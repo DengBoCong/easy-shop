@@ -1,0 +1,58 @@
+数据库
+python manager.py db init
+python manager.py db migrate
+python manager.py db upgrade
+
+开发标记
+autocomplete 文本自动填充 autocomplete.js
+上传进度 upload.js
+layui表单必填项带*样式 https://blog.csdn.net/qq_24562495/article/details/104516722
+
+
+开发代码记录
+user = User.query.filter_by(EMAIL=current_user.EMAIL).update(dict(password=info_data.repassword))
+
+环境导出
+pip3 freeze > requirements.txt
+
+如果要正常退出不关闭容器，请按Ctrl+P+Q进行退出容器
+
+部署
+基于Docker的Flask项目部署 https://0xffff.one/d/845
+docker配合服务器配置https协议 https://lincx_py.gitee.io/2020/12/13/deploy/
+docker中mysql数据定时备份_[Docker]MySql 定时备份 https://blog.csdn.net/weixin_31238109/article/details/113894636
+如何在Docker容器中访问本地数据库或从Docker容器内部连接到计算机的本地主机 https://blog.csdn.net/mr_wang9992/article/details/111939017
+flask下 gunicorn在Python中的使用 https://blog.csdn.net/xuezhangjun0121/article/details/105395884
+记一次 gunicorn 启动 flask 出问题的经历 https://www.huaweicloud.com/articles/5abbb500a2557636892bcb513523dd0a.html
+
+CentOS安装MySQL详解 https://juejin.cn/post/6844903870053761037
+docker 安装mysql  ：https://www.cnblogs.com/UniqueColor/p/11150314.html
+Linux使用mysql没有默认密码，无法操作mysqld.log文件解决方法 https://blog.csdn.net/qq_41824275/article/details/88575001
+
+docker访问宿主机MySQL  https://feifei.blog.csdn.net/article/details/112970000
+
+提交部署镜像
+docker login
+docker commit -a "DengBoCong" -m "verb for deploy test" 容器ID verb:v1.0.0
+docker tag verb:v1.0.0 dengbocong/verb:v1.0.0
+docker push dengbocong/verb:v1.0.0
+
+docker run -itd -p 8000:8000 --name test dengbocong/verb:v1.0.0
+
+启动容器
+docker exec -it test /bin/bash
+gunicorn manager:app -c gunicorn.conf.py
+
+查看日志
+docker logs --tail="10" mytest
+
+
+1:cd到verb目录下
+2:docker build -t test_verb .
+
+ifconfig
+mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '12345678' WITH GRANT OPTION;
+mysql>flush privileges;
+
+
+/sbin/ip route|awk '/default/ {print $3}'

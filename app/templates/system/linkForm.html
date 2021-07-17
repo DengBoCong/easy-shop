@@ -1,0 +1,97 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin"
+     style="padding: 20px 20px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label label-required-next">名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="NAME" placeholder="请输入名称" autocomplete="off" lay-verify="required"
+                   value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label label-required-next">图标</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ICON_CLS" id="iconPicker" lay-filter="iconPicker" style="display:none;">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label label-required-next">URL</label>
+        <div class="layui-input-inline">
+            <input type="text" name="URL" placeholder="请输入URL" autocomplete="off" lay-verify="required"
+                   value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="EMAIL" placeholder="请输入排序号" autocomplete="off"
+                   value="0" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAY-system-quick-link-front-submit"
+               id="LAY-system-quick-link-front-submit" value="确认">
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'user', 'iconPicker'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , iconPicker1 = layui.iconPicker
+            , admin = layui.admin;
+
+        iconPicker1.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false，默认true
+            search: true,
+            // 是否开启分页：true/false，默认true
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 每个图标格子的宽度：'43px'或'20%'
+            cellWidth: '43px',
+            // 点击回调
+            click: function (data) {
+                // console.log(data);
+            },
+            // 渲染成功后的回调
+            success: function(d) {
+                // console.log(d);
+            }
+        });
+
+        /**
+         * 选中图标 （常用于更新时默认选中图标）
+         * @param filter lay-filter
+         * @param iconName 图标名称，自动识别fontClass/unicode
+         */
+        iconPicker1.checkIcon('iconPicker', 'layui-icon-star-fill');
+    })
+</script>
+{% endblock %}

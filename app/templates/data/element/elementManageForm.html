@@ -1,0 +1,55 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin"
+     style="padding: 20px 20px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label label-required-next">Element名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="NAME" lay-verify="required" placeholder="请输入名称" autocomplete="off"
+                   value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label label-required-next">Element类型</label>
+        <div class="layui-input-inline">
+            <select name="TYPE" lay-verify="required">
+                <option value="Core Frame Elements">Core Frame Elements</option>
+                <option value="Non-core Frame Elements">Non-core Frame Elements</option>
+                <option value="Construction Marker">Construction Marker</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAY-element-manage-front-submit" id="LAY-element-manage-front-submit" value="确认">
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , admin = layui.admin;
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+FLASK_CONFIG = "development"
+SECRET_KEY = "e8idu7666aa"
+COOKIE_DURATION_DAYS = 1  # cookie保存时间
+ROOT_NODE_ID = "verb-root-node-id"
+USER_NODE_ID = "verb-user-node-id"
+TEXT_COLOR = ["#CCFFFF", "#FFCCCC", "#CCCC99", "#99CC99", "#FFCC33", "#CCFF99", "#CCCCFF", "#FFCC99", "#FF9966", "#FFFF99"]
+COLOR_MAP = {"Core Frame Elements": "#CCFFFF", "Non-core Frame Elements": "#FFFF99", "Construction Marker": "#FFCCCC"}
+TEMP_FILE_DIR = "/app/static/uploads/temps/"
+FILE_DIR = "/app/static/uploads/files/"
+IMAGE_FILE_DIR = "/app/static/uploads/images/"
+FILE_SUFFIX = ".tag"
+FRAME_FILE_SUFFIX = ".txt"
+DEFAULT_PASSWORD = "111111"
+PAGE_LIMIT = 30

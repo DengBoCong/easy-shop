@@ -1,0 +1,115 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <select name="USER_ID" lay-search id="LAY-contacts-user-select" placeholder="可搜索用户">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-contact" data-type="add">导入</button>
+                    <button class="layui-btn layuiadmin-btn-contact" data-type="batchdel">批量删除</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <table id="LAY-system-contact-manage" lay-filter="LAY-system-contact-manage"></table>
+            <script type="text/html" id="contactToolbarDemo"></script>
+            <script type="text/html" id="table-contact-system-opt">
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'systemAbout', 'layer', 'table', 'form'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table
+            , layer = layui.layer
+            , admin = layui.admin;
+
+        admin.req({
+            method: "get",
+            url: 'api/user/get!user_list',
+            done: function (res) {
+                if (res.code == 0) {
+                    users_list = res.data
+                    for (i = 0; i < users_list.length; i++) {
+                        $('#LAY-contacts-user-select').append(new Option(users_list[i].NAME, users_list[i].ID));// 下拉菜单里添加元素
+                    }
+                    layui.form.render("select");//重新渲染 固定写法
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+
+        //事件
+        var active = {
+            batchdel: function () {
+                var checkStatus = table.checkStatus('LAY-system-contact-manage')
+                    , checkData = checkStatus.data; //得到选中的数据
+
+                if (checkData.length === 0) {
+                    return layer.msg('请选择数据');
+                }
+                layer.confirm('确认删除所选中数据？', {
+                    icon: 3
+                    , title: '敏感操作'
+                }, function (index) {
+                    admin.req({
+                        method: "post",
+                        url: 'api/system/delete!delete_contact',
+                        data: JSON.stringify(checkData),
+                        done: function (res) {
+                            if (res.code == 0) {
+                                table.reload('LAY-system-contact-manage');
+                                layer.msg('已删除');
+                            } else {
+                                layer.msg(res.msg, {icon: 5});
+                            }
+                        }
+                    });
+                });
+            }
+            , add: function () {
+                admin.req({
+                    method: "post",
+                    url: 'api/system/set!user_contacts',
+                    data: JSON.stringify({"ID":$('#LAY-contacts-user-select').val()}),
+                    done: function (res) {
+                        if (res.code == 0) {
+                            table.reload('LAY-system-contact-manage');
+                            layer.msg(res.msg);
+                        } else {
+                            layer.msg(res.msg, {icon: 5});
+                        }
+                    }
+                });
+            }
+        };
+
+        $('.layui-btn.layuiadmin-btn-contact').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        parent.layer.closeAll();
+    });
+</script>
+{% endblock %}

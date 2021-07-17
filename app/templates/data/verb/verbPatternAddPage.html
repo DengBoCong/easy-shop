@@ -1,0 +1,77 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <div class="layui-form" style="padding: 20px 20px 0 0;">
+        <div class="layui-form-item layui-hide">
+            <input type="text" name="VERB_ID" autocomplete="off" value="[[verbId]]" class="layui-input" id="verb-pattern-verb-id">
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">CONST</label>
+            <div class="layui-input-block">
+                <input type="text" name="CONSTRUCTION" value="" placeholder="请输入construction" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label label-required-next">PATTERN</label>
+            <div class="layui-input-block">
+                <input type="text" name="PATTERN" required  lay-verify="required" value=""
+                       placeholder="请输入pattern" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="verb-pattern-add-submit">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'element', 'verbAbout'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , element = layui.element
+            , admin = layui.admin;
+
+
+        form.on('submit(verb-pattern-add-submit)', function (obj) {
+            dataPost = obj.field
+            if (obj.field['CONSTRUCTION'] === '') obj.field['CONSTRUCTION'] = ' '
+            dataPost['VERB_ID'] = $('#verb-pattern-verb-id').val()
+            admin.req({
+                method: "post",
+                url: 'api/data/add!add_verb_pattern',
+                data: JSON.stringify(dataPost),
+                done: function (res) {
+                    if (res.code == 0) {
+                        layer.msg("添加成功，可继续添加或关闭，注意请勿重复添加");
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                }
+            });
+        });
+    })
+</script>
+{% endblock %}

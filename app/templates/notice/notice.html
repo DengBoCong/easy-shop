@@ -1,0 +1,166 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    /* 防止下拉框的下拉列表被隐藏---必须设置--- */
+    .layui-table-cell {
+        overflow: visible !important;
+    }
+
+    /* 使得下拉框与单元格刚好合适 */
+    td .layui-form-select {
+        margin-top: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <input type="text" name="NAME" placeholder="请输入名称" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-notice" lay-submit lay-filter="LAY-system-quick-link-front-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                    <button class="layui-btn layuiadmin-btn-notice" data-type="add">添加</button>
+                    <button class="layui-btn layuiadmin-btn-notice" data-type="batchdel">批量删除</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <table id="LAY-notice-manage" lay-filter="LAY-notice-manage"></table>
+            <script type="text/html" id="noticeToolbarDemo"></script>
+            <script type="text/html" id="topTpl">
+                <select name="IF_TOP" lay-verify="required" lay-filter="tableSelect">  <!-- lay-filter="watch"-->
+                    {% raw %}
+                    <option value="1" {{ d.IF_TOP == 1 ? 'selected' : '' }}>是</option>
+                    <option value="0" {{ d.IF_TOP == 0 ? 'selected' : '' }}>否</option>
+                    {% endraw %}
+                </select>
+            </script>
+            <script type="text/html" id="table-notice-opt">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">
+                    <i class="layui-icon layui-icon-edit"></i>修改</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="editContent">
+                    <i class="layui-icon layui-icon-edit"></i>内容</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="attach">
+                    <i class="layui-icon layui-icon-link"></i>附件</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i
+                        class="layui-icon layui-icon-delete"></i>删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'noticeAbout', 'layer', 'table', 'form'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , table = layui.table
+            , layer = layui.layer
+            , admin = layui.admin;
+
+        //监听搜索
+        form.on('submit(LAY-system-quick-link-front-search)', function (data) {
+            var field = data.field;
+            //执行重载
+            table.reload('LAY-notice-manage', {
+                url: 'api/system/get!link_list_filter_by_param',
+                methods:"get",
+                where: field
+            });
+        });
+
+        form.on('select(tableSelect)', function (data) {
+            var elem = $(data.elem);
+            var trElem = elem.parents('tr');
+            var tableData = table.cache['LAY-notice-manage'];
+            // 更新到表格的缓存数据中，才能在获得选中行等等其他的方法中得到更新之后的值
+            tableData[trElem.data('index')][elem.attr('name')] = data.value;
+        });
+
+        //事件
+        var active = {
+            batchdel: function () {
+                var checkStatus = table.checkStatus('LAY-notice-manage')
+                    , checkData = checkStatus.data; //得到选中的数据
+
+                if (checkData.length === 0) {
+                    return layer.msg('请选择数据');
+                }
+                layer.confirm('确认删除所选中数据？', {
+                    icon: 3
+                    , title: '敏感操作'
+                }, function (index) {
+                    admin.req({
+                        method: "post",
+                        url: 'api/notice/delete!delete_notice',
+                        data: JSON.stringify(checkData),
+                        done: function (res) {
+                            if (res.code == 0) {
+                                table.reload('LAY-notice-manage');
+                                layer.msg('已删除');
+                            } else {
+                                layer.msg(res.msg, {icon: 5});
+                            }
+                        }
+                    });
+                });
+            }
+            , add: function () {
+                layer.open({
+                    type: 2
+                    , title: '添加通告手册'
+                    , content: 'noticeAddPage'
+                    , maxmin: true
+                    , area: ['600px', '400px']
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        var iframeWindow = window['layui-layer-iframe' + index]
+                            , submitID = 'LAY-notice-front-submit'
+                            , submit = layero.find('iframe').contents().find('#' + submitID);
+
+                        //监听提交
+                        iframeWindow.layui.form.on('submit(' + submitID + ')', function (data) {
+                            admin.req({
+                                method: "post",
+                                url: 'api/notice/add!add_notice',
+                                data: JSON.stringify(data.field),
+                                done: function (res) {
+                                    if (res.code == 0) {
+                                        table.reload('LAY-notice-manage'); //数据刷新
+                                        layer.close(index); //关闭弹层
+                                    } else {
+                                        layer.msg(res.msg, {icon: 5});
+                                    }
+                                }
+                            });
+                        });
+
+                        submit.trigger('click');
+                    }
+                });
+            }
+        };
+
+        $('.layui-btn.layuiadmin-btn-notice').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        parent.layer.closeAll();
+    });
+</script>
+{% endblock %}

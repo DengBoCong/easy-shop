@@ -1,0 +1,65 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" id="LAY-app-message-detail">
+    <div class="layui-card layuiAdmin-msg-detail">
+        <div class="layui-card-header">
+            <div class="layui-form-item layui-hide">
+                <input type="text" autocomplete="off"
+                           value="[[notice.ID]]" class="layui-input" id="notice-remain-id">
+            </div>
+            <h1>[[notice.TITLE]]</h1>
+            <p>
+                <span>[[notice.UPDATE_DATETIME]]</span>
+            </p>
+        </div>
+        <div class="layui-card-body layui-text">
+            <div class="layadmin-text" id="show-notice" style="display: none">
+                [[notice.CONTENT]]
+            </div>
+            <div class="layadmin-text">
+                <br><br>
+                {% if attachList %}
+                <i [[if]]>附件下载</i><br>
+                {% for attach in attachList %}
+                &nbsp&nbsp<b>▪</b><a href="[[attach.PATH]]">&nbsp[[attach.NAME]]</a><br>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div style="padding-top: 30px;">
+                <a href="javascript:;" layadmin-event="back"
+                   class="layui-btn layui-btn-primary layui-btn-sm">返回上级</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+    }).use(['index', 'tree', 'util'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            tree = layui.tree,
+            layer = layui.layer,
+            util = layui.util;
+
+        admin.req({
+            method: "get",
+            url: 'api/notice/get!get_notice_info_by_id?ID=' + $('#notice-remain-id').val(),
+            done: function (res) {
+                if (res.code == 0) {
+                    $('#show-notice').html(unescape(res.data.CONTENT))
+                    $('#show-notice').show()
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

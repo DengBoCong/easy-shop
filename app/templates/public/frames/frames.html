@@ -1,0 +1,72 @@
+{% extends "base/basic.html" %}
+{% block title %}[[message.SITE_NAME]]{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" style="padding: 0px;background-color: #F5E9F2">
+    {% include 'public/head.html' %}
+    <div class="layui-card" style="margin-top: 40px;width: 78%;margin-left: 10%;padding: 20px">
+        <div class="layui-card-header">
+            <span class="layui-breadcrumb" lay-filter="breadcrumb">
+                <a href="home">VerbNet</a>
+                <a><cite>Frames</cite></a>
+            </span>
+        </div>
+        <div class="layui-card-body">
+            <p style="font-size: 35px;">Frames</p>
+            {% for frame in frames %}
+            <br>
+            <p style="font-size: 25px;">[[frame.FRAME_TYPE]]: [[frame.NAME]]([[frame.count]] verbs)</p>
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th><b>Basic Frame</b></th>
+                    <th><b>Frame Relation</b></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for child in frame.children %}
+                <tr>
+                    <td><a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-frames-tr"
+                           data-frame-id="[[child.id]]">[[child.name]]</a>([[child.count]])</td>
+                    <td>
+                        <a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-frames-tr"
+                           data-frame-id="[[frame.ID]]">[[frame.NAME]]</a>
+                        {% for item in child.parent %}
+                        →<a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-frames-tr"
+                            data-frame-id="[[item.id]]">[[item.name]]</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+    <div style="height: 15px"></div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'publicCommon'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            layer = layui.layer;
+        layer.load(2)
+
+        $('.layuiadmin-public-frames-tr').on('click', function () {
+            window.location.href = "framesList?frameId=" + $(this).data('frame-id')
+        });
+
+        layer.closeAll();
+    });
+</script>
+{% endblock %}

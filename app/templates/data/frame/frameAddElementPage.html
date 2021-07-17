@@ -1,0 +1,172 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <div class="layui-form-item layui-hide">
+        <input type="text" autocomplete="off" value="[[info.frameId]]" id="frame-remain-id">
+        <input type="text" autocomplete="off" value="[[info.type]]" id="remain-type">
+    </div>
+    <ul class="layui-tab-title">
+        <li class="layui-this">新增Frame与Element关联</li>
+        <li>使用现有Frame与Element关联</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">
+            <div class="layui-form" style="padding: 20px 20px 0 0;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label label-required-next">Elements</label>
+                    <div class="layui-input-inline">
+                        <select name="ELEMENT_TYPE_ID" lay-verify="required" class="frameElementSelect" lay-search>
+                            <option value="">请选择Element</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label label-required-next">DEF</label>
+                    <div class="layui-input-block">
+                    <textarea name="DEF" placeholder="请输入DEF" value="" class="layui-textarea"
+                              style="width: 100%;height: 50px;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label label-required-next">LEMMA</label>
+                    <div class="layui-input-block">
+                    <textarea name="LEMMA" placeholder="请输入LEMMA" value="" class="layui-textarea"
+                              style="width: 100%;height: 50px;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">SAMPLE</label>
+                    <div class="layui-input-block">
+                    <textarea name="SAMPLE" placeholder="请输入Sample" value="" class="layui-textarea"
+                              style="width: 100%;height: 50px;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="frame-add-element-submit">提交更新</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <div class="layui-row layui-form">
+                <select name="ELEMENT_TYPE_ID" id="LAY-frame-element-all-element-type"
+                        lay-filter="LAY-frame-element-all-element-type" lay-search>
+                    <option value="">请选择Element</option>
+                </select>
+            </div>
+            <div class="layui-row">
+                <div class="layui-collapse" lay-filter="component-panel" id="framAddCoreElementPageContact"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'element', 'frameAbout'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , element = layui.element
+            , admin = layui.admin;
+        admin.req({
+            method: "get",
+            url: 'api/data/get!element_type_all_with_filter_by_type?TYPE=' + $('#remain-type').val(),
+            done: function (res) {
+                if (res.code == 0) {
+                    if (res.data.allType.length === 0 || res.data.subType.length === 0) {
+                        layer.msg("当前无" + $('#remain-type').val() + "，请前往添加Elements");
+                    }
+                    for (i = 0; i < res.data.subType.length; i++) {
+                        $('.frameElementSelect').append(new Option(res.data.subType[i].NAME, res.data.subType[i].ID));// 下拉菜单里添加元素
+                        $('#LAY-frame-element-all-element-type').append(new Option(res.data.subType[i].NAME, res.data.subType[i].ID));
+                    }
+                    // for (i = 0; i < res.data.allType.length; i++) {
+                    //     $('#LAY-frame-core-element-all-element-type').append(new Option(res.data.allType[i].NAME, res.data.allType[i].ID));// 下拉菜单里添加元素
+                    // }
+                    layui.form.render("select");//重新渲染 固定写法
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+
+        form.on('submit(frame-add-element-submit)', function (obj) {
+            dataPost = obj.field
+            dataPost['FRAME_ID'] = $('#frame-remain-id').val()
+            admin.req({
+                method: "post",
+                url: 'api/data/add!add_frame_element',
+                data: JSON.stringify(dataPost),
+                done: function (res) {
+                    if (res.code == 0) {
+                        layer.msg("添加成功，可继续添加或关闭，注意请勿重复添加");
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                }
+            });
+        });
+
+        form.on('select(LAY-frame-element-all-element-type)', function (data) {
+            admin.req({
+                method: "get",
+                url: 'api/data/get!element_type_filter_by_id?ID=' + data.value,
+                done: function (res) {
+                    all_str = ''
+                    if (res.count === 0) {
+                        layer.msg("未查询到数据");
+                    } else {
+                        for (var i = 0; i < res.data.length; i++) {
+                            all_str += '<div class="layui-colla-item">' +
+                                '<button class="layui-btn layui-btn-xs layui-btn-normal element-contact-button" data-id="' + res.data[i].ID + '"' +
+                                'style="float:left;margin-top: 10px;margin-left: 10px">关联</button>' +
+                                '<h2 class="layui-colla-title">' + res.data[i].DEF + '</h2>' +
+                                '<div class="layui-colla-content"><p>Lemma</p><textarea id="lemma-'+ res.data[i].ID +'" name="LEMMA" placeholder="请输入LEMMA" value="" class="layui-textarea" style="width: 100%;height: 50px;"></textarea>' +
+                                '<p>Examples</p><textarea id="sample-'+ res.data[i].ID +'" name="SAMPLE" placeholder="请输入SAMPLE" value="" class="layui-textarea" style="width: 100%;height: 50px;"></textarea></div></div>'
+                        }
+                    }
+                    $('#framAddCoreElementPageContact').html(all_str);
+                    element.render('collapse');
+
+                    $('.element-contact-button').on('click', function () {
+                        var elementId = $(this).data('id');
+                        admin.req({
+                            method: "post",
+                            url: 'api/data/add!contact_frame_element',
+                            data: JSON.stringify({'FRAME_ID': $('#frame-remain-id').val(), 'ELEMENT_ID': elementId, 'LEMMA': $('#lemma-' + elementId).val(), 'SAMPLE': $('#sample-' + elementId).val()}),
+                            done: function (res) {
+                                if (res.code == 0) {
+                                    layer.msg("添加成功，可继续添加或关闭，注意请勿重复添加");
+                                } else {
+                                    layer.msg(res.msg, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    })
+</script>
+{% endblock %}

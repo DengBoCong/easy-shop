@@ -1,0 +1,190 @@
+<!-- 侧边菜单 -->
+<div class="layui-side layui-side-menu">
+    <div class="layui-side-scroll">
+        <div class="layui-logo" lay-href="admin">
+            <span>[[message.SITE_NAME]]</span>
+        </div>
+
+        <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+            lay-filter="layadmin-system-side-menu">
+            {% if '/admin' in privilege %}
+            <li data-name="home" class="layui-nav-item">
+                <a lay-href="admin" layadmin-event="refresh">
+                    <i class="layui-icon layui-icon-console"></i>
+                    <cite>主控制台</cite>
+                </a>
+            </li>
+            {% endif %}
+            {% if '/personInfo' in privilege or '/personPwd' in privilege %}
+            <li data-name="person" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="个人中心" lay-direction="2">
+                    <i class="layui-icon layui-icon-username"></i>
+                    <cite>个人中心</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    {% if '/personInfo' in privilege %}
+                    <dd data-name="person-info">
+                        <a lay-href="personInfo" layadmin-event="refresh">基本资料</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/personPwd' in privilege %}
+                    <dd data-name="person-pwd">
+                        <a lay-href="personPwd" layadmin-event="refresh">修改密码</a>
+                    </dd>
+                    {% endif %}
+                </dl>
+            </li>
+            {% endif %}
+            {% if '/dataLabel' in privilege %}
+            <li data-name="label" class="layui-nav-item">
+                <a lay-href="dataLabel" layadmin-event="refresh">
+                    <i class="layui-icon layui-icon-survey"></i>
+                    <cite>数据标注</cite>
+                </a>
+            </li>
+            {% endif %}
+            {% if '/userSystem' in privilege %}
+            <li data-name="user" class="layui-nav-item">
+                <a lay-href="userSystem" layadmin-event="refresh">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <cite>用户管理</cite>
+                </a>
+            </li>
+            {% endif %}
+            {% if '/editHome' in privilege or '/editPublications' in privilege or '/editContributors' in privilege %}
+            <li data-name="edit" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="展示管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-component"></i>
+                    <cite>展示管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    {% if '/editHome' in privilege %}
+                    <dd data-name="space-add">
+                        <a lay-href="editHome" layadmin-event="refresh">Home编辑</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/editPublications' in privilege %}
+                    <dd data-name="space-list">
+                        <a lay-href="editPublications" layadmin-event="refresh">Publications编辑</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/editContributors' in privilege %}
+                    <dd data-name="space-list">
+                        <a lay-href="editContributors" layadmin-event="refresh">Contributors编辑</a>
+                    </dd>
+                    {% endif %}
+                </dl>
+            </li>
+            {% endif %}
+            {% if '/review' in privilege or '/frameManage' in privilege or '/verbManage' in privilege or '/elementTypeManage' in privilege %}
+            <li data-name="data" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="数据管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-template"></i>
+                    <cite>数据管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    {% if '/review' in privilege %}
+                    <dd data-name="data-edit">
+                        <a lay-href="review" layadmin-event="refresh">调配与审核</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/frameManage' in privilege %}
+                    <dd data-name="data-frame">
+                        <a lay-href="frameManage" layadmin-event="refresh">Frame管理</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/verbManage' in privilege %}
+                    <dd data-name="data-verb">
+                        <a lay-href="verbManage" layadmin-event="refresh">Verb管理</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/elementTypeManage' in privilege %}
+                    <dd data-name="data-element">
+                        <a lay-href="elementTypeManage" layadmin-event="refresh">Element管理</a>
+                    </dd>
+                    {% endif %}
+                </dl>
+            </li>
+            {% endif %}
+            {% if '/privilege' in privilege or '/role' in privilege %}
+            <li data-name="role" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="权限管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-auz"></i>
+                    <cite>权限管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    {% if '/privilege' in privilege %}
+                    <dd data-name="role-resource">
+                        <a lay-href="privilege" layadmin-event="refresh">权限列表</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/role' in privilege %}
+                    <dd data-name="role-user">
+                        <a lay-href="role" layadmin-event="refresh">角色管理</a>
+                    </dd>
+                    {% endif %}
+                </dl>
+            </li>
+            {% endif %}
+            {% if '/systemLog' in privilege or '/dataLog' in privilege %}
+            <li data-name="log" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="日志管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-log"></i>
+                    <cite>日志管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    {% if '/systemLog' in privilege %}
+                    <dd data-name="log-system">
+                        <a lay-href="systemLog" layadmin-event="refresh">系统日志</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/dataLog' in privilege %}
+                    <dd data-name="log-document">
+                        <a lay-href="dataLog" layadmin-event="refresh">数据日志</a>
+                    </dd>
+                    {% endif %}
+                </dl>
+            </li>
+            {% endif %}
+            {% if '/quickLink' in privilege or '/contacts' in privilege or '/systemWebsite' in privilege %}
+            <li data-name="system" class="layui-nav-item">
+                <a href="javascript:;" lay-tips="系统管理" lay-direction="2">
+                    <i class="layui-icon layui-icon-set"></i>
+                    <cite>系统管理</cite>
+                </a>
+                <dl class="layui-nav-child">
+                    {% if '/quickLink' in privilege %}
+                    <dd data-name="system-link">
+                        <a lay-href="quickLink" layadmin-event="refresh">快捷链接</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/contacts' in privilege %}
+                    <dd data-name="system-contacts">
+                        <a lay-href="contacts" layadmin-event="refresh">系统联系人</a>
+                    </dd>
+                    {% endif %}
+                    {% if '/systemWebsite' in privilege %}
+                    <dd data-name="system-website">
+                        <a lay-href="systemWebsite" layadmin-event="refresh">系统设置</a>
+                    </dd>
+                    {% endif %}
+                </dl>
+            </li>
+            {% endif %}
+            {% if '/notice' in privilege %}
+            <li data-name="user" class="layui-nav-item">
+                <a lay-href="notice" layadmin-event="refresh">
+                    <i class="layui-icon layui-icon-release"></i>
+                    <cite>通告手册</cite>
+                </a>
+            </li>
+            {% endif %}
+            <li data-name="about" class="layui-nav-item">
+                <a href="javascript:;" layadmin-event="about" lay-tips="关于" lay-direction="2">
+                    <i class="layui-icon layui-icon-tips"></i>
+                    <cite>关于</cite>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+{% extends "base/basic.html" %}
+{% block title %}[[message.SITE_NAME]]{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" style="padding: 0px;background-color: #F5E9F2">
+    {% include 'public/head.html' %}
+    <div style="margin-top: 20px;width: 90%;margin-left: 5%;padding: 20px;" id="LAY-show-home-page">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-form-item layui-hide">
+                <input type="text" autocomplete="off" value=[[verb1.ID]] id="verb1-remain-id">
+                <input type="text" autocomplete="off" value=[[verb2.ID]] id="verb2-remain-id">
+            </div>
+            <div class="layui-col-md4">
+                <div class="layui-card" style="padding: 10px;">
+                    <div id="frames-list-tree-all"></div>
+                </div>
+            </div>
+            <div class="layui-col-md8" id="frameCard">
+                <div class="layui-card" style="padding: 20px">
+                    <p style="font-size: 35px;">Compare:<a
+                            href="verbsList?verbId=[[verb1.ID]]" style="color: #AD5E9D">[[verb1.NAME]]</a>&<a
+                            href="verbsList?verbId=[[verb2.ID]]" style="color: #AD5E9D">[[verb2.NAME]]</a></p>
+                    <table class="layui-table">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th><b>[[verb1.NAME]]</b></th>
+                            <th><b>[[verb2.NAME]]</b></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Frequency in Gigaword</td>
+                            <td>[[verb1.FREQUENCY]]</td>
+                            <td>[[verb2.FREQUENCY]]</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 28px;">Common Patterns</p><br>
+                    <div id="public-verb-compare-common"></div>
+                    <p style="font-size: 28px;">[[verb1.NAME]]-specific patterns</p><br>
+                    <div id="public-verb1-compare"></div><br>
+                    <p style="font-size: 28px;">[[verb2.NAME]]-specific patterns</p><br>
+                    <div id="public-verb2-compare"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 50px"></div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'publicCommon', 'tree'], function () {
+        var $ = layui.$,
+            tree = layui.tree,
+            admin = layui.admin,
+            layer = layui.layer;
+        layer.load(2)
+
+        admin.req({
+            method: "get",
+            url: 'api/data/get!get_all_frame_with_verb',
+            done: function (res) {
+                if (res.code == 0) {
+                    tree.render({
+                        elem: '#frames-list-tree-all'
+                        , data: res.data[0].children
+                        , showLine: false  //是否开启连接线
+                        , click: function (obj) {
+                            if (obj.data.if_verb !== 1) {
+                                window.location.href = "framesList?frameId=" + obj.data.id
+                            } else if (obj.data.if_verb === 1) {
+                                window.location.href = "verbsList?verbId=" + obj.data.id
+                            }
+                        }
+                    });
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+                layer.closeAll();
+            }
+        });
+
+        admin.req({
+            method: "get",
+            url: 'api/public/get!get_verb_compare_detail?verb1=' + $('#verb1-remain-id').val() + '&verb2=' + $('#verb2-remain-id').val(),
+            done: function (res) {
+                if (res.code == 0) {
+                    commonStr = ''
+                    for (var keys in res.data.common) { // 遍历Set
+                        verb1Precent = (res.data.common[keys]['verb1Count'] / res.data.verb1Total * 100).toFixed(2)
+                        verb2Precent = (res.data.common[keys]['verb2Count'] / res.data.verb2Total * 100).toFixed(2)
+                        commonStr += '<details open="open"><summary style="font-size: 20px;">Pattern:' + keys + '('+ verb1Precent +'% of '+ res.data.verb1Info.NAME +','+ verb2Precent +'% of '+ res.data.verb2Info.NAME +')</summary>'
+                        for (var j = 0; j < res.data.common[keys]['pattern'].length; j++) {
+                            commonStr += '<span style="font-size: 16px;">&nbsp<b>•</b> ' + res.data.common[keys]['pattern'][j] + '</span><br>'
+                        }
+                        commonStr += '<br></details>'
+                    }
+                    if (commonStr === '')
+                        commonStr = '(none)<br>'
+                    $('#public-verb-compare-common').html(commonStr)
+                    verb1Str = ''
+                    for (var keys in res.data.verb1) { // 遍历Set
+                        verb1Precent = (res.data.verb1[keys]['verb1Count'] / res.data.verb1Total * 100).toFixed(2)
+                        verb1Str += '<details><summary style="font-size: 20px;">Pattern:' + keys + '('+ res.data.verb1[keys]['verb1Count'] +' sentences, '+ verb1Precent +'% of all)</summary>'
+                        for (var j = 0; j < res.data.verb1[keys]['pattern'].length; j++) {
+                            verb1Str += '<span style="font-size: 16px;">&nbsp<b>•</b> ' + res.data.verb1[keys]['pattern'][j] + '</span><br>'
+                        }
+                        verb1Str += '<br></details>'
+                    }
+
+                    if (verb1Str === '')
+                        verb1Str = '(none)<br>'
+                    $('#public-verb1-compare').html(verb1Str)
+                    verb2Str = ''
+                    for (var keys in res.data.verb2) { // 遍历Set
+                        verb2Precent = (res.data.verb2[keys]['verb2Count'] / res.data.verb2Total * 100).toFixed(2)
+                        verb2Str += '<details><summary style="font-size: 20px;">Pattern:' + keys + '('+ res.data.verb2[keys]['verb2Count'] +' sentences, '+ verb2Precent +'% of all)</summary>'
+                        for (var j = 0; j < res.data.verb2[keys]['pattern'].length; j++) {
+                            verb2Str += '<span style="font-size: 16px;">&nbsp<b>•</b> ' + res.data.verb2[keys]['pattern'][j] + '</span><br>'
+                        }
+                        verb2Str += '<br></details>'
+                    }
+
+                    if (verb2Str === '')
+                        verb2Str = '(none)<br>'
+                    $('#public-verb2-compare').html(verb2Str)
+
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+                layer.closeAll();
+            }
+        });
+    });
+</script>
+{% endblock %}

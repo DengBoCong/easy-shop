@@ -1,0 +1,91 @@
+{% extends "base/basic.html" %}
+{% block title %}[[message.SITE_NAME]]{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" style="padding: 0px;background-color: #fff">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <input type="text" name="" placeholder="Input frame or Verb" autocomplete="off"
+                   id="public-verb-search-input" class="layui-input">
+        </div>
+        <div class="layui-form-item layui-hide">
+            <input type="text" value="[[verbId]]" id="public-verb-details-verb-id">
+        </div>
+    </div>
+    <table class="layui-table">
+        <colgroup>
+            <col>
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th><b>Name</b></th>
+            <th><b>Frame</b></th>
+        </tr>
+        </thead>
+        <tbody id="public-verb-search-table-body">
+        {% for verb in frameInfo.verbs %}
+        <tr>
+            <td><a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-verbs-tr"
+                   data-frame-id="[[verb.ID]]">[[verb.NAME]]</a></td>
+            <td>
+                {% for item in verb.PARENT %}
+                <a href="javascript:;" style="color: #AD5E9D" data-frame-id="[[item.ID]]">[[item.NAME]]</a>→
+                {% endfor %}
+                <a href="javascript:;" style="color: #AD5E9D" data-frame-id="[[verb.ID]]">[[verb.NAME]]</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'publicCommon', 'dropdown'], function () {
+        var $ = layui.$,
+            tree = layui.tree,
+            admin = layui.admin,
+            dropdown = layui.dropdown,
+            layer = layui.layer;
+        layer.load(2)
+
+        $("#public-verb-search-input").on("input", function (e) {
+            admin.req({
+                method: "post",
+                data: JSON.stringify({"search": e.delegateTarget.value}),
+                url: 'api/public/search!searchVerbContent',
+                done: function (res) {
+                    if (res.code == 0) {
+                        currentVerbId = $('#public-verb-details-verb-id').val()
+                        tableStr = ''
+                        for (var i = 0; i < res.data.length; i++) {
+                            tableStr += '<tr><td><a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-verbs-tr" data-frame-id="'+ res.data[i].ID +'">'+ res.data[i].NAME +'</a></td><td>'
+                            for (var j = 0; j < res.data[i].parent.length; j++) {
+                                tableStr += '<a href="javascript:;" style="color: #AD5E9D" data-frame-id="'+ res.data[i].parent[j].ID +'">'+ res.data[i].parent[j].NAME +'</a>→'
+                            }
+                            tableStr += '<a href="javascript:;" style="color: #AD5E9D" data-frame-id="'+ res.data[i].ID +'">'+ res.data[i].NAME +'</a></td></tr>'
+                        }
+                        $('#public-verb-search-table-body').html(tableStr)
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                    $('.layuiadmin-public-verbs-tr').on('click', function () {
+                        top.location.href = "compareVerb?verb1=" + $('#public-verb-details-verb-id').val() + '&verb2=' + $(this).data('frame-id')
+                    });
+                }
+            });
+        });
+
+        $('.layuiadmin-public-verbs-tr').on('click', function () {
+            top.location.href = "compareVerb?verb1=" + $('#public-verb-details-verb-id').val() + '&verb2=' + $(this).data('frame-id')
+        });
+
+        layer.closeAll();
+    });
+</script>
+{% endblock %}

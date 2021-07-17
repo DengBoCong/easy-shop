@@ -1,0 +1,99 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    Verb树状列表--点击Verb加载详情数据
+                    <a href="javascript:;" layadmin-event="verbVerbTreeRefresh" title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </div>
+                <div class="layui-card-body">
+                    <div id="LAY_verb_tree"></div>
+                    <div style="height: 20px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8" id="frameCard">
+            <iframe id="subFrameIframe" src="" frameborder="0" height="100%" width="100%"
+                            scrolling="auto"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    autoheight();
+	function autoheight(){
+		var winHeight=0;
+		if (window.innerHeight)
+			winHeight = window.innerHeight;
+		else if ((document.body) && (document.body.clientHeight))
+			winHeight = document.body.clientHeight;
+		if (document.documentElement && document.documentElement.clientHeight)
+			winHeight = document.documentElement.clientHeight;
+		document.getElementById("frameCard").style.height= winHeight +"px";
+	}
+	window.οnresize=autoheight; //浏览器窗口发生变化时同时变化DIV高度
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+    }).use(['index', 'tree', 'util'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            tree = layui.tree,
+            layer = layui.layer,
+            util = layui.util;
+
+        var remainFrameId = ''
+        admin.events.verbVerbTreeRefresh = function (othis) {
+            var refreshBtn = layer.load(2);
+            admin.req({
+                method: "get",
+                url: 'api/label/get!get_all_user_frame_with_verb_for_label?spreadId=' + remainFrameId,
+                done: function (res) {
+                    tree.reload('verbFrameTree', {data: res.data});
+                    layer.close(refreshBtn);
+                }
+            })
+        };
+
+        admin.req({
+            method: "get",
+            url: 'api/label/get!get_all_user_frame_with_verb_for_label',
+            done: function (res) {
+                if (res.code == 0) {
+                    tree.render({
+                        elem: '#LAY_verb_tree'
+                        , data: res.data
+                        , id: 'verbFrameTree'
+                        , onlyIconControl: true
+                        , edit: []
+                        , click: function (obj) {
+                            if (obj.data.title === '标注根节点，请勿删除') {
+                                layer.msg("顶级根节点不允许进行操作，请选择其他子节点操作！");
+                            } else if (obj.data.if_verb !== 1) {
+                                layer.load(2);
+                                $('#subFrameIframe').attr('src', 'labelDetails?frame=' + obj.data.id)
+                                remainFrameId = obj.data.id
+                            } else if (obj.data.if_verb === 1) {
+                                layer.load(2);
+                                $('#subFrameIframe').attr('src', 'labelVerbDetails?verbId=' + obj.data.id)
+                                remainFrameId = obj.data.id
+                            }
+                        }
+                    });
+                    parent.layer.closeAll();
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

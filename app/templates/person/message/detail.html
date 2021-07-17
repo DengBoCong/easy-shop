@@ -1,0 +1,42 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+
+<div class="layui-fluid" id="LAY-app-message-detail">
+    <div class="layui-card layuiAdmin-msg-detail">
+        <div class="layui-card-header">
+            <h1>[[message.title]]</h1>
+            <p>
+                <span>[[message.time]]</span>
+            </p>
+        </div>
+        <div class="layui-card-body layui-text">
+            <div class="layadmin-text">
+                [[message.content]]
+                <blockquote class="layui-elem-quote">
+                    注：这里读取的是静态的模拟接口，实际应用时，您可以在该页面源代码中，修改成以下任意一种方式
+                    <ul>
+                        <li>将 <em>lay-url=""</em> 改成你的真实接口，系统会自动识别该动态模板，直接前端渲染。</li>
+                        <li>剔除 script 动态模板标签，改成服务端渲染。</li>
+                    </ul>
+                </blockquote>
+            </div>
+
+            <div style="padding-top: 30px;">
+                <a href="javascript:;" layadmin-event="back"
+                   class="layui-btn layui-btn-primary layui-btn-sm">返回上级</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index']);
+</script>
+{% endblock %}

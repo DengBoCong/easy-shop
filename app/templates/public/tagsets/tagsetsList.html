@@ -1,0 +1,112 @@
+{% extends "base/basic.html" %}
+{% block title %}[[message.SITE_NAME]]{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" style="padding: 0px;background-color: #F5E9F2">
+    {% include 'public/head.html' %}
+    <div class="layui-row layui-col-space30" style="margin-top: 40px;width: 80%;margin-left: 10%;">
+        <div class="layui-col-md3" style="background-color: #fff">
+            <div id="tagsets-list-tree-all"></div>
+        </div>
+        <div class="layui-col-md8" id="frameCard" style="background-color: #fff; margin-left: 25px">
+            <!--            <iframe id="subFrameIframe" src="tagsetsDetails?typeId=[[elementType]]" frameborder="0" height="100%" width="100%"-->
+            <!--                    scrolling="auto"></iframe>-->
+            <div style="height: 50px;"><br>
+                <span class="layui-breadcrumb" lay-filter="breadcrumb">
+                    <a href="home">VerbNet</a>
+                    <a href="tagsets">Tagsets</a>
+                    <a href="tagsets?TYPE=[[detail.TYPE]]">[[detail.TYPE]]</a>
+                    <a><cite>[[detail.NAME]]</cite></a>
+                </span>
+            </div>
+            <p style="font-family: 'Courier New'; font-size: 35px;">Tag:[[detail.NAME]]</p><br>
+            <p style="font-family: 'Courier New'; font-size: 25px;">Frames</p>
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Frames</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for frame in detail.frames %}
+                <tr>
+                    <td><span style="background-color: [[frame.color]]">[[frame.NAME]]</span></td>
+                    <td>
+                        {% for item in frame.parent %}
+                        <a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-tagsets-tr"
+                           data-frame-id="[[item.ID]]">[[item.NAME]]</a>→
+                        {% endfor %}
+                        <a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-tagsets-tr"
+                           data-frame-id="[[frame.ID]]">[[frame.NAME]]</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% for frame in detail.frames %}
+            <p style="font-family: 'Courier New'; font-size: 25px;"><span style="background-color: [[frame.color]];">[[frame.NAME]]</span>
+            </p><br>
+            <p style="font-size: 17px;">Definition</p><br>
+            <p style="font-size: 14px;">[[frame.element.DEF]]</p><br>
+            <p style="font-size: 17px;">Lemma</p><br>
+            <p style="font-size: 14px;">&nbsp<b>•</b> [[frame.element.LEMMA]]</p><br>
+            <p style="font-size: 17px;">Examples</p><br>
+            <p style="font-size: 14px;display: none;" class="tagsets-sample-text-to-html">&nbsp<b>•</b> [[frame.element.SAMPLE]]
+            </p><br>
+            {% endfor %}
+        </div>
+    </div>
+    <div style="height: 50px"></div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'publicCommon', 'tree'], function () {
+        var $ = layui.$,
+            tree = layui.tree,
+            admin = layui.admin,
+            layer = layui.layer;
+        layer.load(2)
+
+        admin.req({
+            method: "get",
+            url: 'api/public/get!get_all_element_type_for_tree',
+            done: function (res) {
+                if (res.code == 0) {
+                    tree.render({
+                        elem: '#tagsets-list-tree-all'
+                        , data: res.data
+                        , showLine: false  //是否开启连接线
+                        , click: function (obj) {
+                            if (obj.data.parent !== 1){
+                                window.location.href="tagsetsList?typeId=" + obj.data.id
+                            }
+                        }
+                    });
+                    for (var i = 0; i < $('.tagsets-sample-text-to-html').length; i++) {
+                        $('.tagsets-sample-text-to-html')[i].innerHTML = $('.tagsets-sample-text-to-html')[i].innerText
+                        $('.tagsets-sample-text-to-html')[i].setAttribute('style', 'display: block')
+                    }
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+                layer.closeAll();
+            }
+        });
+
+        $('.layuiadmin-public-tagsets-tr').on('click', function () {
+            window.location.href="framesList?frameId=" + $(this).data('frame-id')
+        });
+        layer.closeAll();
+    });
+</script>
+{% endblock %}

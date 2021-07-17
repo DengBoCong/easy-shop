@@ -1,0 +1,137 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<fieldset class="layui-elem-field" style="background-color: #fff;">
+    <legend>任务基本信息</legend>
+    <div class="layui-field-box">
+        <div class="layui-form" style="padding: 20px 20px 0 0;background-color: #fff;">
+            <div class="layui-form-item layui-hide">
+                <input type="text" name="ID" lay-verify="required" placeholder="请输入Frame" autocomplete="off"
+                           value="[[frame.ID]]" class="layui-input" id="frame-remain-id">
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">导入导出</label>
+                <div class="layui-input-block">
+                    <a class="layui-btn layui-btn-primary" href="api/export/export!frame_with_sub_info?frameId=[[frame.ID]]">Frame级联数据</a>
+                    <a class="layui-btn layui-btn-primary" href="verbFileAddPage?frameId=[[frame.ID]]">批量导入Verb</a>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">迁移线上</label>
+                <div class="layui-input-inline">
+                    <select name="PARENT_ID" lay-verify="required" class="parentFrameSelect" lay-search>
+                        <option value="[[frame.PARENT_ID]]"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label label-required-next">标注者</label>
+                <div class="layui-input-inline">
+                    <select name="USER_ID" lay-verify="required" class="labelUserSelect" lay-search>
+                        {% if frame.USER_NAME != "null" %}
+                        <option value="[[frame.USER_ID]]" selected>[[frame.USER_NAME]]</option>
+                        {% else %}
+                        <option value="null">不分配标注者</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label label-required-next">任务命名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="NAME" lay-verify="required" placeholder="请输入Frame" autocomplete="off"
+                           value="[[frame.NAME]]" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label label-required-next">参考Frame</label>
+                <div class="layui-input-inline">
+                    <select name="TEMP_FRAME_ID" lay-verify="required" class="referFrameSelect" lay-search>
+                        <option value="[[frame.TEMP_FRAME_ID]]">[[frame.temp_frame_name]]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="update-basic-info">提交更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'frameAbout'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , admin = layui.admin;
+
+        admin.req({
+            method: "get",
+            url: 'api/data/get!get_all_frame_for_select',
+            done: function (res) {
+                if (res.code == 0) {
+                    for (i = 0; i < res.data.noVerb.length; i++) {
+                        $('.parentFrameSelect').append(new Option(res.data.noVerb[i].NAME, res.data.noVerb[i].ID));// 下拉菜单里添加元素
+                    }
+                    for (i = 0; i < res.data.all.length; i++) {
+                        $('.referFrameSelect').append(new Option(res.data.all[i].NAME, res.data.all[i].ID));// 下拉菜单里添加元素
+                    }
+                    layui.form.render("select");//重新渲染 固定写法
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+
+        admin.req({
+            method: "get",
+            url: 'api/user/get!user_list',
+            done: function (res) {
+                if (res.code == 0) {
+                    for (i = 0; i < res.data.length; i++) {
+                        $('.labelUserSelect').append(new Option(res.data[i].NAME, res.data[i].ID));// 下拉菜单里添加元素
+                    }
+                    layui.form.render("select");//重新渲染 固定写法
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+
+        form.on('submit(update-basic-info)', function (obj) {
+            //提交修改
+            admin.req({
+                method: "post",
+                url: 'api/label/update!user_frame_basic_info',
+                data: JSON.stringify(obj.field),
+                done: function (res) {
+                    layer.msg(res.msg + '，左侧数据更新有所延迟，需要刷新，不过不影响点击后加载最新数据');
+                }
+            });
+        });
+
+        parent.layer.closeAll();
+    })
+</script>
+{% endblock %}

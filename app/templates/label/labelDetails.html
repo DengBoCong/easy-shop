@@ -1,0 +1,112 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<fieldset class="layui-elem-field" style="background-color: #fff;">
+    <legend>Frame基本信息</legend>
+    <div class="layui-field-box">
+        <div class="layui-form" style="padding: 20px 20px 0 0;background-color: #fff;">
+            <div class="layui-form-item layui-hide">
+                <input type="text" name="ID" lay-verify="required" placeholder="请输入Frame" autocomplete="off"
+                       value="[[frame.ID]]" class="layui-input" id="frame-remain-id">
+            </div>
+            <p>FrameType: [[frame.FRAME_TYPE]]</p><br>
+            <p>Def: [[frame.DEF]]</p><br>
+            <p>Pattern: [[frame.PATTERN]]</p><br>
+            <p>Sample: [[frame.SAMPLE]]</p><br>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset class="layui-elem-field" style="background-color: #fff;">
+    <legend>Core Frame Elements</legend>
+    <div class="layui-field-box">
+        <div class="layui-collapse" lay-filter="component-panel">
+            {% for element in core_elements %}
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title" style="background-color: #fff;">[[element.NAME]]</h2>
+                <div class="layui-colla-content">
+                    <p>Def</p>
+                    <p>&nbsp<b>•</b> [[element.DEF]]</p>
+                    <p>Lemma</p>
+                    <p>&nbsp<b>•</b> [[element.LEMMA]]</p>
+                    <p>Examples</p>
+                    <p>&nbsp<b>•</b> [[element.SAMPLE]]</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</fieldset>
+
+<fieldset class="layui-elem-field" style="background-color: #fff;">
+    <legend>Non-core Frame Elements</legend>
+    <div class="layui-field-box">
+        <div class="layui-collapse" lay-filter="component-panel">
+            {% for element in non_core_elements %}
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title" style="background-color: #fff;">[[element.NAME]]</h2>
+                <div class="layui-colla-content">
+                    <p>Def</p>
+                    <p>&nbsp<b>•</b> [[element.DEF]]</p>
+                    <p>Lemma</p>
+                    <p>&nbsp<b>•</b> [[element.LEMMA]]</p>
+                    <p>Examples</p>
+                    <p>&nbsp<b>•</b> [[element.SAMPLE]]</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</fieldset>
+
+<fieldset class="layui-elem-field" style="background-color: #fff;">
+    <legend>Construction Marker</legend>
+    <div class="layui-field-box">
+        <div class="layui-collapse" lay-filter="component-panel">
+            {% for element in marker %}
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title" style="background-color: #fff;">[[element.NAME]]</h2>
+                <div class="layui-colla-content">
+                    <p>Def</p>
+                    <p>&nbsp<b>•</b> [[element.DEF]]</p>
+                    <p>Lemma</p>
+                    <p>&nbsp<b>•</b> [[element.LEMMA]]</p>
+                    <p>Examples</p>
+                    <p>&nbsp<b>•</b> [[element.SAMPLE]]</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</fieldset>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'frameAbout'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , admin = layui.admin;
+
+        parent.layer.closeAll();
+    })
+</script>
+{% endblock %}

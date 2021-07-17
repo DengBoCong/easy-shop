@@ -1,0 +1,88 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+
+<div class="layui-tab layui-tab-brief" style="background-color: #fff">
+    <div class="layui-card-header" style="height: 50px;background-color: #fff">
+        <div class="layui-row layui-form" style="text-align: center">
+            <div class="layui-form-item layui-hide">
+                <input type="text" value="[[verbInfo.ID]]" class="layui-input" id="verb-id">
+            </div>
+            <div class="layui-inline" style="margin-top: 7px">
+                <select name="ELEMENT_TYPE_ID" id="LAY-verb-pattern-info-element-info"
+                        lay-filter="LAY-verb-pattern-info-element-info" lay-search>
+                    <option value="">请选择Element</option>
+                    {% for type in elementList %}
+                    <option value="[[type.NAME]]">[[type.NAME]]</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" layadmin-event="verbPatternEditReplace">替换选中内容
+                </button>
+                <button class="layui-btn" layadmin-event="verbPatternEditAdd">提交更新</button>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card-body">
+        <textarea id="verb-add-pattern-textarea" style="display: none;" wrap="physical"></textarea>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'layedit', 'verbAbout'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , layedit = layui.layedit
+            , admin = layui.admin;
+
+        editIndex = layedit.build('verb-add-pattern-textarea', {
+            tool: [],
+            height: 350,
+        });
+
+        admin.events.verbPatternEditReplace = function (othis) {
+            element = $('#LAY-verb-pattern-info-element-info').val()
+            if (element === '') {
+                layer.msg('请选择Element元素');
+                return
+            }
+            selection_text = layedit.getSelection(editIndex)
+            total_text = layedit.getText(editIndex)
+            if (total_text === '' || selection_text === '') {
+                layer.msg('请选中文本');
+                return;
+            }
+            if (selection_text.substr(0, 1) !== '@') {
+                layer.msg('请在替换文本开头使用@标记');
+                return;
+            }
+            layedit.setContent(editIndex, total_text.replace(selection_text, '[' + selection_text.substr(1) + '/' + element + ']'), false)
+        };
+
+        admin.events.verbPatternEditAdd = function (othis) {
+            loadItem = layer.load(2)
+            if (layedit.getContent(editIndex) === '') {
+                layer.msg("内容不能为空")
+                return
+            }
+            admin.req({
+                method: "post",
+                url: 'api/data/add!add_verb_pattern_sample',
+                data: JSON.stringify({'CONTENT': layedit.getContent(editIndex), 'verbId': $('#verb-id').val()}),
+                done: function (res) {
+                    layer.close(loadItem)
+                    layer.msg(res.msg);
+                    layedit.setContent(editIndex, '', false)
+                }
+            });
+        };
+    })
+</script>
+{% endblock %}

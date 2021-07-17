@@ -1,0 +1,315 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+<style>
+    .label-required-next:after {
+        top: 6px;
+        right: 5px;
+        color: red;
+        content: '*';
+        position: absolute;
+        margin-left: 4px;
+        font-weight: 700;
+        line-height: 1.8em;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    线下数据列表
+                    <a href="javascript:;" layadmin-event="verbVerbTreeRefresh" title="刷新" id="refresh-button">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                    <button class="layui-btn layui-btn-primary layui-btn-xs" layadmin-event="verbTurnDown"
+                            style="float: right;margin-right: 30px;margin-top: 12px;">导入
+                    </button>
+                    <button class="layui-btn layui-btn-primary layui-btn-xs" layadmin-event="verbAssign"
+                            style="float: right;margin-right: 10px;margin-top: 12px;">分配
+                    </button>
+                </div>
+                <div class="layui-card-body">
+                    <div id="LAY_verb_tree"></div>
+                    <div style="height: 20px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8" id="frameCard">
+            <iframe id="subFrameIframe" src="" frameborder="0" height="100%" width="100%"
+                    scrolling="auto"></iframe>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    autoheight();
+
+    function autoheight() {
+        var winHeight = 0;
+        if (window.innerHeight)
+            winHeight = window.innerHeight;
+        else if ((document.body) && (document.body.clientHeight))
+            winHeight = document.body.clientHeight;
+        if (document.documentElement && document.documentElement.clientHeight)
+            winHeight = document.documentElement.clientHeight;
+        document.getElementById("frameCard").style.height = winHeight + "px";
+    }
+
+    window.οnresize = autoheight; //浏览器窗口发生变化时同时变化DIV高度
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+    }).use(['index', 'tree', 'util', 'form'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            tree = layui.tree,
+            layer = layui.layer,
+            form = layui.form,
+            util = layui.util;
+
+        function tempVerb(data, idList) {
+            if (data["if_verb"] === 1) {
+                idList.push(data["id"])
+                return
+            }
+            for (const child of data["children"]) {
+                tempVerb(child, idList)
+            }
+        }
+
+        var remainFrameId = ''
+        admin.events.verbVerbTreeRefresh = function (othis) {
+            var refreshBtn = layer.load(2);
+            admin.req({
+                method: "get",
+                url: 'api/label/get!get_all_user_frame_with_verb?spreadId=' + remainFrameId,
+                done: function (res) {
+                    tree.reload('verbFrameTree', {data: res.data});
+                    layer.close(refreshBtn);
+                }
+            })
+        };
+
+        admin.events.verbTurnDown = function (othis) {
+            $('#subFrameIframe').attr('src', 'frameFileAddPage')
+        };
+
+        admin.events.verbAssign = function (othis) {
+            var checkedData = tree.getChecked('verbFrameTree'); //获取选中节点的数据
+            if (checkedData.length === 0) {
+                layer.msg('未选中数据')
+            } else {
+                layer.open({
+                    title: '选择Verb对象'
+                    , type: 1
+                    , btn: ['确定']
+                    //,skin: 'layui-layer-rim'
+                    , shadeClose: true
+                    , area: admin.screen() < 2 ? ['80%', '300px'] : ['700px', '500px']
+                    , content: '<div style="padding: 20px;"><div class="layui-form"><div class="layui-form-item">' +
+                        '<label class="layui-form-label label-required-next">分配标注者</label><div class="layui-input-inline"><select name="USER_ID" required lay-verify="required" lay-search id="verb-details-edit-verb-user">' +
+                        '<option value="" selected>不分配标注者</option></select></div></div><div class="layui-form-item"><label class="layui-form-label label-required-next">参考Frame</label>' +
+                        '<div class="layui-input-inline"><select name="TEMP_FRAME_ID" required lay-verify="required" lay-search id="verb-details-edit-verb-frame"><option value="" selected>不分配参考Frame</option></select></div></div></div></div>'
+                    , success: function (layero, index) {
+                        // 重新渲染弹层中的下拉选择框select
+                        form.render('select');
+                        admin.req({
+                            method: "get",
+                            url: 'api/user/get!user_list',
+                            done: function (res) {
+                                if (res.code == 0) {
+                                    for (i = 0; i < res.data.length; i++) {
+                                        $('#verb-details-edit-verb-user').append(new Option(res.data[i].NAME, res.data[i].ID));// 下拉菜单里添加元素
+                                    }
+                                    layui.form.render("select");//重新渲染 固定写法
+                                } else {
+                                    layer.msg(res.msg, {icon: 5});
+                                }
+                            }
+                        });
+
+                        admin.req({
+                            method: "get",
+                            url: 'api/label/get!get_all_user_frame_for_select',
+                            done: function (res) {
+                                if (res.code == 0) {
+                                    for (i = 0; i < res.data.length; i++) {
+                                        $('#verb-details-edit-verb-frame').append(new Option(res.data[i].NAME, res.data[i].ID));// 下拉菜单里添加元素
+                                    }
+                                    layui.form.render("select");//重新渲染 固定写法
+                                } else {
+                                    layer.msg(res.msg, {icon: 5});
+                                }
+                            }
+                        });
+                    }
+                    , yes: function (index, layero) {
+                        userId = $('#verb-details-edit-verb-user').val()
+                        tempFrameId = $('#verb-details-edit-verb-frame').val()
+                        if (userId === '' || tempFrameId === '') {
+                            layer.msg('必填项不能为空', {icon: 5})
+                        } else {
+                            dealData = checkedData[0]
+                            verbIdList = new Array()
+                            tempVerb(dealData, verbIdList)
+                            admin.req({
+                                method: "post",
+                                url: 'api/label/update!batch_verb_basic_info',
+                                data: JSON.stringify({
+                                    "USER_ID": userId,
+                                    "TEMP_FRAME_ID": tempFrameId,
+                                    "checkedData": verbIdList
+                                }),
+                                done: function (res) {
+                                    if (res.code == 0) {
+                                        layer.msg(res.msg);
+                                        tree.reload('verbFrameTree', {data: res.data});
+                                    } else {
+                                        layer.msg(res.msg, {icon: 5});
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        };
+
+        admin.req({
+            method: "get",
+            url: 'api/label/get!get_all_user_frame_with_verb',
+            done: function (res) {
+                if (res.code == 0) {
+                    tree.render({
+                        elem: '#LAY_verb_tree'
+                        , data: res.data
+                        , showCheckbox: true
+                        , id: 'verbFrameTree'
+                        , onlyIconControl: true
+                        , edit: ['add', 'del']
+                        , click: function (obj) {
+                            if (obj.data.id === 'verb-user-node-id') {
+                                layer.msg("顶级根节点不允许进行操作，请选择其他子节点操作！");
+                            } else if (obj.data.if_verb !== 1) {
+                                layer.load(2);
+                                $('#subFrameIframe').attr('src', 'reviewDetails?frame=' + obj.data.id)
+                                remainFrameId = obj.data.id
+                            } else {
+                                layer.load(2);
+                                $('#subFrameIframe').attr('src', 'reviewVerbDetails?verbId=' + obj.data.id)
+                                remainFrameId = obj.data.id
+                            }
+                        }
+                        , operate: function (obj) {
+                            var type = obj.type; //得到操作类型：add、edit、del
+                            var data = obj.data; //得到当前节点的数据
+                            var elem = obj.elem; //得到当前节点元素
+
+                            //Ajax 操作
+                            var id = data.id; //得到节点索引
+                            if (type === 'add') { //增加节点
+                                remainFrameId = obj.data.id
+                                if (obj.data.if_verb === 1) {
+                                    // (obj.data.has_verb === 0 && obj.data.children.length !== 0) || obj.data.if_verb === 1
+                                    layer.msg("存在子级Frame或为Verb，不允许添加Verb");
+                                    $('#refresh-button').trigger('click');
+                                } else {
+                                    layer.open({
+                                        content: '请选择添加的子级类型'
+                                        , btn: ['Frame', 'Verb']
+                                        , yes: function (index, layero) {
+                                            if (obj.data.if_third === 1) {
+                                                layer.msg("三级Frame不允许添加Frame");
+                                                $('#refresh-button').trigger('click');
+                                            } else if (obj.data.has_verb === 1) {
+                                                layer.msg("当前Frame下存在Verb，不允许添加Frame");
+                                                $('#refresh-button').trigger('click');
+                                            } else {
+                                                admin.req({
+                                                    method: "post",
+                                                    url: 'api/label/add!add_user_frame_manage',
+                                                    data: JSON.stringify({'PARENT_ID': obj.data.id, 'IF_THIRD': 0}),
+                                                    done: function (res) {
+                                                        layer.msg(res.msg);
+                                                        tree.reload('verbFrameTree', {data: res.data.frame});
+                                                        if (res.data.newId !== 'null') {
+                                                            $('#subFrameIframe').attr('src', 'reviewDetails?frame=' + res.data.newId)
+                                                            remainFrameId = res.data.newId
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        , btn2: function (index, layero) {
+                                            if (obj.data.has_frame === 1) {
+                                                layer.msg("当前Frame下存在Frame，不允许添加Verb");
+                                                $('#refresh-button').trigger('click');
+                                            } else {
+                                                layer.open({
+                                                    type: 2
+                                                    , title: '添加Verb--不关闭弹出框，请勿重复添加'
+                                                    , content: 'verbAddPage?frameId=' + obj.data.id
+                                                    , maxmin: true
+                                                    , area: ['500px', '300px']
+                                                    , success: function (layero, index) {
+                                                    }
+                                                    , cancel: function () {
+                                                        $('#refresh-button').trigger('click');
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        , cancel: function () {
+                                            $('#refresh-button').trigger('click');
+                                        }
+                                    });
+                                }
+                            } else if (type === 'del') { //删除节点
+                                deleteLoader = layer.load(2)
+                                if (obj.data.id === 'verb-user-node-id') {
+                                    layer.close(deleteLoader)
+                                    layer.msg("顶级根节点不允许进行操作，请选择其他子节点操作！");
+                                    $('#refresh-button').trigger('click');
+                                } else if (obj.data.if_verb !== 1) {
+                                    admin.req({
+                                        method: "post",
+                                        url: 'api/label/delete!delete_user_frame_manage',
+                                        data: JSON.stringify({'ID': obj.data.id}),
+                                        done: function (res) {
+                                            layer.close(deleteLoader)
+                                            layer.msg(res.msg);
+                                            $('#subFrameIframe').attr('src', '')
+                                            remainFrameId = ''
+                                        }
+                                    });
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: 'api/data/delete!delete_verb_by_id',
+                                        data: JSON.stringify({'ID': obj.data.id}),
+                                        done: function (res) {
+                                            layer.close(deleteLoader)
+                                            layer.msg(res.msg);
+                                            $('#subFrameIframe').attr('src', '')
+                                            remainFrameId = ''
+                                        }
+                                    });
+                                }
+                            }
+                            ;
+                        }
+                    });
+                    parent.layer.closeAll();
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-card">
+    <div class="layui-card-header">Verb文件上传，可同时上传多个，务必按照模板格式上传数据，若数据正在处理中，请勿刷新页面</div>
+    <div class="layui-card-body">
+        <div class="layui-upload">
+            <div class="layui-form-item layui-hide">
+                <input type="text" autocomplete="off"
+                       value="[[frameId]]" class="layui-input" id="frameId-remain-id">
+            </div>
+            <button type="button" class="layui-btn layui-btn-normal" id="notice-attach-upload-fileList">
+                选择多文件
+            </button>
+            <div class="layui-upload-list">
+                <table class="layui-table">
+                    <thead>
+                    <tr>
+                        <th>文件名</th>
+                        <th>大小</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="notice-attach-upload-demoList"></tbody>
+                </table>
+            </div>
+            <button type="button" class="layui-btn" id="notice-attach-upload-fileListAction">开始上传</button>
+            <button type="button" class="layui-btn" id="verb-file-upload-preprocess">开始处理</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'upload', 'element', 'layer'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , element = layui.element
+            , layer = layui.layer
+            , upload = layui.upload
+            , admin = layui.admin;
+        layer.alert('Frame文件上传，可同时上传多个，务必按照模板格式上传数据，若数据正在处理中，请勿刷新页面。注意：文件较多的情况下，建议分批导入，否则可能处理时间过长，系统引起未响应。', {
+            title: '上传须知'
+        });
+
+        var currentFileList = new Array()
+        var currentTagList = new Array()
+        //多文件列表示例
+        var demoListView = $('#notice-attach-upload-demoList')
+            , uploadListIns = upload.render({
+            elem: '#notice-attach-upload-fileList'
+            , url: 'api/preprocess/upload!multi_verb_file_upload'
+            , accept: 'file'
+            , multiple: true
+            , auto: false
+            , bindAction: '#notice-attach-upload-fileListAction'
+            , choose: function (obj) {
+                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                //读取本地文件
+                obj.preview(function (index, file, result) {
+                    var tr = $(['<tr id="upload-' + index + '">'
+                        , '<td>' + file.name + '</td>'
+                        , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
+                        , '<td>等待上传</td>'
+                        , '<td>'
+                        , '<button class="layui-btn layui-btn-mini test-upload-demo-reload layui-hide">重传</button>'
+                        , '<button class="layui-btn layui-btn-mini layui-btn-danger test-upload-demo-delete">删除</button>'
+                        , '</td>'
+                        , '</tr>'].join(''));
+
+                    //单个重传
+                    tr.find('.test-upload-demo-reload').on('click', function () {
+                        obj.upload(index, file);
+                    });
+
+                    //删除
+                    tr.find('.test-upload-demo-delete').on('click', function () {
+                        delete files[index]; //删除对应的文件
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });
+
+                    demoListView.append(tr);
+                });
+            }
+            , done: function (res, index, upload) {
+                if (res.code == 0) { //上传成功
+                    var tr = demoListView.find('tr#upload-' + index)
+                        , tds = tr.children();
+                    tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+                    tds.eq(3).html(''); //清空操作
+                    currentFileList.push(res.data.url)
+                    currentTagList.push(res.data.tagName)
+                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                }
+                this.error(index, upload);
+            }
+            , error: function (index, upload) {
+                var tr = demoListView.find('tr#upload-' + index)
+                    , tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.test-upload-demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+
+
+        $('#verb-file-upload-preprocess').on('click', function () {
+            if ($(this).hasClass(DISABLED)) return;
+            var DISABLED = 'layui-btn-disabled';
+            if (currentFileList.length === 0)
+                layer.msg("请先上传数据")
+            $('#notice-attach-upload-fileListAction').addClass(DISABLED);
+            $('#verb-file-upload-preprocess').addClass(DISABLED);
+            processLoad = layer.load(2)
+            admin.req({
+                method: "post",
+                url: 'api/preprocess/process!multi_verb_data',
+                data: JSON.stringify({
+                    "fileList": currentFileList,
+                    "tagNames": currentTagList,
+                    "frameId": $('#frameId-remain-id').val()
+                }),
+                done: function (res) {
+                    if (res.code == 0) {
+                        finishStr = ''
+                        for (var i = 0; i < res.data.finish.length; i++) {
+                            finishStr += '<tr><td>' + res.data.finish[i] + '</td><td>处理完成</td></tr>'
+                        }
+                        for (var i = 0; i < res.data.skip.length; i++) {
+                            finishStr += '<tr><td>' + res.data.skip[i]["fileName"] + '</td><td>处理失败：' + res.data.skip[i]["reason"] + '</td></tr>'
+                        }
+                        layer.open({
+                            title: '处理结果'
+                            , type: 1
+                            //,skin: 'layui-layer-rim'
+                            , shadeClose: true
+                            , area: admin.screen() < 2 ? ['80%', '300px'] : ['700px', '500px']
+                            , content: '<table class="layui-table"><colgroup><col><col></colgroup><thead><tr><th><b>文件名</b><th><b>处理结果</b></th></th></thead><tbody>' + finishStr + '</tbody></table>'
+                        });
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                    $('#notice-attach-upload-fileListAction').removeClass(DISABLED);
+                    $('#verb-file-upload-preprocess').removeClass(DISABLED);
+                    layer.close(processLoad)
+                }
+            });
+        });
+
+        parent.layer.closeAll();
+    })
+</script>
+{% endblock %}

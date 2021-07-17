@@ -1,0 +1,91 @@
+{% extends "base/basic.html" %}
+{% block title %}[[message.SITE_NAME]]{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" style="padding: 0px;background-color: #F5E9F2">
+    {% include 'public/head.html' %}
+    <div class="layui-card" style="margin-top: 40px;width: 78%;margin-left: 10%;padding: 20px">
+        <div class="layui-card-header">
+            <p style="font-family: 'Courier New'; font-size: 35px;">Search: [[searchContent]]</p>
+        </div>
+        <div class="layui-card-body">
+            <br>
+            <p style="font-family: 'Courier New'; font-size: 30px;">[["Matched Frame:" if frames else ""]]</p><br>
+            {% if frames %}
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Path</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for frame in frames %}
+                <tr>
+                    <td><a href="framesList?frameId=[[frame.ID]]" style="color: #AD5E9D">[[frame.NAME]]</a></td>
+                    <td>
+                        {% for parent in frame.parent %}
+                        <a href="framesList?frameId=[[parent.ID]]" style="color: #AD5E9D">[[parent.NAME]]</a>→
+                        {% endfor %}
+                        <a href="framesList?frameId=[[frame.ID]]" style="color: #AD5E9D">[[frame.NAME]]</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            <br>
+            <p style="font-family: 'Courier New'; font-size: 30px;">[["Matched Lexicons:" if verbs else ""]]</p><br>
+            {% if verbs %}
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Path</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for verb in verbs %}
+                <tr>
+                    <td><a href="verbsList?verbId=[[verb.ID]]" style="color: #AD5E9D">[[verb.NAME]]</a></td>
+                    <td>
+                        {% for parent in verb.parent %}
+                        <a href="verbsList?verbId=[[parent.ID]]" style="color: #AD5E9D">[[parent.NAME]]</a>→
+                        {% endfor %}
+                        <a href="verbsList?verbId=[[verb.ID]]" style="color: #AD5E9D">[[verb.NAME]]</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+    <div style="height: 15px"></div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'publicCommon'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            layer = layui.layer;
+        layer.load(2)
+
+
+        layer.closeAll();
+    });
+</script>
+{% endblock %}

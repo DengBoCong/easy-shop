@@ -1,0 +1,92 @@
+{% extends "base/basic.html" %}
+{% block title %}[[message.SITE_NAME]]{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid" style="padding: 0px;background-color: #F5E9F2">
+    {% include 'public/head.html' %}
+    <div class="layui-card" style="margin-top: 40px;width: 78%;margin-left: 10%;padding: 20px">
+        <div class="layui-card-header">
+            <span class="layui-breadcrumb" lay-filter="breadcrumb">
+                <a href="home">VerbNet</a>
+                <a><cite>Tagsets</cite></a>
+            </span>
+        </div>
+        <div class="layui-card-body">
+            <p style="font-family: 'Courier New'; font-size: 35px;">Tagsets</p>
+            <hr>
+            <a href="javascript:;" style="font-family: 'Courier New'; color: #AD5E9D; font-size: 35px;"
+               data-type="Core Frame Elements" class="layuiadmin-public-tagsets">Core Frame Elements</a>
+            <hr>
+            <a href="javascript:;" style="font-family: 'Courier New'; color: #AD5E9D; font-size: 35px;"
+               data-type="Non-core Frame Elements" class="layuiadmin-public-tagsets">Non-core Frame Elements</a>
+            <hr>
+            <a href="javascript:;" style="font-family: 'Courier New'; color: #AD5E9D; font-size: 35px;"
+               data-type="Construction Marker" class="layuiadmin-public-tagsets">Construction Marker</a>
+        </div>
+    </div>
+    <div class="layui-card" style="margin-top: 25px;width: 80%;margin-left: 10%;padding: 20px;[[ 'display: none' if count == 0 else '' ]]"
+         id="LAY-show-targets-page">
+        <div class="layui-card-header">
+            <p style="font-family: 'Courier New'; font-size: 35px;" id="tagsets-list-card-head">Tag Type:[[elementTypeName]]</p>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table" lay-skin="line">
+                <colgroup><col></colgroup>
+                <thead><tr><th><b>Tags</b></th></tr></thead>
+                <tbody id="LAY-tagsets-list-by-type">
+                {% for type in elementTypes %}
+                <tr><td><a href="javascript:;" style="color: #AD5E9D" class="layuiadmin-public-tagsets-tr" data-type-id="[[type.ID]]">[[type.NAME]]</a></td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="height: 15px"></div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'layer', 'publicCommon'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            layer = layui.layer;
+        layer.load(2)
+
+        $('.layuiadmin-public-tagsets').on('click', function () {
+            var type = $(this).data('type');
+            layer.load(2);
+            admin.req({
+                method: "get",
+                url: 'api/data/get!element_type_filter_by_type?TYPE=' + type,
+                done: function (res) {
+                    if (res.code == 0) {
+                        tdStr = ''
+                        for (var i = 0; i < res.data.length; i++) {
+                            tdStr += '<tr><td><a href="javascript:;" style="color: #AD5E9D;" class="layuiadmin-public-tagsets-tr" data-type-id="'+ res.data[i].ID +'">'+ res.data[i].NAME +'</a></td></tr>'
+                        }
+                        $('#LAY-show-targets-page').show()
+                        $('#tagsets-list-card-head').html('Tag Type:' + type)
+                        $('#LAY-tagsets-list-by-type').html(tdStr)
+
+                        $('.layuiadmin-public-tagsets-tr').on('click', function () {
+                            window.location.href="tagsetsList?typeId=" + $(this).data('type-id')
+                        });
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                    layer.closeAll();
+                }
+            });
+        });
+
+        $('.layuiadmin-public-tagsets-tr').on('click', function () {
+            window.location.href="tagsetsList?typeId=" + $(this).data('type-id')
+        });
+        layer.closeAll();
+    });
+</script>
+{% endblock %}

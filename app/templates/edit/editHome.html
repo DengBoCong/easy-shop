@@ -1,0 +1,101 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn" id="LAY-home-page-edit-submit" data-type="content">更新Home内容</button>
+                <button type="button" class="layui-btn layui-btn-primary" id="LAY-home-page-upload-image">
+                    <i class="layui-icon"></i>上传图片
+                </button>
+            </div>
+            <textarea id="LAY-edit-home-content" style="display: none"></textarea>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index', //主入口模块
+    }).use(['index', 'form', 'layer', 'tinymce', 'upload'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            form = layui.form,
+            layer = layui.layer,
+            edit_t = layui.tinymce,
+            upload = layui.upload;
+
+        edit_t.render({
+            elem: "#LAY-edit-home-content"
+            , height: 800
+            , menubar: false
+            // ...
+            // 其余配置可参考官方文档
+        }, (opt, edit) => {
+        });
+
+        admin.req({
+            method: "post",
+            url: 'api/home_page/home_page!get_home_by_type',
+            data: JSON.stringify({"type": "HOME"}),
+            done: function (res) {
+                if (res.code == 0) {
+                    $('#LAY-edit-home-content').html(unescape(res.data.CONTENT))
+                    $('#LAY-edit-home-content').show()
+                    parent.layer.closeAll();
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+
+        //注意：layedit.set 一定要放在 build 前面，否则配置全局接口将无效。
+        // layedit.set({
+        //     uploadImage: {
+        //         url: '/api/common/upload!single_image_upload' //接口url
+        //         ,type: 'post' //默认post
+        //     }
+        // });
+
+        //构建一个默认的编辑器
+        // var index = layedit.build('LAY-edit-home-content', {
+        //     height: 700,
+        //     tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right', '|', 'link', 'unlink', 'face']
+        // });
+
+
+        $('#LAY-home-page-edit-submit').on('click', function () {
+            admin.req({
+                method: "post",
+                url: 'api/home_page/home_page!update_home_page_by_type',
+                data: JSON.stringify({
+                    "TYPE": "HOME",
+                    "CONTENT": escape(edit_t.get('#LAY-edit-home-content').getContent())
+                }),
+                done: function (res) {
+                    layer.msg(res.msg);
+                }
+            });
+        });
+
+        upload.render({
+            url: '/api/common/upload!single_image_upload'
+            , elem: '#LAY-home-page-upload-image'
+            , size: 200
+            , done: function (res) {
+                if (res.code == 0) {
+                    layer.alert(res.data.url, {title: '请粘贴图片地址', icon: 1});
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+        });
+    })
+    ;
+</script>
+{% endblock %}

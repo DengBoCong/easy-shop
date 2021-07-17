@@ -1,0 +1,111 @@
+{% extends "base/basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+
+<div class="layui-card">
+    <div class="layui-card-header" style="height: 60px">
+        <div class="layui-form-item layui-hide">
+            <input type="text" name="VERB_ID" autocomplete="off" value="[[verb.ID]]" class="layui-input"
+                   id="verb-details-verb-id">
+            <input type="text" class="layui-input" id="verb-details-verb-if-click" value="[[verb.IF_FINISH]]">
+        </div>
+<!--        <button class="layui-btn" layadmin-event="verbEdit" style="margin-top: 15px;">修改Verb</button>-->
+        <!--        <button class="layui-btn" layadmin-event="verbPatternAdd" style="margin-top: 15px;">添加Pattern</button>-->
+        <button class="layui-btn btn-label-click1 [['layui-btn-disabled' if verb.IF_FINISH == '1' else '']]" layadmin-event="verbSampleBatchAdd" style="margin-top: 15px;" [['disabled' if verb.IF_FINISH == '1' else '']]>添加Sample</button>
+        <button class="layui-btn btn-label-click1 [['layui-btn-disabled' if verb.IF_FINISH == '1' else '']]" layadmin-event="verbBatchDelete" style="margin-top: 15px;" [['disabled' if verb.IF_FINISH == '1' else '']]>删除Sample</button>
+        <button class="layui-btn [['layui-btn-disabled' if verb.IF_FINISH == '1' else '']]" layadmin-event="verbFinishLabel"
+                style="margin-top: 15px;" [['disabled' if verb.IF_FINISH == '1' else '']]>[['待审核' if verb.IF_FINISH == '1' else '完成标注']]</button>
+    </div>
+    <div class="layui-card-body">
+        <input type="text" name="NAME" value="[[verb.NAME]]" required lay-verify="required" placeholder="请输入name"
+               autocomplete="off" class="layui-input" style="margin-top: 20px;" id="verb-details-edit-verb-name" disabled>
+        <input type="text" name="PIN_YIN" value="[[verb.PIN_YIN]]" required lay-verify="required"
+               placeholder="请输入pingyin" disabled
+               autocomplete="off" class="layui-input" style="margin-top: 20px;" id="verb-details-edit-verb-pinyin">
+        <input type="text" name="FREQUENCY" value="[[verb.FREQUENCY]]" required lay-verify="required"
+               placeholder="请输入frequency" disabled
+               autocomplete="off" class="layui-input" style="margin-top: 20px;" id="verb-details-edit-verb-frequency">
+        {% for pattern in verb.pattern %}
+        <fieldset class="layui-elem-field layui-field-title" id="[[pattern.ID]]">
+            <legend>
+                [[pattern.PATTERN]]
+<!--                <a class="layui-btn layui-btn-normal layui-btn-xs" layadmin-event="verbPatternEdit"-->
+<!--                   style="margin-left: 10px;"-->
+<!--                   data-patternId="[[pattern.ID]]"><i class="layui-icon layui-icon-edit"></i>修改</a>-->
+                <a class="layui-btn layui-btn-danger layui-btn-xs verb-label-delete-click" layadmin-event="verbPatternDel"
+                   data-patternId="[[pattern.ID]]" style="[['display: none' if verb.IF_FINISH == '1' else '']]">
+                    <i class="layui-icon layui-icon-delete"></i>删除</a>
+            </legend>
+            <div class="layui-field-box">
+                {% for sample in pattern.samples %}
+                <input class="label-input-click" type="checkbox" name="verbSampleCheck" [['disabled' if verb.IF_FINISH == '1' else '']] value="[[sample.ID]]" style="float:left;margin-top: 6px;">
+                <p layadmin-event="clickVerbSampleLabel" data-sampleId="[[sample.ID]]">&nbsp<b>•</b> [[sample.CONTENT]]</p>
+                {% endfor %}
+            </div>
+        </fieldset>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'verbAbout'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , admin = layui.admin;
+
+        admin.events.verbFinishLabel = function (othis) {
+            layer.open({
+                title: '提交更改',
+                content: '提交后不可修改，确认提交？'
+                , btn: ['确定']
+                , yes: function (index, layero) {
+                    admin.req({
+                        method: "post",
+                        url: 'api/data/update!verb_basic_info',
+                        data: JSON.stringify({
+                            'ID': $('#verb-details-verb-id').val(),
+                            'IF_FINISH': '1'
+                        }),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.code == 0) {
+                                window.location.reload()
+                            }
+                        }
+                    });
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+        };
+
+        admin.events.clickVerbSampleLabel = function (othis) {
+            if ($('#verb-details-verb-if-click').val() === '1') {
+            } else {
+                sampleId = othis.attr("data-sampleId")
+                verbId = $('#verb-details-verb-id').val()
+                layer.open({
+                    type: 2
+                    , title: 'Sample更新--当前输入内容只更新当前Sample'
+                    , content: 'verbPatternEditBatchPage?sampleId=' + sampleId + '&verbId=' + verbId
+                    , maxmin: true
+                    , area: ['100%', '90%']
+                    , success: function (layero, index) {
+                    }
+                });
+            }
+        };
+
+        parent.layer.closeAll();
+    })
+</script>
+{% endblock %}
