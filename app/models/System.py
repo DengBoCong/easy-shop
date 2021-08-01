@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class System(db.Model, UserMixin):
-    __tablename__ = 'VERB_SYSTEM'
+    __tablename__ = 'SHOP_SYSTEM'
 
     ID = db.Column(db.String(50), primary_key=True, nullable=False, comment="ID")
     CREATE_DATETIME = db.Column(db.DateTime, default=datetime.now(), nullable=False, comment="创建时间")

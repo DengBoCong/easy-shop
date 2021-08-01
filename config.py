@@ -35,16 +35,16 @@ class DevelopmentConfig(Config):
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    SQLALCHEMY_DATABASE_URI = "mysql://root:Andie130857@localhost:3306/verb?charset=utf8&autocommit=true"
+    SQLALCHEMY_DATABASE_URI = "mysql://root:Andie130857@localhost:3306/easyshop?charset=utf8&autocommit=true"
 
 
 class TestingConfig(Config):
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:Andie130857@localhost:3306/verb?charset=utf8&autocommit=true'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:Andie130857@localhost:3306/easyshop?charset=utf8&autocommit=true'
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:Andie130857@localhost:3306/verb?charset=utf8&autocommit=true'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:Andie130857@localhost:3306/easyshop?charset=utf8&autocommit=true'
 
 
 config = {

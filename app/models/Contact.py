@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Contact(db.Model, UserMixin):
-    __tablename__ = 'VERB_CONTACT'
+    __tablename__ = 'SHOP_CONTACT'
 
     ID = db.Column(db.String(50), primary_key=True, nullable=False, comment="ID")
     CREATE_DATETIME = db.Column(db.DateTime, index=True, default=datetime.now(), nullable=False, comment="创建时间")
