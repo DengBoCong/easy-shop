@@ -1,0 +1,202 @@
+{% extends "basic.html" %}
+{% block title %}{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+    <style>
+        #canvas {
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+        <div class="layadmin-user-login-main">
+            <div class="layadmin-user-login-box layadmin-user-login-header">
+                <p style="font-size: 21px;color: #0C0C0C">[[lang.common_login]]</p>
+            </div>
+            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-username"
+                           for="LAY-user-login-username"></label>
+                    <input type="text" name="email" id="LAY-user-login-username" lay-verify="email"
+                           placeholder="[[lang.common_account]]"
+                           class="layui-input" style="border-color: #CFCFCF;">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                           for="LAY-user-login-password"></label>
+                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="pass"
+                           placeholder="[[lang.common_password]]" class="layui-input" style="border-color: #CFCFCF;">
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode"
+                                   for="LAY-user-login-vercode"></label>
+                            <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required"
+                                   placeholder="[[lang.common_verify_code]]" class="layui-input"
+                                   style="border-color: #CFCFCF;width: 200px">
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 38px;">
+                                <canvas id="canvas" width="100" height="35"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-bottom: 20px;text-align: center">
+                    <a href="forget"
+                       style="margin-top: 7px;color: #0C0C0C;font-size: 12px;">[[lang.common_forget_pwd]]</a>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit"
+                            style="background-color: #4A4A4A;">[[lang.common_login]]
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['jquery', 'index', 'dropdown'], function () {
+            var $ = layui.$
+                , setter = layui.setter
+                , admin = layui.admin
+                , form = layui.form
+                , router = layui.router()
+                , search = router.search
+                , dropdown = layui.dropdown
+                , capcha = layui.captcha;
+
+            var show_num = [];
+            capcha.draw(show_num);
+            //显示验证码
+            $("#canvas").on('click', function () {
+                capcha.draw(show_num);
+            });
+
+            form.render();
+
+            //提交
+            form.on('submit(LAY-user-login-submit)', function (obj) {
+                var num = show_num.join("");
+                var code = obj.field["vercode"];
+                if (code != num) {
+                    layer.msg('验证码错误,请重新输入', {offset: '15px', icon: 5});
+                    return
+                }
+                //请求登入接口
+                admin.req({
+                    method: "post",
+                    url: 'api/login/verb_user!verification_login'
+                    ,
+                    data: {
+                        email: obj.field["email"],
+                        password: obj.field["password"],
+                        remember: typeof obj.field["remember"] != "undefined"
+                    }
+                    ,
+                    done: function (res) {
+                        //请求成功后，写入 access_token
+                        layui.data(setter.tableName, {
+                            key: setter.request.tokenName
+                            , value: res.data.access_token
+                        });
+
+                        //登入成功的提示与跳转
+                        layer.msg('登入成功', {
+                            offset: '15px'
+                            , icon: 1
+                            , time: 1000
+                        }, function () {
+                            location.href = 'index'; //后台主页
+                        });
+                    }
+                });
+            });
+
+            dropdown.render({
+                elem: '#shop_basic_dropdown_lang' //可绑定在任意元素中，此处以上述按钮为例
+                , data: [{
+                    title: '中'
+                    , href: '/zh_cn/login'
+                }, {
+                    title: 'EN'
+                    , href: '/en_us/login' //开启超链接
+                }]
+                , id: 'demo1'
+                , trigger: "hover"
+            });
+        });
+
+        // 图形验证码渲染
+        layui.define(function (e) {
+            var obj = {
+                randomColor: function () {//得到随机的颜色值
+                    var r = Math.floor(Math.random() * 256);
+                    var g = Math.floor(Math.random() * 256);
+                    var b = Math.floor(Math.random() * 256);
+                    return "rgb(" + r + "," + g + "," + b + ")";
+                },
+                draw: function (show_num) {
+                    var canvas_width = layui.jquery('#canvas').width();
+                    var canvas_height = layui.jquery('#canvas').height();
+                    var canvas = document.getElementById("canvas");//获取到canvas的对象，演员
+                    var context = canvas.getContext("2d");//获取到canvas画图的环境，演员表演的舞台
+                    canvas.width = canvas_width;
+                    canvas.height = canvas_height;
+                    var sCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+                    var aCode = sCode.split(",");
+                    var aLength = aCode.length;//获取到数组的长度
+
+                    for (var i = 0; i <= 3; i++) {
+                        var j = Math.floor(Math.random() * aLength);//获取到随机的索引值
+                        var deg = Math.random() * 30 * Math.PI / 180;//产生0~30之间的随机弧度
+                        var txt = aCode[j];//得到随机的一个内容
+                        show_num[i] = txt.toLowerCase();
+                        var x = 10 + i * 20;//文字在canvas上的x坐标
+                        var y = 20 + Math.random() * 8;//文字在canvas上的y坐标
+                        context.font = "bold 23px 微软雅黑";
+
+                        context.translate(x, y);
+                        context.rotate(deg);
+
+                        context.fillStyle = obj.randomColor();
+                        context.fillText(txt, 0, 0);
+
+                        context.rotate(-deg);
+                        context.translate(-x, -y);
+                    }
+                    for (var i = 0; i <= 5; i++) { //验证码上显示线条
+                        context.strokeStyle = obj.randomColor();
+                        context.beginPath();
+                        context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);
+                        context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);
+                        context.stroke();
+                    }
+                    for (var i = 0; i <= 30; i++) { //验证码上显示小点
+                        context.strokeStyle = obj.randomColor();
+                        context.beginPath();
+                        var x = Math.random() * canvas_width;
+                        var y = Math.random() * canvas_height;
+                        context.moveTo(x, y);
+                        context.lineTo(x + 1, y + 1);
+                        context.stroke();
+                    }
+                },
+            };
+            e("captcha", obj);
+        });
+    </script>
+{% endblock %}

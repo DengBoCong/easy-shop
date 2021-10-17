@@ -1,7 +1,7 @@
 import uuid
 from . import controllers
 from .. import db
-from ..models import User, OnLine, SystemLog
+from ..models import User
 from datetime import datetime, timedelta
 from ..setting import COOKIE_DURATION_DAYS
 from flask import request

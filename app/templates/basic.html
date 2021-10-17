@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="[[ url_for('static', filename='img/favicon.ico') ]]" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="[[url_for('static', filename='layui/css/layui.css')]]" type="text/css" media="all">
+    <link rel="stylesheet" href="[[url_for('static', filename='style/admin.css')]]" type="text/css" media="all">
+    {% block css %}{% endblock %}
+    <style>
+        @font-face {
+            font-family: 'NotoSansCJK-Bold';
+            src: url("../static/font/NotoSansCJK-Bold.otf");
+        }
+
+        .self-nav ul {
+            list-style-type: none;
+            line-height: 5em;
+
+        }
+
+        .self-nav ul li {
+            display: inline;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        .self-nav a {
+            text-decoration: none;
+        }
+
+        .self-nav a:hover {
+            text-decoration: underline
+        }
+    </style>
+</head>
+<body style="font-family: NotoSansCJK-Bold;width: 1440px;margin:0 auto;">
+<div class="layui-header self-nav">
+    <ul>
+        <li><a href="#">[[lang.header_nav_men]]</a></li>
+        <li><a href="#">[[lang.header_nav_women]]</a></li>
+        <li><a href="#">[[lang.header_nav_kids]]</a></li>
+        <li><a href="#">[[lang.header_nav_everything_else]]</a></li>
+        <li><a href="#">[[lang.header_nav_search]]</a></li>
+        <li style="[[lang.company_name_margin_left]]">[[lang.company_name]]</li>
+    </ul>
+    <ul class="layui-layout-right">
+{#        <li><a href="/en_us/login">[[lang.header_nav_lang]]</a></li>#}
+        <li id="shop_basic_dropdown_lang"><a href="javascript;">[[lang.header_nav_lang]]</a></li>
+        <li><a href="#">[[lang.common_login]]</a></li>
+        <li><a href="#">[[lang.header_nav_wishlist]]</a></li>
+        <li><a href="#">[[lang.header_nav_shopping_bag]]</a></li>
+        <li><a href="#">[[lang.header_nav_sample_bag]]</a></li>
+    </ul>
+</div>
+{% block content %}{% endblock %}
+<div class="layadmin-user-login-footer">
+    <div class="layui-header self-nav">
+        <ul>
+            <li><a href="#">[[lang.common_about_us]]</a></li>
+            <li><a href="#">[[lang.common_contact_us]]</a></li>
+            <li><a href="#">[[lang.common_copyright]]</a></li>
+        </ul>
+    </div>
+</div>
+<script src="[[url_for('static', filename='layui/layui.js')]]"></script>
+
+{% block js %}{% endblock %}
+</body>
+</html>
