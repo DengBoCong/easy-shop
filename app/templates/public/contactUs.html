@@ -1,0 +1,37 @@
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                <p style="margin-top: 20px;font-size: 16px;">联系我们</p>
+                <p style="margin-top: 15px;font-size: 16px;">深圳市华虹进出口贸易有限公司</p>
+                <p style="margin-top: 15px;font-size: 16px;">深圳市南山区东滨路4269号</p>
+                <p style="margin-top: 3px;font-size: 16px;">中泰天成南山主角大厦14楼</p>
+                <p style="margin-top: 15px;font-size: 16px;">电话：86-755-26520270</p>
+                <p style="margin-top: 3px;font-size: 16px;">传真：86-755-26520160</p>
+            </div>
+            <div class="layui-col-md6">
+                <img src=""/>
+            </div>
+            <div class="layui-col-md3"></div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer', 'publicCommon'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
+        });
+    </script>
+{% endblock %}

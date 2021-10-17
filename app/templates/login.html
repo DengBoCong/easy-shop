@@ -1,5 +1,5 @@
 {% extends "basic.html" %}
-{% block title %}{% endblock %}
+{% block title %}[[lang.company_name]]{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
     <style>
@@ -12,9 +12,8 @@
     </style>
 {% endblock %}
 {% block content %}
-
-    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
-        <div class="layadmin-user-login-main">
+    <div class="layui-fluid">
+        <div class="layadmin-user-login-main" style="margin-top: 150px;">
             <div class="layadmin-user-login-box layadmin-user-login-header">
                 <p style="font-size: 21px;color: #0C0C0C">[[lang.common_login]]</p>
             </div>
@@ -59,8 +58,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 {% endblock %}
 {% block js %}
@@ -69,7 +66,7 @@
             base: '../static/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['jquery', 'index', 'dropdown'], function () {
+        }).use(['jquery', 'index', 'dropdown', 'publicCommon'], function () {
             var $ = layui.$
                 , setter = layui.setter
                 , admin = layui.admin
@@ -124,19 +121,6 @@
                         });
                     }
                 });
-            });
-
-            dropdown.render({
-                elem: '#shop_basic_dropdown_lang' //可绑定在任意元素中，此处以上述按钮为例
-                , data: [{
-                    title: '中'
-                    , href: '/zh_cn/login'
-                }, {
-                    title: 'EN'
-                    , href: '/en_us/login' //开启超链接
-                }]
-                , id: 'demo1'
-                , trigger: "hover"
             });
         });
 

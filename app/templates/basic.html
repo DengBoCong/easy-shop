@@ -41,34 +41,135 @@
 <body style="font-family: NotoSansCJK-Bold;width: 1440px;margin:0 auto;">
 <div class="layui-header self-nav">
     <ul>
-        <li><a href="#">[[lang.header_nav_men]]</a></li>
-        <li><a href="#">[[lang.header_nav_women]]</a></li>
-        <li><a href="#">[[lang.header_nav_kids]]</a></li>
-        <li><a href="#">[[lang.header_nav_everything_else]]</a></li>
+        <li id="shop_basic_dropdown_men" style="margin-left: 0px;"><a href="/[[lang_type]]/men">[[lang.header_nav_men]]</a></li>
+        <li id="shop_basic_dropdown_women"><a href="/[[lang_type]]/women">[[lang.header_nav_women]]</a></li>
+        <li id="shop_basic_dropdown_kids"><a href="/[[lang_type]]/kids">[[lang.header_nav_kids]]</a></li>
+        <li id="shop_basic_dropdown_others"><a href="/[[lang_type]]/others">[[lang.header_nav_everything_else]]</a></li>
         <li><a href="#">[[lang.header_nav_search]]</a></li>
         <li style="[[lang.company_name_margin_left]]">[[lang.company_name]]</li>
     </ul>
     <ul class="layui-layout-right">
-{#        <li><a href="/en_us/login">[[lang.header_nav_lang]]</a></li>#}
-        <li id="shop_basic_dropdown_lang"><a href="javascript;">[[lang.header_nav_lang]]</a></li>
-        <li><a href="#">[[lang.common_login]]</a></li>
+        <li id="shop_basic_dropdown_lang" style="margin-left: 0px;">
+            <a href="javascript:;">[[lang.header_nav_lang]]</a>
+        </li>
+        <li id="shop_basic_dropdown_login"><a href="/[[lang_type]]/login">[[lang.common_login]]</a></li>
         <li><a href="#">[[lang.header_nav_wishlist]]</a></li>
         <li><a href="#">[[lang.header_nav_shopping_bag]]</a></li>
         <li><a href="#">[[lang.header_nav_sample_bag]]</a></li>
     </ul>
 </div>
 {% block content %}{% endblock %}
-<div class="layadmin-user-login-footer">
-    <div class="layui-header self-nav">
-        <ul>
-            <li><a href="#">[[lang.common_about_us]]</a></li>
-            <li><a href="#">[[lang.common_contact_us]]</a></li>
-            <li><a href="#">[[lang.common_copyright]]</a></li>
-        </ul>
-    </div>
+<div class="layer-footer self-nav"
+     style="position: fixed; bottom: 0;width: 1440px;height: 70px;line-height: 70px;text-align: center;">
+    <ul>
+        <li style="margin-left: 0px;"><a href="/[[lang_type]]/aboutUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_about_us]]</a>
+        </li>
+        <li><a href="/[[lang_type]]/contactUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_contact_us]]</a>
+        </li>
+        <li style="color: #0C0C0C;font-size: 12px;">[[lang.common_copyright]]</li>
+    </ul>
 </div>
 <script src="[[url_for('static', filename='layui/layui.js')]]"></script>
 
 {% block js %}{% endblock %}
+<script>
+    layui.config({
+        base: '../static/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['jquery', 'index', 'dropdown'], function () {
+        var $ = layui.$
+            , dropdown = layui.dropdown;
+        dropdown.render({
+            elem: '#shop_basic_dropdown_lang' //可绑定在任意元素中，此处以上述按钮为例
+            , data: [{
+                title: '中'
+                , href: '/zh_cn/[[route]]'
+            }, {
+                title: 'EN'
+                , href: '/en_us/[[route]]'
+            }]
+            , trigger: "hover"
+        });
+
+        dropdown.render({
+            elem: '#shop_basic_dropdown_login'
+            , data: [{
+                title: '[[lang.common_account_detail]]'
+                , href: '/[[lang_type]]/accountDetail'
+            }, {
+                title: '[[lang.common_historical_purchase]]'
+                , href: '/[[lang_type]]/historicalPurchase'
+            }, {
+                title: '[[lang.common_historical_sample]]'
+                , href: '/[[lang_type]]/historicalSample'
+            }, {
+                title: '[[lang.common_logout]]'
+                , href: '/[[lang_type]]/logout'
+            }]
+            , trigger: "hover"
+        });
+
+        dropdown.render({
+            elem: '#shop_basic_dropdown_men'
+            , data: [{
+                title: '[[lang.common_sample]]'
+                , href: '/[[lang_type]]/commonSample/men'
+            }, {
+                title: '[[lang.common_design_diagrams]]'
+                , href: '/[[lang_type]]/designDiagrams/men'
+            }, {
+                title: '[[lang.common_reference_diagrams]]'
+                , href: '/[[lang_type]]/referenceDiagrams/men'
+            }]
+            , trigger: "hover"
+        });
+
+        dropdown.render({
+            elem: '#shop_basic_dropdown_women'
+            , data: [{
+                title: '[[lang.common_sample]]'
+                , href: '/[[lang_type]]/commonSample/women'
+            }, {
+                title: '[[lang.common_design_diagrams]]'
+                , href: '/[[lang_type]]/designDiagrams/women'
+            }, {
+                title: '[[lang.common_reference_diagrams]]'
+                , href: '/[[lang_type]]/referenceDiagrams/women'
+            }]
+            , trigger: "hover"
+        });
+
+        dropdown.render({
+            elem: '#shop_basic_dropdown_kids'
+            , data: [{
+                title: '[[lang.common_sample]]'
+                , href: '/[[lang_type]]/commonSample/women'
+            }, {
+                title: '[[lang.common_design_diagrams]]'
+                , href: '/[[lang_type]]/designDiagrams/women'
+            }, {
+                title: '[[lang.common_reference_diagrams]]'
+                , href: '/[[lang_type]]/referenceDiagrams/women'
+            }]
+            , trigger: "hover"
+        });
+
+        dropdown.render({
+            elem: '#shop_basic_dropdown_others'
+            , data: [{
+                title: '[[lang.common_sample]]'
+                , href: '/[[lang_type]]/commonSample/others'
+            }, {
+                title: '[[lang.common_design_diagrams]]'
+                , href: '/[[lang_type]]/designDiagrams/others'
+            }, {
+                title: '[[lang.common_reference_diagrams]]'
+                , href: '/[[lang_type]]/referenceDiagrams/others'
+            }]
+            , trigger: "hover"
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,37 @@
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                <p style="margin-top: 20px;font-size: 16px;">关于我们</p>
+                <p style="margin-top: 15px;font-size: 16px;">公司成立于2000年3月成立，是一家专门从事鞋类、箱包类、纺织类的出口型贸易公司。公司地址位于深圳南山。</p>
+                <p style="margin-top: 15px;font-size: 16px;">公司拥有众多的合作工厂。并有极佳的销售平台。自主研发的多种鞋类款式，产品远销亚洲、欧洲、南北美洲，并得到广泛的赞誉与喜爱。二十多年在鞋类和箱包上的用心，华虹公司出口业务量领先于同类型的贸易公司，设计和质量都有保证。出口额在深圳南山区名列前茅。华虹公司是多年来海关认定的A类企业。</p>
+                <p style="margin-top: 15px;font-size: 16px;">公司非常注重知识产权的保护，注册拥有各类自有商标品牌20种，均已通过国家知识产权局认定。</p>
+                <p style="margin-top: 15px;font-size: 16px;">在百年不遇的疫情中，华虹公司为湖北多家医院奉献爱心，希望能为社会排忧解难，为国家与人民生活发展贡献一份微薄之力。今后也将会力所能及地在慈善方面做尽最大的努力。</p>
+                <p style="margin-top: 15px;font-size: 16px;">我公司全体员工本着以信誉求发展。努力使公司销售网络遍部全世界，争取涉足更宽广的地方。让世界上更多人能看到高质量的中国制造。</p>
+            </div>
+            <div class="layui-col-md6">
+                <img src=""/>
+            </div>
+            <div class="layui-col-md3"></div>
+        </div>
+
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer', 'publicCommon'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
+        });
+    </script>
+{% endblock %}
