@@ -14,7 +14,11 @@
     <style>
         @font-face {
             font-family: 'NotoSansCJK-Bold';
-            src: url("../static/font/NotoSansCJK-Bold.otf");
+            src: url([[ url_for('static', filename='font/NotoSansCJK-Bold.otf') ]]);
+        }
+        @font-face {
+            font-family: 'NotoSansCJK-Medium';
+            src: url([[ url_for('static', filename='font/NotoSansCJK-Medium.otf') ]]);
         }
 
         .self-nav ul {
@@ -59,6 +63,8 @@
     </ul>
 </div>
 {% block content %}{% endblock %}
+<script src="[[url_for('static', filename='layui/layui.js', external=True)]]"></script>
+
 <div style="height: 100px;"></div>
 <div class="layer-footer self-nav"
      style="position: fixed; bottom: 0;width: 1440px;height: 60px;line-height: 60px;text-align: center;background-color: #F2F2F2">
@@ -70,14 +76,13 @@
         <li style="color: #0C0C0C;font-size: 12px;">[[lang.common_copyright]]</li>
     </ul>
 </div>
-<script src="[[url_for('static', filename='layui/layui.js')]]"></script>
 
 {% block js %}{% endblock %}
 <script>
     layui.config({
         base: '../static/' //静态资源所在路径
     }).extend({
-        index: 'lib/index' //主入口模块
+        {#index: 'lib/index' //主入口模块#}
     }).use(['jquery', 'index', 'dropdown'], function () {
         var $ = layui.$
             , dropdown = layui.dropdown;
@@ -115,13 +120,13 @@
             elem: '#shop_basic_dropdown_men'
             , data: [{
                 title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]/commonSample/men'
+                , href: '/[[lang_type]]-men/commonSample'
             }, {
                 title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]/designDiagrams/men'
+                , href: '/[[lang_type]]-men/designDiagrams'
             }, {
                 title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]/referenceDiagrams/men'
+                , href: '/[[lang_type]]-men/referenceDiagrams'
             }]
             , trigger: "hover"
         });
@@ -130,13 +135,13 @@
             elem: '#shop_basic_dropdown_women'
             , data: [{
                 title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]/commonSample/women'
+                , href: '/[[lang_type]]-women/commonSample'
             }, {
                 title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]/designDiagrams/women'
+                , href: '/[[lang_type]]-women/designDiagrams'
             }, {
                 title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]/referenceDiagrams/women'
+                , href: '/[[lang_type]]-women/referenceDiagrams'
             }]
             , trigger: "hover"
         });
@@ -145,13 +150,13 @@
             elem: '#shop_basic_dropdown_kids'
             , data: [{
                 title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]/commonSample/women'
+                , href: '/[[lang_type]]-kids/commonSample'
             }, {
                 title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]/designDiagrams/women'
+                , href: '/[[lang_type]]-kids/designDiagrams'
             }, {
                 title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]/referenceDiagrams/women'
+                , href: '/[[lang_type]]-kids/referenceDiagrams'
             }]
             , trigger: "hover"
         });
@@ -160,13 +165,13 @@
             elem: '#shop_basic_dropdown_others'
             , data: [{
                 title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]/commonSample/others'
+                , href: '/[[lang_type]]-others/commonSample'
             }, {
                 title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]/designDiagrams/others'
+                , href: '/[[lang_type]]-others/designDiagrams'
             }, {
                 title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]/referenceDiagrams/others'
+                , href: '/[[lang_type]]-others/referenceDiagrams'
             }]
             , trigger: "hover"
         });

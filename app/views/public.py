@@ -40,25 +40,31 @@ def contact_us(lang_type):
     return render_template("public/contactUs.html", lang=lang[lang_type], lang_type=lang_type, route="contactUs")
 
 
-@views.route('/<lang_type>/commonSample/<sub_page>', methods=['GET', 'POST'])
-def sample(lang_type, sub_page):
+@views.route('/<lang_type>/commonSample', methods=['GET', 'POST'])
+def sample(lang_type):
     """ 样品页"""
+    lang_type, sub_page = lang_type.split("-")
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="login")
-    return render_template("public/sample.html", lang=lang[lang_type], lang_type=lang_type, route=sub_page)
+    return render_template("public/sample.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="commonSample")
 
 
-@views.route('/<lang_type>/designDiagrams/<sub_page>', methods=['GET', 'POST'])
+@views.route('/<lang_type>/designDiagrams', methods=['GET', 'POST'])
 def design_diagrams(lang_type, sub_page):
     """ 设计图页"""
+    lang_type, sub_page = lang_type.split("-")
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="login")
-    return render_template("public/designDiagrams.html", lang=lang[lang_type], lang_type=lang_type, route=sub_page)
+    return render_template("public/designDiagrams.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="designDiagrams")
 
 
-@views.route('/<lang_type>/referenceDiagrams/<sub_page>', methods=['GET', 'POST'])
+@views.route('/<lang_type>/referenceDiagrams', methods=['GET', 'POST'])
 def reference_diagrams(lang_type, sub_page):
     """ 参考图页"""
+    lang_type, sub_page = lang_type.split("-")
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="login")
-    return render_template("public/referenceDiagrams.html", lang=lang[lang_type], lang_type=lang_type, route=sub_page)
+    return render_template("public/referenceDiagrams.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="referenceDiagrams")

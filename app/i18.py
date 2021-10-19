@@ -21,6 +21,13 @@ lang = {
         "common_design_diagrams": "设计图",
         "common_reference_diagrams": "参考图",
         "common_new_arrivals": "当季新品",
+        "common_all_categories": "总类别",
+        "common_all_products": "全部产品",
+        "common_sort": "排序",
+        "common_latest_arrivals": "最新上架",
+        "common_trending": "人气潮品",
+        "common_price_low_high": "价格：从低到高",
+        "common_price_high_low": "价格：从高到低",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -42,7 +49,23 @@ lang = {
         "contact_us_second": "深圳市南山区东滨路4269号",
         "contact_us_third": "中泰天成南山主角大厦14楼",
         "contact_us_forth": "电话：86-755-26520270",
-        "contact_us_fifth": "传真：86-755-26520160"
+        "contact_us_fifth": "传真：86-755-26520160",
+
+        "products_categories_shoes": "鞋履",
+        "products_categories_bags": "包袋",
+        "products_categories_accessories": "配饰",
+
+        "color_all_colors": "全部颜色",
+        "color_brown": "棕色",
+        "color_blue": "蓝色",
+        "color_gray": "灰色",
+        "color_white": "白色",
+        "color_pink": "粉色",
+        "color_purple": "紫色",
+        "color_red": "红色",
+        "color_green": "绿色",
+        "color_yellow": "黄色",
+        "color_black": "黑色"
     },
 
     "en_us": {
@@ -67,6 +90,13 @@ lang = {
         "common_design_diagrams": "DESIGNS",
         "common_reference_diagrams": "REFERENCES",
         "common_new_arrivals": "NEW ARRIVALS",
+        "common_all_categories": "ALL CATEGORIES",
+        "common_all_products": "ALL PRODUCTS",
+        "common_sort": "SORT",
+        "common_latest_arrivals": "Latest arrivals",
+        "common_trending": "Trending",
+        "common_price_low_high": "Price: Low-High",
+        "common_price_high_low": "Price: High-Low",
 
         "header_nav_men": "MEN",
         "header_nav_women": "WOMEN",
@@ -88,6 +118,22 @@ lang = {
         "contact_us_second": "14Th/Fl. Nanshangzhujiao Bld., No.4269,DongBing",
         "contact_us_third": "Road, Nanshan.Shenzhen,China.",
         "contact_us_forth": "Tel: 86-755-26520270",
-        "contact_us_fifth": "Fax: 86-755-26520160"
+        "contact_us_fifth": "Fax: 86-755-26520160",
+
+        "products_categories_shoes": "SHOES",
+        "products_categories_bags": "BAGS",
+        "products_categories_accessories": "ACCESSORIES",
+
+        "color_all_colors": "ALL COLORS",
+        "color_brown": "Brown",
+        "color_blue": "Blue",
+        "color_gray": "Gray",
+        "color_white": "White",
+        "color_pink": "Pink",
+        "color_purple": "Purple",
+        "color_red": "Red",
+        "color_green": "Green",
+        "color_yellow": "Yellow",
+        "color_black": "Black"
     }
 }

@@ -1,10 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-md2">
+                <p>[[lang.common_all_categories]]</p>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li><a href="javascript:;">[[lang.common_sample]]</a></li>
+                    <li><a href="javascript:;">[[lang.common_design_diagrams]]</a></li>
+                    <li><a href="javascript:;">[[lang.common_reference_diagrams]]</a></li>
+                </ul>
+                <div style="margin-top: 50px;"><p>[[lang.common_all_products]]</p></div>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li><a href="javascript:;">[[lang.products_categories_shoes]]</a></li>
+                    <li><a href="javascript:;">[[lang.products_categories_bags]]</a></li>
+                    <li><a href="javascript:;">[[lang.products_categories_accessories]]</a></li>
+                </ul>
+            </div>
+            <div class="layui-col-md8">
+                <div class="layui-row layui-col-space20">
+                    <div class="layui-col-md3">
+                        <img src="[[url_for('static', filename='img/background.png')]]" width="100%" height="320px"/>
+                        <p style="font-size: 13px;margin-top: 10px;">JW ANDERSON</p>
+                        <p style="font-size: 13px;">棕色外套</p>
+                        <p style="font-size: 13px;">¥30 - ¥50</p>
+                    </div>
+                    <div class="layui-col-md3">
+                        <img src="[[url_for('static', filename='img/background.png')]]" width="100%" height="320px"/>
+                    </div>
+                    <div class="layui-col-md3">
+                        <img src="[[url_for('static', filename='img/background.png')]]" width="100%" height="320px"/>
+                    </div>
+                    <div class="layui-col-md3">
+                        <img src="[[url_for('static', filename='img/background.png')]]" width="100%" height="320px"/>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md1"></div>
+            <div class="layui-col-md1">
+                <p>[[lang.common_sort]]</p>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li><a href="javascript:;">[[lang.common_latest_arrivals]]</a></li>
+                    <li><a href="javascript:;">[[lang.common_trending]]</a></li>
+                    <li><a href="javascript:;">[[lang.common_price_low_high]]</a></li>
+                    <li><a href="javascript:;">[[lang.common_price_high_low]]</a></li>
+                </ul>
+                <div style="margin-top: 50px;"><p>[[lang.color_all_colors]]</p></div>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li><a href="javascript:;">[[lang.color_brown]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_blue]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_gray]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_white]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_pink]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_purple]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_red]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_green]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_yellow]]</a></li>
+                    <li><a href="javascript:;">[[lang.color_black]]</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
+        });
+    </script>
+{% endblock %}
