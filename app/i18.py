@@ -6,7 +6,9 @@ lang = {
         "common_login": "登陆",
         "common_forget_pwd": "忘记密码?",
         "common_about_us": "关于我们",
+        "common_about_us_up": "关于我们",
         "common_contact_us": "联系我们",
+        "common_contact_us_up": "联系我们",
         "common_copyright": "© 2021 huahong.com",
         "common_account": "账号",
         "common_password": "密码",
@@ -15,9 +17,10 @@ lang = {
         "common_historical_purchase": "历史购买",
         "common_historical_sample": "历史打样",
         "common_logout": "登出",
-        "common_sample": "样本",
+        "common_sample": "样品",
         "common_design_diagrams": "设计图",
         "common_reference_diagrams": "参考图",
+        "common_new_arrivals": "当季新品",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -27,7 +30,19 @@ lang = {
         "header_nav_lang": "中",
         "header_nav_wishlist": "愿望清单",
         "header_nav_shopping_bag": "购物袋",
-        "header_nav_sample_bag": "打样袋"
+        "header_nav_sample_bag": "打样袋",
+
+        "about_us_first": "公司成立于2000年3月成立，是一家专门从事鞋类、箱包类、纺织类的出口型贸易公司。公司地址位于深圳南山。",
+        "about_us_second": "公司拥有众多的合作工厂。并有极佳的销售平台。自主研发的多种鞋类款式，产品远销亚洲、欧洲、南北美洲，并得到广泛的赞誉与喜爱。二十多年在鞋类和箱包上的用心，华虹公司出口业务量领先于同类型的贸易公司，设计和质量都有保证。出口额在深圳南山区名列前茅。华虹公司是多年来海关认定的A类企业。",
+        "about_us_third": "公司非常注重知识产权的保护，注册拥有各类自有商标品牌20种，均已通过国家知识产权局认定。",
+        "about_us_forth": "在百年不遇的疫情中，华虹公司为湖北多家医院奉献爱心，希望能为社会排忧解难，为国家与人民生活发展贡献一份微薄之力。今后也将会力所能及地在慈善方面做尽最大的努力。",
+        "about_us_fifth": "我公司全体员工本着以信誉求发展。努力使公司销售网络遍部全世界，争取涉足更宽广的地方。让世界上更多人能看到高质量的中国制造。",
+
+        "contact_us_first": "深圳市华虹进出口贸易有限公司",
+        "contact_us_second": "深圳市南山区东滨路4269号",
+        "contact_us_third": "中泰天成南山主角大厦14楼",
+        "contact_us_forth": "电话：86-755-26520270",
+        "contact_us_fifth": "传真：86-755-26520160"
     },
 
     "en_us": {
@@ -35,20 +50,23 @@ lang = {
         "company_name_margin_left": "font-size: 21px;margin-left: 238px;",
 
         "common_login": "LOG IN",
-        "common_forget_pwd": "Forget Password?",
+        "common_forget_pwd": "Forget Password ?",
         "common_about_us": "About Us",
+        "common_about_us_up": "ABOUT US",
         "common_contact_us": "Contact Us",
+        "common_contact_us_up": "CONTACT US",
         "common_copyright": "© 2021 huahong.com",
         "common_account": "Account",
         "common_password": "Password",
         "common_verify_code": "Verify Code",
-        "common_account_detail": "Account Detail",
-        "common_historical_purchase": "Historical Purchase",
-        "common_historical_sample": "Historical Sample",
-        "common_logout": "Logout",
-        "common_sample": "Sample",
-        "common_design_diagrams": "Design Diagrams",
-        "common_reference_diagrams": "Reference Diagrams",
+        "common_account_detail": "ACCOUNT",
+        "common_historical_purchase": "HISTORICAL PURCHASE",
+        "common_historical_sample": "HISTORICAL SAMPLE",
+        "common_logout": "LOGOUT",
+        "common_sample": "SAMPLES",
+        "common_design_diagrams": "DESIGNS",
+        "common_reference_diagrams": "REFERENCES",
+        "common_new_arrivals": "NEW ARRIVALS",
 
         "header_nav_men": "MEN",
         "header_nav_women": "WOMEN",
@@ -58,6 +76,18 @@ lang = {
         "header_nav_lang": "EN",
         "header_nav_wishlist": "WISHLIST",
         "header_nav_shopping_bag": "SHOPPING BAG",
-        "header_nav_sample_bag": "SAMPLE BAG"
+        "header_nav_sample_bag": "SAMPLE BAG",
+
+        "about_us_first": "Shenzhen Huahong Import & Export Trade Company was founded in 2000 by Alice Wu. It is located in Nanshan, Shenzhen, China. Raised in an environment of the Chinese trading industry, Alice’s attraction to fashion accessories started at an early age. The company is specialized in exporting trade of shoes, bags and textiles.",
+        "about_us_second": "Huahong has established long term cooperation with many qualified factories and excellent sales platforms. Huahong has its own design team to support customers with various needs, who much effort in designing and crafting. A variety of self-developed footwear styles are exported to Asia, Europe, North and South America and enjoy great popularity and praise.",
+        "about_us_third": "With more than 20 years of dedication in shoes and bags, Huahong is ahead of other trading companies in export business volume. The design and quality are put into priority. Now this company is a class-A entreprise which has been recognized by Chinese customers.",
+        "about_us_forth": "The company put great emphasize on protecting intellectual property rights. It has registered 20 kinds of its own trademark brands, which have all been recignized by the Staet Intellectual Property Office. ",
+        "about_us_fifth": "In the unprecedented epidemic, Huahong Company has made donation to many hospitals in Hubei Province, hoping to solve the problems of society and contribute a modest contribution to the development of the country and people’s life. The company will continue to do our best in charity in the future. All employees of our company strive to expand the company’s sales network all over the world in line with the credibility of development. We look forward to expanding this high-quality China-made product known by people all over the world.",
+
+        "contact_us_first": "Shenzhen HuaHong Import&Export Co.,Ltd.",
+        "contact_us_second": "14Th/Fl. Nanshangzhujiao Bld., No.4269,DongBing",
+        "contact_us_third": "Road, Nanshan.Shenzhen,China.",
+        "contact_us_forth": "Tel: 86-755-26520270",
+        "contact_us_fifth": "Fax: 86-755-26520160"
     }
 }
