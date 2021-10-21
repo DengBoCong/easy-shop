@@ -8,16 +8,24 @@
         <div class="layui-row layui-col-space20">
             <div class="layui-col-md2">
                 <p>[[lang.common_all_categories]]</p>
-                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li><a href="javascript:;">[[lang.common_sample]]</a></li>
-                    <li><a href="javascript:;">[[lang.common_design_diagrams]]</a></li>
-                    <li><a href="javascript:;">[[lang.common_reference_diagrams]]</a></li>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';font-size: 12px;">
+                    <li style="[['text-decoration: underline;' if addition.categories=='sample' else '']]">
+                        <a href="javascript:;">[[lang.common_sample]]</a>
+                    </li>
+                    <li><a href="/[[lang_type]]-men/designDiagrams">[[lang.common_design_diagrams]]</a></li>
+                    <li><a href="/[[lang_type]]-men/referenceDiagrams">[[lang.common_reference_diagrams]]</a></li>
                 </ul>
                 <div style="margin-top: 50px;"><p>[[lang.common_all_products]]</p></div>
-                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li><a href="javascript:;">[[lang.products_categories_shoes]]</a></li>
-                    <li><a href="javascript:;">[[lang.products_categories_bags]]</a></li>
-                    <li><a href="javascript:;">[[lang.products_categories_accessories]]</a></li>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';font-size: 12px;">
+                    <li style="[['text-decoration: underline;' if addition.products=='shoes' else '']]">
+                        <a href="[['javascript:;' if addition.products=='shoes' else '/' + lang_type + '-men/commonSample?products=shoes']]">[[lang.products_categories_shoes]]</a>
+                    </li>
+                    <li style="[['text-decoration: underline;' if addition.products=='bags' else '']]">
+                        <a href="[['javascript:;' if addition.products=='bags' else '/' + lang_type + '-men/commonSample?products=bags']]">[[lang.products_categories_bags]]</a>
+                    </li>
+                    <li style="[['text-decoration: underline;' if addition.products=='accessories' else '']]">
+                        <a href="[['javascript:;' if addition.products=='accessories' else '/' + lang_type + '-men/commonSample?products=accessories']]">[[lang.products_categories_accessories]]</a>
+                    </li>
                 </ul>
             </div>
             <div class="layui-col-md8">
@@ -42,14 +50,22 @@
             <div class="layui-col-md1"></div>
             <div class="layui-col-md1">
                 <p>[[lang.common_sort]]</p>
-                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li><a href="javascript:;">[[lang.common_latest_arrivals]]</a></li>
-                    <li><a href="javascript:;">[[lang.common_trending]]</a></li>
-                    <li><a href="javascript:;">[[lang.common_price_low_high]]</a></li>
-                    <li><a href="javascript:;">[[lang.common_price_high_low]]</a></li>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';font-size: 12px;">
+                    <li style="[['text-decoration: underline;' if addition.sort=='latestArrivals' else '']]">
+                        <a href="javascript:;">[[lang.common_latest_arrivals]]</a>
+                    </li>
+                    <li style="[['text-decoration: underline;' if addition.sort=='trending' else '']]">
+                        <a href="javascript:;">[[lang.common_trending]]</a>
+                    </li>
+                    <li style="[['text-decoration: underline;' if addition.sort=='lowHigh' else '']]">
+                        <a href="javascript:;">[[lang.common_price_low_high]]</a>
+                    </li>
+                    <li style="[['text-decoration: underline;' if addition.sort=='highLow' else '']]">
+                        <a href="javascript:;">[[lang.common_price_high_low]]</a>
+                    </li>
                 </ul>
                 <div style="margin-top: 50px;"><p>[[lang.color_all_colors]]</p></div>
-                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';font-size: 12px;">
                     <li><a href="javascript:;">[[lang.color_brown]]</a></li>
                     <li><a href="javascript:;">[[lang.color_blue]]</a></li>
                     <li><a href="javascript:;">[[lang.color_gray]]</a></li>

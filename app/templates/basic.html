@@ -14,11 +14,12 @@
     <style>
         @font-face {
             font-family: 'NotoSansCJK-Bold';
-            src: url([[ url_for('static', filename='font/NotoSansCJK-Bold.otf') ]]);
+            src: url([[ url_for('static' , filename= 'font/NotoSansCJK-Bold.otf') ]]);
         }
+
         @font-face {
             font-family: 'NotoSansCJK-Medium';
-            src: url([[ url_for('static', filename='font/NotoSansCJK-Medium.otf') ]]);
+            src: url([[ url_for('static' , filename= 'font/NotoSansCJK-Medium.otf') ]]);
         }
 
         .self-nav ul {
@@ -45,21 +46,46 @@
 <body style="font-family: NotoSansCJK-Bold;width: 1440px;margin:0 auto;">
 <div class="layui-header self-nav">
     <ul>
-        <li id="shop_basic_dropdown_men" style="margin-left: 0px;"><a href="javascript:;">[[lang.header_nav_men]]</a></li>
-        <li id="shop_basic_dropdown_women"><a href="javascript:;">[[lang.header_nav_women]]</a></li>
-        <li id="shop_basic_dropdown_kids"><a href="javascript:;">[[lang.header_nav_kids]]</a></li>
-        <li id="shop_basic_dropdown_others"><a href="javascript:;">[[lang.header_nav_everything_else]]</a></li>
-        <li><a href="#">[[lang.header_nav_search]]</a></li>
+        <li id="shop_basic_dropdown_men"
+            style="margin-left: 0px;[['text-decoration: underline;' if addition.location=='men' else '']]">
+            <a href="javascript:;">[[lang.header_nav_men]]</a>
+        </li>
+        <li id="shop_basic_dropdown_women"
+            style="[['text-decoration: underline;' if addition.location=='women' else '']]">
+            <a href="javascript:;">[[lang.header_nav_women]]</a>
+        </li>
+        <li id="shop_basic_dropdown_kids"
+            style="[['text-decoration: underline;' if addition.location=='kids' else '']]">
+            <a href="javascript:;">[[lang.header_nav_kids]]</a>
+        </li>
+        <li id="shop_basic_dropdown_others"
+            style="[['text-decoration: underline;' if addition.location=='others' else '']]">
+            <a href="javascript:;">[[lang.header_nav_everything_else]]</a>
+        </li>
+        <li><a href="javascript:;" id="shop_basic_nav_search" data-method="offset" data-type="lt">[[lang.header_nav_search]]</a>
+        </li>
         <li style="[[lang.company_name_margin_left]]"><a href="/[[lang_type]]/index">[[lang.company_name]]</a></li>
     </ul>
     <ul class="layui-layout-right">
         <li id="shop_basic_dropdown_lang" style="margin-left: 0px;">
             <a href="javascript:;">[[lang.header_nav_lang]]</a>
         </li>
-        <li id="shop_basic_dropdown_login"><a href="/[[lang_type]]/login">[[lang.common_login]]</a></li>
-        <li><a href="#">[[lang.header_nav_wishlist]]</a></li>
-        <li><a href="#">[[lang.header_nav_shopping_bag]]</a></li>
-        <li><a href="#">[[lang.header_nav_sample_bag]]</a></li>
+        <li id="shop_basic_dropdown_login"
+            style="[['text-decoration: underline;' if addition.location=='login' else '']]">
+            <a href="/[[lang_type]]/login">[[lang.common_login]]</a>
+        </li>
+        <li
+            style="[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+            <a href="#">[[lang.header_nav_wishlist]]</a>
+        </li>
+        <li
+            style="[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">
+            <a href="#">[[lang.header_nav_shopping_bag]]</a>
+        </li>
+        <li
+            style="[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">
+            <a href="#">[[lang.header_nav_sample_bag]]</a>
+        </li>
     </ul>
 </div>
 {% block content %}{% endblock %}
@@ -69,9 +95,11 @@
 <div class="layer-footer self-nav"
      style="position: fixed; bottom: 0;width: 1440px;height: 60px;line-height: 60px;text-align: center;background-color: #F2F2F2">
     <ul>
-        <li style="margin-left: 0px;"><a href="/[[lang_type]]/aboutUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_about_us]]</a>
+        <li style="margin-left: 0px;[['text-decoration: underline;' if addition.location=='aboutUs' else '']]">
+            <a href="/[[lang_type]]/aboutUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_about_us]]</a>
         </li>
-        <li><a href="/[[lang_type]]/contactUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_contact_us]]</a>
+        <li style="[['text-decoration: underline;' if addition.location=='contactUs' else '']]">
+            <a href="/[[lang_type]]/contactUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_contact_us]]</a>
         </li>
         <li style="color: #0C0C0C;font-size: 12px;">[[lang.common_copyright]]</li>
     </ul>
@@ -86,14 +114,43 @@
     }).use(['jquery', 'index', 'dropdown'], function () {
         var $ = layui.$
             , dropdown = layui.dropdown;
+
+        var fullAddition = "[[addition.add]]"
+
+        //触发事件
+        var active = {
+            offset: function (othis) {
+                var type = othis.data('type')
+                    , text = othis.text();
+
+                layer.open({
+                    type: 1
+                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                    , id: 'layerDemo' + type //防止重复弹出
+                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
+                    , btn: '关闭全部'
+                    , btnAlign: 'c' //按钮居中
+                    , shade: 0 //不显示遮罩
+                    , yes: function () {
+                        layer.closeAll();
+                    }
+                });
+            }
+        };
+
+        $('#shop_basic_nav_search').on('click', function () {
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
         dropdown.render({
             elem: '#shop_basic_dropdown_lang' //可绑定在任意元素中，此处以上述按钮为例
             , data: [{
                 title: '中'
-                , href: '/zh_cn/[[route]]'
+                , href: '/zh_cn' + fullAddition + '/[[route]]'
             }, {
                 title: 'EN'
-                , href: '/en_us/[[route]]'
+                , href: '/en_us' + fullAddition + '/[[route]]'
             }]
             , trigger: "hover"
         });
