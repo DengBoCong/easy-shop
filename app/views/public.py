@@ -22,7 +22,7 @@ def login(lang_type):
 def index(lang_type):
     """ 首页"""
     if lang_type not in ["zh_cn", "en_us"]:
-        return render_template("404.html", lang_type=lang_type, route="login")
+        return render_template("404.html", lang_type=lang_type, route="index")
     return render_template("index.html", lang=lang[lang_type],
                            lang_type=lang_type, route="index", addition=set_addition())
 
@@ -51,12 +51,12 @@ def sample(lang_type):
     info_data = request.args.to_dict()
     lang_type, sub_page = lang_type.split("-")
 
-    addition = set_addition(add="-" + sub_page, categories="sample",
+    addition = set_addition(add="-" + sub_page, categories="sample", page=info_data.get("page", 1),
                             products=info_data.get("products", ""), sort=info_data.get("sort", ""),
                             colors=info_data.get("colors", ""), location=sub_page)
 
     if lang_type not in ["zh_cn", "en_us"]:
-        return render_template("404.html", lang_type=lang_type, route="login")
+        return render_template("404.html", lang_type=lang_type, route="commonSample")
     return render_template("public/sample.html", lang=lang[lang_type],
                            lang_type=lang_type, route="commonSample", addition=addition)
 
@@ -67,12 +67,12 @@ def design_diagrams(lang_type):
     info_data = request.args.to_dict()
     lang_type, sub_page = lang_type.split("-")
 
-    addition = set_addition(add="-" + sub_page, categories="design",
+    addition = set_addition(add="-" + sub_page, categories="design", page=info_data.get("page", 1),
                             products=info_data.get("products", ""), sort=info_data.get("sort", ""),
                             colors=info_data.get("colors", ""), location=sub_page)
 
     if lang_type not in ["zh_cn", "en_us"]:
-        return render_template("404.html", lang_type=lang_type, route="login")
+        return render_template("404.html", lang_type=lang_type, route="designDiagrams")
     return render_template("public/designDiagrams.html", lang=lang[lang_type],
                            lang_type=lang_type, route="designDiagrams", addition=addition)
 
@@ -83,11 +83,11 @@ def reference_diagrams(lang_type):
     info_data = request.args.to_dict()
     lang_type, sub_page = lang_type.split("-")
 
-    addition = set_addition(add="-" + sub_page, categories="reference",
+    addition = set_addition(add="-" + sub_page, categories="reference", page=info_data.get("page", 1),
                             products=info_data.get("products", ""), sort=info_data.get("sort", ""),
                             colors=info_data.get("colors", ""), location=sub_page)
 
     if lang_type not in ["zh_cn", "en_us"]:
-        return render_template("404.html", lang_type=lang_type, route="login")
+        return render_template("404.html", lang_type=lang_type, route="referenceDiagrams")
     return render_template("public/referenceDiagrams.html", lang=lang[lang_type],
                            lang_type=lang_type, route="referenceDiagrams", addition=addition)

@@ -1,7 +1,7 @@
 {% extends "basic.html" %}
 {% block title %}[[lang.company_name]]{% endblock %}
 {% block css %}
-    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{#    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">#}
     <style>
         #canvas {
             display: inline-block;
@@ -9,56 +9,166 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-label-group input,
+        .form-label-group label {
+            height: 3.125rem;
+            padding: .75rem;
+        }
+
+        .form-label-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            margin-bottom: 0; /* Override default `<label>` margin */
+            line-height: 1.5;
+            color: #495057;
+            pointer-events: none;
+            cursor: text; /* Match the input under the label */
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            transition: all .1s ease-in-out;
+        }
+
+        .form-label-group input::-webkit-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-moz-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::-ms-input-placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input::placeholder {
+            color: transparent;
+        }
+
+        .form-label-group input:not(:-moz-placeholder-shown) {
+            padding-top: 1.25rem;
+            padding-bottom: .25rem;
+        }
+
+        .form-label-group input:not(:-ms-input-placeholder) {
+            padding-top: 1.25rem;
+            padding-bottom: .25rem;
+        }
+
+        .form-label-group input:not(:placeholder-shown) {
+            padding-top: 1.25rem;
+            padding-bottom: .25rem;
+        }
+
+        .form-label-group input:not(:-moz-placeholder-shown) ~ label {
+            padding-top: .25rem;
+            padding-bottom: .25rem;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .form-label-group input:not(:-ms-input-placeholder) ~ label {
+            padding-top: .25rem;
+            padding-bottom: .25rem;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .form-label-group input:not(:placeholder-shown) ~ label {
+            padding-top: .25rem;
+            padding-bottom: .25rem;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .form-label-group input:-webkit-autofill ~ label {
+            padding-top: .25rem;
+            padding-bottom: .25rem;
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* Fallback for Edge
+        -------------------------------------------------- */
+        @supports (-ms-ime-align: auto) {
+            .form-label-group {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-direction: column-reverse;
+                flex-direction: column-reverse;
+            }
+
+            .form-label-group label {
+                position: static;
+            }
+
+            .form-label-group input::-ms-input-placeholder {
+                color: #777;
+            }
+        }
     </style>
 {% endblock %}
 {% block content %}
-    <div class="layui-fluid">
-        <div class="layadmin-user-login-main" style="margin-top: 150px;">
-            <div class="layadmin-user-login-box layadmin-user-login-header">
-                <p style="font-size: 21px;color: #0C0C0C">[[lang.common_login]]</p>
+    <main class="container">
+        <form class="form-signin">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 font-weight-normal">[[lang.common_login]]</h1>
             </div>
-            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-username"
-                           for="LAY-user-login-username"></label>
-                    <input type="text" name="email" id="LAY-user-login-username" lay-verify="email"
-                           placeholder="[[lang.common_account]]"
-                           class="layui-input" style="border-color: #CFCFCF;">
-                </div>
-                <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-password"
-                           for="LAY-user-login-password"></label>
-                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="pass"
-                           placeholder="[[lang.common_password]]" class="layui-input" style="border-color: #CFCFCF;">
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-row">
-                        <div class="layui-col-xs7">
-                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode"
-                                   for="LAY-user-login-vercode"></label>
-                            <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required"
-                                   placeholder="[[lang.common_verify_code]]" class="layui-input"
-                                   style="border-color: #CFCFCF;width: 200px">
-                        </div>
-                        <div class="layui-col-xs5">
-                            <div style="margin-left: 38px;">
-                                <canvas id="canvas" width="100" height="35"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item" style="margin-bottom: 20px;text-align: center">
-                    <a href="forget"
-                       style="margin-top: 7px;color: #0C0C0C;font-size: 12px;">[[lang.common_forget_pwd]]</a>
-                </div>
-                <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit"
-                            style="background-color: #4A4A4A;">[[lang.common_login]]
-                    </button>
-                </div>
+
+            <div class="form-label-group">
+                <input type="email" id="inputAccount" class="form-control" placeholder="[[lang.common_account]]"
+                       autofocus>
+                <label for="inputAccount">[[lang.common_account]]</label>
             </div>
-        </div>
-    </div>
+
+            <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="[[lang.common_password]]">
+                <label for="inputPassword">[[lang.common_password]]</label>
+            </div>
+            <div class="form-label-group">
+                <input type="password" id="inputVerifyCode" class="form-control"
+                       placeholder="[[lang.common_verify_code]]" style="width: 70%;">
+                <label for="inputVerifyCode" style="width: 70%;">[[lang.common_verify_code]]</label>
+                <canvas id="canvas" width="100" height="40" style="float: right;margin-top: -45px;"></canvas>
+            </div>
+
+            <div style="text-align: center" class="mb-2">
+                <a href="forget" style="color: #0C0C0C;font-size: 12px;">[[lang.common_forget_pwd]]</a>
+            </div>
+            <button class="btn btn-block" type="submit" style="background-color: #4A4A4A;color: #FFFFFF;width: 100%">
+                [[lang.common_login]]
+            </button>
+        </form>
+    </main>
 {% endblock %}
 {% block js %}
     <script>

@@ -3,13 +3,16 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
     <link href="[[ url_for('static', filename='img/favicon.ico') ]]" rel="icon" type="image/x-icon">
     <link rel="stylesheet" href="[[url_for('static', filename='layui/css/layui.css')]]" type="text/css" media="all">
     <link rel="stylesheet" href="[[url_for('static', filename='style/admin.css')]]" type="text/css" media="all">
+    <link rel="stylesheet" href="[[url_for('static', filename='bootstrap5/css/bootstrap.css')]]">
+    <link rel="stylesheet"
+          href="[[url_for('static', filename='bootstrap5/css/bootstrap-icons-1.6.1/bootstrap-icons.css')]]">
     {% block css %}{% endblock %}
     <style>
         @font-face {
@@ -22,15 +25,22 @@
             src: url([[ url_for('static' , filename= 'font/NotoSansCJK-Medium.otf') ]]);
         }
 
+        html,
+        body {
+            height: 100%;
+            background-color: #FFFFFF;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
         .self-nav ul {
             list-style-type: none;
-            line-height: 5em;
-
         }
 
         .self-nav ul li {
             display: inline;
-            margin-left: 20px;
             font-size: 15px;
         }
 
@@ -41,70 +51,171 @@
         .self-nav a:hover {
             text-decoration: underline
         }
+
+        .self-a-link a {
+            text-decoration: none;
+            color: #0C0C0C;
+        }
+
+        .self-a-link a:hover {
+            text-decoration: underline
+        }
     </style>
 </head>
-<body style="font-family: NotoSansCJK-Bold;width: 1440px;margin:0 auto;">
-<div class="layui-header self-nav">
-    <ul>
-        <li id="shop_basic_dropdown_men"
-            style="margin-left: 0px;[['text-decoration: underline;' if addition.location=='men' else '']]">
-            <a href="javascript:;">[[lang.header_nav_men]]</a>
-        </li>
-        <li id="shop_basic_dropdown_women"
-            style="[['text-decoration: underline;' if addition.location=='women' else '']]">
-            <a href="javascript:;">[[lang.header_nav_women]]</a>
-        </li>
-        <li id="shop_basic_dropdown_kids"
-            style="[['text-decoration: underline;' if addition.location=='kids' else '']]">
-            <a href="javascript:;">[[lang.header_nav_kids]]</a>
-        </li>
-        <li id="shop_basic_dropdown_others"
-            style="[['text-decoration: underline;' if addition.location=='others' else '']]">
-            <a href="javascript:;">[[lang.header_nav_everything_else]]</a>
-        </li>
-        <li><a href="javascript:;" id="shop_basic_nav_search" data-method="offset" data-type="lt">[[lang.header_nav_search]]</a>
-        </li>
-        <li style="[[lang.company_name_margin_left]]"><a href="/[[lang_type]]/index">[[lang.company_name]]</a></li>
-    </ul>
-    <ul class="layui-layout-right">
-        <li id="shop_basic_dropdown_lang" style="margin-left: 0px;">
-            <a href="javascript:;">[[lang.header_nav_lang]]</a>
-        </li>
-        <li id="shop_basic_dropdown_login"
-            style="[['text-decoration: underline;' if addition.location=='login' else '']]">
-            <a href="/[[lang_type]]/login">[[lang.common_login]]</a>
-        </li>
-        <li
-            style="[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
-            <a href="#">[[lang.header_nav_wishlist]]</a>
-        </li>
-        <li
-            style="[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">
-            <a href="#">[[lang.header_nav_shopping_bag]]</a>
-        </li>
-        <li
-            style="[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">
-            <a href="#">[[lang.header_nav_sample_bag]]</a>
-        </li>
-    </ul>
-</div>
+<body style="font-family: NotoSansCJK-Bold;background-color: #FFFFFF;">
+<nav class="navbar navbar-expand-md fixed-top" style="background-color: #FFFFFF">
+    <div class="container-fluid">
+        <div class="d-none d-lg-block self-nav">
+            <ul class="navbar-nav" style="font-size: 15px;">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_men"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='men' else '']]"
+                       data-bs-toggle="dropdown" aria-expanded="false">[[lang.header_nav_men]]</a>
+                    <ul class="dropdown-menu" aria-labelledby="basic_nav_men">
+                        <li><a class="dropdown-item" href="/[[lang_type]]-men/commonSample">[[lang.common_sample]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-men/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-men/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_women" data-bs-toggle="dropdown"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='women' else '']]"
+                       aria-expanded="false">[[lang.header_nav_women]]</a>
+                    <ul class="dropdown-menu" aria-labelledby="basic_nav_women">
+                        <li><a class="dropdown-item" href="/[[lang_type]]-women/commonSample">[[lang.common_sample]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-women/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-women/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_kids" data-bs-toggle="dropdown"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='kids' else '']]"
+                       aria-expanded="false">[[lang.header_nav_kids]]</a>
+                    <ul class="dropdown-menu" aria-labelledby="basic_nav_kids">
+                        <li><a class="dropdown-item" href="/[[lang_type]]-kids/commonSample">[[lang.common_sample]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-kids/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-kids/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_others" data-bs-toggle="dropdown"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='others' else '']]"
+                       aria-expanded="false">[[lang.header_nav_everything_else]]</a>
+                    <ul class="dropdown-menu" aria-labelledby="basic_nav_others">
+                        <li><a class="dropdown-item"
+                               href="/[[lang_type]]-others/commonSample">[[lang.common_sample]]</a></li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-others/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]-others/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_search" style="color: #0C0C0C">[[lang.header_nav_search]]</a>
+                </li>
+            </ul>
+        </div>
+        <div class="d-lg-none">
+            <button type="button" class="btn btn-outline-light">
+                <i class="bi bi-list" style="color: #0C0C0C"></i>
+            </button>
+            <button type="button" class="btn btn-outline-light">
+                <i class="bi bi-search" style="color: #0C0C0C"></i>
+            </button>
+        </div>
+        <a href="/[[lang_type]]/index" style="color: #0C0C0C;font-size: 20px;margin-left: 15px;"><span
+                class="align-middle">[[lang.company_name]]</span></a>
+        <div class="d-lg-none" style="float:right;">
+            <button type="button" class="btn btn-outline-light">
+                <i class="bi bi-list" style="color: #0C0C0C"></i>
+            </button>
+            <button type="button" class="btn btn-outline-light">
+                <i class="bi bi-search" style="color: #0C0C0C"></i>
+            </button>
+        </div>
+        <div class="d-none d-lg-block">
+            <ul class="navbar-nav" style="float:right;font-size: 15px;">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_lang" data-bs-toggle="dropdown"
+                       style="color: #0C0C0C" aria-expanded="false">[[lang.header_nav_lang]]</a>
+                    <ul class="dropdown-menu" aria-labelledby="basic_nav_lang">
+                        <li><a class="dropdown-item" href="/zh_cn[[addition.add]]/[[route]]">中</a></li>
+                        <li><a class="dropdown-item" href="/en_us[[addition.add]]/[[route]]">EN</a></li>
+                    </ul>
+                </li>
+{#                <li class="nav-item dropdown">#}
+{#                    <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login" data-bs-toggle="dropdown"#}
+{#                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]" aria-expanded="false">[[lang.common_login]]</a>#}
+{#                    <ul class="dropdown-menu" aria-labelledby="basic_nav_login">#}
+{#                        <li><a class="dropdown-item"#}
+{#                               href="/[[lang_type]]/accountDetail">[[lang.common_account_detail]]</a></li>#}
+{#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalPurchase">[[lang.common_historical_purchase]]</a>#}
+{#                        </li>#}
+{#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalSample">[[lang.common_historical_sample]]</a>#}
+{#                        </li>#}
+{#                        <li><a class="dropdown-item" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_login]]
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_wishlist"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                        [[lang.header_nav_wishlist]]
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_shopping_bag"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="javascript:;" id="basic_nav_sample_bag"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">[[lang.header_nav_sample_bag]]
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 {% block content %}{% endblock %}
-<script src="[[url_for('static', filename='layui/layui.js', external=True)]]"></script>
-
-<div style="height: 100px;"></div>
-<div class="layer-footer self-nav"
-     style="position: fixed; bottom: 0;width: 1440px;height: 60px;line-height: 60px;text-align: center;background-color: #F2F2F2">
-    <ul>
-        <li style="margin-left: 0px;[['text-decoration: underline;' if addition.location=='aboutUs' else '']]">
-            <a href="/[[lang_type]]/aboutUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_about_us]]</a>
-        </li>
-        <li style="[['text-decoration: underline;' if addition.location=='contactUs' else '']]">
-            <a href="/[[lang_type]]/contactUs" style="color: #0C0C0C;font-size: 12px;">[[lang.common_contact_us]]</a>
-        </li>
-        <li style="color: #0C0C0C;font-size: 12px;">[[lang.common_copyright]]</li>
-    </ul>
+<div style="height: 70px;"></div>
+<div class="self-nav"
+     style="position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+    <div class="container-fluid d-flex align-items-center justify-content-center">
+        <ul class="nav">
+            <li class="nav-item">
+                <a href="/[[lang_type]]/aboutUs"
+                   style="color: #0C0C0C;font-size: 12px;[['text-decoration: underline;' if addition.location=='aboutUs' else '']]">
+                    [[lang.common_about_us]]
+                </a>
+            </li>
+            <li class="nav-item" style="margin-left: 20px">
+                <a href="/[[lang_type]]/contactUs"
+                   style="color: #0C0C0C;font-size: 12px;[['text-decoration: underline;' if addition.location=='contactUs' else '']]">
+                    [[lang.common_contact_us]]
+                </a>
+            </li>
+            <li class="nav-item" style="color: #0C0C0C;font-size: 12px;margin-left: 20px">
+                [[lang.common_copyright]]
+            </li>
+        </ul>
+    </div>
 </div>
-
+<script src="[[url_for('static', filename='bootstrap5/js/bootstrap.bundle.js')]]"></script>
+<script src="[[url_for('static', filename='layui/layui.js', external=True)]]"></script>
 {% block js %}{% endblock %}
 <script>
     layui.config({

@@ -3,6 +3,8 @@ lang = {
         "company_name": "华虹",
         "company_name_margin_left": "font-size: 21px;margin-left: 455px;",
 
+        "common_back_page": "上一页",
+        "common_next_page": "下一页",
         "common_login": "登陆",
         "common_forget_pwd": "忘记密码?",
         "common_about_us": "关于我们",
@@ -55,6 +57,7 @@ lang = {
         "products_categories_bags": "包袋",
         "products_categories_accessories": "配饰",
 
+        "color_colors": "颜色",
         "color_all_colors": "全部颜色",
         "color_brown": "棕色",
         "color_blue": "蓝色",
@@ -72,6 +75,8 @@ lang = {
         "company_name": "HUAHONG",
         "company_name_margin_left": "font-size: 21px;margin-left: 238px;",
 
+        "common_back_page": "Previous",
+        "common_next_page": "Next",
         "common_login": "LOG IN",
         "common_forget_pwd": "Forget Password ?",
         "common_about_us": "About Us",
@@ -124,6 +129,7 @@ lang = {
         "products_categories_bags": "BAGS",
         "products_categories_accessories": "ACCESSORIES",
 
+        "color_colors": "COLORS",
         "color_all_colors": "ALL COLORS",
         "color_brown": "Brown",
         "color_blue": "Blue",

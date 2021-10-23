@@ -8,7 +8,7 @@
  */
 
 
-layui.define(['table', 'form', 'dropdown'], function (exports) {
+layui.define(['table', 'form', 'dropdown', 'laypage'], function (exports) {
     var $ = layui.$
         , admin = layui.admin
         , table = layui.table
