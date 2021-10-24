@@ -12,8 +12,6 @@ class Area(db.Model, UserMixin):
     NAME = db.Column(db.String(100), nullable=False, default="未署名", comment="名称")
     DESCRIPTION = db.Column(db.String(255), nullable=False, default="", comment="备注")
 
-    users = db.relationship('User', backref='area', lazy='dynamic')
-
     def __repr__(self):
         return '<Area %r>\n' % self.NAME
 

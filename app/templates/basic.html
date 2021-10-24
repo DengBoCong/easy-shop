@@ -120,19 +120,20 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="javascript:;" id="basic_nav_search" style="color: #0C0C0C">[[lang.header_nav_search]]</a>
+                    <a class="nav-link" href="javascript:;" id="basic_nav_search_button_second" style="color: #0C0C0C">[[lang.header_nav_search]]</a>
                 </li>
             </ul>
         </div>
         <div class="d-lg-none">
-            <button type="button" class="btn btn-outline-light">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavList" aria-controls="offcanvasNavList">
                 <i class="bi bi-list" style="color: #0C0C0C"></i>
             </button>
-            <button type="button" class="btn btn-outline-light">
+            <button id="basic_nav_search_button_first" type="button" class="btn btn-outline-light">
                 <i class="bi bi-search" style="color: #0C0C0C"></i>
             </button>
         </div>
-        <a href="/[[lang_type]]/index" style="color: #0C0C0C;font-size: 20px;margin-left: 15px;"><span
+        <a href="/[[lang_type]]/index" style="color: #0C0C0C;font-size: 19px;"><span
                 class="align-middle">[[lang.company_name]]</span></a>
         <div class="d-lg-none" style="float:right;">
             <button type="button" class="btn btn-outline-light">
@@ -152,32 +153,45 @@
                         <li><a class="dropdown-item" href="/en_us[[addition.add]]/[[route]]">EN</a></li>
                     </ul>
                 </li>
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login" data-bs-toggle="dropdown"#}
-{#                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]" aria-expanded="false">[[lang.common_login]]</a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="basic_nav_login">#}
-{#                        <li><a class="dropdown-item"#}
-{#                               href="/[[lang_type]]/accountDetail">[[lang.common_account_detail]]</a></li>#}
-{#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalPurchase">[[lang.common_historical_purchase]]</a>#}
-{#                        </li>#}
-{#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalSample">[[lang.common_historical_sample]]</a>#}
-{#                        </li>#}
-{#                        <li><a class="dropdown-item" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>#}
-{#                    </ul>#}
-{#                </li>#}
+                {#                <li class="nav-item dropdown">#}
+                {#                    <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login" data-bs-toggle="dropdown"#}
+                {#                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]" aria-expanded="false">[[lang.common_login]]</a>#}
+                {#                    <ul class="dropdown-menu" aria-labelledby="basic_nav_login">#}
+                {#                        <li><a class="dropdown-item"#}
+                {#                               href="/[[lang_type]]/accountDetail">[[lang.common_account_detail]]</a></li>#}
+                {#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalPurchase">[[lang.common_historical_purchase]]</a>#}
+                {#                        </li>#}
+                {#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalSample">[[lang.common_historical_sample]]</a>#}
+                {#                        </li>#}
+                {#                        <li><a class="dropdown-item" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>#}
+                {#                    </ul>#}
+                {#                </li>#}
+                {% if addition.login == 0 %}
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login"
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_login]]
                     </a>
                 </li>
+                {% else %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="javascript:;" id="basic_nav_wishlist"
+                    <a class="nav-link" href="javascript:;" data-bs-toggle="dropdown"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_account_up]]</a>
+                    <ul class="dropdown-menu" aria-labelledby="basic_nav_lang">
+                        <li><a class="dropdown-item" href="javascript:;">[[lang.common_account_detail_up]]</a></li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]/historyOrders">[[lang.common_historical_purchase_up]]</a></li>
+                        <li><a class="dropdown-item" href="/[[lang_type]]/historySamples">[[lang.common_historical_sample_up]]</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">[[lang.common_logout_up]]</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="/[[lang_type]]/wishlist" id="basic_nav_wishlist"
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
                         [[lang.header_nav_wishlist]]
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="javascript:;" id="basic_nav_shopping_bag"
+                    <a class="nav-link" href="/[[lang_type]]/shoppingBag" id="basic_nav_shopping_bag"
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
                     </a>
                 </li>
@@ -190,6 +204,29 @@
         </div>
     </div>
 </nav>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavList" aria-labelledby="offcanvasNavListLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavListLabel">Offcanvas</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
+            etc.
+        </div>
+        <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown">
+                Dropdown button
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 {% block content %}{% endblock %}
 <div style="height: 70px;"></div>
 <div class="self-nav"
@@ -222,126 +259,47 @@
         base: '../static/' //静态资源所在路径
     }).extend({
         {#index: 'lib/index' //主入口模块#}
-    }).use(['jquery', 'index', 'dropdown'], function () {
+    }).use(['jquery', 'index', 'dropdown', 'layer'], function () {
         var $ = layui.$
+            , layer = layui.layer
             , dropdown = layui.dropdown;
 
         var fullAddition = "[[addition.add]]"
 
-        //触发事件
-        var active = {
-            offset: function (othis) {
-                var type = othis.data('type')
-                    , text = othis.text();
-
-                layer.open({
-                    type: 1
-                    , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                    , id: 'layerDemo' + type //防止重复弹出
-                    , content: '<div style="padding: 20px 100px;">' + text + '</div>'
-                    , btn: '关闭全部'
-                    , btnAlign: 'c' //按钮居中
-                    , shade: 0 //不显示遮罩
-                    , yes: function () {
+        function searchFunc() {
+            layer.open({
+                type: 1,
+                offset: ['50px', '40px'],
+                title: false,
+                id: 'navSearchButton',
+                content: '<div style="padding: 10px 25px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
+                    '<li class="nav-item"><a class="nav-link active" aria-current="page" href="#">所有</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">男装</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">女装</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">童装</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">客户</a></li>' +
+                    '<li class="nav-item" style="margin-top: 8px;margin-left: 135px;" id="basic_nav_search_close">' +
+                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                    '<div class="row"><div class="input-group">' +
+                    '<input type="text" id="inputSearch" class="form-control"><div class="input-group-prepend">' +
+                    '<div class="input-group-text"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div></div></div>',
+                shade: 0,
+                area: ['450px', '110px'],
+                resize: false,
+                closeBtn: 0,
+                success: function (layero, index) {
+                    $('#basic_nav_search_close').on('click', function () {
                         layer.closeAll();
-                    }
-                });
-            }
-        };
+                    });
+                }
+            });
+        }
 
-        $('#shop_basic_nav_search').on('click', function () {
-            var othis = $(this), method = othis.data('method');
-            active[method] ? active[method].call(this, othis) : '';
+        $('#basic_nav_search_button_first').on('click', function () {
+            searchFunc()
         });
-
-        dropdown.render({
-            elem: '#shop_basic_dropdown_lang' //可绑定在任意元素中，此处以上述按钮为例
-            , data: [{
-                title: '中'
-                , href: '/zh_cn' + fullAddition + '/[[route]]'
-            }, {
-                title: 'EN'
-                , href: '/en_us' + fullAddition + '/[[route]]'
-            }]
-            , trigger: "hover"
-        });
-
-        dropdown.render({
-            elem: '#shop_basic_dropdown_login'
-            , data: [{
-                title: '[[lang.common_account_detail]]'
-                , href: '/[[lang_type]]/accountDetail'
-            }, {
-                title: '[[lang.common_historical_purchase]]'
-                , href: '/[[lang_type]]/historicalPurchase'
-            }, {
-                title: '[[lang.common_historical_sample]]'
-                , href: '/[[lang_type]]/historicalSample'
-            }, {
-                title: '[[lang.common_logout]]'
-                , href: '/[[lang_type]]/logout'
-            }]
-            , trigger: "hover"
-        });
-
-        dropdown.render({
-            elem: '#shop_basic_dropdown_men'
-            , data: [{
-                title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]-men/commonSample'
-            }, {
-                title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]-men/designDiagrams'
-            }, {
-                title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]-men/referenceDiagrams'
-            }]
-            , trigger: "hover"
-        });
-
-        dropdown.render({
-            elem: '#shop_basic_dropdown_women'
-            , data: [{
-                title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]-women/commonSample'
-            }, {
-                title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]-women/designDiagrams'
-            }, {
-                title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]-women/referenceDiagrams'
-            }]
-            , trigger: "hover"
-        });
-
-        dropdown.render({
-            elem: '#shop_basic_dropdown_kids'
-            , data: [{
-                title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]-kids/commonSample'
-            }, {
-                title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]-kids/designDiagrams'
-            }, {
-                title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]-kids/referenceDiagrams'
-            }]
-            , trigger: "hover"
-        });
-
-        dropdown.render({
-            elem: '#shop_basic_dropdown_others'
-            , data: [{
-                title: '[[lang.common_sample]]'
-                , href: '/[[lang_type]]-others/commonSample'
-            }, {
-                title: '[[lang.common_design_diagrams]]'
-                , href: '/[[lang_type]]-others/designDiagrams'
-            }, {
-                title: '[[lang.common_reference_diagrams]]'
-                , href: '/[[lang_type]]-others/referenceDiagrams'
-            }]
-            , trigger: "hover"
+        $('#basic_nav_search_button_second').on('click', function () {
+            searchFunc()
         });
     });
 </script>

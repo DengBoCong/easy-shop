@@ -1,4 +1,5 @@
-def set_addition(add="", location="", categories="", products="", sort="", colors="", page=0):
+def set_addition(add="", location="", categories="", products="",
+                 sort="", colors="", page=0, login=0):
     return {
         "add": add,
         "location": location,
@@ -6,5 +7,6 @@ def set_addition(add="", location="", categories="", products="", sort="", color
         "products": products,
         "sort": sort,
         "colors": colors,
-        "page": page
+        "page": page,
+        "login": login
     }

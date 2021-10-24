@@ -1,0 +1,56 @@
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 54px;padding: 50px 30px">
+        <div class="row">
+            <div class="col-xl-2 col-lg-1 d-none d-lg-block"></div>
+            <div class="col-xl-8 col-lg-10">
+                <div class="row">
+                    <span style="font-size: 15px;">[[lang.header_nav_wishlist]]</span>
+                    <span style="font-size: 13px;margin-bottom: 40px;">[[lang.wishlist_title_info]]</span>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                        <p style="font-size: 13px;margin-top: 10px;">JW ANDERSON</br>棕色外套</br>尺码：XXS - 只剩两件</br>￥679</p>
+                        <button class="btn btn-block"
+                                style="background-color: #4A4A4A;color: #FFFFFF;width: 100%;">
+                            [[lang.wishlist_add_to_bag]]
+                        </button>
+                        <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
+                            <i class="bi bi-x-lg" style="color: #0C0C0C"></i>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-1 d-none d-lg-block"></div>
+        </div>
+    </main>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
+
+        });
+    </script>
+{% endblock %}
