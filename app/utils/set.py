@@ -1,5 +1,7 @@
-def set_addition(add="", location="", categories="", products="",
-                 sort="", colors="", page=0, login=0):
+from flask_login import current_user
+
+
+def set_addition(add="", location="", categories="", products="", sort="", colors="", page=0):
     return {
         "add": add,
         "location": location,
@@ -8,5 +10,5 @@ def set_addition(add="", location="", categories="", products="",
         "sort": sort,
         "colors": colors,
         "page": page,
-        "login": login
+        "login": hasattr(current_user, "ID")
     }

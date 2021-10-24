@@ -155,7 +155,7 @@
                 <label for="inputPassword">[[lang.common_password]]</label>
             </div>
             <div class="form-label-group">
-                <input type="password" id="inputVerifyCode" class="form-control"
+                <input type="text" id="inputVerifyCode" class="form-control"
                        placeholder="[[lang.common_verify_code]]" style="width: 70%;">
                 <label for="inputVerifyCode" style="width: 70%;">[[lang.common_verify_code]]</label>
                 <canvas id="canvas" width="100" height="40" style="float: right;margin-top: -45px;"></canvas>
@@ -164,7 +164,7 @@
             <div style="text-align: center" class="mb-2">
                 <a href="forget" style="color: #0C0C0C;font-size: 12px;">[[lang.common_forget_pwd]]</a>
             </div>
-            <div class="btn btn-block" id="LAY-user-login-submit"
+            <div class="btn btn-block"  lay-submit lay-filter="LAY-user-login-submit"
                  style="background-color: #4A4A4A;color: #FFFFFF;width: 100%">
                 [[lang.common_login]]
             </div>
@@ -199,36 +199,36 @@
             //提交
             form.on('submit(LAY-user-login-submit)', function (obj) {
                 var num = show_num.join("");
-                var code = obj.field["vercode"];
-                if (code != num) {
-                    layer.msg('验证码错误,请重新输入', {offset: '15px', icon: 5});
+                var code = $('#inputVerifyCode').val();
+                var account = $('#inputAccount').val();
+                var pwd = $('#inputPassword').val();
+                if (account == null || account == '') {
+                    layer.msg('[[lang.inner_account_not_empty]]', {offset: '15px', icon: 5});
+                    return
+                } else if (pwd == null || pwd == '') {
+                    layer.msg('[[lang.inner_pwd_not_empty]]', {offset: '15px', icon: 5});
+                    return
+                } else if (code != num) {
+                    layer.msg('[[lang.inner_login_error_verify_code]]', {offset: '15px', icon: 5});
                     return
                 }
                 //请求登入接口
                 admin.req({
                     method: "post",
-                    url: 'api/login/verb_user!verification_login'
-                    ,
+                    url: '/api/login/user!verification_login',
                     data: {
-                        email: obj.field["email"],
-                        password: obj.field["password"],
-                        remember: typeof obj.field["remember"] != "undefined"
-                    }
-                    ,
+                        account: $('#inputAccount').val(),
+                        password: $('#inputPassword').val(),
+                        langType: '[[lang_type]]'
+                    },
                     done: function (res) {
-                        //请求成功后，写入 access_token
-                        layui.data(setter.tableName, {
-                            key: setter.request.tokenName
-                            , value: res.data.access_token
-                        });
-
                         //登入成功的提示与跳转
                         layer.msg('登入成功', {
                             offset: '15px'
                             , icon: 1
                             , time: 1000
                         }, function () {
-                            location.href = 'index'; //后台主页
+                            window.location.href = "/[[lang_type]]/index"
                         });
                     }
                 });

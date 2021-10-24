@@ -3,15 +3,30 @@ import json
 from . import views
 from flask import jsonify
 from flask import render_template, request
-from flask_login import login_required, logout_user
+from flask_login import login_required, logout_user, current_user
 from datetime import datetime
 from ..i18 import lang
 from ..utils import set_addition
 
 
+@views.route('/accessDeny', methods=['GET', 'POST'])
+def access_deny():
+    """ 登陆失效或未登录"""
+    return render_template("error/accessDeny.html")
+
+
 @views.route('/<lang_type>/login', methods=['GET', 'POST'])
 def login(lang_type):
     """ 登入页"""
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="login")
+    return render_template("login.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="login", addition=set_addition(location="login"))
+
+
+@views.route('/<lang_type>/logout', methods=['GET', 'POST'])
+def do_logout(lang_type):
+    logout_user()
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="login")
     return render_template("login.html", lang=lang[lang_type],

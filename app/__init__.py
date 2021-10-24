@@ -9,7 +9,7 @@ from flask_caching import Cache
 
 loginManager = LoginManager()
 loginManager.session_protection = "strong"
-loginManager.login_view = "views.login"
+loginManager.login_view = "views.access_deny"
 loginManager.login_message = "请重新登录"
 
 bootstrap = Bootstrap()

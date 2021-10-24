@@ -1,13 +1,4 @@
-if __name__ == '__main__':
-    a = 0X01
-    b = 0X02
-    c = 0X03
-    d = 0X04
-    f = 0X05
-    g = 0X06
-    h = 0X07
+from werkzeug.security import generate_password_hash
 
-    admin = a + b + d
-    public = c + d
-    print(admin & c == c)
-    print(admin & d == d)
+if __name__ == '__main__':
+    print(generate_password_hash("111111"))

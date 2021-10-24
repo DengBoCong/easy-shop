@@ -34,7 +34,7 @@ with app.app_context():
 
 
 def make_shell_context():
-    return dict(app=app, db=db, System=System, User=User)
+    return dict(app=app, db=db, User=User)
 
 
 manager.add_command("shell", Shell(make_context=make_shell_context))

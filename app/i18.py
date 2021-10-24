@@ -24,6 +24,9 @@ lang = {
         "common_account_detail_up": "账户详情",
         "common_historical_purchase_up": "历史购买",
         "common_historical_sample_up": "历史打样",
+        "common_add_products_up": "添加产品",
+        "common_published_products_up": "已发布产品",
+        "common_customer_account_info": "客户信息",
         "common_logout_up": "登出",
         "common_sample": "样品",
         "common_design_diagrams": "设计图",
@@ -96,7 +99,17 @@ lang = {
         "orders_price": "价格",
 
         "wishlist_title_info": "您可以在此页面管理您添加至愿望清单的产品。您可以删除或者把它们加入到购物袋和打样袋中下单。",
-        "wishlist_add_to_bag": "添加至样品袋"
+        "wishlist_add_to_bag": "添加至样品袋",
+
+        "inner_login_success": "登陆成功",
+        "inner_login_fail": "账号或密码错误",
+        "inner_login_error_verify_code": "验证码错误，请重新输入",
+        "inner_account_not_empty": "账号不允许为空",
+        "inner_pwd_not_empty": "密码不允许为空",
+        "inner_account_repeat_reset": "账户重复，请重新填写",
+        "inner_name_repeat_reset": "名称重复，请重新填写",
+        "inner_add_success": "Added successfully",
+        "inner_network_abnormal": "The network is abnormal, please try again"
     },
 
     "en_us": {
@@ -124,6 +137,9 @@ lang = {
         "common_account_detail_up": "ACCOUNT DETAILS",
         "common_historical_purchase_up": "HISTORY ORDERS",
         "common_historical_sample_up": "HISTORY SAMPLES",
+        "common_add_products_up": "ADD PRODUCT",
+        "common_published_products_up": "PUBLISHED PRODUCT",
+        "common_customer_account_info": "CUSTOMER INFO",
         "common_logout_up": "LOG OUT",
         "common_sample": "SAMPLES",
         "common_design_diagrams": "DESIGNS",
@@ -196,6 +212,16 @@ lang = {
         "orders_price": "Price",
 
         "wishlist_title_info": "You can stay in this page to manage products that you added to wishlist. You can delete or add them to shopping bag or sample bag for placeing orders.",
-        "wishlist_add_to_bag": "ADD TO SAMPLE BAG"
+        "wishlist_add_to_bag": "ADD TO SAMPLE BAG",
+
+        "inner_login_success": "Login success",
+        "inner_login_fail": "Incorrect username or password",
+        "inner_login_error_verify_code": "The verification code is wrong",
+        "inner_account_not_empty": "Account cannot be empty",
+        "inner_pwd_not_empty": "Password cannot be empty",
+        "inner_account_repeat_reset": "Duplicate account, please fill in again",
+        "inner_name_repeat_reset": "Duplicate name, please fill in again",
+        "inner_add_success": "Added successfully",
+        "inner_network_abnormal": "The network is abnormal, please try again"
     }
 }

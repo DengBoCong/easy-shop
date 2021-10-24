@@ -166,40 +166,66 @@
                 {#                        <li><a class="dropdown-item" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>#}
                 {#                    </ul>#}
                 {#                </li>#}
-                {% if addition.login == 0 %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login"
-                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_login]]
-                    </a>
-                </li>
+                {% if addition.login %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="javascript:;" data-bs-toggle="dropdown"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_account_up]]</a>
+                        <ul class="dropdown-menu" aria-labelledby="basic_nav_lang">
+                            <li><a class="dropdown-item" href="javascript:;">[[lang.common_account_detail_up]]</a></li>
+                            {% if current_user.ROLE =='USER' %}
+                                <li><a class="dropdown-item" href="/[[lang_type]]/historyOrders">[[lang.common_historical_purchase_up]]</a>
+                                </li>
+                                <li><a class="dropdown-item" href="/[[lang_type]]/historySamples">[[lang.common_historical_sample_up]]</a>
+                                </li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="/[[lang_type]]/publishedProduct">[[lang.common_published_products_up]]</a>
+                                </li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="/[[lang_type]]/logout">[[lang.common_logout_up]]</a></li>
+                        </ul>
+                    </li>
                 {% else %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="javascript:;" data-bs-toggle="dropdown"
-                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_account_up]]</a>
-                    <ul class="dropdown-menu" aria-labelledby="basic_nav_lang">
-                        <li><a class="dropdown-item" href="javascript:;">[[lang.common_account_detail_up]]</a></li>
-                        <li><a class="dropdown-item" href="/[[lang_type]]/historyOrders">[[lang.common_historical_purchase_up]]</a></li>
-                        <li><a class="dropdown-item" href="/[[lang_type]]/historySamples">[[lang.common_historical_sample_up]]</a></li>
-                        <li><a class="dropdown-item" href="javascript:;">[[lang.common_logout_up]]</a></li>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]">[[lang.common_login]]
+                        </a>
+                    </li>
                 {% endif %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="/[[lang_type]]/wishlist" id="basic_nav_wishlist"
-                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
-                        [[lang.header_nav_wishlist]]
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="/[[lang_type]]/shoppingBag" id="basic_nav_shopping_bag"
-                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="javascript:;" id="basic_nav_sample_bag"
-                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">[[lang.header_nav_sample_bag]]
-                    </a>
-                </li>
+                {% if current_user.ROLE =='USER' %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/[[lang_type]]/wishlist" id="basic_nav_wishlist"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                            [[lang.header_nav_wishlist]]
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/[[lang_type]]/shoppingBag" id="basic_nav_shopping_bag"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="javascript:;" id="basic_nav_sample_bag"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">[[lang.header_nav_sample_bag]]
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/[[lang_type]]/editProducts" id="basic_nav_edit_products"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='editProducts' else '']]">
+                            [[lang.common_add_products_up]]
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/[[lang_type]]/adminShoppingBag" id="basic_nav_admin_shopping_bag"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='adminShoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="/[[lang_type]]/customerAccountInfo" id="basic_nav_customer_account_info"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='customerAccountInfo' else '']]">[[lang.common_customer_account_info]]
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -263,6 +289,8 @@
         var $ = layui.$
             , layer = layui.layer
             , dropdown = layui.dropdown;
+
+        console.log("[[addition.login]]")
 
         var fullAddition = "[[addition.add]]"
 
