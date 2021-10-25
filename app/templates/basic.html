@@ -210,18 +210,13 @@
                     </li>
                 {% else %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="/[[lang_type]]/editProducts" id="basic_nav_edit_products"
-                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='editProducts' else '']]">
-                            [[lang.common_add_products_up]]
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
                         <a class="nav-link" href="/[[lang_type]]/adminShoppingBag" id="basic_nav_admin_shopping_bag"
                            style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='adminShoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="/[[lang_type]]/customerAccountInfo" id="basic_nav_customer_account_info"
+                        <a class="nav-link" href="/[[lang_type]]/customerAccountInfo"
+                           id="basic_nav_customer_account_info"
                            style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='customerAccountInfo' else '']]">[[lang.common_customer_account_info]]
                         </a>
                     </li>
@@ -289,8 +284,6 @@
         var $ = layui.$
             , layer = layui.layer
             , dropdown = layui.dropdown;
-
-        console.log("[[addition.login]]")
 
         var fullAddition = "[[addition.add]]"
 
