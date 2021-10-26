@@ -40,6 +40,8 @@ lang = {
         "common_price_low_high": "价格：从低到高",
         "common_price_high_low": "价格：从高到低",
         "common_import_from_computer": "从本地上传",
+        "common_staff_email": "员工邮箱",
+        "common_public": "公共",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -123,6 +125,12 @@ lang = {
         "products_price": "价格",
         "products_choose_color": "选择颜色",
         "products_choose_currency": "选择货币",
+        "products_choose_area": "选择地区",
+        "products_check_upload_area": "请和高级工作人员确认你是否可以上传商品到此地区。",
+        "products_price_rmb": "人民币",
+        "products_price_jpn": "日元",
+        "products_price_eur": "欧元",
+        "products_price_usd": "美元",
 
         "wishlist_title_info": "您可以在此页面管理您添加至愿望清单的产品。您可以删除或者把它们加入到购物袋和打样袋中下单。",
         "wishlist_add_to_bag": "添加至样品袋",
@@ -179,6 +187,8 @@ lang = {
         "common_price_low_high": "Price: Low-High",
         "common_price_high_low": "Price: High-Low",
         "common_import_from_computer": "Import from Computer",
+        "common_staff_email": "STAFF EMAIL",
+        "common_public": "Public",
 
         "header_nav_men": "MEN",
         "header_nav_women": "WOMEN",
@@ -262,6 +272,12 @@ lang = {
         "products_price": "PRICE",
         "products_choose_color": "Choose Color",
         "products_choose_currency": "Choose Currency",
+        "products_choose_area": "Choose Area",
+        "products_check_upload_area": "Please check with the senior staff if you can upload to this area.",
+        "products_price_rmb": "RMB",
+        "products_price_jpn": "JPN",
+        "products_price_eur": "EUR",
+        "products_price_usd": "USD",
 
         "wishlist_title_info": "You can stay in this page to manage products that you added to wishlist. You can delete or add them to shopping bag or sample bag for placeing orders.",
         "wishlist_add_to_bag": "ADD TO SAMPLE BAG",
