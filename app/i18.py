@@ -42,6 +42,9 @@ lang = {
         "common_import_from_computer": "从本地上传",
         "common_staff_email": "员工邮箱",
         "common_public": "公共",
+        "common_add": "添加",
+        "common_zh_name": "中文名",
+        "common_en_name": "英文名",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -142,8 +145,10 @@ lang = {
         "inner_pwd_not_empty": "密码不允许为空",
         "inner_account_repeat_reset": "账户重复，请重新填写",
         "inner_name_repeat_reset": "名称重复，请重新填写",
-        "inner_add_success": "Added successfully",
-        "inner_network_abnormal": "The network is abnormal, please try again"
+        "inner_add_success": "添加成功",
+        "inner_network_abnormal": "网络异常，请重试",
+        "inner_zh_ch_repeat_reset": "中文重复，请重新填写",
+        "inner_en_us_repeat_reset": "英文重复，请重新填写",
     },
 
     "en_us": {
@@ -189,6 +194,9 @@ lang = {
         "common_import_from_computer": "Import from Computer",
         "common_staff_email": "STAFF EMAIL",
         "common_public": "Public",
+        "common_add": "Add",
+        "common_zh_name": "Chinese Name",
+        "common_en_name": "English Name",
 
         "header_nav_men": "MEN",
         "header_nav_women": "WOMEN",
@@ -290,6 +298,8 @@ lang = {
         "inner_account_repeat_reset": "Duplicate account, please fill in again",
         "inner_name_repeat_reset": "Duplicate name, please fill in again",
         "inner_add_success": "Added successfully",
-        "inner_network_abnormal": "The network is abnormal, please try again"
+        "inner_network_abnormal": "The network is abnormal, please try again",
+        "inner_zh_ch_repeat_reset": "Chinese repeat, please fill in again",
+        "inner_en_us_repeat_reset": "English repeat, please fill in again",
     }
 }
