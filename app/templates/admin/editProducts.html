@@ -86,9 +86,9 @@
                         <div class="layui-input-inline">
                             <label>[[lang.products_area]]</label>
                             <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;"
-                                    lay-filter="edit-product-area-select">
-                                <option selected>[[lang.products_choose_area]]</option>
-                                <option>[[lang.common_public]]</option>
+                                    lay-filter="edit-product-area-select" id="edit-product-area-select-id">
+                                <option value="" selected>[[lang.products_choose_area]]</option>
+                                <option value="public">[[lang.common_public]]</option>
                                 {% for area in data.areas %}
                                     <option id="[[area.ID]]">
                                         {% if lang_type == 'zh_cn' %}
@@ -117,12 +117,12 @@
                     <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
                 </div>
             </div>
-            <div class="col-lg-3 d-none d-lg-block self-a-link">
-                <div class="form-label-group">
-                    <form style="padding: 40px 20px;">
-                        <div class="form-group">
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="layui-form" style="padding: 20px 20px 0 0;">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
                             <label>[[lang.products_currency]]</label>
-                            <select class="form-control" id="edit_products_color" style="margin-top: 5px;">
+                            <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;">
                                 <option selected>[[lang.products_choose_currency]]</option>
                                 <option>[[lang.products_price_rmb]]</option>
                                 <option>[[lang.products_price_jpn]]</option>
@@ -130,64 +130,85 @@
                                 <option>[[lang.products_price_usd]]</option>
                             </select>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
-                            <label>[[lang.products_price_range]]</label>
-                            <div>
-                                <div class="layui-form-item">
-                                    <div class="layui-inline">
-                                        <div class="layui-input-inline" style="width: 37%;">
-                                            <input type="text" name="price_min" autocomplete="off" class="layui-input">
-                                        </div>
-                                        <div class="layui-form-mid">-</div>
-                                        <div class="layui-input-inline" style="width: 37%;">
-                                            <input type="text" name="price_max" autocomplete="off"
-                                                   class="layui-input">
-                                        </div>
-                                        <div style="margin-top: 5px;">[[lang.products_qty]]</div>
-                                    </div>
-                                    <div class="layui-inline" style="width: 100%;">
-                                        <div class="layui-input-inline" style="width: 80%;margin-top: 5px;">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div style="margin-top: 10px;">[[lang.products_price]]</div>
-                                    </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <label>[[lang.products_brand]]</label>
+                            <div class="layui-inline" style="margin-top: 5px;">
+                                <div class="layui-input-inline" style="width: 30%;">
+                                    <input type="text" name="price_min" autocomplete="off" class="layui-input" style="border-color: #575759">
                                 </div>
+                                <div class="layui-form-mid">-</div>
+                                <div class="layui-input-inline" style="width: 30%;">
+                                    <input type="text" name="price_max" autocomplete="off"
+                                           class="layui-input" style="border-color: #575759">
+                                </div>
+                                <div style="margin-top: 5px;">[[lang.products_qty]]</div>
                             </div>
-                            <div class="btn btn-block" style="width: 100%;border-color: #DDE1E5">
+                            <div class="layui-inline" style="width: 100%;">
+                                <div class="layui-input-inline" style="width: 70%;margin-top: 5px;">
+                                    <input type="text" class="form-control" style="border-color: #575759">
+                                </div>
+                                <div style="margin-top: 10px;">[[lang.products_price]]</div>
+                            </div>
+                            <div class="btn btn-block" style="width: 100%;border-color: #575759">
                                 [[lang.products_add_range]]
                             </div>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
                             <label>[[lang.products_category]]</label>
-                            <select class="form-control" style="margin-top: 5px;">
+                            <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;"
+                                lay-filter="edit-product-category-select" id="edit-product-category-select-id">
                                 <option selected>[[lang.products_select_category]]</option>
-                                <option>...</option>
+                                {% for category in data.goodCategories %}
+                                    <option id="[[category.ID]]">
+                                        {% if lang_type == 'zh_cn' %}
+                                            [[category.NAME]]
+                                        {% else %}
+                                            [[category.EN_NAME]]
+                                        {% endif %}
+                                    </option>
+                                {% endfor %}
+                                <option value="add">[[lang.common_add]]</option>
                             </select>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
                             <label>[[lang.products_size]]</label>
-                            <select class="form-control" style="margin-top: 5px;">
-                                <option selected>[[lang.products_choose_size]]</option>
-                                <option>...</option>
-                            </select>
+                            <select name="city" xm-select="select1" xm-select-skin="default" lay-verify="required" style="margin-top: 5px;" xm-select-show-count="1">
+                            <option selected>[[lang.products_choose_size]]</option>
+                            <option value="2" selected="selected">上海</option>
+                            <option value="3">广州</option>
+                            <option value="4" selected="selected">深圳</option>
+                            <option value="5">天津</option>
+                          </select>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
                             <label>[[lang.products_size_chart]]</label>
-                            <div class="btn btn-block" style="width: 100%;border-color: #DDE1E5">
+                            <div class="btn btn-block" style="width: 100%;border-color: #575759">
                                 [[lang.common_import_from_computer]]
                             </div>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
-                            <div class="btn btn-block" style="width: 100%;border-color: #DDE1E5">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <div class="btn btn-block" style="width: 100%;border-color: #575759">
                                 [[lang.products_preview]]
                             </div>
                         </div>
-                        <div class="form-group" style="margin-top: 15px;">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
                             <div class="btn btn-block" style="background-color: #4A4A4A;color: #FFFFFF;width: 100%">
                                 [[lang.products_publish_the_sample]]
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -199,10 +220,11 @@
             base: '../static/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index', 'layer', 'form'], function () {
+        }).use(['index', 'layer', 'form', 'formSelects'], function () {
             var $ = layui.$,
                 admin = layui.admin,
                 form = layui.form,
+                formSelects = layui.formSelects,
                 layer = layui.layer;
 
             $('.layui-form-select').css("border", "1px solid #575759");
@@ -214,15 +236,16 @@
                         type: 1,
                         offset: 'auto',
                         title: false,
-                        id: 'navSearchButton',
+                        id: 'navAreaSelect',
                         content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
                             '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
                             '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
                             '<div class="row"><div class="layui-inline"><div class="layui-input-inline" style="width: 150px;">' +
-                            '<input type="text" name="price_min" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<input type="text" id="add-area-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
-                            '<input type="text" name="price_max" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" class="layui-btn layui-btn-primary" style="margin-top: 20px;width: 100px;background-color: #4A4A4A;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '<input type="text" id="add-area-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #4A4A4A;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
                         area: ['370px', '150px'],
@@ -231,6 +254,97 @@
                         success: function (layero, index) {
                             $('#basic_nav_search_close').on('click', function () {
                                 layer.closeAll();
+                            });
+
+                            $('#edit-products-area-add-btn').on('click', function () {
+                                admin.req({
+                                    method: "post",
+                                    url: '/api/area/add!add_area',
+                                    data: JSON.stringify({
+                                        "NAME": $('#add-area-zh-name').val(),
+                                        "EN_NAME": $('#add-area-en-name').val(),
+                                        "langType": '[[lang_type]]'
+                                    }),
+                                    done: function (res) {
+                                        layer.msg(res.msg);
+                                        if (res.code == 0) {
+                                            $('#edit-product-area-select-id').empty()
+                                            $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
+                                            $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
+                                            for (i = 0; i < res.data.areas.length; i++) {
+                                                if ('[[lang_type]]' == 'zh_cn') {
+                                                    $('#edit-product-area-select-id').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
+                                                } else {
+                                                    $('#edit-product-area-select-id').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                                }
+                                            }
+                                            $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                            layui.form.render("select");
+                                            $('.layui-form-select').css("border", "1px solid #575759");
+                                            layer.closeAll();
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+
+            form.on('select(edit-product-category-select)', function (data) {
+                if (data.value == "add") {
+                    layer.open({
+                        type: 1,
+                        offset: 'auto',
+                        title: false,
+                        id: 'navCategorySelect',
+                        content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                            '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                            '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                            '<div class="row"><div class="layui-inline"><div class="layui-input-inline" style="width: 150px;">' +
+                            '<input type="text" id="add-category-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<div class="layui-input-inline" style="width: 150px;float: right">' +
+                            '<input type="text" id="add-category-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-category-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #4A4A4A;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '</div></div></div>',
+                        shade: 0,
+                        area: ['370px', '150px'],
+                        resize: false,
+                        closeBtn: false,
+                        success: function (layero, index) {
+                            $('#basic_nav_search_close').on('click', function () {
+                                layer.closeAll();
+                            });
+
+                            $('#edit-products-category-add-btn').on('click', function () {
+                                admin.req({
+                                    method: "post",
+                                    url: '/api/good/add!add_good_category',
+                                    data: JSON.stringify({
+                                        "NAME": $('#add-category-zh-name').val(),
+                                        "EN_NAME": $('#add-category-en-name').val(),
+                                        "langType": '[[lang_type]]'
+                                    }),
+                                    done: function (res) {
+                                        layer.msg(res.msg);
+                                        if (res.code == 0) {
+                                            $('#edit-product-category-select-id').empty()
+                                            $('#edit-product-category-select-id').append(new Option('[[lang.products_select_category]]', ''));
+                                            for (i = 0; i < res.data.goodCategories.length; i++) {
+                                                if ('[[lang_type]]' == 'zh_cn') {
+                                                    $('#edit-product-category-select-id').append(new Option(res.data.goodCategories[i].NAME, res.data.goodCategories[i].ID));
+                                                } else {
+                                                    $('#edit-product-category-select-id').append(new Option(res.data.goodCategories[i].EN_NAME, res.data.goodCategories[i].ID));
+                                                }
+                                            }
+                                            $('#edit-product-category-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                            layui.form.render("select");
+                                            $('.layui-form-select').css("border", "1px solid #575759");
+                                            layer.closeAll();
+                                        }
+                                    }
+                                });
                             });
                         }
                     });

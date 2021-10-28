@@ -23,10 +23,15 @@ def edit_single_product(lang_type):
     for area in areas:
         areas_list.append(area.to_json())
 
+    good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
+    good_categories_list = []
+    for good_category in good_categories:
+        good_categories_list.append(good_category.to_json())
+
     return render_template("admin/editProducts.html", lang=lang[lang_type],
                            lang_type=lang_type, route="editProducts",
                            addition=set_addition(add="-" + sub_page, location=sub_page),
-                           data={"areas": areas_list})
+                           data={"areas": areas_list, "goodCategories": good_categories_list})
 
 
 @views.route('/<lang_type>/publishedProduct', methods=['GET', 'POST'])

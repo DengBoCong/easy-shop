@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="[[url_for('static', filename='bootstrap5/css/bootstrap.css')]]">
     <link rel="stylesheet"
           href="[[url_for('static', filename='bootstrap5/css/bootstrap-icons-1.6.1/bootstrap-icons.css')]]">
+    <link rel="stylesheet" type="text/css" href="[[url_for('static', filename='bootstrap5/css/formSelects-v4.css')]]" />
     {% block css %}{% endblock %}
     <style>
         @font-face {
@@ -274,6 +275,7 @@
 </div>
 <script src="[[url_for('static', filename='bootstrap5/js/bootstrap.bundle.js')]]"></script>
 <script src="[[url_for('static', filename='layui/layui.js', external=True)]]"></script>
+<script src="[[url_for('static', filename='bootstrap5/js/formSelects-v4.min.js', external=True)]]" type="text/javascript" charset="utf-8"></script>
 {% block js %}{% endblock %}
 <script>
     layui.config({

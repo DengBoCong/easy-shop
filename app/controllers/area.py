@@ -33,6 +33,7 @@ def get_all_area():
 def add_area():
     info_data = json.loads(request.get_data())
     lang_type = info_data["langType"]
+
     try:
         name_area = Area.query.filter_by(NAME=info_data.get("NAME")).all()
         en_name_area = Area.query.filter_by(EN_NAME=info_data.get("EN_NAME")).all()
@@ -46,6 +47,12 @@ def add_area():
                         EN_NAME=info_data.get("EN_NAME"), DESCRIPTION=info_data.get("DESCRIPTION", ""))
             db.session.add(area)
             db.session.commit()
-            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})
+
+            areas = Area.query.order_by(asc(Area.EN_NAME)).all()
+            areas_list = []
+            for area in areas:
+                areas_list.append(area.to_json())
+
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {"areas": areas_list}})
     except:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
