@@ -25,6 +25,8 @@ class Good(db.Model, UserMixin):
     SIZE = db.Column(db.String(255), nullable=False, default="", comment="尺码")
     SIZE_CHART = db.Column(db.String(255), nullable=False, default="", comment="尺码表地址")
     STAFF_EMAIL = db.Column(db.String(50), nullable=False, default="", comment="员工邮箱")
+    IS_PUBLISHED = db.Column(db.Boolean, nullable=False, default=True, comment="是否发布")
+    CLASS = db.Column(db.Enum('SAMPLE', 'DESIGN', 'REFERENCE'), nullable=False, comment="产品归类")
 
     def __repr__(self):
         return '<Good %r>\n' % self.NAME
@@ -33,6 +35,22 @@ class Good(db.Model, UserMixin):
         return {
             'ID': self.ID,
             'CREATE_DATETIME': self.CREATE_DATETIME.strftime('%Y-%m-%d %H:%M:%S'),
-            'NAME': self.NAME,
+            'BRAND': self.BRAND,
+            'COLOR': self.COLOR,
+
+            'STYLE': self.STYLE,
             'DESCRIPTION': self.DESCRIPTION,
+            'SUPPLIER_COLOR': self.SUPPLIER_COLOR,
+            'MATERIAL': self.MATERIAL,
+            'PLACE_OF_ORIGIN': self.PLACE_OF_ORIGIN,
+            'PRODUCT_NUMBER': self.PRODUCT_NUMBER,
+            'FACTORY_CODE': self.FACTORY_CODE,
+            'AREA_ID': self.AREA_ID,
+            'CURRENCY': self.CURRENCY,
+            'CATEGORY_ID': self.CATEGORY_ID,
+            'SIZE': self.SIZE,
+            'SIZE_CHART': self.SIZE_CHART,
+            'STAFF_EMAIL': self.STAFF_EMAIL,
+            'IS_PUBLISHED': self.IS_PUBLISHED,
+            'CLASS': self.CLASS
         }

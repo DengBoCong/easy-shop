@@ -10,15 +10,15 @@
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_brand]]</label>
+                            <label class="text-uppercase">[[lang.products_brand]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.color_color]]</label>
-                            <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;">
+                            <label class="text-uppercase">[[lang.color_color]]</label>
+                            <select lay-verify="required" style="margin-top: 5px;">
                                 <option selected>[[lang.products_choose_color]]</option>
                                 <option>[[lang.color_brown]]</option>
                                 <option>[[lang.color_blue]]</option>
@@ -35,59 +35,59 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_style]]</label>
+                            <label class="text-uppercase">[[lang.products_style]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_description]]</label>
+                            <label class="text-uppercase">[[lang.products_description]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_supplier_color]]</label>
+                            <label class="text-uppercase">[[lang.products_supplier_color]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_material]]</label>
+                            <label class="text-uppercase">[[lang.products_material]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_place_of_origin]]</label>
+                            <label class="text-uppercase">[[lang.products_place_of_origin]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_product_number]]</label>
+                            <label class="text-uppercase">[[lang.products_product_number]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_factory_code]]</label>
+                            <label class="text-uppercase">[[lang.products_factory_code]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_area]]</label>
+                            <label class="text-uppercase">[[lang.products_area]]</label>
                             <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;"
                                     lay-filter="edit-product-area-select" id="edit-product-area-select-id">
-                                <option value="" selected>[[lang.products_choose_area]]</option>
+                                <option value="">[[lang.products_choose_area]]</option>
                                 <option value="public">[[lang.common_public]]</option>
                                 {% for area in data.areas %}
                                     <option id="[[area.ID]]">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.common_staff_email]]</label>
+                            <label class="text-uppercase">[[lang.common_staff_email]]</label>
                             <input type="text" name="NAME" lay-verify="required" value="" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -113,15 +113,17 @@
                 </div>
             </div>
             <div class="col-lg-6">
+                <div id="edit-product-add-img-list"></div>
                 <div class="row">
-                    <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                    <img src="[[url_for('static', filename='img/plus.png')]]" style="width: 100%;"
+                         id="edit-product-add-img">
                 </div>
             </div>
             <div class="col-lg-3 d-none d-lg-block">
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_currency]]</label>
+                            <label class="text-uppercase">[[lang.products_currency]]</label>
                             <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;">
                                 <option selected>[[lang.products_choose_currency]]</option>
                                 <option>[[lang.products_price_rmb]]</option>
@@ -133,35 +135,41 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_brand]]</label>
-                            <div class="layui-inline" style="margin-top: 5px;">
-                                <div class="layui-input-inline" style="width: 30%;">
-                                    <input type="text" name="price_min" autocomplete="off" class="layui-input" style="border-color: #575759">
+                            <label class="text-uppercase">[[lang.products_price_range]]</label>
+                            <div id="edit-products-add-range-block">
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-input-inline" style="width: 30%;">
+                                        <input type="text" name="START_NUM" autocomplete="off" class="layui-input"
+                                               value="" style="border-color: #575759">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 30%;">
+                                        <input type="text" name="END_NUM" autocomplete="off"
+                                               value="" class="layui-input" style="border-color: #575759">
+                                    </div>
+                                    <div style="margin-top: 5px;" class="text-uppercase">[[lang.products_qty]]</div>
                                 </div>
-                                <div class="layui-form-mid">-</div>
-                                <div class="layui-input-inline" style="width: 30%;">
-                                    <input type="text" name="price_max" autocomplete="off"
-                                           class="layui-input" style="border-color: #575759">
+                                <div class="layui-inline" style="width: 100%;">
+                                    <div class="layui-input-inline" style="width: 70%;margin-top: 5px;">
+                                        <input type="text" name="RANGE_PRICE" class="form-control"
+                                               value="" style="border-color: #575759">
+                                    </div>
+                                    <div style="margin-top: 10px;" class="text-uppercase">[[lang.products_price]]</div>
                                 </div>
-                                <div style="margin-top: 5px;">[[lang.products_qty]]</div>
                             </div>
-                            <div class="layui-inline" style="width: 100%;">
-                                <div class="layui-input-inline" style="width: 70%;margin-top: 5px;">
-                                    <input type="text" class="form-control" style="border-color: #575759">
-                                </div>
-                                <div style="margin-top: 10px;">[[lang.products_price]]</div>
-                            </div>
-                            <div class="btn btn-block" style="width: 100%;border-color: #575759">
+                            <div class="btn btn-block text-uppercase"
+                                 style="width: 100%;border-color: #575759;margin-top: 5px;"
+                                 id="edit-product-add-range">
                                 [[lang.products_add_range]]
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_category]]</label>
+                            <label class="text-uppercase">[[lang.products_category]]</label>
                             <select name="ELEMENT_TYPE_ID" lay-verify="required" style="margin-top: 5px;"
-                                lay-filter="edit-product-category-select" id="edit-product-category-select-id">
-                                <option selected>[[lang.products_select_category]]</option>
+                                    lay-filter="edit-product-category-select" id="edit-product-category-select-id">
+                                <option value="">[[lang.products_select_category]]</option>
                                 {% for category in data.goodCategories %}
                                     <option id="[[category.ID]]">
                                         {% if lang_type == 'zh_cn' %}
@@ -177,34 +185,41 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_size]]</label>
-                            <select name="city" xm-select="select1" xm-select-skin="default" lay-verify="required" style="margin-top: 5px;" xm-select-show-count="1">
-                            <option selected>[[lang.products_choose_size]]</option>
-                            <option value="2" selected="selected">上海</option>
-                            <option value="3">广州</option>
-                            <option value="4" selected="selected">深圳</option>
-                            <option value="5">天津</option>
-                          </select>
+                            <label class="text-uppercase">[[lang.products_size]]</label>
+                            <select name="city" xm-select="size_select" xm-select-skin="default" lay-verify="required"
+                                    style="margin-top: 5px;border: 1px solid #575759" xm-select-show-count="1"
+                                    lay-filter="edit-product-size-select" id="edit-product-size-select-id">
+                                <option value="">[[lang.products_choose_size]]</option>
+                                {% for size in data.goodSizes %}
+                                    <option id="[[size.ID]]">
+                                        [[size.SIZE]]
+                                    </option>
+                                {% endfor %}
+                                <option value="add">[[lang.common_add]]</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <label>[[lang.products_size_chart]]</label>
-                            <div class="btn btn-block" style="width: 100%;border-color: #575759">
+                            <label class="text-uppercase">[[lang.products_size_chart]]</label>
+                            <div class="btn btn-block text-capitalize"
+                                 style="width: 100%;border-color: #575759;overflow: hidden;"
+                                 id="edit-products-import-chart">
                                 [[lang.common_import_from_computer]]
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <div class="btn btn-block" style="width: 100%;border-color: #575759">
+                            <div class="btn btn-block text-uppercase" style="width: 100%;border-color: #575759">
                                 [[lang.products_preview]]
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <div class="btn btn-block" style="background-color: #4A4A4A;color: #FFFFFF;width: 100%">
+                            <div class="btn btn-block text-uppercase" id="edit-product-publish-products"
+                                 style="background-color: #4A4A4A;color: #FFFFFF;width: 100%">
                                 [[lang.products_publish_the_sample]]
                             </div>
                         </div>
@@ -220,15 +235,16 @@
             base: '../static/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index', 'layer', 'form', 'formSelects'], function () {
+        }).use(['index', 'layer', 'form', 'formSelects', 'upload'], function () {
             var $ = layui.$,
                 admin = layui.admin,
                 form = layui.form,
                 formSelects = layui.formSelects,
+                upload = layui.upload,
                 layer = layui.layer;
 
             $('.layui-form-select').css("border", "1px solid #575759");
-
+            $('.xm-select-parent').css("border", "1px solid #575759");
 
             form.on('select(edit-product-area-select)', function (data) {
                 if (data.value == "add") {
@@ -349,6 +365,160 @@
                         }
                     });
                 }
+            });
+
+            layui.formSelects.on('size_select', function (id, vals, val, isAdd, isDisabled) {
+                //id:           点击select的id
+                //vals:         当前select已选中的值
+                //val:          当前select点击的值
+                //isAdd:        当前操作选中or取消
+                //isDisabled:   当前选项是否是disabled
+                //如果return false, 那么将取消本次操作
+                if (val.value == "add") {
+                    layer.open({
+                        type: 1,
+                        offset: 'auto',
+                        title: false,
+                        id: 'navSizeSelect',
+                        content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                            '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                            '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                            '<div class="row"><div class="layui-inline">' +
+                            '<div class="layui-input-inline" style="width: 100%;">' +
+                            '<input type="text" id="add-size-name" placeholder="Size" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-size-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #4A4A4A;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '</div></div></div>',
+                        shade: 0,
+                        area: ['370px', '150px'],
+                        resize: false,
+                        closeBtn: false,
+                        success: function (layero, index) {
+                            $('#basic_nav_search_close').on('click', function () {
+                                layer.closeAll();
+                            });
+
+                            $('#edit-products-size-add-btn').on('click', function () {
+                                admin.req({
+                                    method: "post",
+                                    url: '/api/good/add!add_good_size',
+                                    data: JSON.stringify({
+                                        "SIZE": $('#add-size-name').val(),
+                                        "langType": '[[lang_type]]'
+                                    }),
+                                    done: function (res) {
+                                        layer.msg(res.msg);
+                                        if (res.code == 0) {
+                                            var sizeArr = new Array();
+                                            {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
+                                            for (i = 0; i < res.data.goodSizes.length; i++) {
+                                                sizeArr[i] = {
+                                                    "name": res.data.goodSizes[i].SIZE,
+                                                    "value": res.data.goodSizes[i].ID
+                                                }
+                                            }
+                                            sizeArr[res.data.goodSizes.length] = {
+                                                "name": "[[lang.common_add]]",
+                                                "value": "add"
+                                            }
+                                            layui.formSelects.data('size_select', 'local', {
+                                                arr: sizeArr
+                                            });
+                                            layer.closeAll();
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+
+            upload.render({
+                url: '/api/common/upload!single_image_upload'
+                , elem: '#edit-products-import-chart'
+                , size: 200
+                , done: function (res) {
+                    if (res.code == 0) {
+                        $('#edit-products-import-chart').html(res.data.originFileName)
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                }
+            });
+
+            $('#edit-product-add-range').on('click', function () {
+                var temp = '<div class="layui-inline" style="margin-top: 5px;"><div class="layui-input-inline" style="width: 30%;">' +
+                    '<input type="text" name="START_NUM" value="" autocomplete="off" class="layui-input" style="border-color: #575759">' +
+                    '</div><div class="layui-form-mid">-</div><div class="layui-input-inline" style="width: 30%;">' +
+                    '<input type="text" name="END_NUM" value="" autocomplete="off" class="layui-input" style="border-color: #575759">' +
+                    '</div><div style="margin-top: 5px;" class="text-uppercase">[[lang.products_qty]]</div></div><div class="layui-inline" style="width: 100%;">' +
+                    '<div class="layui-input-inline" style="width: 70%;margin-top: 5px;"><input type="text" name="RANGE_PRICE" value="" ' +
+                    'class="form-control" style="border-color: #575759">' +
+                    '</div><div style="margin-top: 10px;" class="text-uppercase">[[lang.products_price]]</div></div>'
+                $('#edit-products-add-range-block').html($('#edit-products-add-range-block').html() + temp)
+            });
+
+            $('#edit-product-publish-products').on('click', function () {
+                var startNum = document.getElementsByName("START_NUM");
+                var endNum = document.getElementsByName("END_NUM");
+                var rangePrice = document.getElementsByName("RANGE_PRICE");
+                for (var i = 0; i < startNum.length; i++) {
+                    if (startNum[i].value == '' && endNum[i].value == '' && rangePrice[i].value == '') {
+                        continue
+                    } else if (startNum[i].value != '' && endNum[i].value != '' && rangePrice[i].value != '') {
+                        continue
+                    } else {
+                        if ('[[lang_type]]' == 'zh_cn') {
+                            layer.msg('价格区间的最低数量、最高数量和价格不允许残缺，可全空', {icon: 5, time: 5000});
+                        } else {
+                            layer.msg('The minimum quantity, maximum quantity and price of the price range are not allowed to be incomplete and can be completely empty', {
+                                icon: 5,
+                                time: 5000
+                            });
+                        }
+                    }
+                }
+            });
+
+            upload.render({
+                url: '/api/common/upload!single_image_upload'
+                , elem: '#edit-product-add-img'
+                , size: 200
+                , done: function (res) {
+                    if (res.code == 0) {
+                        var temp = '<div class="row" style="position:relative;margin-top: 10px;">' +
+                            '<img class="edit-product-add-img-img" src="' + res.data.url + '" style="width: 100%;">' +
+                            '<span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #4A4A4A;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
+                            '<span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #4A4A4A;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span></div>'
+                        $('#edit-product-add-img-list').html($('#edit-product-add-img-list').html() + temp)
+
+                        $('.edit-product-add-img-delete').on('click', function () {
+                            $(this).parent('.row').remove();
+                        });
+
+
+                        upload.render({
+                            url: '/api/common/upload!single_image_upload'
+                            , elem: '.edit-product-add-img-replace'
+                            , size: 200
+                            , done: function (res) {
+                                if (res.code == 0) {
+                                    {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
+                                    this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
+                                } else {
+                                    layer.msg(res.msg, {icon: 5});
+                                }
+                            }
+                        });
+                    } else {
+                        layer.msg(res.msg, {icon: 5});
+                    }
+                }
+            });
+
+            $('.edit-product-add-img-delete').on('click', function () {
+                $(this).parent('.row').remove();
             });
         });
     </script>

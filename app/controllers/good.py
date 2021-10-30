@@ -57,3 +57,48 @@ def add_good_category():
                             'data': {"goodCategories": good_categories_list}})
     except:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+######################Good Size#########################
+
+@controllers.route('{}/get!get_all_good_size'.format(URL_PREFIX), methods=['GET'])
+@login_required
+def get_all_good_size():
+    info_data = request.args.to_dict()
+    lang_type = info_data["langType"]
+    try:
+        good_sizes = GoodSize.query.order_by(asc(GoodSize.SIZE)).all()
+        good_sizes_list = []
+        for good_size in good_sizes:
+            good_sizes_list.append(good_size.to_json())
+        return jsonify({'code': 0, 'msg': '', 'data': good_sizes_list})
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': [{}]})
+
+
+@controllers.route('{}/add!add_good_size'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def add_good_size():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        size_good_size = GoodSize.query.filter_by(SIZE=info_data.get("SIZE")).all()
+
+        if len(size_good_size) != 0:
+            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_repeat_reset"], 'data': {}})
+        else:
+            good_size = GoodSize(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(),
+                                 SIZE=info_data.get("SIZE"), DESCRIPTION=info_data.get("DESCRIPTION", ""))
+            db.session.add(good_size)
+            db.session.commit()
+
+            good_sizes = GoodSize.query.order_by(asc(GoodSize.SIZE)).all()
+            good_sizes_list = []
+            for good_size in good_sizes:
+                good_sizes_list.append(good_size.to_json())
+
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"],
+                            'data': {"goodSizes": good_sizes_list}})
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})

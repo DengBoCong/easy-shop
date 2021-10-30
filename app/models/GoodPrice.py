@@ -15,7 +15,7 @@ class GoodPrice(db.Model, UserMixin):
     PRICE = db.Column(db.DECIMAL(20, 3), nullable=False, default=0.000, comment="价格")
 
     def __repr__(self):
-        return '<GoodPrice %r>\n' % self.NAME
+        return '<GoodPrice %r>\n' % self.PRICE
 
     def to_json(self):
         return {
