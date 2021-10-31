@@ -13,6 +13,8 @@ class GoodCategory(db.Model, UserMixin):
     EN_NAME = db.Column(db.String(100), nullable=False, default="", comment="英文名称")
     DESCRIPTION = db.Column(db.String(255), nullable=False, default="", comment="备注")
 
+    goods = db.relationship('Good', backref='category', lazy='dynamic')
+
     def __repr__(self):
         return '<GoodCategory %r>\n' % self.NAME
 

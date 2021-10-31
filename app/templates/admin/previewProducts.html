@@ -1,0 +1,207 @@
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 54px;">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 d-none d-md-block">
+                <p class="text-uppercase" style="margin-top: 300px;font-size: 14px;">[[goodInfo.BRAND]]</p>
+                <p style="font-size: 14px;">[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</p>
+
+                <p style="margin-top: 15px;font-size: 14px;">[[goodInfo.DESCRIPTION]]</p>
+                <p style="margin-top: 15px;font-size: 14px;">
+                    [[lang.products_supplier_color]]：[[goodInfo.SUPPLIER_COLOR]]</p>
+                <p style="margin-top: 15px;font-size: 14px;">[[lang.products_material]]：[[goodInfo.MATERIAL]]</br>
+                    [[lang.products_place_of_origin]]：[[goodInfo.PLACE_OF_ORIGIN]]</p>
+                <p style="margin-top: 3px;font-size: 14px;">
+                    [[lang.products_product_number]]：[[goodInfo.PRODUCT_NUMBER]]</p>
+            </div>
+            <div class="col-lg-6 col-md-4 d-none d-md-block">
+                <div class="row">
+                    {% for img in goodInfo.IMG %}
+                        <img src="[[img]]" style="margin-top: 10px;" width="100%"/>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 d-none d-md-block" style="text-align: center;">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-secondary text-uppercase" id="exit-preview-btn"
+                            style="font-size: 15px;width: 150px;height: 55px;">[[lang.products_exit_preview]]
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary text-uppercase"
+                            style="font-size: 15px;width: 150px;height: 55px;background-color: #323232;color: #FFFFFF;">
+                        {% if goodInfo.CLASS == 'SAMPLE' %}
+                            [[lang.products_publish_the_sample]]{% elif goodInfo.CLASS == 'DESIGN' %}
+                            [[lang.products_publish_the_design]]{% else %}
+                            [[lang.products_publish_the_reference]]{% endif %}</button>
+                </div>
+                <div class="layui-form">
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <div class="row" style="margin-top: 200px;font-size: 14px;padding: 10px;width: 300px;">
+                            <div class="col-3 text-capitalize">[[lang.products_qty_full]]</div>
+                            {% for price in goodInfo.PRICES %}
+                                <div class="col-3">[[price.RANGE]]</div>
+                            {% endfor %}
+                            <hr class="layui-border-black" style="margin-top: 5px;">
+                            <div class="col-3 text-capitalize" style="margin-top: -10px;">[[lang.products_price]]</div>
+                            {% for price in goodInfo.PRICES %}
+                                <div class="col-3" style="margin-top: -10px;">[[price.PRICE]]</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <select id="product-color" lay-verify="required" style="margin-top: 5px;">
+                            <option value="">[[lang.products_choose_size]]</option>
+                            {% for color in goodInfo.SIZE %}
+                                <option value="[[color]]">[[color]]</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <input type="text" id="product-brand" lay-verify="required" value="" class="layui-input"
+                               placeholder="[[lang.products_qty_full]]"
+                               style="margin-top: 5px;border-color: #575759;width: 280px;">
+                    </div>
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <div class="btn btn-block text-uppercase" id="edit-product-publish-products"
+                             style="background-color: #323232;color: #FFFFFF;width: 280px">
+                            [[lang.wishlist_add_to_bag]]
+                        </div>
+                    </div>
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <div class="row" style="width:280px;">
+                            <div class="col-6" style="text-align: left;font-size: 14px;padding: 0;">
+                                <span class="text-capitalize"
+                              layadmin-event="frameImgPreview">[[lang.products_size_chart]]</span>
+                            </div>
+                            <div class="col-6" style="text-align: right;font-size: 14px;padding: 0;">
+                                <span>[[lang.wishlist_add_to_wishlist_bag]]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-4 d-md-none" style="padding: 0">
+                <div class="btn-group" role="group" style="width: 100%">
+                    <button type="button" class="btn btn-outline-secondary text-uppercase"
+                            style="font-size: 12px;width: 50%;height: 40px;">[[lang.products_exit_preview]]
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary text-uppercase"
+                            style="font-size: 12px;width: 50%;height: 40px;background-color: #323232;color: #FFFFFF;">
+                        {% if goodInfo.CLASS == 'SAMPLE' %}
+                            [[lang.products_publish_the_sample]]{% elif goodInfo.CLASS == 'DESIGN' %}
+                            [[lang.products_publish_the_design]]{% else %}
+                            [[lang.products_publish_the_reference]]{% endif %}</button>
+                </div>
+                <div class="row" style="padding: 20px;">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for img in goodInfo.IMG %}
+                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="[[loop.index-1]]"
+                                        class="[['active' if loop.first else '']]"
+                                        aria-current="[['true' if loop.first else 'false']]"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            {% for img in goodInfo.IMG %}
+                                <div class="carousel-item [['active' if loop.first else '']]">
+                                    <img src="[[img]]" class="d-block w-100">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 d-md-none" style="padding: 0">
+                <div class="row" style="font-size: 10px;">
+                    <div class="col-5 text-capitalize" style="padding: 0 30px;">
+                        <span class="text-uppercase" style="font-size: 10px;">[[goodInfo.BRAND]]</span></br>
+                        <span class="text-capitalize" style="font-size: 10px;">[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</span>
+                    </div>
+                    <div class="col-7 text-capitalize">
+                        <div class="row">
+                            <div class="col-3 text-capitalize">[[lang.products_qty_full]]</div>
+                            {% for price in goodInfo.PRICES %}
+                                <div class="col-3">[[price.RANGE]]</div>
+                            {% endfor %}
+                            <hr class="layui-border-black" style="margin-top: 5px;">
+                            <div class="col-3 text-capitalize" style="margin-top: -15px;">[[lang.products_price]]</div>
+                            {% for price in goodInfo.PRICES %}
+                                <div class="col-3" style="margin-top: -15px;">[[price.PRICE]]</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form">
+                    <div class="layui-form-item" style="padding: 20px">
+                        <select lay-verify="required">
+                            <option value="">[[lang.products_choose_size]]</option>
+                            {% for color in goodInfo.SIZE %}
+                                <option value="[[color]]">[[color]]</option>
+                            {% endfor %}
+                        </select>
+                        <div class="input-group mb-3" style="margin-top: 10px;">
+                            <input type="number" value="" class="form-control"
+                                   placeholder="[[lang.products_qty_full]]"
+                                   style="border-color: #575759;">
+                            <span class="layui-form-mid" layadmin-event="frameImgPreview">&nbsp;&nbsp;<i
+                                    class="bi bi-clipboard-plus"></i></span>
+                        </div>
+                        <div class="input-group mb-3" style="margin-top: 10px;">
+                            <div class="btn btn-block text-uppercase form-control"
+                                 style="background-color: #323232;color: #FFFFFF;">
+                                [[lang.wishlist_add_to_bag]]
+                            </div>
+                            <span class="layui-form-mid">&nbsp;&nbsp;<i class="bi bi-heart"></i></span>
+                        </div>
+                        <p style="font-size: 10px;" class="text-uppercase">[[lang.products_product_info]]</p>
+                        <p style="font-size: 10px;">[[goodInfo.DESCRIPTION]]</p>
+                        <p style="margin-top: 15px;font-size: 10px;">
+                            [[lang.products_supplier_color]]：[[goodInfo.SUPPLIER_COLOR]]</p>
+                        <p style="margin-top: 15px;font-size: 10px;">
+                            [[lang.products_material]]：[[goodInfo.MATERIAL]]</br>
+                            [[lang.products_place_of_origin]]：[[goodInfo.PLACE_OF_ORIGIN]]</p>
+                        <p style="margin-top: 3px;font-size: 10px;">
+                            [[lang.products_product_number]]：[[goodInfo.PRODUCT_NUMBER]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
+
+            $('.layui-form-select').css("border", "1px solid #575759");
+
+            admin.events.frameImgPreview = function (othis) {
+                layer.photos({
+                    photos: {
+                        "title": "[[lang.products_size_chart]]" //相册标题
+                        , "data": [{
+                            "src": "[[goodInfo.SIZE_CHART]]" //原图地址
+                        }]
+                    }
+                    , shade: 0.01
+                    , closeBtn: 1
+                    , anim: 5
+                });
+            };
+
+            $('#exit-preview-btn').on('click', function () {
+                window.location.href = "/[[lang_type]][[addition.add]]/editProducts?goodId=[[goodInfo.ID]]"
+            });
+        });
+    </script>
+{% endblock %}

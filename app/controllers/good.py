@@ -102,3 +102,47 @@ def add_good_size():
                             'data': {"goodSizes": good_sizes_list}})
     except:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+######################Good#########################
+
+@controllers.route('{}/add!add_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def add_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        good_id = uuid.uuid1()
+        good = Good(ID=good_id, CREATE_DATETIME=datetime.now(), BRAND=info_data.get("BRAND"),
+                    COLOR=info_data.get("COLOR"), STYLE=info_data.get("STYLE"),
+                    DESCRIPTION=info_data.get("DESCRIPTION"), SUPPLIER_COLOR=info_data.get("SUPPLIER_COLOR"),
+                    MATERIAL=info_data.get("MATERIAL"), PLACE_OF_ORIGIN=info_data.get("PLACE_OF_ORIGIN"),
+                    PRODUCT_NUMBER=info_data.get("PRODUCT_NUMBER"), FACTORY_CODE=info_data.get("FACTORY_CODE"),
+                    AREA_ID=info_data.get("AREA_ID"), CURRENCY=info_data.get("CURRENCY"),
+                    CATEGORY_ID=info_data.get("CATEGORY_ID"), SIZE=info_data.get("SIZE"),
+                    SIZE_CHART=info_data.get("SIZE_CHART"), STAFF_EMAIL=info_data.get("STAFF_EMAIL"),
+                    IS_PUBLISHED=info_data.get("IS_PUBLISHED"), CLASS=info_data.get("CLASS"))
+        db.session.add(good)
+
+        good_img = list()
+        for img in info_data.get("GOOD_IMG", []):
+            good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
+        db.session.add_all(good_img)
+
+        good_prices = list()
+        for price in info_data.get("PRICE_RNAGE", []):
+            good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
+                                         START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
+                                         PRICE=price.get("PRICE", 0)))
+        db.session.add_all(good_prices)
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["common_redirecting"],
+                        'data': {"goodId": good_id}})
+        # if info_data.get("IS_PUBLISHED") == 0:
+        #     return redirect(url_for('views.preview_products', lang_type=lang_type, good_id=good_id))
+        # else:
+        #     return redirect(url_for('views.product_details', lang_type=lang_type, good_id=good_id))
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})

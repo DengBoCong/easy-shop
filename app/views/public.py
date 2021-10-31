@@ -2,7 +2,7 @@ import re
 import json
 from . import views
 from flask import jsonify
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from flask_login import login_required, logout_user, current_user
 from datetime import datetime
 from ..i18 import lang
@@ -40,6 +40,20 @@ def index(lang_type):
         return render_template("404.html", lang_type=lang_type, route="index")
     return render_template("index.html", lang=lang[lang_type],
                            lang_type=lang_type, route="index", addition=set_addition())
+
+
+@views.route('/<lang_type>/', methods=['GET', 'POST'])
+def index_d(lang_type):
+    """ 首页"""
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="index")
+    return redirect(url_for('views.index', lang_type=lang_type))
+
+
+@views.route('/', methods=['GET', 'POST'])
+def index_g():
+    """ 首页"""
+    return redirect(url_for('views.index', lang_type="zh_cn"))
 
 
 @views.route('/<lang_type>/aboutUs', methods=['GET', 'POST'])

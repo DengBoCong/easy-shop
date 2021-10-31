@@ -12,7 +12,7 @@ class Config:
     # 数据库相关
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
     # 邮件相关
     FLASKY_MAIL_SENDER = "1210212670@qq.com"

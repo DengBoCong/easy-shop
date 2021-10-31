@@ -37,7 +37,6 @@ class Good(db.Model, UserMixin):
             'CREATE_DATETIME': self.CREATE_DATETIME.strftime('%Y-%m-%d %H:%M:%S'),
             'BRAND': self.BRAND,
             'COLOR': self.COLOR,
-
             'STYLE': self.STYLE,
             'DESCRIPTION': self.DESCRIPTION,
             'SUPPLIER_COLOR': self.SUPPLIER_COLOR,
