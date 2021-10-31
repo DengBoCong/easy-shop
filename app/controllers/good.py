@@ -122,11 +122,12 @@ def add_good():
                     AREA_ID=info_data.get("AREA_ID"), CURRENCY=info_data.get("CURRENCY"),
                     CATEGORY_ID=info_data.get("CATEGORY_ID"), SIZE=info_data.get("SIZE"),
                     SIZE_CHART=info_data.get("SIZE_CHART"), STAFF_EMAIL=info_data.get("STAFF_EMAIL"),
-                    IS_PUBLISHED=info_data.get("IS_PUBLISHED"), CLASS=info_data.get("CLASS"))
+                    IS_PUBLISHED=info_data.get("IS_PUBLISHED"), CLASS=info_data.get("CLASS"),
+                    TYPE=info_data.get("TYPE").upper(), COVER=info_data.get("GOOD_IMG", [""])[0])
         db.session.add(good)
 
         good_img = list()
-        for img in info_data.get("GOOD_IMG", []):
+        for img in info_data.get("GOOD_IMG", [])[1:]:
             good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
         db.session.add_all(good_img)
 
@@ -144,5 +145,48 @@ def add_good():
         #     return redirect(url_for('views.preview_products', lang_type=lang_type, good_id=good_id))
         # else:
         #     return redirect(url_for('views.product_details', lang_type=lang_type, good_id=good_id))
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+@controllers.route('{}/update!update_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def update_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    good_id = info_data["ID"]
+
+    GoodImg.query.filter_by(GOOD_ID=good_id).delete()
+    db.session.commit()
+    good_img = list()
+    for img in info_data.get("GOOD_IMG", [])[1:]:
+        good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
+    db.session.add_all(good_img)
+    db.session.commit()
+
+    GoodPrice.query.filter_by(GOOD_ID=good_id).delete()
+    db.session.commit()
+    good_prices = list()
+    for price in info_data.get("PRICE_RNAGE", []):
+        good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
+                                     START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
+                                     PRICE=price.get("PRICE", 0)))
+    db.session.add_all(good_prices)
+    db.session.commit()
+
+    try:
+        del info_data["langType"]
+        del info_data["PRICE_RNAGE"]
+        del info_data["GOOD_IMG"]
+        good = Good.query.filter_by(ID=info_data.get("ID")).update(info_data)
+
+        if good == 1:
+            db.session.commit()
+
+            return jsonify({'code': 0, 'msg': lang[lang_type]["common_redirecting"],
+                            'data': {"goodId": info_data.get("ID")}})
+        else:
+            return jsonify({'code': 1, 'msg': lang[lang_type]["common_update_fail"], 'data': {}})
+
     except:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})

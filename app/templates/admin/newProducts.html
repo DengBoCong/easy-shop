@@ -107,7 +107,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.common_staff_email]]</label>
-                            <input type="text" id="product-staff-email" lay-verify="required" value=""
+                            <input type="email" id="product-staff-email" lay-verify="required" value=""
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -226,10 +226,7 @@
                         <div class="layui-input-inline" style="width: 300px;">
                             <div class="btn btn-block text-uppercase" id="edit-product-publish-products"
                                  style="background-color: #323232;color: #FFFFFF;width: 100%">
-                                {% if data.productType == 'SAMPLE' %}
-                                    [[lang.products_publish_the_sample]]{% elif data.productType == 'DESIGN' %}
-                                    [[lang.products_publish_the_design]]{% else %}
-                                    [[lang.products_publish_the_reference]]{% endif %}
+                                {% if data.productType == 'SAMPLE' %}[[lang.products_publish_the_sample]]{% elif data.productType == 'DESIGN' %}[[lang.products_publish_the_design]]{% else %}[[lang.products_publish_the_reference]]{% endif %}
                             </div>
                         </div>
                     </div>
@@ -902,7 +899,7 @@
                     '<div class="layui-input-inline" style="width: 70%;margin-top: 5px;"><input type="number" name="RANGE_PRICE" value="" ' +
                     'class="form-control" style="border-color: #575759">' +
                     '</div><div style="margin-top: 10px;" class="text-uppercase">[[lang.products_price]]</div></div>'
-                $('#edit-products-add-range-block').html($('#edit-products-add-range-block').html() + temp)
+                $('#edit-products-add-range-block').after(temp)
             });
             $('#edit-product-add-range1').on('click', function () {
                 var temp = '<div class="input-group mb-3"><input type="number" class="form-control" name="START_NUM1" value="" style="border-color: #575759;">' +
@@ -910,9 +907,17 @@
                     '<span class="layui-form-mid">&nbsp;&nbsp;[[lang.products_qty]]</span></div><div class="input-group mb-3">' +
                     '<input type="number" class="form-control" name="RANGE_PRICE1" value="" style="border-color: #575759;width: 67%">' +
                     '<span class="layui-form-mid">&nbsp;&nbsp;[[lang.products_price]]</span></div>'
-                $('#edit-products-add-range-block1').html($('#edit-products-add-range-block1').html() + temp)
+                $('#edit-products-add-range-block1').after(temp)
             });
 
+            var successUrl = ''
+            if ('[[data.productType]]' == 'DESIGN') {
+                successUrl = 'designDiagrams'
+            } else if ('[[data.productType]]' == 'REFERENCE') {
+                successUrl = 'referenceDiagrams'
+            } else {
+                successUrl = 'commonSample'
+            }
             function addProducts(btnType) {
                 var brand = $('#product-brand').val()
                 var color = $('#product-color').val()
@@ -963,13 +968,14 @@
                 if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
                     || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
                     || productArea == "" || staffEmail == "" || currency == "" || category == ""
-                    || size == "" || sizeChart == "" || prices.length == 0 || goodImg.length == 0) {
+                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
                     admin.req({
                         method: "post",
                         url: '/api/good/add!add_good',
                         data: JSON.stringify({
+                            "TYPE": '[[addition.location]]',
                             "BRAND": brand,
                             "COLOR": color,
                             "STYLE": style,
@@ -994,7 +1000,11 @@
                         done: function (res) {
                             layer.msg(res.msg);
                             if (res.code == 0) {
-                                window.location.href = "/[[lang_type]]/previewProducts?goodId=" + res.data.goodId
+                                if (btnType == 0) {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
+                                } else {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                                }
                             }
                         }
                     });
@@ -1050,13 +1060,14 @@
                 if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
                     || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
                     || productArea == "" || staffEmail == "" || currency == "" || category == ""
-                    || size == "" || sizeChart == "" || prices.length == 0 || goodImg.length == 0) {
+                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
                     admin.req({
                         method: "post",
                         url: '/api/good/add!add_good',
                         data: JSON.stringify({
+                            "TYPE": '[[addition.location]]',
                             "BRAND": brand,
                             "COLOR": color,
                             "STYLE": style,
@@ -1081,7 +1092,11 @@
                         done: function (res) {
                             layer.msg(res.msg);
                             if (res.code == 0) {
-                                window.location.href = "/[[lang_type]]/previewProducts?goodId=" + res.data.goodId
+                                if (btnType == 0) {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
+                                } else {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                                }
                             }
                         }
                     });

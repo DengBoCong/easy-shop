@@ -6,12 +6,12 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 54px;">
         <div class="row">
-            <div class="col-lg-3 col-sm-4 d-none d-sm-block">
+            <div class="col-lg-3 col-md-4 d-none d-md-block">
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_brand]]</label>
-                            <input type="text" id="product-brand" lay-verify="required" value="" class="layui-input"
+                            <input type="text" id="product-brand" lay-verify="required" value="[[data.goodInfo.BRAND]]" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
@@ -20,30 +20,30 @@
                             <label class="text-uppercase">[[lang.color_color]]</label>
                             <select id="product-color" lay-verify="required" style="margin-top: 5px;">
                                 <option value="">[[lang.products_choose_color]]</option>
-                                <option value="Brown">[[lang.color_brown]]</option>
-                                <option value="Blue">[[lang.color_blue]]</option>
-                                <option value="Gray">[[lang.color_gray]]</option>
-                                <option value="White">[[lang.color_white]]</option>
-                                <option value="Pink">[[lang.color_pink]]</option>
-                                <option value="Purple">[[lang.color_purple]]</option>
-                                <option value="Red">[[lang.color_red]]</option>
-                                <option value="Green">[[lang.color_green]]</option>
-                                <option value="Yellow">[[lang.color_yellow]]</option>
-                                <option value="Black">[[lang.color_black]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Brown' else '']] value="Brown">[[lang.color_brown]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Blue' else '']] value="Blue">[[lang.color_blue]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Gray' else '']] value="Gray">[[lang.color_gray]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'White' else '']] value="White">[[lang.color_white]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Pink' else '']] value="Pink">[[lang.color_pink]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Purple' else '']] value="Purple">[[lang.color_purple]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Red' else '']] value="Red">[[lang.color_red]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Green' else '']] value="Green">[[lang.color_green]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Yellow' else '']] value="Yellow">[[lang.color_yellow]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Black' else '']] value="Black">[[lang.color_black]]</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_style]]</label>
-                            <input type="text" id="product-style" lay-verify="required" value="" class="layui-input"
+                            <input type="text" id="product-style" lay-verify="required" value="[[data.goodInfo.STYLE]]" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_description]]</label>
-                            <input type="text" id="product-description" lay-verify="required" value=""
+                            <input type="text" id="product-description" lay-verify="required" value="[[data.goodInfo.DESCRIPTION]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -51,7 +51,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_supplier_color]]</label>
-                            <input type="text" id="product-supplier-color" lay-verify="required" value=""
+                            <input type="text" id="product-supplier-color" lay-verify="required" value="[[data.goodInfo.SUPPLIER_COLOR]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -59,14 +59,14 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_material]]</label>
-                            <input type="text" id="product-material" lay-verify="required" value="" class="layui-input"
+                            <input type="text" id="product-material" lay-verify="required" value="[[data.goodInfo.MATERIAL]]" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_place_of_origin]]</label>
-                            <input type="text" id="product-place-of-origin" lay-verify="required" value=""
+                            <input type="text" id="product-place-of-origin" lay-verify="required" value="[[data.goodInfo.PLACE_OF_ORIGIN]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -74,7 +74,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_product_number]]</label>
-                            <input type="text" id="product-product-number" lay-verify="required" value=""
+                            <input type="text" id="product-product-number" lay-verify="required" value="[[data.goodInfo.PRODUCT_NUMBER]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -82,7 +82,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_factory_code]]</label>
-                            <input type="text" id="product-factory-code" lay-verify="required" value=""
+                            <input type="text" id="product-factory-code" lay-verify="required" value="[[data.goodInfo.FACTORY_CODE]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -93,11 +93,9 @@
                             <select lay-verify="required" style="margin-top: 5px;"
                                     lay-filter="edit-product-area-select" id="edit-product-area-select-id">
                                 <option value="">[[lang.products_choose_area]]</option>
-                                <option value="public">[[lang.common_public]]</option>
+                                <option [['selected' if data.goodInfo.AREA_ID == 'public' else '']] value="public">[[lang.common_public]]</option>
                                 {% for area in data.areas %}
-                                    <option value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else
-                                        area.EN_NAME]]
-                                    </option>
+                                    <option [['selected' if data.goodInfo.AREA_ID == area.ID else '']] value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
                             </select>
@@ -107,32 +105,40 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.common_staff_email]]</label>
-                            <input type="text" id="product-staff-email" lay-verify="required" value=""
+                            <input type="text" id="product-staff-email" lay-verify="required" value="[[data.goodInfo.STAFF_EMAIL]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-4 d-none d-sm-block">
-                <div id="edit-product-add-img-list"></div>
+            <div class="col-lg-6 col-md-4 d-none d-md-block">
+                <div id="edit-product-add-img-list">
+                    {% for img in data.goodInfo.IMG %}
+                        <div class="row" style="position:relative;margin-top: 10px;">
+                            <img class="edit-product-add-img-img" src="[[img]]" style="width: 100%;">
+                            <span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>
+                            <span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
+                        </div>
+                    {% endfor %}
+                </div>
                 <div class="row" style="margin-top: 30px;">
                     <img src="[[url_for('static', filename='img/plusLine.png')]]"
                          style="width: 600px;border-color: #0C0C0C"
                          id="edit-product-add-img" class="rounded mx-auto d-block">
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-4 d-none d-sm-block">
+            <div class="col-lg-3 col-md-4 d-none d-md-block">
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.products_currency]]</label>
                             <select id="product-currency" lay-verify="required" style="margin-top: 5px;">
                                 <option value="">[[lang.products_choose_currency]]</option>
-                                <option value="RMB">[[lang.products_price_rmb]]</option>
-                                <option value="JPN">[[lang.products_price_jpn]]</option>
-                                <option value="EUR">[[lang.products_price_eur]]</option>
-                                <option value="USD">[[lang.products_price_usd]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'RMB' else '']] value="RMB">[[lang.products_price_rmb]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'JPN' else '']] value="JPN">[[lang.products_price_jpn]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'EUR' else '']] value="EUR">[[lang.products_price_eur]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'USD' else '']] value="USD">[[lang.products_price_usd]]</option>
                             </select>
                         </div>
                     </div>
@@ -141,15 +147,16 @@
                             <div class="layui-input-inline" style="width: 300px;">
                                 <label class="text-uppercase">[[lang.products_price_range]]</label>
                                 <div id="edit-products-add-range-block">
+                                    {% for price in data.goodInfo.PRICES %}
                                     <div class="layui-inline" style="margin-top: 5px;width: 100%">
                                         <div class="layui-input-inline" style="width: 30%;">
                                             <input type="number" name="START_NUM" autocomplete="off" class="layui-input"
-                                                   value="" style="border-color: #575759">
+                                                   value="[[price.START_NUM]]" style="border-color: #575759">
                                         </div>
                                         <div class="layui-form-mid">-</div>
                                         <div class="layui-input-inline" style="width: 30%;">
                                             <input type="number" name="END_NUM" autocomplete="off"
-                                                   value="" class="layui-input" style="border-color: #575759">
+                                                   value="[[price.END_NUM]]" class="layui-input" style="border-color: #575759">
                                         </div>
                                         <div style="margin-top: 5px;float: right" class="text-uppercase">
                                             [[lang.products_qty]]
@@ -158,12 +165,13 @@
                                     <div class="layui-inline" style="width: 100%">
                                         <div class="layui-input-inline" style="width: 70%;margin-top: 5px;">
                                             <input type="number" name="RANGE_PRICE" class="form-control"
-                                                   value="" style="border-color: #575759">
+                                                   value="[[price.PRICE]]" style="border-color: #575759">
                                         </div>
                                         <div style="margin-top: 10px;float: right" class="text-uppercase">
                                             [[lang.products_price]]
                                         </div>
                                     </div>
+                                    {% endfor %}
                                 </div>
                                 <div class="btn btn-block text-uppercase"
                                      style="width: 100%;border-color: #575759;margin-top: 5px;"
@@ -180,9 +188,7 @@
                                     lay-filter="edit-product-category-select" id="edit-product-category-select-id">
                                 <option value="">[[lang.products_select_category]]</option>
                                 {% for category in data.goodCategories %}
-                                    <option value="[[category.ID]]">[[category.NAME if lang_type == 'zh_cn' else
-                                        category.EN_NAME]]
-                                    </option>
+                                    <option [['selected' if data.goodInfo.CATEGORY_ID == category.ID else '']] value="[[category.ID]]">[[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
                             </select>
@@ -196,9 +202,7 @@
                                     lay-filter="edit-product-size-select" id="edit-product-size-select-id">
                                 <option value="">[[lang.products_choose_size]]</option>
                                 {% for size in data.goodSizes %}
-                                    <option value="[[size.SIZE]]">
-                                        [[size.SIZE]]
-                                    </option>
+                                    <option [['selected' if size.SIZE in data.goodInfo.SIZE else '']] value="[[size.SIZE]]">[[size.SIZE]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
                             </select>
@@ -209,8 +213,8 @@
                             <label class="text-uppercase">[[lang.products_size_chart]]</label>
                             <div class="btn btn-block text-capitalize"
                                  style="width: 100%;border-color: #575759;overflow: hidden;"
-                                 id="edit-products-import-chart" data-sizeChart="">
-                                [[lang.common_import_from_computer]]
+                                 id="edit-products-import-chart" data-sizeChart="[[data.goodInfo.SIZE_CHART]]">
+                                [[data.goodInfo.SIZE_CHART]]
                             </div>
                         </div>
                     </div>
@@ -235,20 +239,28 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-4 col-12 d-sm-none">
-                <div id="edit-product-add-img-list1"></div>
+            <div class="col-lg-6 col-md-4 col-12 d-md-none">
+                <div id="edit-product-add-img-list1">
+                    {% for img in data.goodInfo.IMG %}
+                        <div style="position:relative;margin-top: 10px;width: 370px;" class="row rounded mx-auto d-block">
+                            <img class="edit-product-add-img-img1" src="[[img]]">
+                            <span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>
+                            <span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
+                        </div>
+                    {% endfor %}
+                </div>
                 <div class="row" style="margin-top: 30px;">
                     <img src="[[url_for('static', filename='img/plusLine.png')]]"
                          style="width: 385px;border-color: #0C0C0C"
                          id="edit-product-add-img1" class="rounded mx-auto d-block">
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-4 col-12 d-sm-none">
+            <div class="col-lg-3 col-md-4 col-12 d-md-none">
                 <div class="layui-form" style="padding: 20px 0 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_brand]]</label>
-                            <input type="text" id="product-brand1" lay-verify="required" value="" class="layui-input"
+                            <input type="text" id="product-brand1" lay-verify="required" value="[[data.goodInfo.BRAND]]" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
@@ -257,30 +269,30 @@
                             <label class="text-uppercase">[[lang.color_color]]</label>
                             <select id="product-color1" lay-verify="required" style="margin-top: 5px;">
                                 <option value="">[[lang.products_choose_color]]</option>
-                                <option value="Brown">[[lang.color_brown]]</option>
-                                <option value="Blue">[[lang.color_blue]]</option>
-                                <option value="Gray">[[lang.color_gray]]</option>
-                                <option value="White">[[lang.color_white]]</option>
-                                <option value="Pink">[[lang.color_pink]]</option>
-                                <option value="Purple">[[lang.color_purple]]</option>
-                                <option value="Red">[[lang.color_red]]</option>
-                                <option value="Green">[[lang.color_green]]</option>
-                                <option value="Yellow">[[lang.color_yellow]]</option>
-                                <option value="Black">[[lang.color_black]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Brown' else '']] value="Brown">[[lang.color_brown]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Blue' else '']] value="Blue">[[lang.color_blue]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Gray' else '']] value="Gray">[[lang.color_gray]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'White' else '']] value="White">[[lang.color_white]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Pink' else '']] value="Pink">[[lang.color_pink]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Purple' else '']] value="Purple">[[lang.color_purple]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Red' else '']] value="Red">[[lang.color_red]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Green' else '']] value="Green">[[lang.color_green]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Yellow' else '']] value="Yellow">[[lang.color_yellow]]</option>
+                                <option [['selected' if data.goodInfo.COLOR == 'Black' else '']] value="Black">[[lang.color_black]]</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_style]]</label>
-                            <input type="text" id="product-style1" lay-verify="required" value="" class="layui-input"
+                            <input type="text" id="product-style1" lay-verify="required" value="[[data.goodInfo.STYLE]]" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_description]]</label>
-                            <input type="text" id="product-description1" lay-verify="required" value=""
+                            <input type="text" id="product-description1" lay-verify="required" value="[[data.goodInfo.DESCRIPTION]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -288,7 +300,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_supplier_color]]</label>
-                            <input type="text" id="product-supplier-color1" lay-verify="required" value=""
+                            <input type="text" id="product-supplier-color1" lay-verify="required" value="[[data.goodInfo.SUPPLIER_COLOR]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -296,14 +308,14 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_material]]</label>
-                            <input type="text" id="product-material1" lay-verify="required" value="" class="layui-input"
+                            <input type="text" id="product-material1" lay-verify="required" value="[[data.goodInfo.MATERIAL]]" class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_place_of_origin]]</label>
-                            <input type="text" id="product-place-of-origin1" lay-verify="required" value=""
+                            <input type="text" id="product-place-of-origin1" lay-verify="required" value="[[data.goodInfo.PLACE_OF_ORIGIN]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -311,7 +323,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_product_number]]</label>
-                            <input type="text" id="product-product-number1" lay-verify="required" value=""
+                            <input type="text" id="product-product-number1" lay-verify="required" value="[[data.goodInfo.PRODUCT_NUMBER]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -319,7 +331,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_factory_code]]</label>
-                            <input type="text" id="product-factory-code1" lay-verify="required" value=""
+                            <input type="text" id="product-factory-code1" lay-verify="required" value="[[data.goodInfo.FACTORY_CODE]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
@@ -330,11 +342,9 @@
                             <select lay-verify="required" style="margin-top: 5px;"
                                     lay-filter="edit-product-area-select1" id="edit-product-area-select-id1">
                                 <option value="">[[lang.products_choose_area]]</option>
-                                <option value="public">[[lang.common_public]]</option>
+                                <option [['selected' if data.goodInfo.AREA_ID == 'public' else '']] value="public">[[lang.common_public]]</option>
                                 {% for area in data.areas %}
-                                    <option value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else
-                                        area.EN_NAME]]
-                                    </option>
+                                    <option [['selected' if data.goodInfo.AREA_ID == area.ID else '']] value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
                             </select>
@@ -344,24 +354,24 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.common_staff_email]]</label>
-                            <input type="text" id="product-staff-email1" lay-verify="required" value=""
+                            <input type="text" id="product-staff-email1" lay-verify="required" value="[[data.goodInfo.STAFF_EMAIL]]"
                                    class="layui-input"
                                    style="margin-top: 5px;border-color: #575759">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-4 col-12 d-sm-none">
+            <div class="col-lg-3 col-md-4 col-12 d-md-none">
                 <div class="layui-form" style="padding: 20px 0 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.products_currency]]</label>
                             <select id="product-currency1" lay-verify="required" style="margin-top: 5px;">
                                 <option value="">[[lang.products_choose_currency]]</option>
-                                <option value="RMB">[[lang.products_price_rmb]]</option>
-                                <option value="JPN">[[lang.products_price_jpn]]</option>
-                                <option value="EUR">[[lang.products_price_eur]]</option>
-                                <option value="USD">[[lang.products_price_usd]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'RMB' else '']] value="RMB">[[lang.products_price_rmb]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'JPN' else '']] value="JPN">[[lang.products_price_jpn]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'EUR' else '']] value="EUR">[[lang.products_price_eur]]</option>
+                                <option [['selected' if data.goodInfo.CURRENCY == 'USD' else '']] value="USD">[[lang.products_price_usd]]</option>
                             </select>
                         </div>
                     </div>
@@ -370,16 +380,18 @@
                             <div style="width: 370px;">
                                 <label class="text-uppercase">[[lang.products_price_range]]</label>
                                 <div id="edit-products-add-range-block1">
+                                    {% for price in data.goodInfo.PRICES %}
                                     <div class="input-group mb-3">
-                                        <input type="number" class="form-control" name="START_NUM1" value="" style="border-color: #575759;">
+                                        <input type="number" class="form-control" name="START_NUM1" value="[[price.START_NUM]]" style="border-color: #575759;">
                                         <span class="layui-form-mid">&nbsp;&nbsp;-</span>
-                                        <input type="number" class="form-control" name="END_NUM1" value="" style="border-color: #575759;">
+                                        <input type="number" class="form-control" name="END_NUM1" value="[[price.END_NUM]]" style="border-color: #575759;">
                                         <span class="layui-form-mid">&nbsp;&nbsp;[[lang.products_qty]]</span>
                                     </div>
                                     <div class="input-group mb-3">
-                                        <input type="number" class="form-control" name="RANGE_PRICE1" value="" style="border-color: #575759;width: 67%">
+                                        <input type="number" class="form-control" name="RANGE_PRICE1" value="[[price.PRICE]]" style="border-color: #575759;width: 67%">
                                         <span class="layui-form-mid">&nbsp;&nbsp;[[lang.products_price]]</span>
                                     </div>
+                                    {% endfor %}
                                 </div>
 
                                 {#                            <div id="edit-products-add-range-block1">#}
@@ -418,9 +430,7 @@
                                     lay-filter="edit-product-category-select1" id="edit-product-category-select-id1">
                                 <option value="">[[lang.products_select_category]]</option>
                                 {% for category in data.goodCategories %}
-                                    <option value="[[category.ID]]">[[category.NAME if lang_type == 'zh_cn' else
-                                        category.EN_NAME]]
-                                    </option>
+                                    <option [['selected' if data.goodInfo.CATEGORY_ID == category.ID else '']] value="[[category.ID]]">[[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
                             </select>
@@ -434,9 +444,7 @@
                                     lay-filter="edit-product-size-select1" id="edit-product-size-select-id1">
                                 <option value="">[[lang.products_choose_size]]</option>
                                 {% for size in data.goodSizes %}
-                                    <option value="[[size.SIZE]]">
-                                        [[size.SIZE]]
-                                    </option>
+                                    <option [['selected' if size.SIZE in data.goodInfo.SIZE else '']] value="[[size.SIZE]]">[[size.SIZE]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
                             </select>
@@ -447,8 +455,8 @@
                             <label class="text-uppercase">[[lang.products_size_chart]]</label>
                             <div class="btn btn-block text-capitalize"
                                  style="width: 100%;border-color: #575759;overflow: hidden;"
-                                 id="edit-products-import-chart1" data-sizeChart="">
-                                [[lang.common_import_from_computer]]
+                                 id="edit-products-import-chart1" data-sizeChart="[[data.goodInfo.SIZE_CHART]]">
+                                [[data.goodInfo.SIZE_CHART]]
                             </div>
                         </div>
                     </div>
@@ -902,7 +910,7 @@
                     '<div class="layui-input-inline" style="width: 70%;margin-top: 5px;"><input type="number" name="RANGE_PRICE" value="" ' +
                     'class="form-control" style="border-color: #575759">' +
                     '</div><div style="margin-top: 10px;" class="text-uppercase">[[lang.products_price]]</div></div>'
-                $('#edit-products-add-range-block').html($('#edit-products-add-range-block').html() + temp)
+                $('#edit-products-add-range-block').after(temp)
             });
             $('#edit-product-add-range1').on('click', function () {
                 var temp = '<div class="input-group mb-3"><input type="number" class="form-control" name="START_NUM1" value="" style="border-color: #575759;">' +
@@ -910,9 +918,17 @@
                     '<span class="layui-form-mid">&nbsp;&nbsp;[[lang.products_qty]]</span></div><div class="input-group mb-3">' +
                     '<input type="number" class="form-control" name="RANGE_PRICE1" value="" style="border-color: #575759;width: 67%">' +
                     '<span class="layui-form-mid">&nbsp;&nbsp;[[lang.products_price]]</span></div>'
-                $('#edit-products-add-range-block1').html($('#edit-products-add-range-block1').html() + temp)
+                $('#edit-products-add-range-block1').after(temp)
             });
 
+            var successUrl = ''
+            if ('[[data.productType]]' == 'DESIGN') {
+                successUrl = 'designDiagrams'
+            } else if ('[[data.productType]]' == 'REFERENCE') {
+                successUrl = 'referenceDiagrams'
+            } else {
+                successUrl = 'commonSample'
+            }
             function addProducts(btnType) {
                 var brand = $('#product-brand').val()
                 var color = $('#product-color').val()
@@ -963,44 +979,48 @@
                 if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
                     || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
                     || productArea == "" || staffEmail == "" || currency == "" || category == ""
-                    || size == "" || sizeChart == "" || prices.length == 0 || goodImg.length == 0) {
+                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
-                    admin.req({
-                        method: "post",
-                        url: '/api/good/add!add_good',
-                        data: JSON.stringify({
-                            "BRAND": brand,
-                            "COLOR": color,
-                            "STYLE": style,
-                            "DESCRIPTION": description,
-                            "SUPPLIER_COLOR": supplierColor,
-                            "MATERIAL": material,
-                            "PLACE_OF_ORIGIN": placeOfOrigin,
-                            "PRODUCT_NUMBER": productNumber,
-                            "FACTORY_CODE": factoryCode,
-                            "AREA_ID": productArea,
-                            "CURRENCY": currency,
-                            "CATEGORY_ID": category,
-                            "SIZE": size,
-                            "SIZE_CHART": sizeChart,
-                            "STAFF_EMAIL": staffEmail,
-                            "IS_PUBLISHED": btnType,
-                            "CLASS": '[[data.productType]]',
-                            "PRICE_RNAGE": prices,
-                            "GOOD_IMG": goodImg,
-                            "langType": '[[lang_type]]'
-                        }),
-                        done: function (res) {
-                            layer.msg(res.msg);
-                            if (res.code == 0) {
-                                window.location.href = "/[[lang_type]]/previewProducts?goodId=" + res.data.goodId
+                    if (btnType == 0) {
+                        window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=[[data.goodInfo.ID]]"
+                    } else {
+                        admin.req({
+                            method: "post",
+                            url: '/api/good/update!update_good',
+                            data: JSON.stringify({
+                                "ID": '[[data.goodInfo.ID]]',
+                                "BRAND": brand,
+                                "COLOR": color,
+                                "STYLE": style,
+                                "DESCRIPTION": description,
+                                "SUPPLIER_COLOR": supplierColor,
+                                "MATERIAL": material,
+                                "PLACE_OF_ORIGIN": placeOfOrigin,
+                                "PRODUCT_NUMBER": productNumber,
+                                "FACTORY_CODE": factoryCode,
+                                "AREA_ID": productArea,
+                                "CURRENCY": currency,
+                                "CATEGORY_ID": category,
+                                "SIZE": size,
+                                "SIZE_CHART": sizeChart,
+                                "STAFF_EMAIL": staffEmail,
+                                "IS_PUBLISHED": btnType,
+                                "COVER": goodImg[0],
+                                "PRICE_RNAGE": prices,
+                                "GOOD_IMG": goodImg,
+                                "langType": '[[lang_type]]'
+                            }),
+                            done: function (res) {
+                                layer.msg(res.msg);
+                                if (res.code == 0) {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
-
             function addProducts1(btnType) {
                 var brand = $('#product-brand1').val()
                 var color = $('#product-color1').val()
@@ -1044,48 +1064,53 @@
                     }
                 }
 
-                $(".edit-product-add-img-img").each(function (i, e) {
+                $(".edit-product-add-img-img1").each(function (i, e) {
                     goodImg[i] = $(this).attr('src')
                 });
 
                 if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
                     || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
                     || productArea == "" || staffEmail == "" || currency == "" || category == ""
-                    || size == "" || sizeChart == "" || prices.length == 0 || goodImg.length == 0) {
+                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
-                    admin.req({
-                        method: "post",
-                        url: '/api/good/add!add_good',
-                        data: JSON.stringify({
-                            "BRAND": brand,
-                            "COLOR": color,
-                            "STYLE": style,
-                            "DESCRIPTION": description,
-                            "SUPPLIER_COLOR": supplierColor,
-                            "MATERIAL": material,
-                            "PLACE_OF_ORIGIN": placeOfOrigin,
-                            "PRODUCT_NUMBER": productNumber,
-                            "FACTORY_CODE": factoryCode,
-                            "AREA_ID": productArea,
-                            "CURRENCY": currency,
-                            "CATEGORY_ID": category,
-                            "SIZE": size,
-                            "SIZE_CHART": sizeChart,
-                            "STAFF_EMAIL": staffEmail,
-                            "IS_PUBLISHED": btnType,
-                            "CLASS": '[[data.productType]]',
-                            "PRICE_RNAGE": prices,
-                            "GOOD_IMG": goodImg,
-                            "langType": '[[lang_type]]'
-                        }),
-                        done: function (res) {
-                            layer.msg(res.msg);
-                            if (res.code == 0) {
-                                window.location.href = "/[[lang_type]]/previewProducts?goodId=" + res.data.goodId
+                    if (btnType == 0) {
+                        window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=[[data.goodInfo.ID]]"
+                    } else {
+                        admin.req({
+                            method: "post",
+                            url: '/api/good/update!update_good',
+                            data: JSON.stringify({
+                                "ID": '[[data.goodInfo.ID]]',
+                                "BRAND": brand,
+                                "COLOR": color,
+                                "STYLE": style,
+                                "DESCRIPTION": description,
+                                "SUPPLIER_COLOR": supplierColor,
+                                "MATERIAL": material,
+                                "PLACE_OF_ORIGIN": placeOfOrigin,
+                                "PRODUCT_NUMBER": productNumber,
+                                "FACTORY_CODE": factoryCode,
+                                "AREA_ID": productArea,
+                                "CURRENCY": currency,
+                                "CATEGORY_ID": category,
+                                "SIZE": size,
+                                "SIZE_CHART": sizeChart,
+                                "STAFF_EMAIL": staffEmail,
+                                "IS_PUBLISHED": btnType,
+                                "COVER": goodImg[0],
+                                "PRICE_RNAGE": prices,
+                                "GOOD_IMG": goodImg,
+                                "langType": '[[lang_type]]'
+                            }),
+                            done: function (res) {
+                                layer.msg(res.msg);
+                                if (res.code == 0) {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
 
@@ -1145,7 +1170,7 @@
                 , done: function (res) {
                     if (res.code == 0) {
                         var temp = '<div style="position:relative;margin-top: 10px;width: 370px;" class="row rounded mx-auto d-block">' +
-                            '<img class="edit-product-add-img-img" src="' + res.data.url + '">' +
+                            '<img class="edit-product-add-img-img1" src="' + res.data.url + '">' +
                             '<span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
                             '<span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span></div>'
                         $('#edit-product-add-img-list1').html($('#edit-product-add-img-list1').html() + temp)
@@ -1162,7 +1187,7 @@
                             , done: function (res) {
                                 if (res.code == 0) {
                                     {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
-                                    this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
+                                    this.item.siblings('.edit-product-add-img-img1').attr('src', res.data.url)
                                 } else {
                                     layer.msg(res.msg, {icon: 5});
                                 }

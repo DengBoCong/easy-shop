@@ -51,14 +51,27 @@ def new_single_product(lang_type):
 def edit_single_product(lang_type):
     """ 编辑产品"""
     lang_type, sub_page = lang_type.split("-")
+    info_data = request.args.to_dict()
 
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="editProducts")
 
-    info_data = request.args.to_dict()
-    product_type = info_data.get("productType", "")
-    if product_type not in ["SAMPLE", "DESIGN", "REFERENCE"]:
-        return render_template("404.html", lang_type=lang_type, route="editProducts")
+    good = Good.query.get(info_data.get("goodId"))
+    good_info = good.to_json()
+
+    good_info["SIZE"] = [e for e in good_info["SIZE"].split(",")]
+
+    good_info["IMG"] = [good_info["COVER"]]
+    good_img = GoodImg.query.filter_by(GOOD_ID=good_info["ID"]).order_by(asc(GoodImg.CREATE_DATETIME)).all()
+    for img in good_img:
+        good_info["IMG"].append(img.URL)
+
+    good_prices = GoodPrice.query.filter_by(GOOD_ID=good_info["ID"]).order_by(asc(GoodPrice.START_NUM)).all()
+    good_info["PRICES"] = [{
+        "START_NUM": price.START_NUM,
+        "END_NUM": price.END_NUM,
+        "PRICE": "%.2f" % price.PRICE
+    } for price in good_prices]
 
     areas = Area.query.order_by(asc(Area.EN_NAME)).all()
     areas_list = []
@@ -79,7 +92,8 @@ def edit_single_product(lang_type):
                            lang_type=lang_type, route="editProducts",
                            addition=set_addition(add="-" + sub_page, location=sub_page),
                            data={"areas": areas_list, "goodCategories": good_categories_list,
-                                 "goodSizes": good_sizes_list, "productType": product_type})
+                                 "goodSizes": good_sizes_list, "goodInfo": good_info,
+                                 "productType": good_info["CLASS"]})
 
 
 @views.route('/<lang_type>/previewProducts', methods=['GET', 'POST'])
@@ -87,6 +101,7 @@ def edit_single_product(lang_type):
 def preview_products(lang_type):
     """ 预览产品"""
     info_data = request.args.to_dict()
+    lang_type, sub_page = lang_type.split("-")
 
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="previewProducts")
@@ -98,8 +113,10 @@ def preview_products(lang_type):
     good_info["SIZE"] = [e for e in good_info["SIZE"].split(",")]
     good_info["SIZE"].sort()
 
+    good_info["IMG"] = [good_info["COVER"]]
     good_img = GoodImg.query.filter_by(GOOD_ID=good_info["ID"]).order_by(asc(GoodImg.CREATE_DATETIME)).all()
-    good_info["IMG"] = [img.URL for img in good_img]
+    for img in good_img:
+        good_info["IMG"].append(img.URL)
 
     good_prices = GoodPrice.query.filter_by(GOOD_ID=good_info["ID"]).order_by(asc(GoodPrice.START_NUM)).all()
     good_info["PRICES"] = [{
@@ -113,7 +130,8 @@ def preview_products(lang_type):
 
     return render_template("admin/previewProducts.html", lang=lang[lang_type], lang_type=lang_type,
                            route="previewProducts?goodId={}".format(good_info["ID"]),
-                           goodInfo=good_info, addition=set_addition(location="previewProducts"))
+                           goodInfo=good_info, addition=set_addition(add="-" + sub_page, location="previewProducts"),
+                           data={"productType": good_info["CLASS"]})
 
 
 @views.route('/<lang_type>/publishedProduct', methods=['GET', 'POST'])

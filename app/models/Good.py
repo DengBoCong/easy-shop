@@ -27,6 +27,8 @@ class Good(db.Model, UserMixin):
     STAFF_EMAIL = db.Column(db.String(50), nullable=False, default="", comment="员工邮箱")
     IS_PUBLISHED = db.Column(db.Boolean, nullable=False, default=True, comment="是否发布")
     CLASS = db.Column(db.Enum('SAMPLE', 'DESIGN', 'REFERENCE'), nullable=False, comment="产品归类")
+    TYPE = db.Column(db.Enum('MEN', 'WOMEN', 'KIDS', 'OTHERS'), nullable=False, comment="所属类型")
+    COVER = db.Column(db.String(255), nullable=False, default="", comment="封面地址")
 
     def __repr__(self):
         return '<Good %r>\n' % self.NAME
@@ -51,5 +53,7 @@ class Good(db.Model, UserMixin):
             'SIZE_CHART': self.SIZE_CHART,
             'STAFF_EMAIL': self.STAFF_EMAIL,
             'IS_PUBLISHED': self.IS_PUBLISHED,
-            'CLASS': self.CLASS
+            'CLASS': self.CLASS,
+            'TYPE': self.TYPE,
+            'COVER': self.COVER
         }

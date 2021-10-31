@@ -41,6 +41,7 @@ lang = {
         "common_upload_fail": "上传失败",
         "common_complete_info": "请补全信息",
         "common_redirecting": "正在为您跳转",
+        "common_update_fail": "信息更新失败",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -196,6 +197,7 @@ lang = {
         "common_upload_fail": "upload fail",
         "common_complete_info": "Please complete the information",
         "common_redirecting": "Redirecting for you",
+        "common_update_fail": "Information update failed",
 
         "header_nav_men": "men",
         "header_nav_women": "women",
