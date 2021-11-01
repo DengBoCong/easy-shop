@@ -27,10 +27,10 @@
             </div>
             <div class="col-lg-3 col-md-4 d-none d-md-block" style="text-align: center;">
                 <div class="btn-group" role="group" style="margin-top: 10px;">
-                    <button type="button" class="btn btn-outline-secondary text-uppercase" id="exit-preview-btn"
+                    <button type="button" class="btn btn-outline-secondary text-uppercase exit-preview-btn"
                             style="font-size: 15px;width: 150px;height: 55px;">[[lang.products_exit_preview]]
                     </button>
-                    <button type="button" class="btn btn-outline-secondary text-uppercase" id="published-btn"
+                    <button type="button" class="btn btn-outline-secondary text-uppercase published-btn"
                             style="font-size: 15px;width: 150px;height: 55px;background-color: #323232;color: #FFFFFF;">{% if goodInfo.CLASS == 'SAMPLE' %}[[lang.products_publish_the_sample]]{% elif goodInfo.CLASS == 'DESIGN' %}[[lang.products_publish_the_design]]{% else %}[[lang.products_publish_the_reference]]{% endif %}</button>
                 </div>
                 <div class="layui-form">
@@ -81,10 +81,10 @@
             </div>
             <div class="col-lg-6 col-md-4 d-md-none" style="padding: 0">
                 <div class="btn-group" role="group" style="width: 100%">
-                    <button type="button" class="btn btn-outline-secondary text-uppercase"
+                    <button type="button" class="btn btn-outline-secondary text-uppercase exit-preview-btn"
                             style="font-size: 12px;width: 50%;height: 40px;">[[lang.products_exit_preview]]
                     </button>
-                    <button type="button" class="btn btn-outline-secondary text-uppercase"
+                    <button type="button" class="btn btn-outline-secondary text-uppercase published-btn"
                             style="font-size: 12px;width: 50%;height: 40px;background-color: #323232;color: #FFFFFF;">
                         {% if goodInfo.CLASS == 'SAMPLE' %}
                             [[lang.products_publish_the_sample]]{% elif goodInfo.CLASS == 'DESIGN' %}
@@ -195,10 +195,10 @@
                 });
             };
 
-            $('#exit-preview-btn').on('click', function () {
+            $('.exit-preview-btn').on('click', function () {
                 window.location.href = "/[[lang_type]][[addition.add]]/editProducts?goodId=[[goodInfo.ID]]"
             });
-            $('#published-btn').on('click', function () {
+            $('.published-btn').on('click', function () {
                 var successUrl = ''
                 if ('[[data.productType]]' == 'DESIGN') {
                     successUrl = 'designDiagrams'

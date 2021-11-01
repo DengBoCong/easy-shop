@@ -153,6 +153,7 @@ lang = {
         "inner_network_abnormal": "网络异常，请重试",
         "inner_zh_ch_repeat_reset": "中文重复，请重新填写",
         "inner_en_us_repeat_reset": "英文重复，请重新填写",
+        "inner_small_screen_delete_img": "小屏模式下必须从后开始删除"
     },
 
     "en_us": {
@@ -309,5 +310,6 @@ lang = {
         "inner_network_abnormal": "The network is abnormal, please try again",
         "inner_zh_ch_repeat_reset": "Chinese repeat, please fill in again",
         "inner_en_us_repeat_reset": "English repeat, please fill in again",
+        "inner_small_screen_delete_img": "In small screen mode, it must be deleted from the back"
     }
 }

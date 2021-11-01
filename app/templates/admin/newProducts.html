@@ -233,11 +233,23 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-4 col-12 d-md-none">
-                <div id="edit-product-add-img-list1"></div>
-                <div class="row" style="margin-top: 30px;">
-                    <img src="[[url_for('static', filename='img/plusLine.png')]]"
-                         style="width: 385px;border-color: #0C0C0C"
-                         id="edit-product-add-img1" class="rounded mx-auto d-block">
+                <div id="display-img1-upload" style="display: none;"></div>
+                <div class="row d-flex justify-content-center" style="margin-top: 30px;">
+{#                    <img src="[[url_for('static', filename='img/plusLine.png')]]"#}
+{#                         style="width: 385px;border-color: #0C0C0C"#}
+{#                         id="edit-product-add-img1" class="rounded mx-auto d-block">#}
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width: 385px;">
+                        <div class="carousel-indicators" id="carousel-index-btn">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" id="carousel-btn"
+                                    data-bs-slide-to="0" class="active" aria-current="true"></button>
+                        </div>
+                        <div class="carousel-inner" id="carousel-index-img">
+                            <div class="carousel-item active">
+                                <img src="[[url_for('static', filename='img/plusLine.png')]]"
+                                     class="d-block w-100 edit-product-add-img1" data-tag-first="yes">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4 col-12 d-md-none">
@@ -486,6 +498,8 @@
                 formSelects = layui.formSelects,
                 upload = layui.upload,
                 layer = layui.layer;
+
+            var imgCount = 1
 
             $('.layui-form-select').css("border", "1px solid #575759");
             $('.xm-select-parent').css("border", "1px solid #575759");
@@ -1154,20 +1168,34 @@
             });
             upload.render({
                 url: '/api/common/upload!single_image_upload'
-                , elem: '#edit-product-add-img1'
+                , elem: '#display-img1-upload'
                 , size: 200
                 , done: function (res) {
                     if (res.code == 0) {
-                        var temp = '<div style="position:relative;margin-top: 10px;width: 370px;" class="row rounded mx-auto d-block">' +
-                            '<img class="edit-product-add-img-img" src="' + res.data.url + '">' +
-                            '<span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
-                            '<span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span></div>'
-                        $('#edit-product-add-img-list1').html($('#edit-product-add-img-list1').html() + temp)
+                        var temp1 = '<button type="button" class="carousel-index-btn-sub' + imgCount + '" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="' + imgCount + '"></button>'
+                        var temp2 = '<div class="carousel-item carousel-index-btn-sub' + imgCount + '" style="position:relative;"><img src="' + res.data.url + '" class="d-block w-100 edit-product-add-img-img">' +
+                            '<span data-imgCountAdd="' + imgCount + '" data-imgCount=".carousel-index-btn-sub' + imgCount + '" class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 15px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
+                            '<span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 15px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span></div>'
+                        {#$('#edit-product-add-img-list1').html($('#edit-product-add-img-list1').html() + temp)#}
+
+                        $('#carousel-index-btn').html($('#carousel-index-btn').html() + temp1)
+                        $('#carousel-index-img').html($('#carousel-index-img').html() + temp2)
 
                         $('.edit-product-add-img-delete').on('click', function () {
-                            $(this).parent('.row').remove();
+                            if ($(this).attr('data-imgCountAdd') != (imgCount - 1)) {
+                                layer.msg('[[lang.inner_small_screen_delete_img]]', {icon: 5});
+                            } else {
+                                $('#carousel-btn').trigger("click")
+                                $($(this).attr('data-imgCount')).remove()
+                                imgCount -= 1
+                            }
                         });
 
+                        $('.edit-product-add-img1').on('click', function () {
+                            if ($(this).attr('data-tag-first') == 'yes') {
+                                $('#display-img1-upload').trigger('click')
+                            }
+                        });
 
                         upload.render({
                             url: '/api/common/upload!single_image_upload'
@@ -1182,14 +1210,22 @@
                                 }
                             }
                         });
+
+                        imgCount += 1
                     } else {
                         layer.msg(res.msg, {icon: 5});
                     }
                 }
             });
 
+
             $('.edit-product-add-img-delete').on('click', function () {
                 $(this).parent('.row').remove();
+            });
+            $('.edit-product-add-img1').on('click', function () {
+                if ($(this).attr('data-tag-first') == 'yes') {
+                    $('#display-img1-upload').trigger('click')
+                }
             });
         });
     </script>

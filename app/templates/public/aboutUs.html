@@ -6,16 +6,17 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 54px;">
         <div class="row">
-            <div class="col-12 col-md-6 col-xl-3">
-                <p class="text-uppercase" style="margin-top: 20px;font-size: 14px;">[[lang.common_about_us]]</p>
+            <div class="col-12 col-md-6 col-xl-3" style="padding: 0 20px 0 20px">
+                <p class="text-uppercase d-none d-lg-block" style="margin-top: 20px;font-size: 14px;">[[lang.common_about_us]]</p>
+                <p class="text-uppercase d-lg-none" style="margin-top: 20px;font-size: 14px;text-align: center">[[lang.common_about_us]]</p>
                 <p style="margin-top: 15px;font-size: 14px;">[[lang.about_us_first]]</p>
                 <p style="margin-top: 15px;font-size: 14px;">[[lang.about_us_second]]</p>
                 <p style="margin-top: 15px;font-size: 14px;">[[lang.about_us_third]]</p>
                 <p style="margin-top: 15px;font-size: 14px;">[[lang.about_us_forth]]</p>
                 <p style="margin-top: 15px;font-size: 14px;">[[lang.about_us_fifth]]</p>
             </div>
-            <div class="col-12 col-md-6 col-xl-6">
-                <img src="[[url_for('static', filename='img/background.png')]]" width="100%" />
+            <div class="col-12 col-md-6 col-xl-6" style="padding: 0 20px 0 20px">
+                <img src="[[url_for('static', filename='img/background.png')]]" width="100%" style="margin-top: 20px;" />
             </div>
             <div class="col-12 col-md-12 col-xl-3"></div>
         </div>
