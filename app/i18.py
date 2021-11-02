@@ -42,6 +42,10 @@ lang = {
         "common_complete_info": "请补全信息",
         "common_redirecting": "正在为您跳转",
         "common_update_fail": "信息更新失败",
+        "common_close": "关闭",
+        "common_published_products": "已发布产品",
+        "common_manage_staff_accounts": "管理员工账号",
+        "common_manage_customer_accounts": "管理客户账号",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -52,6 +56,7 @@ lang = {
         "header_nav_wishlist": "愿望清单",
         "header_nav_shopping_bag": "购物袋",
         "header_nav_sample_bag": "打样袋",
+        "header_nav_language": "语言",
 
         "about_us_first": "公司成立于2000年3月成立，是一家专门从事鞋类、箱包类、纺织类的出口型贸易公司。公司地址位于深圳南山。",
         "about_us_second": "公司拥有众多的合作工厂。并有极佳的销售平台。自主研发的多种鞋类款式，产品远销亚洲、欧洲、南北美洲，并得到广泛的赞誉与喜爱。二十多年在鞋类和箱包上的用心，华虹公司出口业务量领先于同类型的贸易公司，设计和质量都有保证。出口额在深圳南山区名列前茅。华虹公司是多年来海关认定的A类企业。",
@@ -199,6 +204,10 @@ lang = {
         "common_complete_info": "Please complete the information",
         "common_redirecting": "Redirecting for you",
         "common_update_fail": "Information update failed",
+        "common_close": "Close",
+        "common_published_products": "published products",
+        "common_manage_staff_accounts": "manage staff accounts",
+        "common_manage_customer_accounts": "manage customer accounts",
 
         "header_nav_men": "men",
         "header_nav_women": "women",
@@ -209,6 +218,7 @@ lang = {
         "header_nav_wishlist": "wishlist",
         "header_nav_shopping_bag": "shopping bag",
         "header_nav_sample_bag": "sample bag",
+        "header_nav_language": "language",
 
         "about_us_first": "Shenzhen Huahong Import & Export Trade Company was founded in 2000 by Alice Wu. It is located in Nanshan, Shenzhen, China. Raised in an environment of the Chinese trading industry, Alice’s attraction to fashion accessories started at an early age. The company is specialized in exporting trade of shoes, bags and textiles.",
         "about_us_second": "Huahong has established long term cooperation with many qualified factories and excellent sales platforms. Huahong has its own design team to support customers with various needs, who much effort in designing and crafting. A variety of self-developed footwear styles are exported to Asia, Europe, North and South America and enjoy great popularity and praise.",

@@ -122,11 +122,11 @@ def preview_products(lang_type):
     good_info["PRICES"] = [{
         "RANGE": "{}-{}".format(price.START_NUM, price.END_NUM),
         "PRICE": "%.2f" % price.PRICE + get_currency_op(good_info["CURRENCY"])
-    } for price in good_prices[:-1]]
-    good_info["PRICES"].append({
-        "RANGE": "{}<".format(good_prices[-1].START_NUM),
-        "PRICE": "%.2f" % good_prices[-1].PRICE + get_currency_op(good_info["CURRENCY"])
-    })
+    } for price in good_prices]
+    # good_info["PRICES"].append({
+    #     "RANGE": "{}<".format(good_prices[-1].START_NUM),
+    #     "PRICE": "%.2f" % good_prices[-1].PRICE + get_currency_op(good_info["CURRENCY"])
+    # })
 
     return render_template("admin/previewProducts.html", lang=lang[lang_type], lang_type=lang_type,
                            route="previewProducts?goodId={}".format(good_info["ID"]),

@@ -996,43 +996,43 @@
                     || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
-                    if (btnType == 0) {
-                        window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=[[data.goodInfo.ID]]"
-                    } else {
-                        admin.req({
-                            method: "post",
-                            url: '/api/good/update!update_good',
-                            data: JSON.stringify({
-                                "ID": '[[data.goodInfo.ID]]',
-                                "BRAND": brand,
-                                "COLOR": color,
-                                "STYLE": style,
-                                "DESCRIPTION": description,
-                                "SUPPLIER_COLOR": supplierColor,
-                                "MATERIAL": material,
-                                "PLACE_OF_ORIGIN": placeOfOrigin,
-                                "PRODUCT_NUMBER": productNumber,
-                                "FACTORY_CODE": factoryCode,
-                                "AREA_ID": productArea,
-                                "CURRENCY": currency,
-                                "CATEGORY_ID": category,
-                                "SIZE": size,
-                                "SIZE_CHART": sizeChart,
-                                "STAFF_EMAIL": staffEmail,
-                                "IS_PUBLISHED": btnType,
-                                "COVER": goodImg[0],
-                                "PRICE_RNAGE": prices,
-                                "GOOD_IMG": goodImg,
-                                "langType": '[[lang_type]]'
-                            }),
-                            done: function (res) {
-                                layer.msg(res.msg);
-                                if (res.code == 0) {
+                    admin.req({
+                        method: "post",
+                        url: '/api/good/update!update_good',
+                        data: JSON.stringify({
+                            "ID": '[[data.goodInfo.ID]]',
+                            "BRAND": brand,
+                            "COLOR": color,
+                            "STYLE": style,
+                            "DESCRIPTION": description,
+                            "SUPPLIER_COLOR": supplierColor,
+                            "MATERIAL": material,
+                            "PLACE_OF_ORIGIN": placeOfOrigin,
+                            "PRODUCT_NUMBER": productNumber,
+                            "FACTORY_CODE": factoryCode,
+                            "AREA_ID": productArea,
+                            "CURRENCY": currency,
+                            "CATEGORY_ID": category,
+                            "SIZE": size,
+                            "SIZE_CHART": sizeChart,
+                            "STAFF_EMAIL": staffEmail,
+                            "IS_PUBLISHED": btnType,
+                            "COVER": goodImg[0],
+                            "PRICE_RNAGE": prices,
+                            "GOOD_IMG": goodImg,
+                            "langType": '[[lang_type]]'
+                        }),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.code == 0) {
+                                if (btnType == 0) {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
+                                } else {
                                     window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
                 }
             }
             function addProducts1(btnType) {
@@ -1088,43 +1088,43 @@
                     || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
-                    if (btnType == 0) {
-                        window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=[[data.goodInfo.ID]]"
-                    } else {
-                        admin.req({
-                            method: "post",
-                            url: '/api/good/update!update_good',
-                            data: JSON.stringify({
-                                "ID": '[[data.goodInfo.ID]]',
-                                "BRAND": brand,
-                                "COLOR": color,
-                                "STYLE": style,
-                                "DESCRIPTION": description,
-                                "SUPPLIER_COLOR": supplierColor,
-                                "MATERIAL": material,
-                                "PLACE_OF_ORIGIN": placeOfOrigin,
-                                "PRODUCT_NUMBER": productNumber,
-                                "FACTORY_CODE": factoryCode,
-                                "AREA_ID": productArea,
-                                "CURRENCY": currency,
-                                "CATEGORY_ID": category,
-                                "SIZE": size,
-                                "SIZE_CHART": sizeChart,
-                                "STAFF_EMAIL": staffEmail,
-                                "IS_PUBLISHED": btnType,
-                                "COVER": goodImg[0],
-                                "PRICE_RNAGE": prices,
-                                "GOOD_IMG": goodImg,
-                                "langType": '[[lang_type]]'
-                            }),
-                            done: function (res) {
-                                layer.msg(res.msg);
-                                if (res.code == 0) {
+                    admin.req({
+                        method: "post",
+                        url: '/api/good/update!update_good',
+                        data: JSON.stringify({
+                            "ID": '[[data.goodInfo.ID]]',
+                            "BRAND": brand,
+                            "COLOR": color,
+                            "STYLE": style,
+                            "DESCRIPTION": description,
+                            "SUPPLIER_COLOR": supplierColor,
+                            "MATERIAL": material,
+                            "PLACE_OF_ORIGIN": placeOfOrigin,
+                            "PRODUCT_NUMBER": productNumber,
+                            "FACTORY_CODE": factoryCode,
+                            "AREA_ID": productArea,
+                            "CURRENCY": currency,
+                            "CATEGORY_ID": category,
+                            "SIZE": size,
+                            "SIZE_CHART": sizeChart,
+                            "STAFF_EMAIL": staffEmail,
+                            "IS_PUBLISHED": btnType,
+                            "COVER": goodImg[0],
+                            "PRICE_RNAGE": prices,
+                            "GOOD_IMG": goodImg,
+                            "langType": '[[lang_type]]'
+                        }),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.code == 0) {
+                                if (btnType == 0) {
+                                    window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
+                                } else {
                                     window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
                 }
             }
 

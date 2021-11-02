@@ -156,28 +156,33 @@ def update_good():
     lang_type = info_data["langType"]
     good_id = info_data["ID"]
 
-    GoodImg.query.filter_by(GOOD_ID=good_id).delete()
-    db.session.commit()
-    good_img = list()
-    for img in info_data.get("GOOD_IMG", [])[1:]:
-        good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
-    db.session.add_all(good_img)
-    db.session.commit()
+    if len(info_data.get("GOOD_IMG", [])) != 0:
+        GoodImg.query.filter_by(GOOD_ID=good_id).delete()
+        db.session.commit()
+        good_img = list()
+        for img in info_data.get("GOOD_IMG")[1:]:
+            good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
+        db.session.add_all(good_img)
+        db.session.commit()
 
-    GoodPrice.query.filter_by(GOOD_ID=good_id).delete()
-    db.session.commit()
-    good_prices = list()
-    for price in info_data.get("PRICE_RNAGE", []):
-        good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
-                                     START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
-                                     PRICE=price.get("PRICE", 0)))
-    db.session.add_all(good_prices)
-    db.session.commit()
+    if len(info_data.get("PRICE_RNAGE", [])) != 0:
+        GoodPrice.query.filter_by(GOOD_ID=good_id).delete()
+        db.session.commit()
+        good_prices = list()
+        for price in info_data.get("PRICE_RNAGE", []):
+            if price:
+                good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
+                                             START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
+                                             PRICE=price.get("PRICE", 0)))
+        db.session.add_all(good_prices)
+        db.session.commit()
 
     try:
         del info_data["langType"]
-        del info_data["PRICE_RNAGE"]
-        del info_data["GOOD_IMG"]
+        if info_data.get("PRICE_RNAGE", None):
+            del info_data["PRICE_RNAGE"]
+        if info_data.get("GOOD_IMG", None):
+            del info_data["GOOD_IMG"]
         good = Good.query.filter_by(ID=info_data.get("ID")).update(info_data)
 
         if good == 1:

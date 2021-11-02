@@ -73,11 +73,14 @@
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='men' else '']]"
                        data-bs-toggle="dropdown" aria-expanded="false">[[lang.header_nav_men]]</a>
                     <ul class="dropdown-menu" aria-labelledby="basic_nav_men">
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-men/commonSample">[[lang.common_sample]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='men' and addition.categories=='sample' else '']]" href="/[[lang_type]]-men/commonSample">[[lang.common_sample]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-men/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='men' and addition.categories=='design' else '']]" href="/[[lang_type]]-men/designDiagrams">[[lang.common_design_diagrams]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-men/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='men' and addition.categories=='reference' else '']]" href="/[[lang_type]]-men/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
                         </li>
                     </ul>
                 </li>
@@ -86,11 +89,14 @@
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='women' else '']]"
                        aria-expanded="false">[[lang.header_nav_women]]</a>
                     <ul class="dropdown-menu" aria-labelledby="basic_nav_women">
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-women/commonSample">[[lang.common_sample]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='women' and addition.categories=='sample' else '']]" href="/[[lang_type]]-women/commonSample">[[lang.common_sample]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-women/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='women' and addition.categories=='design' else '']]" href="/[[lang_type]]-women/designDiagrams">[[lang.common_design_diagrams]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-women/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='women' and addition.categories=='reference' else '']]" href="/[[lang_type]]-women/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
                         </li>
                     </ul>
                 </li>
@@ -99,11 +105,14 @@
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='kids' else '']]"
                        aria-expanded="false">[[lang.header_nav_kids]]</a>
                     <ul class="dropdown-menu" aria-labelledby="basic_nav_kids">
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-kids/commonSample">[[lang.common_sample]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='kids' and addition.categories=='sample' else '']]" href="/[[lang_type]]-kids/commonSample">[[lang.common_sample]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-kids/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='kids' and addition.categories=='design' else '']]" href="/[[lang_type]]-kids/designDiagrams">[[lang.common_design_diagrams]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-kids/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='kids' and addition.categories=='reference' else '']]" href="/[[lang_type]]-kids/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
                         </li>
                     </ul>
                 </li>
@@ -112,11 +121,14 @@
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='others' else '']]"
                        aria-expanded="false">[[lang.header_nav_everything_else]]</a>
                     <ul class="dropdown-menu" aria-labelledby="basic_nav_others">
-                        <li><a class="dropdown-item text-uppercase"
-                               href="/[[lang_type]]-others/commonSample">[[lang.common_sample]]</a></li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-others/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='others' and addition.categories=='sample' else '']]" href="/[[lang_type]]-others/commonSample">[[lang.common_sample]]</a>
                         </li>
-                        <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]-others/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='others' and addition.categories=='design' else '']]" href="/[[lang_type]]-others/designDiagrams">[[lang.common_design_diagrams]]</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-uppercase" style="[['text-decoration: underline;' if addition.location=='others' and addition.categories=='reference' else '']]" href="/[[lang_type]]-others/referenceDiagrams">[[lang.common_reference_diagrams]]</a>
                         </li>
                     </ul>
                 </li>
@@ -125,23 +137,36 @@
                 </li>
             </ul>
         </div>
-        <div class="d-lg-none">
+        <div class="d-lg-none" style="position: relative;z-index:1000;">
             <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasNavList" aria-controls="offcanvasNavList">
+                    data-bs-target="#offcanvasNavList" aria-controls="offcanvasNavList" id="offcanvasNavList1">
                 <i class="bi bi-list" style="color: #0C0C0C"></i>
             </button>
             <button id="basic_nav_search_button_first" type="button" class="btn btn-outline-light">
                 <i class="bi bi-search" style="color: #0C0C0C"></i>
             </button>
+            {% if addition.login %}
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavListAccount" aria-controls="offcanvasNavListAccount" id="offcanvasNavListAccount1">
+                <i class="bi bi-person" style="color: #0C0C0C"></i>
+            </button>
+            {% else %}
+            <button type="button" class="btn btn-outline-light" id="small-screen-log-in-btn">
+                <i class="bi bi-person" style="color: #0C0C0C"></i>
+            </button>
+            {% endif %}
         </div>
         <a href="/[[lang_type]]/index" style="color: #0C0C0C;font-size: 19px;"><span
                 class="align-middle text-uppercase">[[lang.company_name]]</span></a>
         <div class="d-lg-none" style="float:right;">
             <button type="button" class="btn btn-outline-light">
-                <i class="bi bi-list" style="color: #0C0C0C"></i>
+                <i class="bi bi-heart" style="color: #0C0C0C"></i>
             </button>
             <button type="button" class="btn btn-outline-light">
-                <i class="bi bi-search" style="color: #0C0C0C"></i>
+                <i class="bi bi-bag-dash" style="color: #0C0C0C"></i>
+            </button>
+            <button type="button" class="btn btn-outline-light">
+                <i class="bi bi-bag" style="color: #0C0C0C"></i>
             </button>
         </div>
         <div class="d-none d-lg-block">
@@ -192,7 +217,19 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if current_user.ROLE =='USER' %}
+                {% if addition.login and current_user.ROLE !='USER' %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-uppercase" href="/[[lang_type]]/adminShoppingBag" id="basic_nav_admin_shopping_bag"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='adminShoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-uppercase" href="/[[lang_type]]/customerAccountInfo"
+                           id="basic_nav_customer_account_info"
+                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='customerAccountInfo' else '']]">[[lang.common_customer_account_info]]
+                        </a>
+                    </li>
+                {% else %}
                     <li class="nav-item dropdown">
                         <a class="nav-link text-uppercase" href="/[[lang_type]]/wishlist" id="basic_nav_wishlist"
                            style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
@@ -209,43 +246,180 @@
                            style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">[[lang.header_nav_sample_bag]]
                         </a>
                     </li>
-                {% else %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-uppercase" href="/[[lang_type]]/adminShoppingBag" id="basic_nav_admin_shopping_bag"
-                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='adminShoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-uppercase" href="/[[lang_type]]/customerAccountInfo"
-                           id="basic_nav_customer_account_info"
-                           style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='customerAccountInfo' else '']]">[[lang.common_customer_account_info]]
-                        </a>
-                    </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavList" aria-labelledby="offcanvasNavListLabel">
+<div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+     data-bs-scroll="true" data-bs-backdrop="false"
+     id="offcanvasNavList" aria-labelledby="offcanvasNavListLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavListLabel">Offcanvas</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h5 class="offcanvas-title"></h5>
+{#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
     </div>
-    <div class="offcanvas-body">
-        <div>
-            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
-            etc.
+    <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+        <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.location=='men' else '']]" id="header-offcanvas-men">
+                <span class="text-uppercase">[[lang.header_nav_men]]</span>
+                <i class="bi bi-arrow-right" style="color: #0C0C0C;float: right"></i>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.location=='women' else '']]" id="header-offcanvas-women">
+                <span class="text-uppercase">[[lang.header_nav_women]]</span>
+                <i class="bi bi-arrow-right" style="color: #0C0C0C;float: right"></i>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.location=='kids' else '']]" id="header-offcanvas-kids">
+                <span class="text-uppercase">[[lang.header_nav_kids]]</span>
+                <i class="bi bi-arrow-right" style="color: #0C0C0C;float: right"></i>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.location=='others' else '']]" id="header-offcanvas-others">
+                <span class="text-uppercase">[[lang.header_nav_everything_else]]</span>
+                <i class="bi bi-arrow-right" style="color: #0C0C0C;float: right"></i>
+            </li>
+            <hr class="layui-border-black" style="margin-top: 15px;">
+            <li class="nav-item">
+                <a href="/[[lang_type]]/wishlist" class="text-uppercase"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                    [[lang.header_nav_wishlist]]
+                </a>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/aboutUs" class="text-uppercase"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='aboutUs' else '']]">
+                    [[lang.common_about_us]]
+                </a>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/contactUs" class="text-uppercase"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='contactUs' else '']]">
+                    [[lang.common_contact_us]]
+                </a>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;" id="header-offcanvas-language">
+                <span class="text-uppercase">[[lang.header_nav_language]]</span>
+                <i class="bi bi-arrow-right" style="color: #0C0C0C;float: right"></i>
+            </li>
+        </ul>
+        <ul class="nav flex-column" id="header-offcanvas-men-card" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;display: none;">
+            <li class="nav-item" style="margin-top: 15px;" id="header-offcanvas-men-card-first">
+                <i class="bi bi-arrow-left" style="color: #0C0C0C;"></i>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-men/commonSample" style="[['text-decoration: underline;' if addition.location=='men' and addition.categories=='sample' else '']]">[[lang.common_sample]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-men/designDiagrams" style="[['text-decoration: underline;' if addition.location=='men' and addition.categories=='design' else '']]">[[lang.common_design_diagrams]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-men/referenceDiagrams" style="[['text-decoration: underline;' if addition.location=='men' and addition.categories=='reference' else '']]">[[lang.common_reference_diagrams]]</a>
+            </li>
+        </ul>
+        <ul class="nav flex-column" id="header-offcanvas-women-card" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;display: none;">
+            <li class="nav-item" style="margin-top: 15px;" id="header-offcanvas-women-card-first">
+                <i class="bi bi-arrow-left" style="color: #0C0C0C;"></i>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-women/commonSample" style="[['text-decoration: underline;' if addition.location=='women' and addition.categories=='sample' else '']]">[[lang.common_sample]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-women/designDiagrams" style="[['text-decoration: underline;' if addition.location=='women' and addition.categories=='design' else '']]">[[lang.common_design_diagrams]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-women/referenceDiagrams" style="[['text-decoration: underline;' if addition.location=='women' and addition.categories=='reference' else '']]">[[lang.common_reference_diagrams]]</a>
+            </li>
+        </ul>
+        <ul class="nav flex-column" id="header-offcanvas-kids-card" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;display: none;">
+            <li class="nav-item" style="margin-top: 15px;" id="header-offcanvas-kids-card-first">
+                <i class="bi bi-arrow-left" style="color: #0C0C0C;"></i>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-kids/commonSample" style="[['text-decoration: underline;' if addition.location=='kids' and addition.categories=='sample' else '']]">[[lang.common_sample]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-kids/designDiagrams" style="[['text-decoration: underline;' if addition.location=='kids' and addition.categories=='design' else '']]">[[lang.common_design_diagrams]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-kids/referenceDiagrams" style="[['text-decoration: underline;' if addition.location=='kids' and addition.categories=='reference' else '']]">[[lang.common_reference_diagrams]]</a>
+            </li>
+        </ul>
+        <ul class="nav flex-column" id="header-offcanvas-others-card" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;display: none;">
+            <li class="nav-item" style="margin-top: 15px;" id="header-offcanvas-others-card-first">
+                <i class="bi bi-arrow-left" style="color: #0C0C0C;"></i>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-others/commonSample" style="[['text-decoration: underline;' if addition.location=='others' and addition.categories=='sample' else '']]">[[lang.common_sample]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-others/designDiagrams" style="[['text-decoration: underline;' if addition.location=='others' and addition.categories=='design' else '']]">[[lang.common_design_diagrams]]</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a class="text-capitalize" href="/[[lang_type]]-others/referenceDiagrams" style="[['text-decoration: underline;' if addition.location=='others' and addition.categories=='reference' else '']]">[[lang.common_reference_diagrams]]</a>
+            </li>
+        </ul>
+        <ul class="nav flex-column" id="header-offcanvas-language-card" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;display: none;">
+            <li class="nav-item" style="margin-top: 15px;" id="header-offcanvas-language-card-first">
+                <i class="bi bi-arrow-left" style="color: #0C0C0C;"></i>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a href="/en_us[[addition.add]]/[[route]]" style="[['text-decoration: underline;' if lang_type=='en_us' else '']]">English</a>
+            </li>
+            <li class="nav-item self-a-link" style="margin-top: 15px;">
+                <a href="/zh_cn[[addition.add]]/[[route]]" style="[['text-decoration: underline;' if lang_type=='zh_cn' else '']]">中文</a>
+            </li>
+        </ul>
+        <div class="self-nav" id="header-offcanvas-bottom-close"
+             style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+            [[lang.common_close]]
         </div>
-        <div class="dropdown mt-3">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown">
-                Dropdown button
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+    </div>
+</div>
+<div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+     data-bs-scroll="true" data-bs-backdrop="false"
+     id="offcanvasNavListAccount" aria-labelledby="offcanvasNavListAccountLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title"></h5>
+{#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+    </div>
+    <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+        <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                    [[lang.common_account_detail]]
+                </a>
+            </li>
+            {% if addition.login %}
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                    [[lang.common_published_products]]
+                </a>
+            </li>
+            {% endif %}
+            {% if addition.login and current_user.ROLE != 'AGENT' %}
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                    [[lang.common_manage_staff_accounts]]
+                </a>
+            </li>
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                    [[lang.common_manage_customer_accounts]]
+                </a>
+            </li>
+            {% endif %}
+            <li class="nav-item" style="margin-top: 15px;">
+                <a href="/[[lang_type]]/logout" class="text-capitalize"
+                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                    [[lang.common_logout]]
+                </a>
+            </li>
+        </ul>
+        <div class="self-nav" id="header-offcanvas-bottom-close-account"
+             style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+            [[lang.common_close]]
         </div>
     </div>
 </div>
@@ -255,13 +429,13 @@
      style="position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
     <div class="container-fluid d-flex align-items-center justify-content-center">
         <ul class="nav">
-            <li class="nav-item">
+            <li class="nav-item d-none d-lg-block">
                 <a href="/[[lang_type]]/aboutUs" class="text-capitalize"
                    style="color: #0C0C0C;font-size: 12px;[['text-decoration: underline;' if addition.location=='aboutUs' else '']]">
                     [[lang.common_about_us]]
                 </a>
             </li>
-            <li class="nav-item" style="margin-left: 20px">
+            <li class="nav-item d-none d-lg-block" style="margin-left: 20px">
                 <a href="/[[lang_type]]/contactUs" class="text-capitalize"
                    style="color: #0C0C0C;font-size: 12px;[['text-decoration: underline;' if addition.location=='contactUs' else '']]">
                     [[lang.common_contact_us]]
@@ -323,6 +497,62 @@
         });
         $('#basic_nav_search_button_second').on('click', function () {
             searchFunc()
+        });
+
+        $('#header-offcanvas-language').on('click', function () {
+            $('#header-offcanvas-first').hide()
+            $('#header-offcanvas-language-card').show()
+        });
+        $('#header-offcanvas-language-card-first').on('click', function () {
+            $('#header-offcanvas-first').show()
+            $('#header-offcanvas-language-card').hide()
+        });
+
+        $('#header-offcanvas-men').on('click', function () {
+            $('#header-offcanvas-first').hide()
+            $('#header-offcanvas-men-card').show()
+        });
+        $('#header-offcanvas-men-card-first').on('click', function () {
+            $('#header-offcanvas-first').show()
+            $('#header-offcanvas-men-card').hide()
+        });
+
+        $('#header-offcanvas-women').on('click', function () {
+            $('#header-offcanvas-first').hide()
+            $('#header-offcanvas-women-card').show()
+        });
+        $('#header-offcanvas-women-card-first').on('click', function () {
+            $('#header-offcanvas-first').show()
+            $('#header-offcanvas-women-card').hide()
+        });
+
+        $('#header-offcanvas-kids').on('click', function () {
+            $('#header-offcanvas-first').hide()
+            $('#header-offcanvas-kids-card').show()
+        });
+        $('#header-offcanvas-kids-card-first').on('click', function () {
+            $('#header-offcanvas-first').show()
+            $('#header-offcanvas-kids-card').hide()
+        });
+
+        $('#header-offcanvas-others').on('click', function () {
+            $('#header-offcanvas-first').hide()
+            $('#header-offcanvas-others-card').show()
+        });
+        $('#header-offcanvas-others-card-first').on('click', function () {
+            $('#header-offcanvas-first').show()
+            $('#header-offcanvas-others-card').hide()
+        });
+
+        $('#header-offcanvas-bottom-close').on('click', function () {
+            $('#offcanvasNavList1').trigger('click')
+        });
+        $('#header-offcanvas-bottom-close-account').on('click', function () {
+            $('#offcanvasNavListAccount1').trigger('click')
+        });
+
+        $('#small-screen-log-in-btn').on('click', function () {
+           window.location.href = "/[[lang_type]]/login"
         });
     });
 </script>

@@ -212,6 +212,7 @@
                     method: "post",
                     url: '/api/good/update!update_good',
                     data: JSON.stringify({
+                        "ID": '[[goodInfo.ID]]',
                         "IS_PUBLISHED": 1,
                         "langType": '[[lang_type]]'
                     }),
