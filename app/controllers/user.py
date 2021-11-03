@@ -37,3 +37,45 @@ def add_user():
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})
     except:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+@controllers.route('{}/update!update_user'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def update_user():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    user_id = info_data["ID"]
+    flag = False
+    user = User.query.filter_by(ID=user_id).first()
+
+    try:
+        del info_data["langType"]
+
+        if info_data.get("_PWD", None) and info_data["_PWD"]:
+            flag = True
+            if user.check_password(info_data["_PWD"].encode('utf-8')):
+                user.password = info_data["NEW_PWD"]
+                db.session.commit()
+            else:
+                return jsonify({'code': 1, 'msg': lang[lang_type]["inner_pwd_fail"],
+                                'data': {"userId": user_id}})
+
+        if "_PWD" in info_data.keys():
+            del info_data["_PWD"]
+        if "NEW_PWD" in info_data.keys():
+            del info_data["NEW_PWD"]
+
+        User.query.filter_by(ID=user_id).update(info_data)
+        db.session.commit()
+
+        if flag:
+            logout_user()
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_pwd_change"],
+                            'data': {"userId": ""}})
+        else:
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_change_success"],
+                            'data': {"userId": user_id}})
+
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["common_update_fail"],
+                        'data': {"userId": user_id}})

@@ -3,10 +3,11 @@ import json
 from . import views
 from flask import jsonify
 from flask import render_template, request
-from flask_login import login_required, logout_user
+from flask_login import login_required, logout_user, current_user
 from datetime import datetime
 from ..i18 import lang
 from ..utils import set_addition
+from ..models import *
 
 
 @views.route('/<lang_type>/accountDetail', methods=['GET', 'POST'])
@@ -15,6 +16,11 @@ def account_detail(lang_type):
     """ 用户详情"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="accountDetail")
+
+    # user = User.query.get(current_user.ID)
+    # area = {"zh_cn": user.area.NAME, "en_us": user.area.EN_NAME}
+    # data={"area": area}
+
     return render_template("customer/accountDetail.html", lang=lang[lang_type],
                            lang_type=lang_type, route="accountDetail",
                            addition=set_addition(location="login", categories="accountDetail"))

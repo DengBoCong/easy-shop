@@ -19,7 +19,6 @@ lang = {
         "common_historical_purchase": "历史购买",
         "common_historical_sample": "历史打样",
         "common_logout": "登出",
-        "common_customer_account_info": "客户信息",
         "common_sample": "样品",
         "common_design_diagrams": "设计图",
         "common_reference_diagrams": "参考图",
@@ -33,6 +32,7 @@ lang = {
         "common_price_high_low": "价格：从高到低",
         "common_import_from_computer": "从本地上传",
         "common_staff_email": "员工邮箱",
+        "common_email": "邮箱",
         "common_public": "公共",
         "common_add": "添加",
         "common_zh_name": "中文名",
@@ -46,6 +46,7 @@ lang = {
         "common_published_products": "已发布产品",
         "common_manage_staff_accounts": "管理员工账号",
         "common_manage_customer_accounts": "管理客户账号",
+        "common_area": "地区",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -148,6 +149,8 @@ lang = {
 
         "inner_login_success": "登陆成功",
         "inner_login_fail": "账号或密码错误",
+        "inner_pwd_fail": "密码错误",
+        "inner_pwd_change": "密码已重置，请重新登录",
         "inner_login_error_verify_code": "验证码错误，请重新输入",
         "inner_account_not_empty": "账号不允许为空",
         "inner_pwd_not_empty": "密码不允许为空",
@@ -158,7 +161,8 @@ lang = {
         "inner_network_abnormal": "网络异常，请重试",
         "inner_zh_ch_repeat_reset": "中文重复，请重新填写",
         "inner_en_us_repeat_reset": "英文重复，请重新填写",
-        "inner_small_screen_delete_img": "小屏模式下必须从后开始删除"
+        "inner_small_screen_delete_img": "小屏模式下必须从后开始删除",
+        "inner_change_success": "修改成功"
     },
 
     "en_us": {
@@ -181,7 +185,6 @@ lang = {
         "common_historical_purchase": "history orders",
         "common_historical_sample": "history samples",
         "common_logout": "log out",
-        "common_customer_account_info": "customer info",
         "common_sample": "samples",
         "common_design_diagrams": "designs",
         "common_reference_diagrams": "references",
@@ -195,6 +198,7 @@ lang = {
         "common_price_high_low": "Price: High-Low",
         "common_import_from_computer": "import from computer",
         "common_staff_email": "staff email",
+        "common_email": "E-mail",
         "common_public": "Public",
         "common_add": "Add",
         "common_zh_name": "chinese name",
@@ -208,6 +212,7 @@ lang = {
         "common_published_products": "published products",
         "common_manage_staff_accounts": "manage staff accounts",
         "common_manage_customer_accounts": "manage customer accounts",
+        "common_area": "area",
 
         "header_nav_men": "men",
         "header_nav_women": "women",
@@ -251,7 +256,7 @@ lang = {
         "color_black": "Black",
 
         "account_info": "account info",
-        "account_edit_details": "edit your account details.",
+        "account_edit_details": "Edit your account details.",
         "account_change_pwd_tips": "password",
         "account_last_name": "last name",
         "account_first_name": "first name",
@@ -310,6 +315,8 @@ lang = {
 
         "inner_login_success": "Login success",
         "inner_login_fail": "Incorrect username or password",
+        "inner_pwd_fail": "Incorrect password",
+        "inner_pwd_change": "Password has been reset, please log in again",
         "inner_login_error_verify_code": "The verification code is wrong",
         "inner_account_not_empty": "Account cannot be empty",
         "inner_pwd_not_empty": "Password cannot be empty",
@@ -320,6 +327,7 @@ lang = {
         "inner_network_abnormal": "The network is abnormal, please try again",
         "inner_zh_ch_repeat_reset": "Chinese repeat, please fill in again",
         "inner_en_us_repeat_reset": "English repeat, please fill in again",
-        "inner_small_screen_delete_img": "In small screen mode, it must be deleted from the back"
+        "inner_small_screen_delete_img": "In small screen mode, it must be deleted from the back",
+        "inner_change_success": "Change Success"
     }
 }

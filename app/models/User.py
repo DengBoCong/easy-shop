@@ -25,6 +25,9 @@ class User(db.Model, UserMixin):
     EMAIL = db.Column(db.String(60), index=True, nullable=False, default="", unique=True, comment="邮箱账号")
     _PWD = db.Column(db.String(100), nullable=False, default=generate_password_hash(DEFAULT_PASSWORD), comment="密码")
     NAME = db.Column(db.String(100), nullable=False, default="未署名", comment="名称")
+    LAST_NAME = db.Column(db.String(50), nullable=False, default="", comment="last name")
+    FIRST_NAME = db.Column(db.String(50), nullable=False, default="", comment="first name")
+    COMPANY_NAME = db.Column(db.String(100), nullable=False, default="", comment="company name")
     PHONE = db.Column(db.String(30), nullable=False, default="00000000000", comment="联系方式")
     IF_LOGIN = db.Column(db.Boolean, nullable=False, default=True, comment="是否允许登录，0否1是")
     ROLE = db.Column(db.Enum('SUPER', 'ADMIN', 'AGENT', 'USER'), nullable=False, comment="账号类型")
@@ -59,6 +62,9 @@ class User(db.Model, UserMixin):
             'CREATE_DATETIME': self.CREATE_DATETIME.strftime('%Y-%m-%d %H:%M:%S'),
             'EMAIL': self.EMAIL,
             'NAME': self.NAME,
+            'LAST_NAME': self.LAST_NAME,
+            'FIRST_NAME': self.FIRST_NAME,
+            'COMPANY_NAME': self.COMPANY_NAME,
             'PHONE': self.PHONE,
             'IF_LOGIN': self.IF_LOGIN,
             'ROLE': self.ROLE,

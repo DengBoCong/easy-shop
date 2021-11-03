@@ -6,80 +6,143 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 54px;">
         <div class="row">
-            <div class="col-xxl-4 col-xl-3 col-md-2 d-none d-md-block self-a-link">
+            <div class="col-md-2 d-lg-none self-a-link"></div>
+            <div class="col-xxl-4 col-xl-3 col-md-2 d-none d-lg-block self-a-link">
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        [[lang.common_account_up]]
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_account]]
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;">
+                    <li style="margin-top: 10px;font-size: 13px;" class="text-capitalize">
                         <a href="javascript:;"
                            style="[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]">
                             [[lang.common_account_detail]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
+                    {% if current_user.ROLE =='USER' %}
+                    <li style="font-size: 13px;" class="text-capitalize">
                         <a href="/[[lang_type]]/historyOrders"
                            style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
                             [[lang.common_historical_purchase]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
+                    <li style="font-size: 13px;" class="text-capitalize">
                         <a href="/[[lang_type]]/historySamples"
                            style="[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
                             [[lang.common_historical_sample]]
                         </a>
                     </li>
+                    {% endif %}
+                    {% if current_user.ROLE !='USER' %}
+                    <li style="font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct"
+                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                            [[lang.common_published_products]]
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if current_user.ROLE =='ADMIN' or current_user.ROLE =='SUPER' %}
+                    <li style="font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/manageStaffAccounts"
+                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                            [[lang.common_manage_staff_accounts]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/manageCustomerAccounts"
+                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                            [[lang.common_manage_customer_accounts]]
+                        </a>
+                    </li>
+                    {% endif %}
                     <li style="font-size: 13px;">
-                        <a href="javascript:;"
+                        <a href="javascript:;" class="text-capitalize"
                            style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
                             [[lang.common_logout]]
                         </a>
                     </li>
                 </ul>
             </div>
+            {% if current_user.ROLE =='USER' %}
             <div class="col-xxl-4 col-xl-6 col-md-8" style="padding: 20px 80px">
                 <div class="text-center mb-4">
-                    <p class="mb-3 font-weight-normal" style="font-size: 17px;">[[lang.common_account_detail_up]]</p>
+                    <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
                 </div>
 
                 <div class="form-label-group" style="font-size: 13px;">
                     <p>[[lang.account_edit_details]]</p>
-                    <p>[[lang.account_info]]</p>
-                    <label>[[lang.account_last_name]]</label>
-                    <input type="text" class="form-control">
+                    <p class="text-uppercase">[[lang.account_info]]</p>
+                    <label class="text-capitalize">[[lang.account_last_name]]</label>
+                    <input type="text" value="[[current_user.LAST_NAME]]" class="form-control" id="account-last-name">
                 </div>
 
                 <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                    <label>[[lang.account_first_name]]</label>
-                    <input type="text" class="form-control">
+                    <label class="text-capitalize">[[lang.account_first_name]]</label>
+                    <input type="text" value="[[current_user.FIRST_NAME]]" class="form-control" id="account-first-name">
                 </div>
 
                 <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                    <label>[[lang.account_company_name]]</label>
-                    <input type="text" class="form-control">
+                    <label class="text-capitalize">[[lang.account_company_name]]</label>
+                    <input type="text" value="[[current_user.COMPANY_NAME]]" class="form-control" id="account-company-name">
                 </div>
-
-                <button class="btn btn-block"
-                        style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px;">
-                    [[lang.account_change_info]]
-                </button>
-
-                <div class="form-label-group" style="font-size: 13px;margin-top: 50px;">
-                    <p>[[lang.account_change_pwd_tips]]</p>
-                    <label>[[lang.account_old_password]]</label>
-                    <input type="text" class="form-control">
+                <hr class="layui-border-black" style="margin-top: 25px;height: 1px;">
+                <div class="form-label-group" style="font-size: 13px;margin-top: 25px;">
+                    <p class="text-uppercase">[[lang.account_change_pwd_tips]]</p>
+                    <label class="text-capitalize">[[lang.account_old_password]]</label>
+                    <input type="text" value="" class="form-control" id="account-old-password">
                 </div>
 
                 <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                    <label>[[lang.account_new_password]]</label>
-                    <input type="text" class="form-control">
+                    <label class="text-capitalize">[[lang.account_new_password]]</label>
+                    <input type="text" value="" class="form-control" id="account-new-password">
                 </div>
 
-                <button class="btn btn-block"
+                <button class="btn btn-block text-uppercase" id="change-user-info-btn"
                         style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px;">
                     [[lang.account_change_password]]
                 </button>
             </div>
+            {% endif %}
+            {% if current_user.ROLE =='AGENT' %}
+                <div class="col-xxl-4 col-xl-6 col-md-8" style="padding: 20px 80px">
+                    <div class="text-center mb-4">
+                        <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
+                    </div>
+                    <p>[[lang.account_edit_details]]</p>
+                    <p class="text-uppercase">[[lang.account_info]]</p>
+                    <p>[[lang.common_account]]：</br>[[current_user.EMAIL]]</p>
+                    <p>[[lang.account_last_name]]：</br>[[current_user.LAST_NAME]]</p>
+                    <p>[[lang.account_first_name]]：</br>[[current_user.FIRST_NAME]]</p>
+{#                    <p>[[lang.common_area]]：</br>[[data.area[lang_type] ]]</p>#}
+                </div>
+            {% endif %}
+            {% if current_user.ROLE =='ADMIN' or current_user.ROLE =='SUPER' %}
+                <div class="col-xxl-4 col-xl-6 col-md-8" style="padding: 20px 80px">
+                    <div class="text-center mb-4">
+                        <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
+                    </div>
+                    <p>[[lang.account_edit_details]]</p>
+                    <p class="text-uppercase">[[lang.account_info]]</p>
+                    <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
+                        <label class="text-capitalize">[[lang.common_email]]</label>
+                        <input type="text" value="[[current_user.EMAIL]]" class="form-control" disabled>
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 25px;">
+                        <p class="text-uppercase">[[lang.account_change_pwd_tips]]</p>
+                        <label class="text-capitalize">[[lang.account_old_password]]</label>
+                        <input type="text" value="" class="form-control" id="account-old-password1">
+                    </div>
+
+                    <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
+                        <label class="text-capitalize">[[lang.account_new_password]]</label>
+                        <input type="text" value="" class="form-control" id="account-new-password1">
+                    </div>
+
+                    <button class="btn btn-block text-uppercase" id="change-user-info-btn1"
+                            style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px;">
+                        [[lang.account_change_password]]
+                    </button>
+                </div>
+            {% endif %}
             <div class="col-xxl-4 col-xl-3 col-md-2 d-none d-md-block"></div>
         </div>
     </main>
@@ -94,6 +157,62 @@
             var $ = layui.$,
                 admin = layui.admin,
                 layer = layui.layer;
+
+            $('#change-user-info-btn').on('click', function () {
+                var lastName = $('#account-last-name').val()
+                var firstName = $('#account-first-name').val()
+                var companyName = $('#account-company-name').val()
+                var pwd = $('#account-old-password').val()
+                var nPwd = $('#account-new-password').val()
+                if (lastName == "" || firstName == "" || companyName == "" || pwd == "" || nPwd == "") {
+                    layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                } else {
+                    admin.req({
+                        method: "post",
+                        url: '/api/user/update!update_user',
+                        data: JSON.stringify({
+                            "ID": '[[current_user.ID]]',
+                            "LAST_NAME": lastName,
+                            "FIRST_NAME": firstName,
+                            "COMPANY_NAME": companyName,
+                            "_PWD": pwd,
+                            "NEW_PWD": nPwd,
+                            "langType": '[[lang_type]]'
+                        }),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.data.userId == "") {
+                                window.location.href = "/[[lang_type]]/login"
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#change-user-info-btn1').on('click', function () {
+                var pwd = $('#account-old-password1').val()
+                var nPwd = $('#account-new-password1').val()
+                if (pwd == "" || nPwd == "") {
+                    layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                } else {
+                    admin.req({
+                        method: "post",
+                        url: '/api/user/update!update_user',
+                        data: JSON.stringify({
+                            "ID": '[[current_user.ID]]',
+                            "_PWD": pwd,
+                            "NEW_PWD": nPwd,
+                            "langType": '[[lang_type]]'
+                        }),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.data.userId == "") {
+                                window.location.href = "/[[lang_type]]/login"
+                            }
+                        }
+                    });
+                }
+            });
         });
     </script>
 {% endblock %}

@@ -145,23 +145,25 @@ def published_product(lang_type):
                            addition=set_addition(location="publishedProduct"))
 
 
-@views.route('/<lang_type>/customerAccountInfo', methods=['GET', 'POST'])
+##############################超管###############################
+
+@views.route('/<lang_type>/manageStaffAccounts', methods=['GET', 'POST'])
 @login_required
-def customer_account_info(lang_type):
-    """ 客户信息"""
+def manage_staff_accounts(lang_type):
+    """ 管理员工账号"""
     if lang_type not in ["zh_cn", "en_us"]:
-        return render_template("404.html", lang_type=lang_type, route="customerAccountInfo")
-    return render_template("admin/customerAccountInfo.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="customerAccountInfo",
-                           addition=set_addition(location="customerAccountInfo"))
+        return render_template("404.html", lang_type=lang_type, route="manageStaffAccounts")
+    return render_template("admin/manageStaffAccounts.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="manageStaffAccounts",
+                           addition=set_addition(location="manageStaffAccounts"))
 
 
-@views.route('/<lang_type>/addUser', methods=['GET', 'POST'])
+@views.route('/<lang_type>/manageCustomerAccounts', methods=['GET', 'POST'])
 @login_required
-def add_user(lang_type):
-    """ 添加账户"""
+def manage_customer_accounts(lang_type):
+    """ 管理客户账号"""
     if lang_type not in ["zh_cn", "en_us"]:
-        return render_template("404.html", lang_type=lang_type, route="addUser")
-    return render_template("admin/addUser.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="addUser",
-                           addition=set_addition(location="addUser"))
+        return render_template("404.html", lang_type=lang_type, route="manageCustomerAccounts")
+    return render_template("admin/manageCustomerAccounts.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="manageCustomerAccounts",
+                           addition=set_addition(location="manageCustomerAccounts"))
