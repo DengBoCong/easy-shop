@@ -32,6 +32,7 @@ class User(db.Model, UserMixin):
     IF_LOGIN = db.Column(db.Boolean, nullable=False, default=True, comment="是否允许登录，0否1是")
     ROLE = db.Column(db.Enum('SUPER', 'ADMIN', 'AGENT', 'USER'), nullable=False, comment="账号类型")
     DESCRIPTION = db.Column(db.String(255), nullable=False, default="", comment="备注")
+    ORDERS = db.Column(db.Integer, nullable=False, default=0, comment="订单数")
     AREA_ID = db.Column(db.String(50), db.ForeignKey('SHOP_AREA.ID', ondelete='SET NULL'), comment="地区ID")
     PARENT_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID'))
 
@@ -69,6 +70,7 @@ class User(db.Model, UserMixin):
             'IF_LOGIN': self.IF_LOGIN,
             'ROLE': self.ROLE,
             'DESCRIPTION': self.DESCRIPTION,
+            'ORDERS': self.ORDERS,
             'AREA_ID': self.AREA_ID,
             'PARENT_ID': self.PARENT_ID
         }

@@ -147,23 +147,44 @@ def published_product(lang_type):
 
 ##############################超管###############################
 
+@views.route('/<lang_type>/addUser', methods=['GET', 'POST'])
+@login_required
+def add_user(lang_type):
+    """ 添加账号"""
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="addUser")
+    return render_template("admin/manage/addUser.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="addUser",
+                           addition=set_addition(location="addUser"))
+
+
 @views.route('/<lang_type>/manageStaffAccounts', methods=['GET', 'POST'])
 @login_required
 def manage_staff_accounts(lang_type):
     """ 管理员工账号"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="manageStaffAccounts")
-    return render_template("admin/manageStaffAccounts.html", lang=lang[lang_type],
+    return render_template("admin/manage/manageStaffAccounts.html", lang=lang[lang_type],
                            lang_type=lang_type, route="manageStaffAccounts",
-                           addition=set_addition(location="manageStaffAccounts"))
+                           addition=set_addition(location="manageStaffAccounts", categories="manageStaffAccounts"))
 
 
 @views.route('/<lang_type>/manageCustomerAccounts', methods=['GET', 'POST'])
 @login_required
 def manage_customer_accounts(lang_type):
     """ 管理客户账号"""
+    info_data = request.args.to_dict()
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="manageCustomerAccounts")
-    return render_template("admin/manageCustomerAccounts.html", lang=lang[lang_type],
+
+    areas = Area.query.order_by(asc(Area.EN_NAME)).all()
+    areas_list = []
+    for area in areas:
+        areas_list.append(area.to_json())
+
+    return render_template("admin/manage/manageCustomerAccounts.html", lang=lang[lang_type],
                            lang_type=lang_type, route="manageCustomerAccounts",
-                           addition=set_addition(location="manageCustomerAccounts"))
+                           addition=set_addition(location="manageCustomerAccounts", categories="manageCustomerAccounts"),
+                           data={"areas": areas_list, "sort": info_data.get("sort", ""),
+                                 "area": info_data.get("area", "")})

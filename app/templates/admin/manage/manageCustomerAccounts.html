@@ -6,7 +6,7 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 54px;">
         <div class="row">
-            <div class="col-lg-3 d-none d-lg-block self-a-link">
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
                         [[lang.common_account]]
@@ -60,102 +60,111 @@
                     </li>
                 </ul>
             </div>
-            {% if current_user.ROLE =='USER' %}
-            <div class="col-lg-6 col-12" style="padding: 20px 30px 0 30px">
-                <div class="layui-form">
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <div class="row" style="width: 400px;">
-                            <div class="text-center mb-4">
-                                <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
-                            </div>
-
-                            <div class="form-label-group" style="font-size: 13px;">
-                                <p>[[lang.account_edit_details]]</p>
-                                <p class="text-uppercase">[[lang.account_info]]</p>
-                                <label class="text-capitalize">[[lang.account_last_name]]</label>
-                                <input type="text" value="[[current_user.LAST_NAME]]" class="form-control" id="account-last-name">
-                            </div>
-
-                            <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                                <label class="text-capitalize">[[lang.account_first_name]]</label>
-                                <input type="text" value="[[current_user.FIRST_NAME]]" class="form-control" id="account-first-name">
-                            </div>
-
-                            <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                                <label class="text-capitalize">[[lang.account_company_name]]</label>
-                                <input type="text" value="[[current_user.COMPANY_NAME]]" class="form-control" id="account-company-name">
-                            </div>
-                            <hr class="layui-border-black" style="margin-top: 25px;height: 1px;">
-                            <div class="form-label-group" style="font-size: 13px;margin-top: 25px;">
-                                <p class="text-uppercase">[[lang.account_change_pwd_tips]]</p>
-                                <label class="text-capitalize">[[lang.account_old_password]]</label>
-                                <input type="text" value="" class="form-control" id="account-old-password">
-                            </div>
-
-                            <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                                <label class="text-capitalize">[[lang.account_new_password]]</label>
-                                <input type="text" value="" class="form-control" id="account-new-password">
-                                <button class="btn btn-block text-uppercase" id="change-user-info-btn"
-                                    style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px;">
-                                    [[lang.account_change_password]]
-                                </button>
-                            </div>
-                        </div>
+            <div class="d-sm-none col-12" style="padding: 0">
+                <div class="row" style="padding: 0">
+                    <div class="btn-group" role="group" style="padding: 0">
+                        <button type="button" class="btn btn-outline-secondary text-uppercase"
+                                style="font-size: 15px;height: 45px;">[[lang.common_sort]]
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary text-uppercase"
+                                style="font-size: 15px;height: 45px;">[[lang.common_area]]</button>
                     </div>
                 </div>
             </div>
-            {% endif %}
-            {% if current_user.ROLE =='AGENT' %}
-                <div class="col-lg-6 col-12" style="padding: 20px 30px 0 30px">
-                    <div class="layui-form">
-                        <div class="layui-form-item d-flex justify-content-center">
-                            <div class="row" style="width: 700px;">
-                                <div class="text-center mb-4">
-                                    <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
-                                </div>
-                                <p>[[lang.account_edit_details]]</p>
-                                <p class="text-uppercase">[[lang.account_info]]</p>
-                                <p>[[lang.common_account]]：</br>[[current_user.EMAIL]]</p>
-                                <p>[[lang.account_last_name]]：</br>[[current_user.LAST_NAME]]</p>
-                                <p>[[lang.account_first_name]]：</br>[[current_user.FIRST_NAME]]</p>
-            {#                    <p>[[lang.common_area]]：</br>[[data.area[lang_type] ]]</p>#}
-                            </div>
-                        </div>
+            <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
+                <div class="row">
+                    <div class="col-sm-6 col-12">
+                        <p><span class="text-uppercase">[[lang.common_manage_customer_accounts]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_manage_customer_accounts_page_tips]]</span></p>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <button class="btn btn-block text-uppercase d-none d-sm-block" id="change-user-info-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
+                            [[lang.account_add_an_account]]
+                        </button>
+                        <button class="btn btn-block text-uppercase d-sm-none" id="change-user-info-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 100%;">
+                            [[lang.account_add_an_account]]
+                        </button>
                     </div>
                 </div>
-            {% endif %}
-            {% if current_user.ROLE =='ADMIN' or current_user.ROLE =='SUPER' %}
-                <div class="col-lg-6 col-12" style="padding: 20px 30px 0 30px;">
-                    <div class="layui-form">
-                        <div class="layui-form-item d-flex justify-content-center">
-                            <div class="row" style="width: 400px;">
-                                <div class="text-center mb-4">
-                                    <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
-                                </div>
-                                <p>[[lang.account_edit_details]]</p>
-                                <p class="text-uppercase">[[lang.account_info]]</p>
-                                <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                                    <label class="text-capitalize">[[lang.common_email]]</label>
-                                    <input type="text" value="[[current_user.EMAIL]]" class="form-control" disabled>
-                                </div>
-                                <div class="form-label-group" style="font-size: 13px;margin-top: 25px;">
-                                    <p class="text-uppercase">[[lang.account_change_pwd_tips]]</p>
-                                    <label class="text-capitalize">[[lang.account_old_password]]</label>
-                                    <input type="text" value="" class="form-control" id="account-old-password1">
-                                </div>
-                                <div class="form-label-group" style="margin-top: 10px;font-size: 13px;">
-                                    <label class="text-capitalize">[[lang.account_new_password]]</label>
-                                    <input type="text" value="" class="form-control" id="account-new-password1">
-                                    <button class="btn btn-block text-uppercase" id="change-user-info-btn1"
-                                        style="background-color: #323232;color: #FFFFFF;margin-top: 30px;width: 100%">
-                                        [[lang.account_change_password]]
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-4 d-none d-sm-block text-uppercase">[[lang.common_customers]]</div>
+                    <div class="col-4 d-none d-sm-block text-uppercase">[[lang.account_number]]</div>
+                    <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_orders]]</div>
+                    <div class="col-2 d-none d-sm-block text-uppercase">[[lang.common_area]]</div>
+                    <hr class="layui-border-black d-none d-sm-block" style="margin-top: 5px;">
+                    <div class="col-4 d-none d-sm-block">xx Company</div>
+                    <div class="col-4 d-none d-sm-block">w2323233</div>
+                    <div class="col-2 d-none d-sm-block">8888</div>
+                    <div class="col-2 d-none d-sm-block">USA</div>
+                    <hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">
+                    <div class="col-4 d-none d-sm-block">xx Company</div>
+                    <div class="col-4 d-none d-sm-block">w2323233</div>
+                    <div class="col-2 d-none d-sm-block">8888</div>
+                    <div class="col-2 d-none d-sm-block">USA</div>
+                    <hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">
                 </div>
-            {% endif %}
+                <div class="row d-sm-none" style="margin-top: 30px;font-family: NotoSansCJK-Medium">
+                    <hr class="layui-border-black">
+                    <div class="col-6">
+                        <p class="text-capitalize">[[lang.common_customers]]</p>
+                        <p class="text-capitalize">[[lang.account_number]]</p>
+                        <p class="text-capitalize">[[lang.orders_orders]]</p>
+                        <p class="text-capitalize">[[lang.common_area]]</p>
+                    </div>
+                    <div class="col-6" style="text-align: right">
+                        <p>Customer</p>
+                        <p>Customer</p>
+                        <p>Customer</p>
+                        <p>Customer</p>
+                    </div>
+                    <hr class="layui-border-black" style="margin-top: 10px;">
+                    <div class="col-6">
+                        <p class="text-capitalize">[[lang.common_customers]]</p>
+                        <p class="text-capitalize">[[lang.account_number]]</p>
+                        <p class="text-capitalize">[[lang.orders_orders]]</p>
+                        <p class="text-capitalize">[[lang.common_area]]</p>
+                    </div>
+                    <div class="col-6" style="text-align: right">
+                        <p>Customer</p>
+                        <p>Customer</p>
+                        <p>Customer</p>
+                        <p>Customer</p>
+                    </div>
+                    <hr class="layui-border-black" style="margin-top: 10px;">
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_sort]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.sort =='less_more' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=less_more&area=[[data.area]]">
+                            [[lang.common_order_less_more]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if data.sort=='more_less' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=more_less&area=[[data.area]]"
+                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                            [[lang.common_order_more_less]]
+                        </a>
+                    </li>
+                </ul>
+                <ul style="margin-top: 35px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_all_area]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.area=='public' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=[[data.sort]]&area=public">[[lang.common_public]]</a>
+                    </li>
+                    {% for area in data.areas %}
+                        <li style="font-size: 13px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]" class="text-capitalize">
+                            <a href="/[[lang_type]]/manageCustomerAccounts?sort=[[data.sort]]&area=[[area.EN_NAME]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </main>
 {% endblock %}

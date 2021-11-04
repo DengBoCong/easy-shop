@@ -202,7 +202,7 @@
                             </li>
                             {% if current_user.ROLE !='USER' %}
                             <li>
-                                <a class="dropdown-item text-uppercase" href="javascript:;">[[lang.common_published_products]]</a>
+                                <a class="dropdown-item text-uppercase" href="/[[lang_type]]/publishedProduct">[[lang.common_published_products]]</a>
                             </li>
                             {% endif %}
                             {% if current_user.ROLE =='USER' %}
@@ -215,10 +215,10 @@
                             {% endif %}
                             {% if current_user.ROLE != 'AGENT' and current_user.ROLE != 'USER' %}
                                 <li>
-                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/historyOrders">[[lang.common_manage_staff_accounts]]</a>
+                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/manageStaffAccounts">[[lang.common_manage_staff_accounts]]</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/historyOrders">[[lang.common_manage_customer_accounts]]</a>
+                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/manageCustomerAccounts">[[lang.common_manage_customer_accounts]]</a>
                                 </li>
                             {% endif %}
                             <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>
@@ -382,28 +382,28 @@
     </div>
     <div class="offcanvas-body" style="padding: 20px 20px 0 0">
         <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
-            <li class="nav-item" style="margin-top: 15px;">
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]">
                 <a href="/[[lang_type]]/accountDetail" class="text-capitalize"
                    style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
                     [[lang.common_account_detail]]
                 </a>
             </li>
             {% if addition.login and current_user.ROLE !='USER' %}
-            <li class="nav-item" style="margin-top: 15px;">
-                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='publishedProduct' else '']]">
+                <a href="/[[lang_type]]/publishedProduct" class="text-capitalize"
                    style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
                     [[lang.common_published_products]]
                 </a>
             </li>
             {% endif %}
             {% if addition.login and current_user.ROLE =='USER' %}
-                <li class="nav-item" style="margin-top: 15px;">
+                <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
                     <a href="/[[lang_type]]/historyOrders" class="text-capitalize"
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='historyOrders' else '']]">
                         [[lang.common_historical_purchase]]
                     </a>
                 </li>
-                <li class="nav-item" style="margin-top: 15px;">
+                <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
                     <a href="/[[lang_type]]/historySamples" class="text-capitalize"
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='historySamples' else '']]">
                         [[lang.common_historical_sample]]
@@ -411,14 +411,14 @@
                 </li>
             {% endif %}
             {% if addition.login and current_user.ROLE != 'AGENT' and current_user.ROLE != 'USER' %}
-            <li class="nav-item" style="margin-top: 15px;">
-                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='manageStaffAccounts' else '']]">
+                <a href="/[[lang_type]]/manageStaffAccounts" class="text-capitalize"
                    style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
                     [[lang.common_manage_staff_accounts]]
                 </a>
             </li>
-            <li class="nav-item" style="margin-top: 15px;">
-                <a href="/[[lang_type]]/wishlist" class="text-capitalize"
+            <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='manageCustomerAccounts' else '']]">
+                <a href="/[[lang_type]]/manageCustomerAccounts" class="text-capitalize"
                    style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
                     [[lang.common_manage_customer_accounts]]
                 </a>
