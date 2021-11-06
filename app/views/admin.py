@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from datetime import datetime
 from ..models import *
-from sqlalchemy import asc
+from sqlalchemy import asc, desc, and_
 from ..utils.set import set_addition
 from ..utils.get import get_currency_op
 from ..i18 import lang
@@ -153,9 +153,16 @@ def add_user(lang_type):
     """ 添加账号"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="addUser")
+
+    areas = Area.query.order_by(asc(Area.EN_NAME)).all()
+    areas_list = []
+    for area in areas:
+        areas_list.append(area.to_json())
+
     return render_template("admin/manage/addUser.html", lang=lang[lang_type],
                            lang_type=lang_type, route="addUser",
-                           addition=set_addition(location="addUser"))
+                           addition=set_addition(location="addUser"),
+                           data={"areas": areas_list})
 
 
 @views.route('/<lang_type>/manageStaffAccounts', methods=['GET', 'POST'])
@@ -180,11 +187,24 @@ def manage_customer_accounts(lang_type):
 
     areas = Area.query.order_by(asc(Area.EN_NAME)).all()
     areas_list = []
+    area_dict = {"public": "public"}
     for area in areas:
+        area_dict[area.EN_NAME] = area.ID
         areas_list.append(area.to_json())
+
+    if info_data.get("sort", "") == "less_more":
+        if info_data.get("area", "") == "" or info_data.get("area", "") == "all":
+            users = User.query.filter_by(ROLE="USER").order_by(asc(User.ORDERS)).all()
+        else:
+            users = User.query.filter(and_(User.ROLE=="USER", User.AREA_ID==area_dict.get(info_data["area"], ""))).order_by(asc(User.ORDERS)).all()
+    else:
+        if info_data.get("area", "") == "" or info_data.get("area", "") == "all":
+            users = User.query.filter_by(ROLE="USER").order_by(desc(User.ORDERS)).all()
+        else:
+            users = User.query.filter(and_(User.ROLE=="USER", User.AREA_ID==area_dict.get(info_data["area"], ""))).order_by(desc(User.ORDERS)).all()
 
     return render_template("admin/manage/manageCustomerAccounts.html", lang=lang[lang_type],
                            lang_type=lang_type, route="manageCustomerAccounts",
                            addition=set_addition(location="manageCustomerAccounts", categories="manageCustomerAccounts"),
                            data={"areas": areas_list, "sort": info_data.get("sort", ""),
-                                 "area": info_data.get("area", "")})
+                                 "area": info_data.get("area", ""), "users": users})

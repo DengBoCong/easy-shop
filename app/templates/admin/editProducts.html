@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
 {% endblock %}
 {% block content %}
-    <main class="container" style="max-width: 1920px;margin-top: 54px;">
+    <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-lg-3 col-md-4 d-none d-md-block">
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
@@ -542,34 +542,41 @@
                             });
 
                             $('#edit-products-area-add-btn').on('click', function () {
-                                admin.req({
-                                    method: "post",
-                                    url: '/api/area/add!add_area',
-                                    data: JSON.stringify({
-                                        "NAME": $('#add-area-zh-name').val(),
-                                        "EN_NAME": $('#add-area-en-name').val(),
-                                        "langType": '[[lang_type]]'
-                                    }),
-                                    done: function (res) {
-                                        layer.msg(res.msg);
-                                        if (res.code == 0) {
-                                            $('#edit-product-area-select-id').empty()
-                                            $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
-                                            $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
-                                            for (i = 0; i < res.data.areas.length; i++) {
-                                                if ('[[lang_type]]' == 'zh_cn') {
-                                                    $('#edit-product-area-select-id').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
-                                                } else {
-                                                    $('#edit-product-area-select-id').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                var zhName = $('#add-area-zh-name').val()
+                                var enName = $('#add-area-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/area/add!add_area',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-area-zh-name').val(),
+                                            "EN_NAME": $('#add-area-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                $('#edit-product-area-select-id').empty()
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
+                                                for (i = 0; i < res.data.areas.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-area-select-id').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
+                                                    } else {
+                                                        $('#edit-product-area-select-id').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                                    }
                                                 }
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
                                             }
-                                            $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
-                                            layui.form.render("select");
-                                            $('.layui-form-select').css("border", "1px solid #575759");
-                                            layer.closeAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     });
@@ -602,34 +609,41 @@
                             });
 
                             $('#edit-products-area-add-btn').on('click', function () {
-                                admin.req({
-                                    method: "post",
-                                    url: '/api/area/add!add_area',
-                                    data: JSON.stringify({
-                                        "NAME": $('#add-area-zh-name').val(),
-                                        "EN_NAME": $('#add-area-en-name').val(),
-                                        "langType": '[[lang_type]]'
-                                    }),
-                                    done: function (res) {
-                                        layer.msg(res.msg);
-                                        if (res.code == 0) {
-                                            $('#edit-product-area-select-id1').empty()
-                                            $('#edit-product-area-select-id1').append(new Option('[[lang.products_choose_area]]', ''));
-                                            $('#edit-product-area-select-id1').append(new Option('[[lang.common_public]]', 'public'));
-                                            for (i = 0; i < res.data.areas.length; i++) {
-                                                if ('[[lang_type]]' == 'zh_cn') {
-                                                    $('#edit-product-area-select-id1').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
-                                                } else {
-                                                    $('#edit-product-area-select-id1').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                var zhName = $('#add-area-zh-name').val()
+                                var enName = $('#add-area-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/area/add!add_area',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-area-zh-name').val(),
+                                            "EN_NAME": $('#add-area-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                $('#edit-product-area-select-id1').empty()
+                                                $('#edit-product-area-select-id1').append(new Option('[[lang.products_choose_area]]', ''));
+                                                $('#edit-product-area-select-id1').append(new Option('[[lang.common_public]]', 'public'));
+                                                for (i = 0; i < res.data.areas.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-area-select-id1').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
+                                                    } else {
+                                                        $('#edit-product-area-select-id1').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                                    }
                                                 }
+                                                $('#edit-product-area-select-id1').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
                                             }
-                                            $('#edit-product-area-select-id1').append(new Option('[[lang.common_add]]', 'add'));
-                                            layui.form.render("select");
-                                            $('.layui-form-select').css("border", "1px solid #575759");
-                                            layer.closeAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     });
@@ -663,33 +677,40 @@
                             });
 
                             $('#edit-products-category-add-btn').on('click', function () {
-                                admin.req({
-                                    method: "post",
-                                    url: '/api/good/add!add_good_category',
-                                    data: JSON.stringify({
-                                        "NAME": $('#add-category-zh-name').val(),
-                                        "EN_NAME": $('#add-category-en-name').val(),
-                                        "langType": '[[lang_type]]'
-                                    }),
-                                    done: function (res) {
-                                        layer.msg(res.msg);
-                                        if (res.code == 0) {
-                                            $('#edit-product-category-select-id').empty()
-                                            $('#edit-product-category-select-id').append(new Option('[[lang.products_select_category]]', ''));
-                                            for (i = 0; i < res.data.goodCategories.length; i++) {
-                                                if ('[[lang_type]]' == 'zh_cn') {
-                                                    $('#edit-product-category-select-id').append(new Option(res.data.goodCategories[i].NAME, res.data.goodCategories[i].ID));
-                                                } else {
-                                                    $('#edit-product-category-select-id').append(new Option(res.data.goodCategories[i].EN_NAME, res.data.goodCategories[i].ID));
+                                var zhName = $('#add-category-zh-name').val()
+                                var enName = $('#add-category-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/good/add!add_good_category',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-category-zh-name').val(),
+                                            "EN_NAME": $('#add-category-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                $('#edit-product-category-select-id').empty()
+                                                $('#edit-product-category-select-id').append(new Option('[[lang.products_select_category]]', ''));
+                                                for (i = 0; i < res.data.goodCategories.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-category-select-id').append(new Option(res.data.goodCategories[i].NAME, res.data.goodCategories[i].ID));
+                                                    } else {
+                                                        $('#edit-product-category-select-id').append(new Option(res.data.goodCategories[i].EN_NAME, res.data.goodCategories[i].ID));
+                                                    }
                                                 }
+                                                $('#edit-product-category-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
                                             }
-                                            $('#edit-product-category-select-id').append(new Option('[[lang.common_add]]', 'add'));
-                                            layui.form.render("select");
-                                            $('.layui-form-select').css("border", "1px solid #575759");
-                                            layer.closeAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     });
@@ -722,33 +743,40 @@
                             });
 
                             $('#edit-products-category-add-btn').on('click', function () {
-                                admin.req({
-                                    method: "post",
-                                    url: '/api/good/add!add_good_category',
-                                    data: JSON.stringify({
-                                        "NAME": $('#add-category-zh-name').val(),
-                                        "EN_NAME": $('#add-category-en-name').val(),
-                                        "langType": '[[lang_type]]'
-                                    }),
-                                    done: function (res) {
-                                        layer.msg(res.msg);
-                                        if (res.code == 0) {
-                                            $('#edit-product-category-select-id1').empty()
-                                            $('#edit-product-category-select-id1').append(new Option('[[lang.products_select_category]]', ''));
-                                            for (i = 0; i < res.data.goodCategories.length; i++) {
-                                                if ('[[lang_type]]' == 'zh_cn') {
-                                                    $('#edit-product-category-select-id1').append(new Option(res.data.goodCategories[i].NAME, res.data.goodCategories[i].ID));
-                                                } else {
-                                                    $('#edit-product-category-select-id1').append(new Option(res.data.goodCategories[i].EN_NAME, res.data.goodCategories[i].ID));
+                                var zhName = $('#add-category-zh-name').val()
+                                var enName = $('#add-category-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/good/add!add_good_category',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-category-zh-name').val(),
+                                            "EN_NAME": $('#add-category-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                $('#edit-product-category-select-id1').empty()
+                                                $('#edit-product-category-select-id1').append(new Option('[[lang.products_select_category]]', ''));
+                                                for (i = 0; i < res.data.goodCategories.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-category-select-id1').append(new Option(res.data.goodCategories[i].NAME, res.data.goodCategories[i].ID));
+                                                    } else {
+                                                        $('#edit-product-category-select-id1').append(new Option(res.data.goodCategories[i].EN_NAME, res.data.goodCategories[i].ID));
+                                                    }
                                                 }
+                                                $('#edit-product-category-select-id1').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
                                             }
-                                            $('#edit-product-category-select-id1').append(new Option('[[lang.common_add]]', 'add'));
-                                            layui.form.render("select");
-                                            $('.layui-form-select').css("border", "1px solid #575759");
-                                            layer.closeAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     });
@@ -787,35 +815,41 @@
                             });
 
                             $('#edit-products-size-add-btn').on('click', function () {
-                                admin.req({
-                                    method: "post",
-                                    url: '/api/good/add!add_good_size',
-                                    data: JSON.stringify({
-                                        "SIZE": $('#add-size-name').val(),
-                                        "langType": '[[lang_type]]'
-                                    }),
-                                    done: function (res) {
-                                        layer.msg(res.msg);
-                                        if (res.code == 0) {
-                                            var sizeArr = new Array();
-                                            {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
-                                            for (i = 0; i < res.data.goodSizes.length; i++) {
-                                                sizeArr[i] = {
-                                                    "name": res.data.goodSizes[i].SIZE,
-                                                    "value": res.data.goodSizes[i].ID
+                                var zhName = $('#add-size-name').val()
+
+                                if (zhName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/good/add!add_good_size',
+                                        data: JSON.stringify({
+                                            "SIZE": $('#add-size-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                var sizeArr = new Array();
+                                                {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
+                                                for (i = 0; i < res.data.goodSizes.length; i++) {
+                                                    sizeArr[i] = {
+                                                        "name": res.data.goodSizes[i].SIZE,
+                                                        "value": res.data.goodSizes[i].ID
+                                                    }
                                                 }
+                                                sizeArr[res.data.goodSizes.length] = {
+                                                    "name": "[[lang.common_add]]",
+                                                    "value": "add"
+                                                }
+                                                layui.formSelects.data('size_select', 'local', {
+                                                    arr: sizeArr
+                                                });
+                                                layer.closeAll();
                                             }
-                                            sizeArr[res.data.goodSizes.length] = {
-                                                "name": "[[lang.common_add]]",
-                                                "value": "add"
-                                            }
-                                            layui.formSelects.data('size_select', 'local', {
-                                                arr: sizeArr
-                                            });
-                                            layer.closeAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     });
@@ -853,35 +887,41 @@
                             });
 
                             $('#edit-products-size-add-btn').on('click', function () {
-                                admin.req({
-                                    method: "post",
-                                    url: '/api/good/add!add_good_size',
-                                    data: JSON.stringify({
-                                        "SIZE": $('#add-size-name').val(),
-                                        "langType": '[[lang_type]]'
-                                    }),
-                                    done: function (res) {
-                                        layer.msg(res.msg);
-                                        if (res.code == 0) {
-                                            var sizeArr = new Array();
-                                            {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
-                                            for (i = 0; i < res.data.goodSizes.length; i++) {
-                                                sizeArr[i] = {
-                                                    "name": res.data.goodSizes[i].SIZE,
-                                                    "value": res.data.goodSizes[i].ID
+                                var zhName = $('#add-size-name').val()
+
+                                if (zhName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/good/add!add_good_size',
+                                        data: JSON.stringify({
+                                            "SIZE": $('#add-size-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                var sizeArr = new Array();
+                                                {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
+                                                for (i = 0; i < res.data.goodSizes.length; i++) {
+                                                    sizeArr[i] = {
+                                                        "name": res.data.goodSizes[i].SIZE,
+                                                        "value": res.data.goodSizes[i].ID
+                                                    }
                                                 }
+                                                sizeArr[res.data.goodSizes.length] = {
+                                                    "name": "[[lang.common_add]]",
+                                                    "value": "add"
+                                                }
+                                                layui.formSelects.data('size_select', 'local', {
+                                                    arr: sizeArr
+                                                });
+                                                layer.closeAll();
                                             }
-                                            sizeArr[res.data.goodSizes.length] = {
-                                                "name": "[[lang.common_add]]",
-                                                "value": "add"
-                                            }
-                                            layui.formSelects.data('size_select', 'local', {
-                                                arr: sizeArr
-                                            });
-                                            layer.closeAll();
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             });
                         }
                     });

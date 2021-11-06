@@ -1,10 +1,185 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 60px;">
+        <div class="layui-form">
+            <div class="layui-form-item d-flex justify-content-center">
+                <div class="row" style="width: 400px;padding: 20px 30px 0 30px">
+                    <div class="text-center mb-4">
+                        <p class="mb-3 font-weight-normal" style="font-size: 17px;">[[lang.account_add_an_customer_account]]</p>
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;">
+                        <label class="text-capitalize">[[lang.account_last_name]]</label>
+                        <input type="text" value="" class="form-control" id="account-last-name">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.account_first_name]]</label>
+                        <input type="text" value="" class="form-control" id="account-first-name">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.account_related_email]]</label>
+                        <input type="email" value="" class="form-control" id="account-related-email">
+                        <span style="color: red;font-size: 10px;">[[lang.account_related_email_tip]]</span>
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.common_password]]</label>
+                        <input type="password" value="" class="form-control" id="account-pwd">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.common_confirm_password]]</label>
+                        <input type="password" value="" class="form-control" id="account-confirm-pwd">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.products_area]]</label>
+                        <select lay-verify="required" style="margin-top: 5px;"
+                                lay-filter="edit-product-area-select" id="edit-product-area-select-id">
+                            <option value="">[[lang.products_choose_area]]</option>
+                            {% for area in data.areas %}
+                                <option value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else
+                                    area.EN_NAME]]
+                                </option>
+                            {% endfor %}
+                            <option value="add">[[lang.common_add]]</option>
+                        </select>
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 30px;font-family: NotoSansCJK-Medium">
+                        <div class="btn btn-block text-uppercase" id="add-customer-account-btn"
+                             style="background-color: #323232;color: #FFFFFF;width: 100%;">
+                            [[lang.account_register]]
+                        </div>
+                        <div class="btn btn-block text-uppercase cancel-account-btn"
+                             style="margin-top: 30px;width: 100%;border: 1px solid #575759">
+                            [[lang.common_cancel]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer', 'form'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                form = layui.form,
+                layer = layui.layer;
 
-</body>
-</html>
+            $('.layui-form-select').css("border", "1px solid #575759");
+            form.on('select(edit-product-area-select)', function (data) {
+                if (data.value == "add") {
+                    layer.open({
+                        type: 1,
+                        offset: 'auto',
+                        title: false,
+                        id: 'navAreaSelect',
+                        content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                            '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                            '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                            '<div class="row"><div class="layui-inline"><div class="layui-input-inline" style="width: 150px;">' +
+                            '<input type="text" id="add-area-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<div class="layui-input-inline" style="width: 150px;float: right">' +
+                            '<input type="text" id="add-area-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '</div></div></div>',
+                        shade: 0,
+                        area: ['370px', '150px'],
+                        resize: false,
+                        closeBtn: false,
+                        success: function (layero, index) {
+                            $('#basic_nav_search_close').on('click', function () {
+                                layer.closeAll();
+                            });
+
+                            $('#edit-products-area-add-btn').on('click', function () {
+                                var zhName = $('#add-area-zh-name').val()
+                                var enName = $('#add-area-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/area/add!add_area',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-area-zh-name').val(),
+                                            "EN_NAME": $('#add-area-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                $('#edit-product-area-select-id').empty()
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
+                                                for (i = 0; i < res.data.areas.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-area-select-id').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
+                                                    } else {
+                                                        $('#edit-product-area-select-id').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                                    }
+                                                }
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('.cancel-account-btn').on('click', function () {
+                window.history.back(-1);
+            });
+            $('#add-customer-account-btn').on('click', function () {
+                var lastName = $('#account-last-name').val()
+                var firstName = $('#account-first-name').val()
+                var relatedEmail = $('#account-related-email').val()
+                var pwd = $('#account-pwd').val()
+                var confirmPwd = $('#account-confirm-pwd').val()
+                var areaVal = $('#edit-product-area-select-id').val()
+
+
+                if (lastName == "" || firstName == "" || relatedEmail == ""
+                    || pwd == "" || confirmPwd == "" || areaVal == "") {
+                    layer.msg('[[lang.common_complete_info]]', {icon: 5});
+                } else if (confirmPwd != pwd) {
+                    layer.msg('[[lang.account_pwd_confirm_diff_tip]]', {icon: 5});
+                } else {
+                    admin.req({
+                        method: "post",
+                        url: '/api/user/add!add_user',
+                        data: JSON.stringify({
+                            "LAST_NAME": lastName,
+                            "FIRST_NAME": firstName,
+                            "EMAIL": relatedEmail,
+                            "PWD_": pwd,
+                            "AREA_ID": areaVal,
+                            "ROLE": "USER",
+                            "langType": '[[lang_type]]'
+                        }),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.code == 0) {
+                                window.location.href = "/[[lang_type]]/manageCustomerAccounts"
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

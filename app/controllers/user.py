@@ -27,11 +27,18 @@ def add_user():
         elif info_data.get("NAME") != "NULL-None" and len(name_user) != 0:
             return jsonify({'code': 1, 'msg': lang[lang_type]["inner_name_repeat_reset"], 'data': {}})
         else:
-            user = User(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), EMAIL=info_data.get("ACCOUNT"),
-                        NAME=info_data.get("NAME", "NULL-None"), PHONE=info_data.get("PHONE", "00000000000"),
+            user = User(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), EMAIL=info_data.get("EMAIL"),
+                        NAME=info_data.get("NAME", ""), PHONE=info_data.get("PHONE", ""),
+                        LAST_NAME=info_data.get("LAST_NAME", ""), FIRST_NAME=info_data.get("FIRST_NAME", ""),
+                        COMPANY_NAME=info_data.get("COMPANY_NAME", ""), ORDERS=info_data.get("ORDERS", 0),
                         IF_LOGIN=bool(info_data.get("IF_LOGIN", 1)), ROLE=info_data.get("ROLE"),
-                        DESCRIPTION=info_data.get("DESCRIPTION", ""), AREA=info_data.get("AREA"),
-                        PARENT_ID=info_data.get("PARENT_ID"))
+                        DESCRIPTION=info_data.get("DESCRIPTION", ""), AREA_ID=info_data.get("AREA_ID"),
+                        PARENT_ID="root")
+
+            if info_data.get("PWD_", None):
+                user.password = info_data["PWD_"]
+                del info_data["PWD_"]
+
             db.session.add(user)
             db.session.commit()
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})

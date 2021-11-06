@@ -138,34 +138,36 @@
             </ul>
         </div>
         <div class="d-lg-none" style="position: relative;z-index:1000;">
-            <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasNavList" aria-controls="offcanvasNavList" id="offcanvasNavList1">
-                <i class="bi bi-list" style="color: #0C0C0C"></i>
-            </button>
-            <button id="basic_nav_search_button_first" type="button" class="btn btn-outline-light">
-                <i class="bi bi-search" style="color: #0C0C0C"></i>
-            </button>
-            {% if addition.login %}
-            <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasNavListAccount" aria-controls="offcanvasNavListAccount" id="offcanvasNavListAccount1">
-                <i class="bi bi-person" style="color: #0C0C0C"></i>
-            </button>
-            {% else %}
-            <button type="button" class="btn btn-outline-light" id="small-screen-log-in-btn">
-                <i class="bi bi-person" style="color: #0C0C0C"></i>
-            </button>
-            {% endif %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas" style="width: 30px;"
+                        data-bs-target="#offcanvasNavList" aria-controls="offcanvasNavList" id="offcanvasNavList1">
+                    <i class="bi bi-list" style="color: #0C0C0C"></i>
+                </button>
+                <button id="basic_nav_search_button_first" type="button" class="btn btn-outline-light" style="width: 30px;">
+                    <i class="bi bi-search" style="color: #0C0C0C"></i>
+                </button>
+                {% if addition.login %}
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="offcanvas" style="width: 30px;"
+                        data-bs-target="#offcanvasNavListAccount" aria-controls="offcanvasNavListAccount" id="offcanvasNavListAccount1">
+                    <i class="bi bi-person" style="color: #0C0C0C"></i>
+                </button>
+                {% else %}
+                <button type="button" class="btn btn-outline-light" id="small-screen-log-in-btn" style="width: 30px;">
+                    <i class="bi bi-person" style="color: #0C0C0C"></i>
+                </button>
+                {% endif %}
+            </div>
         </div>
         <a href="/[[lang_type]]/index" style="color: #0C0C0C;font-size: 19px;"><span
                 class="align-middle text-uppercase">[[lang.company_name]]</span></a>
         <div class="d-lg-none" style="float:right;">
-            <button type="button" class="btn btn-outline-light">
+            <button type="button" class="btn btn-outline-light" style="width: 30px;">
                 <i class="bi bi-heart" style="color: #0C0C0C"></i>
             </button>
-            <button type="button" class="btn btn-outline-light">
+            <button type="button" class="btn btn-outline-light" style="width: 30px;">
                 <i class="bi bi-bag-dash" style="color: #0C0C0C"></i>
             </button>
-            <button type="button" class="btn btn-outline-light">
+            <button type="button" class="btn btn-outline-light" style="width: 30px;">
                 <i class="bi bi-bag" style="color: #0C0C0C"></i>
             </button>
         </div>
