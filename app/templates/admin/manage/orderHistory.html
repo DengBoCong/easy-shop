@@ -9,53 +9,31 @@
             <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
-                        [[lang.common_account]]
+                        [[lang.common_all_categories]]
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/accountDetail">
-                            [[lang.common_account_detail]]
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?goodId=[[data.goodId]]">
+                            [[lang.orders_history]]
                         </a>
                     </li>
-                    {% if current_user.ROLE =='USER' %}
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/historyOrders"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_historical_purchase]]
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]][[addition.add]]/newProducts?productType=SAMPLE">
+                            [[lang.common_making_samples]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/historySamples"
-                           style="[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
-                            [[lang.common_historical_sample]]
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/wishlist">
+                            [[lang.header_nav_wishlist]]
                         </a>
                     </li>
-                    {% endif %}
-                    {% if current_user.ROLE !='USER' %}
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='publishedProduct' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_published_products]]
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/shoppingBag">
+                            [[lang.header_nav_shopping_bag]]
                         </a>
                     </li>
-                    {% endif %}
-                    {% if current_user.ROLE =='ADMIN' or current_user.ROLE =='SUPER' %}
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='manageStaffAccounts' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageStaffAccounts"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_manage_staff_accounts]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='manageCustomerAccounts' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageCustomerAccounts"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_manage_customer_accounts]]
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li style="font-size: 13px;">
-                        <a href="javascript:;" class="text-capitalize"
-                           style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
-                            [[lang.common_logout]]
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/sampleBag">
+                            [[lang.header_nav_sample_bag]]
                         </a>
                     </li>
                 </ul>
@@ -63,38 +41,39 @@
             <div class="d-sm-none col-12" style="padding: 0">
                 <div class="row" style="padding: 0">
                     <div class="btn-group" role="group" style="padding: 0">
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListCategory1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListCategory" aria-controls="offcanvasNavListCategory"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_categories]]</div>
                         <div class="btn btn-block text-uppercase" id="offcanvasNavListSort1"
                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListSort" aria-controls="offcanvasNavListSort"
                                 style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_sort]]
                         </div>
-                        <div class="btn btn-block text-uppercase" id="offcanvasNavListArea1"
-                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListArea" aria-controls="offcanvasNavListArea"
-                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_area]]</div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
                 <div class="row">
                     <div class="col-sm-6 col-12">
-                        <p><span class="text-uppercase">[[lang.common_manage_customer_accounts]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_manage_customer_accounts_page_tips]]</span></p>
+                        <p>[[user.NAME]]</br>[[user.EMAIL]]</br>[[user.area.NAME if lang_type == 'zh_cn' else user.area.EN_NAME]]</p>
                     </div>
                     <div class="col-sm-6 col-12">
-                        <div class="btn btn-block text-uppercase d-none d-sm-block add-user-accpunt-btn"
+                        <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
-                            [[lang.account_add_an_account]]
+                            [[lang.account_edit_an_account]]
                         </div>
-                        <div class="btn btn-block text-uppercase d-sm-none add-user-accpunt-btn"
+                        <div class="btn btn-block text-uppercase d-sm-none edit-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 100%;">
-                            [[lang.account_add_an_account]]
+                            [[lang.account_edit_an_account]]
                         </div>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 30px">
                     <div class="row">
-                        <div class="col-4 d-none d-sm-block text-uppercase">[[lang.common_customers]]</div>
-                        <div class="col-4 d-none d-sm-block text-uppercase">[[lang.account_number]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_orders]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.common_area]]</div>
+                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.orders_orders]]</div>
+                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_date]]</div>
+                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_total_amount]]</div>
+                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_status]]</div>
+                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.orders_tracking_number]]</div>
                     </div>
                     {% if not data.users %}<hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">{% endif %}
                     {% for user in data.users %}
@@ -131,30 +110,61 @@
                         [[lang.common_sort]]
                     </li>
                     <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.sort =='less_more' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=less_more&area=[[data.area]]">
-                            [[lang.common_order_less_more]]
+                        <a href="/[[lang_type]]/orderHistory?goodId=[[data.goodId]]&sort=less_more">
+                            [[lang.common_order_amount_less_more]]
                         </a>
                     </li>
                     <li style="font-size: 13px;[['text-decoration: underline;' if data.sort=='more_less' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=more_less&area=[[data.area]]"
+                        <a href="/[[lang_type]]/orderHistory?goodId=[[data.goodId]]&sort=more_less"
                            style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_order_more_less]]
+                            [[lang.common_order_amount_more_less]]
                         </a>
                     </li>
-                </ul>
-                <ul style="margin-top: 35px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';[['text-decoration: underline;' if data.area=='all' else '']]" class="text-uppercase">
-                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=[[data.sort]]&area=all">[[lang.common_all_area]]</a>
-                    </li>
-                    {% for area in data.areas %}
-                        <li style="[['margin-top: 10px;' if loop.index - 1 == 0 else '']]font-size: 13px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]" class="text-capitalize">
-                            <a href="/[[lang_type]]/manageCustomerAccounts?sort=[[data.sort]]&area=[[area.EN_NAME]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</a>
-                        </li>
-                    {% endfor %}
                 </ul>
             </div>
         </div>
     </main>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListCategory" aria-labelledby="offcanvasNavListCategoryLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]">
+                    <a href="/[[lang_type]]/orderHistory?goodId=[[data.goodId]]">
+                        [[lang.orders_history]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/newProducts?productType=SAMPLE">
+                        [[lang.common_making_samples]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]">
+                    <a href="/[[lang_type]]/wishlist">
+                        [[lang.header_nav_wishlist]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]">
+                    <a href="/[[lang_type]]/shoppingBag">
+                        [[lang.header_nav_shopping_bag]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]">
+                    <a href="/[[lang_type]]/sampleBag">
+                        [[lang.header_nav_sample_bag]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-area"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
     <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
          data-bs-scroll="true" data-bs-backdrop="false"
          id="offcanvasNavListSort" aria-labelledby="offcanvasNavListSortLabel">
@@ -165,45 +175,17 @@
         <div class="offcanvas-body" style="padding: 20px 20px 0 0">
             <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
                 <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.sort =='less_more' else '']]">
-                    <a href="/[[lang_type]]/manageCustomerAccounts?sort=less_more&area=[[data.area]]">
-                        [[lang.common_order_less_more]]
+                    <a href="/[[lang_type]]/orderHistory?goodId=[[data.goodId]]&sort=less_more">
+                        [[lang.common_order_amount_less_more]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.sort=='more_less' else '']]">
-                    <a href="/[[lang_type]]/manageCustomerAccounts?sort=more_less&area=[[data.area]]">
-                        [[lang.common_order_more_less]]
+                    <a href="/[[lang_type]]/orderHistory?goodId=[[data.goodId]]&sort=more_less">
+                        [[lang.common_order_amount_more_less]]
                     </a>
                 </li>
             </ul>
             <div class="self-nav" id="header-offcanvas-bottom-close-sort"
-                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
-                [[lang.common_close]]
-            </div>
-        </div>
-    </div>
-    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
-         data-bs-scroll="true" data-bs-backdrop="false"
-         id="offcanvasNavListArea" aria-labelledby="offcanvasNavListAreaLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title"></h5>
-    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
-        </div>
-        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
-            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
-                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if data.area=='all' else '']]">
-                    <a href="/[[lang_type]]/manageCustomerAccounts?sort=[[data.sort]]&area=all">
-                        [[lang.common_all_area]]
-                    </a>
-                </li>
-                {% for area in data.areas %}
-                    <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]">
-                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=[[data.sort]]&area=[[area.EN_NAME]]">
-                            [[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="self-nav" id="header-offcanvas-bottom-close-area"
                  style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
                 [[lang.common_close]]
             </div>

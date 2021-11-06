@@ -68,3 +68,14 @@ def shopping_bag(lang_type):
     return render_template("customer/shoppingBag.html", lang=lang[lang_type],
                            lang_type=lang_type, route="shoppingBag",
                            addition=set_addition(location="shoppingBag"))
+
+
+@views.route('/<lang_type>/sampleBag', methods=['GET', 'POST'])
+@login_required
+def sample_bag(lang_type):
+    """ 样品袋"""
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="sampleBag")
+    return render_template("customer/sampleBag.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="sampleBag",
+                           addition=set_addition(location="sampleBag"))

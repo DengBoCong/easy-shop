@@ -30,6 +30,8 @@ class Good(db.Model, UserMixin):
     TYPE = db.Column(db.Enum('MEN', 'WOMEN', 'KIDS', 'OTHERS'), nullable=False, comment="所属类型")
     COVER = db.Column(db.String(255), nullable=False, default="", comment="封面地址")
 
+    orderGoods = db.relationship('OrderGood', backref='good', lazy='dynamic')
+
     def __repr__(self):
         return '<Good %r>\n' % self.NAME
 

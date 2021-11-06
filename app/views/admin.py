@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from datetime import datetime
 from ..models import *
-from sqlalchemy import asc, desc, and_
+from sqlalchemy import asc, desc, and_, or_
 from ..utils.set import set_addition
 from ..utils.get import get_currency_op
 from ..i18 import lang
@@ -151,7 +151,12 @@ def published_product(lang_type):
 @login_required
 def add_user(lang_type):
     """ 添加账号"""
+    lang_type, sub_page = lang_type.split("-")
+
     if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="addUser")
+
+    if sub_page not in ["customer", "staff"]:
         return render_template("404.html", lang_type=lang_type, route="addUser")
 
     areas = Area.query.order_by(asc(Area.EN_NAME)).all()
@@ -162,18 +167,37 @@ def add_user(lang_type):
     return render_template("admin/manage/addUser.html", lang=lang[lang_type],
                            lang_type=lang_type, route="addUser",
                            addition=set_addition(location="addUser"),
-                           data={"areas": areas_list})
+                           data={"areas": areas_list, "subPage": sub_page})
 
 
 @views.route('/<lang_type>/manageStaffAccounts', methods=['GET', 'POST'])
 @login_required
 def manage_staff_accounts(lang_type):
     """ 管理员工账号"""
+    info_data = request.args.to_dict()
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="manageStaffAccounts")
+
+    if info_data.get("sort", "") == "az":
+        if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
+            users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(asc(User.ORDERS)).all()
+        else:
+            users = User.query.filter_by(
+                ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+    else:
+        if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
+            users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(desc(User.ORDERS)).all()
+        else:
+            users = User.query.filter_by(
+                ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+
+    addition = set_addition(location="manageStaffAccounts", categories="manageStaffAccounts")
+
     return render_template("admin/manage/manageStaffAccounts.html", lang=lang[lang_type],
                            lang_type=lang_type, route="manageStaffAccounts",
-                           addition=set_addition(location="manageStaffAccounts", categories="manageStaffAccounts"))
+                           addition=addition, data={"users": users, "position": info_data.get("position", ""),
+                                                    "sort": info_data.get("sort", "")})
 
 
 @views.route('/<lang_type>/manageCustomerAccounts', methods=['GET', 'POST'])
@@ -196,15 +220,42 @@ def manage_customer_accounts(lang_type):
         if info_data.get("area", "") == "" or info_data.get("area", "") == "all":
             users = User.query.filter_by(ROLE="USER").order_by(asc(User.ORDERS)).all()
         else:
-            users = User.query.filter(and_(User.ROLE=="USER", User.AREA_ID==area_dict.get(info_data["area"], ""))).order_by(asc(User.ORDERS)).all()
+            users = User.query.filter(
+                and_(User.ROLE == "USER", User.AREA_ID == area_dict.get(info_data["area"], ""))).order_by(
+                asc(User.ORDERS)).all()
     else:
         if info_data.get("area", "") == "" or info_data.get("area", "") == "all":
             users = User.query.filter_by(ROLE="USER").order_by(desc(User.ORDERS)).all()
         else:
-            users = User.query.filter(and_(User.ROLE=="USER", User.AREA_ID==area_dict.get(info_data["area"], ""))).order_by(desc(User.ORDERS)).all()
+            users = User.query.filter(
+                and_(User.ROLE == "USER", User.AREA_ID == area_dict.get(info_data["area"], ""))).order_by(
+                desc(User.ORDERS)).all()
+
+    addition = set_addition(location="manageCustomerAccounts", categories="manageCustomerAccounts")
 
     return render_template("admin/manage/manageCustomerAccounts.html", lang=lang[lang_type],
                            lang_type=lang_type, route="manageCustomerAccounts",
-                           addition=set_addition(location="manageCustomerAccounts", categories="manageCustomerAccounts"),
-                           data={"areas": areas_list, "sort": info_data.get("sort", ""),
-                                 "area": info_data.get("area", ""), "users": users})
+                           addition=addition, data={"areas": areas_list, "sort": info_data.get("sort", ""),
+                                                    "area": info_data.get("area", ""), "users": users})
+
+
+##############################订单###############################
+
+@views.route('/<lang_type>/orderHistory', methods=['GET', 'POST'])
+@login_required
+def orde_history(lang_type):
+    """ 历史订单"""
+    info_data = request.args.to_dict()
+    good_id = info_data.get("goodId", "")
+    sort = info_data.get("sort", "")
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="orderHistory")
+
+    user = User.query.get(good_id)
+    orders = Order.query.filter_by(ROLE="USER").order_by(asc(User.ORDERS)).all()
+
+    return render_template("admin/manage/orderHistory.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="orderHistory",
+                           addition=set_addition(location="orderHistory"),
+                           data={"goodId": good_id, "user": user})

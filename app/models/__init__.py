@@ -4,4 +4,6 @@ from .GoodCategory import GoodCategory
 from .GoodImg import GoodImg
 from .GoodPrice import GoodPrice
 from .GoodSize import GoodSize
+from .Order import Order
+from .OrderGood import OrderGood
 from .User import User

@@ -32,19 +32,29 @@
                         <label class="text-capitalize">[[lang.common_confirm_password]]</label>
                         <input type="password" value="" class="form-control" id="account-confirm-pwd">
                     </div>
+                    {% if data.subPage == 'customer' %}
                     <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
                         <label class="text-capitalize">[[lang.products_area]]</label>
                         <select lay-verify="required" style="margin-top: 5px;"
                                 lay-filter="edit-product-area-select" id="edit-product-area-select-id">
                             <option value="">[[lang.products_choose_area]]</option>
                             {% for area in data.areas %}
-                                <option value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else
-                                    area.EN_NAME]]
-                                </option>
+                                <option value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
                             {% endfor %}
                             <option value="add">[[lang.common_add]]</option>
                         </select>
                     </div>
+                    {% endif %}
+                    {% if data.subPage == 'staff' %}
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.products_area]]</label>
+                        <select lay-verify="required" style="margin-top: 5px;" id="edit-position-select-id">
+                            <option class="text-capitalize" value="">[[lang.account_choose_position]]</option>
+                            <option class="text-capitalize" value="AGENT">[[lang.account_junior_staff]]</option>
+                            <option class="text-capitalize" value="ADMIN">[[lang.account_senior_staff]]</option>
+                        </select>
+                    </div>
+                    {% endif %}
                     <div class="form-label-group" style="font-size: 13px;margin-top: 30px;font-family: NotoSansCJK-Medium">
                         <div class="btn btn-block text-uppercase" id="add-customer-account-btn"
                              style="background-color: #323232;color: #FFFFFF;width: 100%;">
@@ -142,7 +152,11 @@
             });
 
             $('.cancel-account-btn').on('click', function () {
-                window.history.back(-1);
+                if ('[[data.subPage]]' == 'customer') {
+                    window.location.href = "/[[lang_type]]/manageCustomerAccounts"
+                } else if ('[[data.subPage]]' == 'staff') {
+                    window.location.href = "/[[lang_type]]/manageStaffAccounts"
+                }
             });
             $('#add-customer-account-btn').on('click', function () {
                 var lastName = $('#account-last-name').val()
@@ -151,10 +165,27 @@
                 var pwd = $('#account-pwd').val()
                 var confirmPwd = $('#account-confirm-pwd').val()
                 var areaVal = $('#edit-product-area-select-id').val()
+                var position = $('#edit-position-select-id').val()
+
+                var valuePost = {
+                    "LAST_NAME": lastName,
+                    "FIRST_NAME": firstName,
+                    "EMAIL": relatedEmail,
+                    "PWD_": pwd,
+                    "langType": '[[lang_type]]'
+                }
+                if ('[[data.subPage]]' == 'customer') {
+                    valuePost["AREA_ID"] = areaVal
+                    valuePost["ROLE"] = "USER"
+                } else if ('[[data.subPage]]' == 'staff') {
+                    valuePost["ROLE"] = position
+                }
 
 
-                if (lastName == "" || firstName == "" || relatedEmail == ""
-                    || pwd == "" || confirmPwd == "" || areaVal == "") {
+                if (('[[data.subPage]]' == 'customer' && (lastName == "" || firstName == "" || relatedEmail == ""
+                    || pwd == "" || confirmPwd == "" || areaVal == "")) || ('[[data.subPage]]' == 'staff')
+                    && (lastName == "" || firstName == "" || relatedEmail == "" || pwd == "" || confirmPwd == ""
+                        || position == "")) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 5});
                 } else if (confirmPwd != pwd) {
                     layer.msg('[[lang.account_pwd_confirm_diff_tip]]', {icon: 5});
@@ -162,19 +193,15 @@
                     admin.req({
                         method: "post",
                         url: '/api/user/add!add_user',
-                        data: JSON.stringify({
-                            "LAST_NAME": lastName,
-                            "FIRST_NAME": firstName,
-                            "EMAIL": relatedEmail,
-                            "PWD_": pwd,
-                            "AREA_ID": areaVal,
-                            "ROLE": "USER",
-                            "langType": '[[lang_type]]'
-                        }),
+                        data: JSON.stringify(valuePost),
                         done: function (res) {
                             layer.msg(res.msg);
                             if (res.code == 0) {
-                                window.location.href = "/[[lang_type]]/manageCustomerAccounts"
+                                if ('[[data.subPage]]' == 'customer') {
+                                    window.location.href = "/[[lang_type]]/manageCustomerAccounts"
+                                } else if ('[[data.subPage]]' == 'staff') {
+                                    window.location.href = "/[[lang_type]]/manageStaffAccounts"
+                                }
                             }
                         }
                     });

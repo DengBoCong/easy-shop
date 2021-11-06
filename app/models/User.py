@@ -36,6 +36,8 @@ class User(db.Model, UserMixin):
     AREA_ID = db.Column(db.String(50), db.ForeignKey('SHOP_AREA.ID', ondelete='SET NULL'), comment="地区ID")
     PARENT_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID'))
 
+    orders = db.relationship('Order', backref='user', lazy='dynamic')
+
     @property
     def password(self):
         return self._PWD
