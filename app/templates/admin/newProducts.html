@@ -1029,6 +1029,7 @@
                         method: "post",
                         url: '/api/good/add!add_good',
                         data: JSON.stringify({
+                            "USER_ID": '[[current_user.ID]]',
                             "TYPE": '[[addition.location]]',
                             "BRAND": brand,
                             "COLOR": color,
@@ -1121,6 +1122,7 @@
                         method: "post",
                         url: '/api/good/add!add_good',
                         data: JSON.stringify({
+                            "USER_ID": '[[current_user.ID]]',
                             "TYPE": '[[addition.location]]',
                             "BRAND": brand,
                             "COLOR": color,

@@ -166,8 +166,35 @@ def add_user(lang_type):
 
     return render_template("admin/manage/addUser.html", lang=lang[lang_type],
                            lang_type=lang_type, route="addUser",
-                           addition=set_addition(location="addUser"),
+                           addition=set_addition(location="addUser", add="-" + sub_page),
                            data={"areas": areas_list, "subPage": sub_page})
+
+
+@views.route('/<lang_type>/editUser', methods=['GET', 'POST'])
+@login_required
+def edit_user(lang_type):
+    """ 编辑账号"""
+    info_data = request.args.to_dict()
+    lang_type, sub_page = lang_type.split("-")
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="editUser")
+
+    if sub_page not in ["customer", "staff"]:
+        return render_template("404.html", lang_type=lang_type, route="editUser")
+
+    user_id = info_data.get("userId", "")
+    user = User.query.get(user_id)
+
+    areas = Area.query.order_by(asc(Area.EN_NAME)).all()
+    areas_list = []
+    for area in areas:
+        areas_list.append(area.to_json())
+
+    return render_template("admin/manage/editUser.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="editUser?userId=" + user_id,
+                           addition=set_addition(location="editUser", add="-" + sub_page),
+                           data={"areas": areas_list, "subPage": sub_page, "user": user})
 
 
 @views.route('/<lang_type>/manageStaffAccounts', methods=['GET', 'POST'])
@@ -246,16 +273,19 @@ def manage_customer_accounts(lang_type):
 def orde_history(lang_type):
     """ 历史订单"""
     info_data = request.args.to_dict()
-    good_id = info_data.get("goodId", "")
+    user_id = info_data.get("userId", "")
     sort = info_data.get("sort", "")
 
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="orderHistory")
 
-    user = User.query.get(good_id)
-    orders = Order.query.filter_by(ROLE="USER").order_by(asc(User.ORDERS)).all()
+    user = User.query.get(user_id)
+    if sort == "less_more":
+        orders = Order.query.filter_by(USER_ID=user_id).order_by(asc(Order.TOTAL_AMOUNT)).all()
+    else:
+        orders = Order.query.filter_by(USER_ID=user_id).order_by(desc(Order.TOTAL_AMOUNT)).all()
 
     return render_template("admin/manage/orderHistory.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="orderHistory",
-                           addition=set_addition(location="orderHistory"),
-                           data={"goodId": good_id, "user": user})
+                           lang_type=lang_type, route="orderHistory?userId={}&sort={}".format(user_id, sort),
+                           addition=set_addition(location="orderHistory", categories="orderHistory"),
+                           data={"userId": user_id, "user": user, "orders": orders, "sort": sort})

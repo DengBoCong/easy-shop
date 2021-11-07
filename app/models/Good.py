@@ -29,6 +29,7 @@ class Good(db.Model, UserMixin):
     CLASS = db.Column(db.Enum('SAMPLE', 'DESIGN', 'REFERENCE'), nullable=False, comment="产品归类")
     TYPE = db.Column(db.Enum('MEN', 'WOMEN', 'KIDS', 'OTHERS'), nullable=False, comment="所属类型")
     COVER = db.Column(db.String(255), nullable=False, default="", comment="封面地址")
+    USER_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID', ondelete='SET NULL'), comment="USER ID")
 
     orderGoods = db.relationship('OrderGood', backref='good', lazy='dynamic')
 
@@ -57,5 +58,6 @@ class Good(db.Model, UserMixin):
             'IS_PUBLISHED': self.IS_PUBLISHED,
             'CLASS': self.CLASS,
             'TYPE': self.TYPE,
-            'COVER': self.COVER
+            'COVER': self.COVER,
+            'USER_ID': self.USER_ID
         }

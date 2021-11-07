@@ -16,6 +16,9 @@ lang = {
         "common_account": "账号",
         "common_password": "密码",
         "common_confirm_password": "确认密码",
+        "common_confirm_change": "确认修改",
+        "common_confirm_delete": "确认删除",
+        "common_confirm_delete_tips": "确认删除该账号，删除后所有附带信息不可恢复！",
         "common_verify_code": "图形验证码",
         "common_account_detail": "账户详情",
         "common_historical_purchase": "历史购买",
@@ -117,7 +120,8 @@ lang = {
         "account_pwd_confirm_diff_tip": "两次密码不一致",
         "account_change_password": "修改密码",
         "account_add_an_account": "添加账号",
-        "account_edit_an_account": "编辑账号",
+        "account_edit_the_account": "编辑账号",
+        "account_delete_an_account": "删除账号",
         "account_add_an_customer_account": "添加客户账号",
         "account_number": "账号编码",
         "account_related_email": "账号关联E-Mail",
@@ -172,6 +176,7 @@ lang = {
         "products_price_eur": "欧元",
         "products_price_usd": "美元",
         "products_product_info": "产品信息",
+        "products_view_products": "查看产品",
 
         "wishlist_title_info": "您可以在此页面管理您添加至愿望清单的产品。您可以删除或者把它们加入到购物袋和打样袋中下单。",
         "wishlist_add_to_bag": "加入购物袋",
@@ -192,7 +197,8 @@ lang = {
         "inner_zh_ch_repeat_reset": "中文重复，请重新填写",
         "inner_en_us_repeat_reset": "英文重复，请重新填写",
         "inner_small_screen_delete_img": "小屏模式下必须从后开始删除",
-        "inner_change_success": "修改成功"
+        "inner_change_success": "修改成功",
+        "inner_delete_success": "删除成功"
     },
 
     "en_us": {
@@ -212,6 +218,9 @@ lang = {
         "common_account": "account",
         "common_password": "password",
         "common_confirm_password": "confirm password",
+        "common_confirm_change": "confirm the change",
+        "common_confirm_delete": "confirm the delete",
+        "common_confirm_delete_tips": "Confirm to delete the account, all attached information cannot be restored after deletion!",
         "common_verify_code": "verify code",
         "common_account_detail": "account details",
         "common_historical_purchase": "history orders",
@@ -240,8 +249,8 @@ lang = {
         "common_email": "E-mail",
         "common_public": "Public",
         "common_add": "Add",
-        "common_zh_name": "chinese name",
-        "common_en_name": "english name",
+        "common_zh_name": "Chinese name",
+        "common_en_name": "English name",
         "common_upload_success": "upload success",
         "common_upload_fail": "upload fail",
         "common_complete_info": "Please complete the information",
@@ -313,7 +322,8 @@ lang = {
         "account_pwd_confirm_diff_tip": "The two passwords are inconsistent",
         "account_change_password": "change your password",
         "account_add_an_account": "add an account",
-        "account_edit_an_account": "edit an account",
+        "account_edit_the_account": "Edit the Account",
+        "account_delete_an_account": "delete the account",
         "account_add_an_customer_account": "Add a Customer Account",
         "account_number": "account number",
         "account_related_email": "Account Related E-mail",
@@ -369,6 +379,7 @@ lang = {
         "products_price_eur": "EUR",
         "products_price_usd": "USD",
         "products_product_info": "item info",
+        "products_view_products": "View Products",
 
         "wishlist_title_info": "You can stay in this page to manage products that you added to wishlist. You can delete or add them to shopping bag or sample bag for placeing orders.",
         "wishlist_add_to_bag": "add to shopping bag",
@@ -389,6 +400,7 @@ lang = {
         "inner_zh_ch_repeat_reset": "Chinese repeat, please fill in again",
         "inner_en_us_repeat_reset": "English repeat, please fill in again",
         "inner_small_screen_delete_img": "In small screen mode, it must be deleted from the back",
-        "inner_change_success": "Change Success"
+        "inner_change_success": "Change Success",
+        "inner_delete_success": "Delete Success"
     }
 }

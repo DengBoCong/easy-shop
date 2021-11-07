@@ -37,6 +37,7 @@ class User(db.Model, UserMixin):
     PARENT_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID'))
 
     orders = db.relationship('Order', backref='user', lazy='dynamic')
+    goods = db.relationship('Good', backref='user', lazy='dynamic')
 
     @property
     def password(self):

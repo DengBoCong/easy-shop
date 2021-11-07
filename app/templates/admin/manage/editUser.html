@@ -1,0 +1,250 @@
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 60px;">
+        <div class="layui-form">
+            <div class="layui-form-item d-flex justify-content-center">
+                <div class="row" style="width: 400px;padding: 20px 30px 0 30px">
+                    <div class="text-center mb-4">
+                        <p class="mb-3 font-weight-normal" style="font-size: 17px;">[[lang.account_edit_the_account]]</p>
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;">
+                        <label class="text-capitalize">[[lang.account_last_name]]</label>
+                        <input type="text" value="[[data.user.LAST_NAME]]" class="form-control" id="account-last-name">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.account_first_name]]</label>
+                        <input type="text" value="[[data.user.FIRST_NAME]]" class="form-control" id="account-first-name">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.account_related_email]]</label>
+                        <input type="email" value="[[data.user.EMAIL]]" class="form-control" disabled>
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.account_old_password]]</label>
+                        <input type="password" value="" class="form-control" id="account-old-pwd">
+                    </div>
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.account_new_password]]</label>
+                        <input type="password" value="" class="form-control" id="account-new-pwd">
+                    </div>
+                    {% if data.subPage == 'customer' %}
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.products_area]]</label>
+                        <select lay-verify="required" style="margin-top: 5px;"
+                                lay-filter="edit-product-area-select" id="edit-product-area-select-id">
+                            <option value="">[[lang.products_choose_area]]</option>
+                            {% for area in data.areas %}
+                                <option [['selected' if data.user.AREA_ID == area.ID else '']] value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
+                            {% endfor %}
+                            <option value="add">[[lang.common_add]]</option>
+                        </select>
+                    </div>
+                    {% endif %}
+                    {% if data.subPage == 'staff' %}
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
+                        <label class="text-capitalize">[[lang.products_area]]</label>
+                        <select lay-verify="required" style="margin-top: 5px;" id="edit-position-select-id">
+                            <option class="text-capitalize" value="">[[lang.account_choose_position]]</option>
+                            <option class="text-capitalize" value="AGENT">[[lang.account_junior_staff]]</option>
+                            <option class="text-capitalize" value="ADMIN">[[lang.account_senior_staff]]</option>
+                        </select>
+                    </div>
+                    {% endif %}
+                    <div class="form-label-group" style="font-size: 13px;margin-top: 30px;font-family: NotoSansCJK-Medium">
+                        <div class="btn btn-block text-uppercase" id="edit-customer-account-btn"
+                             style="background-color: #323232;color: #FFFFFF;width: 100%;">
+                            [[lang.common_confirm_change]]
+                        </div>
+                        <div class="btn btn-block text-uppercase" id="delete-customer-account-btn"
+                             style="margin-top: 30px;width: 100%;background-color: #970005;color: #FFFFFF;">
+                            [[lang.account_delete_an_account]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer', 'form'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                form = layui.form,
+                layer = layui.layer;
+
+            $('.layui-form-select').css("border", "1px solid #575759");
+            form.on('select(edit-product-area-select)', function (data) {
+                if (data.value == "add") {
+                    layer.open({
+                        type: 1,
+                        offset: 'auto',
+                        title: false,
+                        id: 'navAreaSelect',
+                        content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                            '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                            '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                            '<div class="row"><div class="layui-inline"><div class="layui-input-inline" style="width: 150px;">' +
+                            '<input type="text" id="add-area-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<div class="layui-input-inline" style="width: 150px;float: right">' +
+                            '<input type="text" id="add-area-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '</div></div></div>',
+                        shade: 0,
+                        area: ['370px', '150px'],
+                        resize: false,
+                        closeBtn: false,
+                        success: function (layero, index) {
+                            $('#basic_nav_search_close').on('click', function () {
+                                layer.closeAll();
+                            });
+
+                            $('#edit-products-area-add-btn').on('click', function () {
+                                var zhName = $('#add-area-zh-name').val()
+                                var enName = $('#add-area-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/area/add!add_area',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-area-zh-name').val(),
+                                            "EN_NAME": $('#add-area-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.msg(res.msg);
+                                            if (res.code == 0) {
+                                                $('#edit-product-area-select-id').empty()
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
+                                                for (i = 0; i < res.data.areas.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-area-select-id').append(new Option(res.data.areas[i].NAME, res.data.areas[i].ID));
+                                                    } else {
+                                                        $('#edit-product-area-select-id').append(new Option(res.data.areas[i].EN_NAME, res.data.areas[i].ID));
+                                                    }
+                                                }
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $('#edit-customer-account-btn').on('click', function () {
+                var lastName = $('#account-last-name').val()
+                var firstName = $('#account-first-name').val()
+                var pwd = $('#account-old-pwd').val()
+                var confirmPwd = $('#account-new-pwd').val()
+                var areaVal = $('#edit-product-area-select-id').val()
+                var position = $('#edit-position-select-id').val()
+
+                var valuePost = {
+                    "ID": '[[data.user.ID]]',
+                    "LAST_NAME": lastName,
+                    "FIRST_NAME": firstName,
+                    "_PWD": pwd,
+                    "NEW_PWD": confirmPwd,
+                    "langType": '[[lang_type]]'
+                }
+                if ('[[data.subPage]]' == 'customer') {
+                    valuePost["AREA_ID"] = areaVal
+                } else if ('[[data.subPage]]' == 'staff') {
+                    valuePost["ROLE"] = position
+                }
+
+
+                if (('[[data.subPage]]' == 'customer' && (lastName == "" || firstName == ""
+                    || areaVal == "")) || ('[[data.subPage]]' == 'staff')
+                    && (lastName == "" || firstName == "" || position == "")) {
+                    layer.msg('[[lang.common_complete_info]]', {icon: 5});
+                } else if((pwd == "" && confirmPwd != "") || (pwd != "" && confirmPwd == "")) {
+                    layer.msg('[[lang.common_complete_info]]', {icon: 5});
+                } else {
+                    var loadTmp = layer.load(2)
+                    admin.req({
+                        method: "post",
+                        url: '/api/user/update!update_user',
+                        data: JSON.stringify(valuePost),
+                        done: function (res) {
+                            layer.msg(res.msg);
+                            if (res.code == 0) {
+                                if ('[[data.subPage]]' == 'customer') {
+                                    window.location.href = "/[[lang_type]]/orderHistory?userId=[[data.user.ID]]"
+                                } else if ('[[data.subPage]]' == 'staff') {
+                                    window.location.href = "/[[lang_type]]/manageStaffAccounts"
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#delete-customer-account-btn').on('click', function () {
+                layer.open({
+                    type: 1,
+                    offset: 'auto',
+                    title: false,
+                    id: 'navdeleteSelect',
+                    content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                        '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                        '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                        '<div class="row"><div class="layui-inline"><p>[[lang.common_confirm_delete_tips]]</p>' +
+                        '<button type="button" id="delete-user-btn" class="layui-btn layui-btn-primary" ' +
+                        'style="background-color: #323232;color: #FFFFFF;">[[lang.common_confirm_delete]]</button></div>' +
+                        '</div></div>',
+                    shade: 0,
+                    area: ['370px', '150px'],
+                    resize: false,
+                    closeBtn: false,
+                    success: function (layero, index) {
+                        $('#basic_nav_search_close').on('click', function () {
+                            layer.closeAll();
+                        });
+
+                        $('#delete-user-btn').on('click', function () {
+                            var loadTmp = layer.load(2)
+                            admin.req({
+                                method: "post",
+                                url: '/api/user/delete!delete_user',
+                                data: JSON.stringify({
+                                    "ID": '[[data.user.ID]]',
+                                    "langType": '[[lang_type]]'
+                                }),
+                                done: function (res) {
+                                    layer.msg(res.msg);
+                                    if (res.code == 0) {
+                                        if ('[[data.subPage]]' == 'customer') {
+                                            window.location.href = "/[[lang_type]]/manageCustomerAccounts"
+                                        } else if ('[[data.subPage]]' == 'staff') {
+                                            window.location.href = "/[[lang_type]]/manageStaffAccounts"
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

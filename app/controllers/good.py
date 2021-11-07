@@ -123,7 +123,8 @@ def add_good():
                     CATEGORY_ID=info_data.get("CATEGORY_ID"), SIZE=info_data.get("SIZE"),
                     SIZE_CHART=info_data.get("SIZE_CHART"), STAFF_EMAIL=info_data.get("STAFF_EMAIL"),
                     IS_PUBLISHED=info_data.get("IS_PUBLISHED"), CLASS=info_data.get("CLASS"),
-                    TYPE=info_data.get("TYPE").upper(), COVER=info_data.get("GOOD_IMG", [""])[0])
+                    TYPE=info_data.get("TYPE").upper(), COVER=info_data.get("GOOD_IMG", [""])[0],
+                    USER_ID=info_data.get("USER_ID"))
         db.session.add(good)
 
         good_img = list()

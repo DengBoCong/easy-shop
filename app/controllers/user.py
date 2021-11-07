@@ -75,7 +75,7 @@ def update_user():
         User.query.filter_by(ID=user_id).update(info_data)
         db.session.commit()
 
-        if flag:
+        if flag and user_id == current_user.ID:
             logout_user()
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_pwd_change"],
                             'data': {"userId": ""}})
@@ -86,3 +86,24 @@ def update_user():
     except:
         return jsonify({'code': 1, 'msg': lang[lang_type]["common_update_fail"],
                         'data': {"userId": user_id}})
+
+
+@controllers.route('{}/delete!delete_user'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_user_by_id():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    user = User.query.get(info_data.get("ID"))
+
+    if user is not None:
+        for order in user.orders:
+            for order_good in order.orderGoods:
+                db.session.delete(order_good)
+            db.session.delete(order)
+        db.session.delete(user)
+
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {}})
+    else:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
