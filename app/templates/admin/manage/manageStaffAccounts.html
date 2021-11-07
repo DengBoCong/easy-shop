@@ -60,7 +60,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="d-sm-none col-12" style="padding: 0">
+            <div class="d-lg-none col-12" style="padding: 0">
                 <div class="row" style="padding: 0">
                     <div class="btn-group" role="group" style="padding: 0">
                         <div class="btn btn-block text-uppercase" id="offcanvasNavListSort1"
@@ -76,8 +76,9 @@
             <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
                 <div class="row">
                     <div class="col-sm-6 col-12">
-                        <p><span class="text-uppercase">[[lang.common_manage_staff_accounts]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_manage_staff_accounts_page_tips]]</span></p>
+                        <p><span class="text-uppercase">[[lang.common_manage_staff_accounts if current_user.ROLE == 'SUPER' else lang.common_check_staff_accounts]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_manage_staff_accounts_page_tips if current_user.ROLE == 'SUPER' else lang.common_check_staff_accounts_page_tips]]</span></p>
                     </div>
+                    {% if addition.login and current_user.ROLE == 'SUPER' %}
                     <div class="col-sm-6 col-12">
                         <div class="btn btn-block text-uppercase d-none d-sm-block add-user-accpunt-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
@@ -88,26 +89,27 @@
                             [[lang.account_add_an_account]]
                         </div>
                     </div>
+                    {% endif %}
                 </div>
-                <div class="row" style="margin-top: 30px">
+                <div class="row d-none d-sm-block" style="margin-top: 30px">
                     <div class="row">
-                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.common_name]]</div>
-                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.account_position_hierarchy]]</div>
-                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.account_number]]</div>
-                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.common_published_products]]</div>
+                        <div class="col-3 text-uppercase">[[lang.common_name]]</div>
+                        <div class="col-3 text-uppercase">[[lang.account_position_hierarchy]]</div>
+                        <div class="col-3 text-uppercase">[[lang.account_number]]</div>
+                        <div class="col-3 text-uppercase">[[lang.common_published_products]]</div>
                     </div>
-                    {% if not data.users %}<hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">{% endif %}
+                    {% if not data.users %}<hr class="layui-border-black" style="margin-top: 10px;">{% endif %}
                     {% for user in data.users %}
-                        <hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">
+                        <hr class="layui-border-black" style="margin-top: 10px;">
                         <div class="row account-details-btn" data-account="[[user.ID]]">
-                            <div class="col-3 d-none d-sm-block">[[user.NAME]]</div>
-                            <div class="col-3 d-none d-sm-block">[['Junior Staff' if user.ROLE == 'AGENT' else 'Senior Staff']]</div>
-                            <div class="col-3 d-none d-sm-block">[[user.EMAIL]]</div>
-                            <div class="col-3 d-none d-sm-block">[[user.ORDERS]]</div>
+                            <div class="col-3">[[user.NAME]]</div>
+                            <div class="col-3">[['Junior Staff' if user.ROLE == 'AGENT' else 'Senior Staff']]</div>
+                            <div class="col-3">[[user.EMAIL]]</div>
+                            <div class="col-3">[[user.ORDERS]]</div>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="row d-sm-none" style="margin-top: 30px;font-size: 13px;font-family: NotoSansCJK-Medium">
+                <div class="row d-sm-none" style="font-size: 13px;font-family: NotoSansCJK-Medium">
                     {% for user in data.users %}
                     <hr class="layui-border-black">
                     <div class="col-6 account-details-btn" data-account="[[user.ID]]">
@@ -237,7 +239,7 @@
             });
 
             $('.account-details-btn').on('click', function () {
-                window.location.href = "/[[lang_type]]/publishedProduct?userId=" + $(this).attr('data-account')
+                window.location.href = "/[[lang_type]]/publishedProduct?userId=" + $(this).attr('data-account') + '&category=SAMPLE'
             });
         });
     </script>

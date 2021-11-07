@@ -32,9 +32,10 @@ class Good(db.Model, UserMixin):
     USER_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID', ondelete='SET NULL'), comment="USER ID")
 
     orderGoods = db.relationship('OrderGood', backref='good', lazy='dynamic')
+    goodPrices = db.relationship('GoodPrice', backref='good', lazy='dynamic')
 
     def __repr__(self):
-        return '<Good %r>\n' % self.NAME
+        return '<Good %r>\n' % self.ID
 
     def to_json(self):
         return {

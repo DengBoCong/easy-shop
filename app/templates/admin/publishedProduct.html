@@ -1,10 +1,387 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 60px;">
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 d-none d-lg-block self-a-link">
+                {% if addition.login and current_user.ROLE != 'AGENT' %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_all_categories]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.category=='SAMPLE' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=SAMPLE&product=[[data.product]]&color=[[data.color]]">
+                            [[lang.common_sample]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.category=='DESIGN' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=DESIGN&product=[[data.product]]&color=[[data.color]]">
+                            [[lang.common_design_diagrams]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.category=='REFERENCE' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=REFERENCE&product=[[data.product]]&color=[[data.color]]">
+                            [[lang.common_reference_diagrams]]
+                        </a>
+                    </li>
+                </ul>
+                {% else %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_account]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/accountDetail">
+                            [[lang.common_account_detail]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;text-decoration: underline;" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[current_user.ID]]&category=[[data.category]]&product=[[data.product]]">
+                            [[lang.common_published_products]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/logout">
+                            [[lang.common_logout]]
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+            <div class="d-lg-none col-12" style="padding: 0">
+                <div class="row" style="padding: 0">
+                    <div class="btn-group" role="group" style="padding: 0">
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListCategory1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListCategory" aria-controls="offcanvasNavListCategory"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_categories]]</div>
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListProducts1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListProducts" aria-controls="offcanvasNavListProducts"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_products]]
+                        </div>
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListColor1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListColor" aria-controls="offcanvasNavListColor"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.color_colors]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-12" style="padding: 20px 30px 0 30px">
+                {% if addition.login and current_user.ROLE != 'AGENT' %}
+                <div class="row">
+                    <div class="col-sm-6 col-12">
+                        <span>[[data.user.NAME if data.user.NAME != '' else lang.common_empty ]] ([['Senior' if data.user.ROLE == 'ADMIN' else 'Junior']])</br>[[data.user.EMAIL]]</span>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
+                            [[lang.account_edit_the_account]]
+                        </div>
+                        <div class="btn btn-block text-uppercase d-sm-none edit-user-account-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px;">
+                            [[lang.account_edit_the_account]]
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="row" style="margin-top: 30px">
+                    <div class="row">
+                        {% for good in data.goods %}
+                        <div class="col-xxl-3 col-lg-4 col-6">
+                            <img src="[[good.COVER]]" style="width: 100%;">
+                            <div class="row">
+                                <div class="col-10">
+                                    <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>
+                                </div>
+                                <div class="col-2">
+                                    <div class="btn btn-block text-capitalize published-edit-product-btn" data-product-id="[[good.ID]]"
+                                        style="font-size: 10px;background-color: #323232;color: #FFFFFF;width: 50px;margin-top: 10px;float: right">
+                                        [[lang.common_edit]]
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 d-none d-lg-block self-a-link">
+                {% if addition.login and current_user.ROLE != 'AGENT' %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';[['text-decoration: underline;' if (data.product =='all' or data.product =='') else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=all&color=[[data.color]]">
+                            [[lang.common_all_products]]
+                        </a>
+                    </li>
+                    {% for category in data.categories %}
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.product == category.EN_NAME else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[category.EN_NAME]]&color=[[data.color]]">
+                            [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <ul style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';[['text-decoration: underline;' if (data.color =='all' or data.color =='') else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=all">
+                            [[lang.color_all_colors]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'brown' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=brown">
+                            [[lang.color_brown]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'blue' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=blue">
+                            [[lang.color_blue]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'gray' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=gray">
+                            [[lang.color_gray]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'white' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=white">
+                            [[lang.color_white]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'pink' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=pink">
+                            [[lang.color_pink]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'purple' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=purple">
+                            [[lang.color_purple]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'red' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=red">
+                            [[lang.color_red]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'green' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=green">
+                            [[lang.color_green]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'yellow' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=yellow">
+                            [[lang.color_yellow]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.color == 'black' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=black">
+                            [[lang.color_black]]
+                        </a>
+                    </li>
+                </ul>
+                {% else %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_all_categories]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.category=='SAMPLE' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[current_user.ID]]&category=SAMPLE&product=[[data.product]]">
+                            [[lang.common_sample]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.category=='DESIGN' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[current_user.ID]]&category=DESIGN&product=[[data.product]]">
+                            [[lang.common_design_diagrams]]
+                        </a>
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.category=='REFERENCE' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[current_user.ID]]&category=REFERENCE&product=[[data.product]]">
+                            [[lang.common_reference_diagrams]]
+                        </a>
+                    </li>
+                </ul>
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';[['text-decoration: underline;' if (data.product =='all' or data.product =='') else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=all&color=[[data.color]]">
+                            [[lang.common_all_products]]
+                        </a>
+                    </li>
+                    {% for category in data.categories %}
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.product == category.EN_NAME else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[category.EN_NAME]]&color=[[data.color]]">
+                            [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListCategory" aria-labelledby="offcanvasNavListCategoryLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if data.category=='SAMPLE' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=SAMPLE&product=[[data.product]]&color=[[data.color]]">
+                        [[lang.common_sample]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if data.category=='DESIGN' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=DESIGN&product=[[data.product]]&color=[[data.color]]">
+                        [[lang.common_design_diagrams]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if data.category=='REFERENCE' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=REFERENCE&product=[[data.product]]&color=[[data.color]]">
+                        [[lang.header_nav_wishlist]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-category"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListProducts" aria-labelledby="offcanvasNavListProductsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if (data.product =='all' or data.product =='') else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=all&color=[[data.color]]">
+                        [[lang.common_all_products]]
+                    </a>
+                </li>
+                {% for category in data.categories %}
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.product == category.EN_NAME else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[category.EN_NAME]]&color=[[data.color]]">
+                        [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-product"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListColor" aria-labelledby="offcanvasNavListColorLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if (data.color =='all' or data.color =='') else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=all">
+                        [[lang.color_all_colors]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'brown' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=brown">
+                        [[lang.color_brown]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'blue' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=blue">
+                        [[lang.color_blue]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'gray' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=gray">
+                        [[lang.color_gray]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'white' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=white">
+                        [[lang.color_white]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'pink' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=pink">
+                        [[lang.color_pink]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'purple' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=purple">
+                        [[lang.color_purple]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'red' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=red">
+                        [[lang.color_red]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'green' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=green">
+                        [[lang.color_green]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'yellow' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=yellow">
+                        [[lang.color_yellow]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'black' else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=black">
+                        [[lang.color_black]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-color"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer', 'publicCommon'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
 
-</body>
-</html>
+            layer.load(2)
+
+            $('.edit-user-account-btn').on('click', function () {
+                window.location.href = "/[[lang_type]]-staff/editUser?userId=[[data.user.ID]]"
+            });
+
+            $('#header-offcanvas-bottom-close-category').on('click', function () {
+                $('#offcanvasNavListCategory1').trigger('click')
+            });
+            $('#header-offcanvas-bottom-close-product').on('click', function () {
+                $('#offcanvasNavListProducts1').trigger('click')
+            });
+            $('#header-offcanvas-bottom-close-color').on('click', function () {
+                $('#offcanvasNavListColor1').trigger('click')
+            });
+
+            $('.published-edit-product-btn').on('click', function () {
+                window.location.href = '/[[lang_type]][[addition.add]]/editProducts?goodId=' + $(this).attr('data-product-id')
+            });
+
+            layer.closeAll()
+        });
+    </script>
+{% endblock %}

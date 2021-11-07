@@ -53,7 +53,7 @@
                     </li>
                     {% endif %}
                     <li style="font-size: 13px;">
-                        <a href="javascript:;" class="text-capitalize"
+                        <a href="/[[lang_type]]/logout" class="text-capitalize"
                            style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
                             [[lang.common_logout]]
                         </a>
@@ -66,7 +66,7 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="row" style="width: 400px;">
                             <div class="text-center mb-4">
-                                <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
+                                <p class="mb-3 font-weight-normal text-capitalize" style="font-size: 17px;">[[lang.common_account_detail]]</p>
                             </div>
 
                             <div class="form-label-group" style="font-size: 13px;">
@@ -105,13 +105,13 @@
                 </div>
             </div>
             {% endif %}
-            {% if current_user.ROLE =='AGENT' %}
+            {% if current_user.ROLE =='AGENT' or current_user.ROLE =='ADMIN' %}
                 <div class="col-lg-6 col-12" style="padding: 20px 30px 0 30px">
                     <div class="layui-form">
                         <div class="layui-form-item d-flex justify-content-center">
                             <div class="row" style="width: 700px;">
                                 <div class="text-center mb-4">
-                                    <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
+                                    <p class="mb-3 font-weight-normal text-capitalize" style="font-size: 17px;">[[lang.common_account_detail]]</p>
                                 </div>
                                 <p>[[lang.account_edit_details]]</p>
                                 <p class="text-uppercase">[[lang.account_info]]</p>
@@ -124,13 +124,13 @@
                     </div>
                 </div>
             {% endif %}
-            {% if current_user.ROLE =='ADMIN' or current_user.ROLE =='SUPER' %}
+            {% if current_user.ROLE =='SUPER' %}
                 <div class="col-lg-6 col-12" style="padding: 20px 30px 0 30px;">
                     <div class="layui-form">
                         <div class="layui-form-item d-flex justify-content-center">
                             <div class="row" style="width: 400px;">
                                 <div class="text-center mb-4">
-                                    <p class="mb-3 font-weight-normal text-uppercase" style="font-size: 17px;">[[lang.common_account_detail]]</p>
+                                    <p class="mb-3 font-weight-normal text-capitalize" style="font-size: 17px;">[[lang.common_account_detail]]</p>
                                 </div>
                                 <p>[[lang.account_edit_details]]</p>
                                 <p class="text-uppercase">[[lang.account_info]]</p>

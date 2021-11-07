@@ -48,9 +48,9 @@
                     <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
                         <label class="text-capitalize">[[lang.products_area]]</label>
                         <select lay-verify="required" style="margin-top: 5px;" id="edit-position-select-id">
-                            <option class="text-capitalize" value="">[[lang.account_choose_position]]</option>
-                            <option class="text-capitalize" value="AGENT">[[lang.account_junior_staff]]</option>
-                            <option class="text-capitalize" value="ADMIN">[[lang.account_senior_staff]]</option>
+                            <option value="">[[lang.account_choose_position]]</option>
+                            <option [['selected' if data.user.ROLE == 'AGENT' else '']] value="AGENT">[[lang.account_junior_staff]]</option>
+                            <option [['selected' if data.user.ROLE == 'ADMIN' else '']] value="ADMIN">[[lang.account_senior_staff]]</option>
                         </select>
                     </div>
                     {% endif %}
@@ -80,6 +80,8 @@
                 admin = layui.admin,
                 form = layui.form,
                 layer = layui.layer;
+
+            layer.load(2)
 
             $('.layui-form-select').css("border", "1px solid #575759");
             form.on('select(edit-product-area-select)', function (data) {
@@ -245,6 +247,8 @@
                     }
                 });
             });
+
+            layer.closeAll()
         });
     </script>
 {% endblock %}

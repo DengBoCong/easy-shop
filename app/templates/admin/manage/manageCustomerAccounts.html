@@ -42,13 +42,13 @@
                     <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='manageStaffAccounts' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/manageStaffAccounts"
                            style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_manage_staff_accounts]]
+                            [[lang.common_manage_staff_accounts if current_user.ROLE == 'SUPER' else lang.common_check_staff_accounts]]
                         </a>
                     </li>
                     <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='manageCustomerAccounts' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/manageCustomerAccounts"
                            style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_manage_customer_accounts]]
+                            [[lang.common_manage_customer_accounts if current_user.ROLE == 'SUPER' else lang.common_check_customer_accounts]]
                         </a>
                     </li>
                     {% endif %}
@@ -60,7 +60,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="d-sm-none col-12" style="padding: 0">
+            <div class="d-lg-none col-12" style="padding: 0">
                 <div class="row" style="padding: 0">
                     <div class="btn-group" role="group" style="padding: 0">
                         <div class="btn btn-block text-uppercase" id="offcanvasNavListSort1"
@@ -76,40 +76,42 @@
             <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
                 <div class="row">
                     <div class="col-sm-6 col-12">
-                        <p><span class="text-uppercase">[[lang.common_manage_customer_accounts]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_manage_customer_accounts_page_tips]]</span></p>
+                        <p><span class="text-uppercase">[[lang.common_manage_customer_accounts if current_user.ROLE == 'SUPER' else lang.common_check_customer_accounts]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_manage_customer_accounts_page_tips if current_user.ROLE == 'SUPER' else lang.common_check_customer_accounts_page_tips]]</span></p>
                     </div>
+                    {% if addition.login and current_user.ROLE == 'SUPER' %}
                     <div class="col-sm-6 col-12">
-                        <div class="btn btn-block text-uppercase d-none d-sm-block add-user-accpunt-btn"
+                        <div class="btn btn-block text-uppercase d-none d-sm-block add-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
                             [[lang.account_add_an_account]]
                         </div>
-                        <div class="btn btn-block text-uppercase d-sm-none add-user-accpunt-btn"
+                        <div class="btn btn-block text-uppercase d-sm-none add-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 100%;">
                             [[lang.account_add_an_account]]
                         </div>
                     </div>
+                    {% endif %}
                 </div>
-                <div class="row" style="margin-top: 30px">
+                <div class="row d-none d-sm-block">
                     <div class="row">
-                        <div class="col-4 d-none d-sm-block text-uppercase">[[lang.common_customers]]</div>
-                        <div class="col-4 d-none d-sm-block text-uppercase">[[lang.account_number]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_orders]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.common_area]]</div>
+                        <div class="col-4 text-uppercase">[[lang.common_customers]]</div>
+                        <div class="col-4 text-uppercase">[[lang.account_number]]</div>
+                        <div class="col-2 text-uppercase">[[lang.orders_orders]]</div>
+                        <div class="col-2 text-uppercase">[[lang.common_area]]</div>
                     </div>
-                    {% if not data.users %}<hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">{% endif %}
+                    {% if not data.users %}<hr class="layui-border-black" style="margin-top: 10px;">{% endif %}
                     {% for user in data.users %}
-                        <hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">
+                        <hr class="layui-border-black" style="margin-top: 10px;">
                         <div class="row account-details-btn" data-account="[[user.ID]]">
-                            <div class="col-4 d-none d-sm-block">[[user.NAME]]</div>
-                            <div class="col-4 d-none d-sm-block">[[user.EMAIL]]</div>
-                            <div class="col-2 d-none d-sm-block">[[user.ORDERS]]</div>
-                            <div class="col-2 d-none d-sm-block">[[user.area.NAME if lang_type == 'zh_cn' else user.area.EN_NAME]]</div>
+                            <div class="col-4">[[user.NAME]]</div>
+                            <div class="col-4">[[user.EMAIL]]</div>
+                            <div class="col-2">[[user.ORDERS]]</div>
+                            <div class="col-2">[[user.area.NAME if lang_type == 'zh_cn' else user.area.EN_NAME]]</div>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="row d-sm-none" style="margin-top: 30px;font-size: 13px;font-family: NotoSansCJK-Medium">
+                <div class="row d-sm-none" style="font-size: 13px;font-family: NotoSansCJK-Medium">
                     {% for user in data.users %}
-                    <hr class="layui-border-black">
+                    <hr class="layui-border-black" style="margin-top: 10px;">
                     <div class="col-6 account-details-btn" data-account="[[user.ID]]">
                         <p class="text-capitalize">[[lang.common_customers]]</p>
                         <p class="text-capitalize">[[lang.account_number]]</p>
@@ -221,7 +223,7 @@
                 admin = layui.admin,
                 layer = layui.layer;
 
-            $('.add-user-accpunt-btn').on('click', function () {
+            $('.add-user-account-btn').on('click', function () {
                 window.location.href = "/[[lang_type]]-customer/addUser"
             });
 

@@ -6,7 +6,7 @@ from datetime import datetime
 from ..models import *
 from sqlalchemy import asc, desc, and_, or_
 from ..utils.set import set_addition
-from ..utils.get import get_currency_op
+from ..utils.get import *
 from ..i18 import lang
 
 
@@ -138,11 +138,67 @@ def preview_products(lang_type):
 @login_required
 def published_product(lang_type):
     """ 已发布产品"""
+    info_data = request.args.to_dict()
+    user_id = info_data.get("userId", "")
+    category = info_data.get("category", "")
+    product = info_data.get("product", "")
+    color = info_data.get("color", "")
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="publishedProduct")
+
+    user = User.query.get(user_id)
+
+    good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
+    good_categories_dict = dict()
+    good_categories_list = list()
+    for good_category in good_categories:
+        good_categories_list.append(good_category.to_json())
+        good_categories_dict[good_category.EN_NAME] = good_category.ID
+
+    if (product == "" or product == "all") and (color == "" or color == "all"):
+        goods = Good.query.filter(and_(Good.USER_ID == user_id,
+                                       Good.CLASS == category,
+                                       Good.IS_PUBLISHED == 1)).order_by(desc(Good.CREATE_DATETIME)).all()
+    elif product != "" and product != "all" and color != "" and color != "all":
+        goods = Good.query.filter(and_(Good.USER_ID == user_id,
+                                       Good.CLASS == category,
+                                       Good.IS_PUBLISHED == 1,
+                                       Good.CATEGORY_ID == good_categories_dict.get(product, ""),
+                                       Good.COLOR == color)).order_by(desc(Good.CREATE_DATETIME)).all()
+    elif product != "" and product != "all":
+        goods = Good.query.filter(and_(Good.USER_ID == user_id,
+                                       Good.CLASS == category,
+                                       Good.IS_PUBLISHED == 1,
+                                       Good.CATEGORY_ID == good_categories_dict.get(product, "")
+                                       )).order_by(desc(Good.CREATE_DATETIME)).all()
+    elif color != "" and color != "all":
+        goods = Good.query.filter(and_(Good.USER_ID == user_id,
+                                       Good.CLASS == category,
+                                       Good.IS_PUBLISHED == 1,
+                                       Good.COLOR == color)).order_by(desc(Good.CREATE_DATETIME)).all()
+
+    goods_list = list()
+    for good in goods:
+        good_info = good.to_json()
+        min_price, max_price = 10000000, 0
+        for price in good.goodPrices:
+            min_price = price.START_NUM if price.START_NUM < min_price else min_price
+            max_price = price.END_NUM if price.END_NUM > max_price else max_price
+        good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), min_price, max_price)
+        good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
+        good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
+        goods_list.append(good_info)
+
+    addition = set_addition(add="-" + info_data.get("category", "SAMPLE"), location="publishedProduct",
+                            categories="manageStaffAccounts")
+
     return render_template("admin/publishedProduct.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="publishedProduct",
-                           addition=set_addition(location="publishedProduct"))
+                           lang_type=lang_type,
+                           route="publishedProduct?userId={}&category={}".format(user_id, category),
+                           addition=addition,
+                           data={"user": user, "category": category, "product": product, "color": color,
+                                 "categories": good_categories_list, "goods": goods_list})
 
 
 ##############################超管###############################

@@ -38,7 +38,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="d-sm-none col-12" style="padding: 0">
+            <div class="d-lg-none col-12" style="padding: 0">
                 <div class="row" style="padding: 0">
                     <div class="btn-group" role="group" style="padding: 0">
                         <div class="btn btn-block text-uppercase" id="offcanvasNavListCategory1"
@@ -63,6 +63,7 @@
                             </div>
                         </div>
                     </div>
+                    {% if addition.login and (current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
                     <div class="col-sm-6 col-12">
                         <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
@@ -73,6 +74,7 @@
                             [[lang.account_edit_the_account]]
                         </div>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="row" style="margin-top: 30px">
                     <div class="row">
@@ -174,33 +176,33 @@
         </div>
         <div class="offcanvas-body" style="padding: 20px 20px 0 0">
             <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
-                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]">
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]">
                     <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=[[data.sort]]">
                         [[lang.orders_history]]
                     </a>
                 </li>
-                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]">
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]">
                     <a href="/[[lang_type]][[addition.add]]/newProducts?productType=SAMPLE">
                         [[lang.common_making_samples]]
                     </a>
                 </li>
-                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]">
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]">
                     <a href="/[[lang_type]]/wishlist">
                         [[lang.header_nav_wishlist]]
                     </a>
                 </li>
-                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]">
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]">
                     <a href="/[[lang_type]]/shoppingBag">
                         [[lang.header_nav_shopping_bag]]
                     </a>
                 </li>
-                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]">
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]">
                     <a href="/[[lang_type]]/sampleBag">
                         [[lang.header_nav_sample_bag]]
                     </a>
                 </li>
             </ul>
-            <div class="self-nav" id="header-offcanvas-bottom-close-area"
+            <div class="self-nav" id="header-offcanvas-bottom-close-category"
                  style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
                 [[lang.common_close]]
             </div>
@@ -248,11 +250,11 @@
                 window.location.href = "/[[lang_type]]-customer/editUser?userId=[[data.userId]]"
             });
 
+            $('#header-offcanvas-bottom-close-category').on('click', function () {
+                $('#offcanvasNavListCategory1').trigger('click')
+            });
             $('#header-offcanvas-bottom-close-sort').on('click', function () {
                 $('#offcanvasNavListSort1').trigger('click')
-            });
-            $('#header-offcanvas-bottom-close-area').on('click', function () {
-                $('#offcanvasNavListArea1').trigger('click')
             });
         });
     </script>

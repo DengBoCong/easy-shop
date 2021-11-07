@@ -181,19 +181,6 @@
                         <li><a class="dropdown-item text-uppercase" href="/en_us[[addition.add]]/[[route]]">EN</a></li>
                     </ul>
                 </li>
-                {#                <li class="nav-item dropdown">#}
-                {#                    <a class="nav-link" href="/[[lang_type]]/login" id="basic_nav_login" data-bs-toggle="dropdown"#}
-                {#                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='login' else '']]" aria-expanded="false">[[lang.common_login]]</a>#}
-                {#                    <ul class="dropdown-menu" aria-labelledby="basic_nav_login">#}
-                {#                        <li><a class="dropdown-item"#}
-                {#                               href="/[[lang_type]]/accountDetail">[[lang.common_account_detail]]</a></li>#}
-                {#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalPurchase">[[lang.common_historical_purchase]]</a>#}
-                {#                        </li>#}
-                {#                        <li><a class="dropdown-item" href="/[[lang_type]]/historicalSample">[[lang.common_historical_sample]]</a>#}
-                {#                        </li>#}
-                {#                        <li><a class="dropdown-item" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>#}
-                {#                    </ul>#}
-                {#                </li>#}
                 {% if addition.login %}
                     <li class="nav-item dropdown">
                         <a class="nav-link text-uppercase" href="javascript:;" data-bs-toggle="dropdown"
@@ -217,10 +204,10 @@
                             {% endif %}
                             {% if current_user.ROLE != 'AGENT' and current_user.ROLE != 'USER' %}
                                 <li>
-                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/manageStaffAccounts">[[lang.common_manage_staff_accounts]]</a>
+                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/manageStaffAccounts">[[lang.common_manage_staff_accounts if current_user.ROLE == 'SUPER' else lang.common_check_staff_accounts]]</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/manageCustomerAccounts">[[lang.common_manage_customer_accounts]]</a>
+                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/manageCustomerAccounts">[[lang.common_manage_customer_accounts if current_user.ROLE == 'SUPER' else lang.common_check_customer_accounts]]</a>
                                 </li>
                             {% endif %}
                             <li><a class="dropdown-item text-uppercase" href="/[[lang_type]]/logout">[[lang.common_logout]]</a></li>
@@ -416,13 +403,13 @@
             <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='manageStaffAccounts' else '']]">
                 <a href="/[[lang_type]]/manageStaffAccounts" class="text-capitalize"
                    style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
-                    [[lang.common_manage_staff_accounts]]
+                    [[lang.common_manage_staff_accounts if current_user.ROLE == 'SUPER' else lang.common_check_staff_accounts]]
                 </a>
             </li>
             <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='manageCustomerAccounts' else '']]">
                 <a href="/[[lang_type]]/manageCustomerAccounts" class="text-capitalize"
                    style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
-                    [[lang.common_manage_customer_accounts]]
+                    [[lang.common_manage_customer_accounts if current_user.ROLE == 'SUPER' else lang.common_check_customer_accounts]]
                 </a>
             </li>
             {% endif %}
