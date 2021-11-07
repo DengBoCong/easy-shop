@@ -263,17 +263,23 @@ def manage_staff_accounts(lang_type):
         return render_template("404.html", lang_type=lang_type, route="manageStaffAccounts")
 
     if info_data.get("sort", "") == "az":
-        if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
-            users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(asc(User.ORDERS)).all()
-        else:
-            users = User.query.filter_by(
-                ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+        if current_user.ROLE == 'SUPER':
+            if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
+                users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(asc(User.ORDERS)).all()
+            else:
+                users = User.query.filter_by(
+                    ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+        elif current_user.ROLE == 'ADMIN':
+            users = User.query.filter_by(ROLE="AGENT").order_by(asc(User.ORDERS)).all()
     else:
-        if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
-            users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(desc(User.ORDERS)).all()
-        else:
-            users = User.query.filter_by(
-                ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+        if current_user.ROLE == 'SUPER':
+            if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
+                users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(desc(User.ORDERS)).all()
+            else:
+                users = User.query.filter_by(
+                    ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+        elif current_user.ROLE == 'ADMIN':
+            users = User.query.filter_by(ROLE="AGENT").order_by(desc(User.ORDERS)).all()
 
     addition = set_addition(location="manageStaffAccounts", categories="manageStaffAccounts")
 

@@ -67,9 +67,11 @@
                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListSort" aria-controls="offcanvasNavListSort"
                                 style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_sort]]
                         </div>
+                        {% if addition.login and current_user.ROLE == 'SUPER' %}
                         <div class="btn btn-block text-uppercase" id="offcanvasNavListArea1"
                                 data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListArea" aria-controls="offcanvasNavListArea"
                                 style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.account_position]]</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -92,20 +94,34 @@
                     {% endif %}
                 </div>
                 <div class="row d-none d-sm-block" style="margin-top: 30px">
+                    {% if addition.login and current_user.ROLE == 'SUPER' %}
                     <div class="row">
                         <div class="col-3 text-uppercase">[[lang.common_name]]</div>
                         <div class="col-3 text-uppercase">[[lang.account_position_hierarchy]]</div>
                         <div class="col-3 text-uppercase">[[lang.account_number]]</div>
                         <div class="col-3 text-uppercase">[[lang.common_published_products]]</div>
                     </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-4 text-uppercase">[[lang.common_name]]</div>
+                        <div class="col-4 text-uppercase">[[lang.account_number]]</div>
+                        <div class="col-4 text-uppercase">[[lang.common_published_products]]</div>
+                    </div>
+                    {% endif %}
                     {% if not data.users %}<hr class="layui-border-black" style="margin-top: 10px;">{% endif %}
                     {% for user in data.users %}
                         <hr class="layui-border-black" style="margin-top: 10px;">
                         <div class="row account-details-btn" data-account="[[user.ID]]">
+                            {% if addition.login and current_user.ROLE == 'SUPER' %}
                             <div class="col-3">[[user.NAME]]</div>
                             <div class="col-3">[['Junior Staff' if user.ROLE == 'AGENT' else 'Senior Staff']]</div>
                             <div class="col-3">[[user.EMAIL]]</div>
                             <div class="col-3">[[user.ORDERS]]</div>
+                            {% else %}
+                            <div class="col-4">[[user.NAME]]</div>
+                            <div class="col-4">[[user.EMAIL]]</div>
+                            <div class="col-4">[[user.ORDERS]]</div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>
@@ -114,13 +130,17 @@
                     <hr class="layui-border-black">
                     <div class="col-6 account-details-btn" data-account="[[user.ID]]">
                         <p class="text-capitalize">[[lang.common_name]]</p>
+                        {% if addition.login and current_user.ROLE == 'SUPER' %}
                         <p class="text-capitalize">[[lang.account_position_hierarchy]]</p>
+                        {% endif %}
                         <p class="text-capitalize">[[lang.account_number]]</p>
                         <p class="text-capitalize">[[lang.common_published_products]]</p>
                     </div>
                     <div class="col-6 account-details-btn" data-account="[[user.ID]]" style="text-align: right">
                         <p>[[user.NAME if user.NAME != '' else lang.common_empty ]]</p>
+                        {% if addition.login and current_user.ROLE == 'SUPER' %}
                         <p>[['Junior Staff' if user.ROLE == 'AGENT' else 'Senior Staff']]</p>
+                        {% endif %}
                         <p>[[user.EMAIL]]</p>
                         <p>[[user.ORDERS]]</p>
                     </div>
@@ -144,6 +164,7 @@
                         </a>
                     </li>
                 </ul>
+                {% if addition.login and current_user.ROLE == 'SUPER' %}
                 <ul style="margin-top: 35px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';[['text-decoration: underline;' if data.position=='all' else '']]" class="text-uppercase">
                         <a href="/[[lang_type]]/manageStaffAccounts?sort=[[data.sort]]&position=all">[[lang.account_all_position]]</a>
@@ -155,6 +176,7 @@
                         <a href="/[[lang_type]]/manageStaffAccounts?sort=[[data.sort]]&position=junior">[[lang.account_junior_staff]]</a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </main>

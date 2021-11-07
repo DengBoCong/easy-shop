@@ -72,8 +72,9 @@
                 {% if addition.login and current_user.ROLE != 'AGENT' %}
                 <div class="row">
                     <div class="col-sm-6 col-12">
-                        <span>[[data.user.NAME if data.user.NAME != '' else lang.common_empty ]] ([['Senior' if data.user.ROLE == 'ADMIN' else 'Junior']])</br>[[data.user.EMAIL]]</span>
+                        <span>[[data.user.NAME if data.user.NAME != '' else lang.common_empty ]] [[('(Senior)' if data.user.ROLE == 'ADMIN' else '(Junior)') if current_user.ROLE == 'SUPER' else '']]</br>[[data.user.EMAIL]]</span>
                     </div>
+                    {% if addition.login and current_user.ROLE == 'SUPER' %}
                     <div class="col-sm-6 col-12">
                         <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
@@ -84,6 +85,7 @@
                             [[lang.account_edit_the_account]]
                         </div>
                     </div>
+                    {% endif %}
                 </div>
                 {% endif %}
                 <div class="row" style="margin-top: 30px">
