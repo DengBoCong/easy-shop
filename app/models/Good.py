@@ -20,6 +20,7 @@ class Good(db.Model, UserMixin):
     FACTORY_CODE = db.Column(db.String(40), nullable=False, default="", comment="工厂代码")
     AREA_ID = db.Column(db.String(50), db.ForeignKey('SHOP_AREA.ID', ondelete='SET NULL'), comment="地区ID")
     CURRENCY = db.Column(db.String(50), nullable=False, default="", comment="货币")
+    CATEGORY = db.Column(db.String(100), nullable=False, default="", comment="产品分类")
     CATEGORY_ID = db.Column(db.String(50), db.ForeignKey('SHOP_GOOD_CATEGORY.ID',
                                                          ondelete='SET NULL'), comment="产品分类ID")
     SIZE = db.Column(db.String(255), nullable=False, default="", comment="尺码")
@@ -30,6 +31,8 @@ class Good(db.Model, UserMixin):
     TYPE = db.Column(db.Enum('MEN', 'WOMEN', 'KIDS', 'OTHERS'), nullable=False, comment="所属类型")
     COVER = db.Column(db.String(255), nullable=False, default="", comment="封面地址")
     USER_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID', ondelete='SET NULL'), comment="USER ID")
+    NUM = db.Column(db.Integer, nullable=False, default=0, comment="数量")
+    PRICE = db.Column(db.DECIMAL(20, 3), nullable=False, default=0.000, comment="价格")
 
     orderGoods = db.relationship('OrderGood', backref='good', lazy='dynamic')
     goodPrices = db.relationship('GoodPrice', backref='good', lazy='dynamic')
@@ -52,6 +55,7 @@ class Good(db.Model, UserMixin):
             'FACTORY_CODE': self.FACTORY_CODE,
             'AREA_ID': self.AREA_ID,
             'CURRENCY': self.CURRENCY,
+            'CATEGORY': self.CATEGORY,
             'CATEGORY_ID': self.CATEGORY_ID,
             'SIZE': self.SIZE,
             'SIZE_CHART': self.SIZE_CHART,
@@ -60,5 +64,7 @@ class Good(db.Model, UserMixin):
             'CLASS': self.CLASS,
             'TYPE': self.TYPE,
             'COVER': self.COVER,
-            'USER_ID': self.USER_ID
+            'USER_ID': self.USER_ID,
+            'NUM': self.NUM,
+            'PRICE': self.PRICE
         }

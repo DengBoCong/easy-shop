@@ -113,7 +113,17 @@ def add_good():
     lang_type = info_data["langType"]
 
     try:
+        good_category = GoodCategory.query.get(info_data.get("CATEGORY_ID"))
+
         good_id = uuid.uuid1()
+        good_prices, min_price = list(), 1000000
+        for price in info_data.get("PRICE_RNAGE", []):
+            min_price = min(min_price, price.get("PRICE", 0))
+            good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
+                                         START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
+                                         PRICE=price.get("PRICE", 0)))
+        db.session.add_all(good_prices)
+
         good = Good(ID=good_id, CREATE_DATETIME=datetime.now(), BRAND=info_data.get("BRAND"),
                     COLOR=info_data.get("COLOR"), STYLE=info_data.get("STYLE"),
                     DESCRIPTION=info_data.get("DESCRIPTION"), SUPPLIER_COLOR=info_data.get("SUPPLIER_COLOR"),
@@ -124,7 +134,7 @@ def add_good():
                     SIZE_CHART=info_data.get("SIZE_CHART"), STAFF_EMAIL=info_data.get("STAFF_EMAIL"),
                     IS_PUBLISHED=info_data.get("IS_PUBLISHED"), CLASS=info_data.get("CLASS"),
                     TYPE=info_data.get("TYPE").upper(), COVER=info_data.get("GOOD_IMG", [""])[0],
-                    USER_ID=info_data.get("USER_ID"))
+                    USER_ID=info_data.get("USER_ID"), NUM=0, PRICE=min_price, CATEGORY=good_category.EN_NAME)
         db.session.add(good)
 
         good_img = list()
@@ -132,12 +142,6 @@ def add_good():
             good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
         db.session.add_all(good_img)
 
-        good_prices = list()
-        for price in info_data.get("PRICE_RNAGE", []):
-            good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
-                                         START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
-                                         PRICE=price.get("PRICE", 0)))
-        db.session.add_all(good_prices)
         db.session.commit()
 
         return jsonify({'code': 0, 'msg': lang[lang_type]["common_redirecting"],
@@ -166,12 +170,14 @@ def update_good():
         db.session.add_all(good_img)
         db.session.commit()
 
+    min_price = None
     if len(info_data.get("PRICE_RNAGE", [])) != 0:
         GoodPrice.query.filter_by(GOOD_ID=good_id).delete()
         db.session.commit()
         good_prices = list()
         for price in info_data.get("PRICE_RNAGE", []):
             if price:
+                min_price = min(min_price, price.get("PRICE", 0))
                 good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
                                              START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
                                              PRICE=price.get("PRICE", 0)))
@@ -184,6 +190,12 @@ def update_good():
             del info_data["PRICE_RNAGE"]
         if info_data.get("GOOD_IMG", None):
             del info_data["GOOD_IMG"]
+
+        if min_price:
+            info_data["PRICE"] = min_price
+        if info_data.get("CATEGORY_ID", None):
+            good_category = GoodCategory.query.get(info_data.get("CATEGORY_ID"))
+            info_data["CATEGORY"] = good_category.EN_NAME
         good = Good.query.filter_by(ID=info_data.get("ID")).update(info_data)
 
         if good == 1:

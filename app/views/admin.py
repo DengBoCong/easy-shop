@@ -183,22 +183,25 @@ def published_product(lang_type):
         good_info = good.to_json()
         min_price, max_price = 10000000, 0
         for price in good.goodPrices:
-            min_price = price.START_NUM if price.START_NUM < min_price else min_price
-            max_price = price.END_NUM if price.END_NUM > max_price else max_price
-        good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), min_price, max_price)
+            min_price = price.PRICE if price.PRICE < min_price else min_price
+            max_price = price.PRICE if price.PRICE > max_price else max_price
+        if min_price != max_price:
+            good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price, "%.2f" % max_price)
+        else:
+            good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
         good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
-    addition = set_addition(add="-" + info_data.get("category", "SAMPLE"), location="publishedProduct",
-                            categories="manageStaffAccounts")
+    addition = set_addition(location="publishedProduct", categories="manageStaffAccounts")
 
     return render_template("admin/publishedProduct.html", lang=lang[lang_type],
                            lang_type=lang_type,
                            route="publishedProduct?userId={}&category={}".format(user_id, category),
                            addition=addition,
                            data={"user": user, "category": category, "product": product, "color": color,
-                                 "categories": good_categories_list, "goods": goods_list})
+                                 "categories": good_categories_list, "goods": goods_list,
+                                 "add": "-" + info_data.get("category", "SAMPLE")})
 
 
 ##############################超管###############################
