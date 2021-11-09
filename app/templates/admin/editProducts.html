@@ -1058,7 +1058,7 @@
                             "STAFF_EMAIL": staffEmail,
                             "IS_PUBLISHED": btnType,
                             "COVER": goodImg[0],
-                            "PRICE_RNAGE": prices,
+                            "PRICE_RANGE": prices,
                             "GOOD_IMG": goodImg,
                             "langType": '[[lang_type]]'
                         }),
@@ -1068,7 +1068,7 @@
                                 if (btnType == 0) {
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
-                                    window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                                    window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
                                 }
                             }
                         }
@@ -1150,7 +1150,7 @@
                             "STAFF_EMAIL": staffEmail,
                             "IS_PUBLISHED": btnType,
                             "COVER": goodImg[0],
-                            "PRICE_RNAGE": prices,
+                            "PRICE_RANGE": prices,
                             "GOOD_IMG": goodImg,
                             "langType": '[[lang_type]]'
                         }),

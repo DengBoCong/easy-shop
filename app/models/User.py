@@ -38,6 +38,7 @@ class User(db.Model, UserMixin):
 
     orders = db.relationship('Order', backref='user', lazy='dynamic')
     goods = db.relationship('Good', backref='user', lazy='dynamic')
+    wishGoods = db.relationship('WishGood', backref='user', lazy='dynamic')
 
     @property
     def password(self):

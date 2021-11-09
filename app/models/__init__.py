@@ -7,3 +7,4 @@ from .GoodSize import GoodSize
 from .Order import Order
 from .OrderGood import OrderGood
 from .User import User
+from .WishGood import WishGood

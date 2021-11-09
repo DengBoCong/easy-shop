@@ -72,6 +72,7 @@ def edit_single_product(lang_type):
         "END_NUM": price.END_NUM,
         "PRICE": "%.2f" % price.PRICE
     } for price in good_prices]
+    good_info["TYPE"] = good_info["TYPE"].lower()
 
     areas = Area.query.order_by(asc(Area.EN_NAME)).all()
     areas_list = []

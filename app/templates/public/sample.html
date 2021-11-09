@@ -76,7 +76,19 @@
                     {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                         <img src="[[good.COVER]]" width="100%" height="400px"/>
-                        <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>
+                        <div class="row">
+                            <div class="col-10">
+                                <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>
+                            </div>
+                            <div class="col-2">
+                                {% if addition.login and current_user.ROLE != "USER" %}
+                                <div class="btn btn-block text-capitalize published-edit-product-btn" data-product-id="[[good.ID]]"
+                                    style="font-size: 10px;background-color: #323232;color: #FFFFFF;width: 50px;margin-top: 10px;float: right">
+                                    [[lang.common_edit]]
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -342,7 +354,7 @@
                 , curr: [[addition.page]]
                 , jump: function (obj, first) {
                     if (!first) {
-                        window.location.href = "/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=green&page=" + obj.curr
+                        window.location.href = "/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]&page=" + obj.curr
                     }
                 }
             });
@@ -355,6 +367,10 @@
             });
             $('#header-offcanvas-bottom-close-color').on('click', function () {
                 $('#offcanvasNavListColor1').trigger('click')
+            });
+
+            $('.published-edit-product-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
         });
     </script>

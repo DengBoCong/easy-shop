@@ -7,7 +7,7 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-lg-2 d-none d-lg-block self-a-link">
-                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                <ul class="text-uppercase" style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
                         [[lang.common_all_categories]]
                     </li>
@@ -24,64 +24,80 @@
                         </a>
                     </li>
                     <li style="font-size: 13px;">
-                        <a href="javascript:;"
+                        <a href="/[[lang_type]]-[[addition.location]]/referenceDiagrams?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
                            style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
                             [[lang.common_reference_diagrams]]
                         </a>
                     </li>
                 </ul>
-                <ul style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
+                <ul class="text-uppercase" style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]"
                            style="[['text-decoration: underline;' if addition.products=='' else '']]">
                             [[lang.common_all_products]]
                         </a>
                     </li>
+                    {% for category in data.categories %}
                     <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=shoes&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.products=='shoes' else '']]">
-                            [[lang.products_categories_shoes]]
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
+                           style="[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
+                            [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=bags&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.products=='bags' else '']]">
-                            [[lang.products_categories_bags]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=accessories&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.products=='accessories' else '']]">
-                            [[lang.products_categories_accessories]]
-                        </a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
+            <div class="d-lg-none col-12" style="padding: 0">
+                <div class="row" style="padding: 0">
+                    <div class="btn-group" role="group" style="padding: 0">
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListProducts1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListProducts" aria-controls="offcanvasNavListProducts"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_products]]</div>
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListSort1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListSort" aria-controls="offcanvasNavListSort"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_sort]]
+                        </div>
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListColor1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListColor" aria-controls="offcanvasNavListColor"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.color_colors]]
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-8">
-                <div class="row">
+                <div class="row" style="padding: 30px 20px 0 20px">
+                    {% if current_user.ROLE !='USER' and addition.login %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                            <a href="/[[lang_type]][[addition.add]]/newProducts?productType=REFERENCE" class="btn btn-block" style="width: 100%;height: 83%;border-color: #DDE1E5">
+                                <img src="[[url_for('static', filename='img/plus.png')]]" style="width: 100%;height: 100%;">
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                        <p style="font-size: 13px;margin-top: 10px;">JW ANDERSON</br>棕色外套</br>¥30 - ¥50</p>
+                        <img src="[[good.COVER]]" width="100%" height="400px"/>
+                        <div class="row">
+                            <div class="col-10">
+                                <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>
+                            </div>
+                            <div class="col-2">
+                                {% if addition.login and current_user.ROLE != "USER" %}
+                                <div class="btn btn-block text-capitalize published-edit-product-btn" data-product-id="[[good.ID]]"
+                                    style="font-size: 10px;background-color: #323232;color: #FFFFFF;width: 50px;margin-top: 10px;float: right">
+                                    [[lang.common_edit]]
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-lg-2 d-none d-lg-block self-a-link">
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">[[lang.common_sort]]</li>
+                    <li class="text-uppercase" style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">[[lang.common_sort]]</li>
                     <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]"
                            style="[['text-decoration: underline;' if addition.sort=='' else '']]">
                             [[lang.common_latest_arrivals]]
                         </a>
@@ -106,69 +122,69 @@
                     </li>
                 </ul>
                 <ul style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors="
+                    <li class="text-uppercase" style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors="
                            style="[['text-decoration: underline;' if addition.colors=='' else '']]">
                             [[lang.color_all_colors]]
                         </a>
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=brown"
-                           style="[['text-decoration: underline;' if addition.colors=='brown' else '']]">
+                    <li class="text-capitalize" style="margin-top: 10px;font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Brown"
+                           style="[['text-decoration: underline;' if addition.colors=='Brown' else '']]">
                             [[lang.color_brown]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=blue"
-                           style="[['text-decoration: underline;' if addition.colors=='blue' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Blue"
+                           style="[['text-decoration: underline;' if addition.colors=='Blue' else '']]">
                             [[lang.color_blue]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=gray"
-                           style="[['text-decoration: underline;' if addition.colors=='gray' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Gray"
+                           style="[['text-decoration: underline;' if addition.colors=='Gray' else '']]">
                             [[lang.color_gray]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=white"
-                           style="[['text-decoration: underline;' if addition.colors=='white' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=White"
+                           style="[['text-decoration: underline;' if addition.colors=='White' else '']]">
                             [[lang.color_white]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=pink"
-                           style="[['text-decoration: underline;' if addition.colors=='pink' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Pink"
+                           style="[['text-decoration: underline;' if addition.colors=='Pink' else '']]">
                             [[lang.color_pink]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=purple"
-                           style="[['text-decoration: underline;' if addition.colors=='purple' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Purple"
+                           style="[['text-decoration: underline;' if addition.colors=='Purple' else '']]">
                             [[lang.color_purple]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=red"
-                           style="[['text-decoration: underline;' if addition.colors=='red' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Red"
+                           style="[['text-decoration: underline;' if addition.colors=='Red' else '']]">
                             [[lang.color_red]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=green"
-                           style="[['text-decoration: underline;' if addition.colors=='green' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Green"
+                           style="[['text-decoration: underline;' if addition.colors=='Green' else '']]">
                             [[lang.color_green]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=yellow"
-                           style="[['text-decoration: underline;' if addition.colors=='yellow' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Yellow"
+                           style="[['text-decoration: underline;' if addition.colors=='Yellow' else '']]">
                             [[lang.color_yellow]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=black"
-                           style="[['text-decoration: underline;' if addition.colors=='black' else '']]">
+                    <li class="text-capitalize" style="font-size: 13px;">
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Black"
+                           style="[['text-decoration: underline;' if addition.colors=='Black' else '']]">
                             [[lang.color_black]]
                         </a>
                     </li>
@@ -179,6 +195,144 @@
             <div id="pageBottomSelect"></div>
         </div>
     </main>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListProducts" aria-labelledby="offcanvasNavListProductsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.products=='' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]">
+                        [[lang.common_all_products]]
+                    </a>
+                </li>
+                {% for category in data.categories %}
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]">
+                        [[lang.common_design_diagrams]]
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-products"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListSort" aria-labelledby="offcanvasNavListSortLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;">
+                    [[lang.common_sort]]
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='' else '']]">
+                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]">
+                        [[lang.common_latest_arrivals]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='trending' else '']]">
+                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=trending&colors=[[addition.colors]]">
+                        [[lang.common_trending]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='lowHigh' else '']]">
+                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=lowHigh&colors=[[addition.colors]]">
+                        [[lang.common_price_low_high]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='highLow' else '']]">
+                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=highLow&colors=[[addition.colors]]">
+                        [[lang.common_price_high_low]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-sort"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListColor" aria-labelledby="offcanvasNavListColorLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=">
+                        [[lang.color_all_colors]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Brown' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Brown">
+                        [[lang.color_brown]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Blue' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Blue">
+                        [[lang.color_blue]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Gray' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Gray">
+                        [[lang.color_gray]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='White' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=White">
+                        [[lang.color_white]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Pink' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Pink">
+                        [[lang.color_pink]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Purple' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Purple">
+                        [[lang.color_purple]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Red' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Red">
+                        [[lang.color_red]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Green' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Green">
+                        [[lang.color_green]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Yellow' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Yellow">
+                        [[lang.color_yellow]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Black' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Black">
+                        [[lang.color_black]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-color"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block js %}
     <script>
@@ -200,9 +354,23 @@
                 , curr: [[addition.page]]
                 , jump: function (obj, first) {
                     if (!first) {
-                        window.location.href = "/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=green&page=" + obj.curr
+                        window.location.href = "/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]&page=" + obj.curr
                     }
                 }
+            });
+
+            $('#header-offcanvas-bottom-close-products').on('click', function () {
+                $('#offcanvasNavListProducts1').trigger('click')
+            });
+            $('#header-offcanvas-bottom-close-sort').on('click', function () {
+                $('#offcanvasNavListSort1').trigger('click')
+            });
+            $('#header-offcanvas-bottom-close-color').on('click', function () {
+                $('#offcanvasNavListColor1').trigger('click')
+            });
+
+            $('.published-edit-product-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]-REFERENCE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
         });
     </script>

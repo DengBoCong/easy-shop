@@ -117,7 +117,7 @@ def add_good():
 
         good_id = uuid.uuid1()
         good_prices, min_price = list(), 1000000
-        for price in info_data.get("PRICE_RNAGE", []):
+        for price in info_data.get("PRICE_RANGE", []):
             min_price = min(min_price, price.get("PRICE", 0))
             good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
                                          START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
@@ -170,14 +170,14 @@ def update_good():
         db.session.add_all(good_img)
         db.session.commit()
 
-    min_price = None
-    if len(info_data.get("PRICE_RNAGE", [])) != 0:
+    min_price = 100000000
+    if len(info_data.get("PRICE_RANGE", [])) != 0:
         GoodPrice.query.filter_by(GOOD_ID=good_id).delete()
         db.session.commit()
         good_prices = list()
-        for price in info_data.get("PRICE_RNAGE", []):
+        for price in info_data.get("PRICE_RANGE", []):
             if price:
-                min_price = min(min_price, price.get("PRICE", 0))
+                min_price = min(min_price, float(price.get("PRICE", 0)))
                 good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
                                              START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
                                              PRICE=price.get("PRICE", 0)))
@@ -186,8 +186,8 @@ def update_good():
 
     try:
         del info_data["langType"]
-        if info_data.get("PRICE_RNAGE", None):
-            del info_data["PRICE_RNAGE"]
+        if info_data.get("PRICE_RANGE", None):
+            del info_data["PRICE_RANGE"]
         if info_data.get("GOOD_IMG", None):
             del info_data["GOOD_IMG"]
 
