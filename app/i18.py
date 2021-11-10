@@ -72,6 +72,8 @@ lang = {
         "common_empty": "[空]",
         "common_making_samples": "制作样品",
         "common_edit": "编辑",
+        "common_you_may_like": "你可能也喜欢：",
+        "common_published_date": "发布日期：",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -281,6 +283,8 @@ lang = {
         "common_empty": "[Empty]",
         "common_making_samples": "Making samples",
         "common_edit": "Edit",
+        "common_you_may_like": "You may also like:",
+        "common_published_date": "Published Date：",
 
         "header_nav_men": "men",
         "header_nav_women": "women",

@@ -118,12 +118,11 @@ def add_good():
         good_id = uuid.uuid1()
         good_prices, min_price = list(), 1000000
         for price in info_data.get("PRICE_RANGE", []):
-            min_price = min(min_price, price.get("PRICE", 0))
+            min_price = min(min_price, float(price.get("PRICE", 0)))
             good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
                                          START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
                                          PRICE=price.get("PRICE", 0)))
         db.session.add_all(good_prices)
-
         good = Good(ID=good_id, CREATE_DATETIME=datetime.now(), BRAND=info_data.get("BRAND"),
                     COLOR=info_data.get("COLOR"), STYLE=info_data.get("STYLE"),
                     DESCRIPTION=info_data.get("DESCRIPTION"), SUPPLIER_COLOR=info_data.get("SUPPLIER_COLOR"),

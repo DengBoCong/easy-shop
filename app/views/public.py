@@ -311,3 +311,71 @@ def reference_diagrams(lang_type):
     return render_template("public/referenceDiagrams.html", lang=lang[lang_type], lang_type=lang_type,
                            route="referenceDiagrams", addition=addition,
                            data={"goods": goods_list, "categories": good_categories_list})
+
+
+@views.route('/<lang_type>/singleProduct', methods=['GET', 'POST'])
+def single_products(lang_type):
+    """ 商品详情"""
+    info_data = request.args.to_dict()
+    lang_type, sub_page = lang_type.split("-")
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="singleProduct")
+
+    good = Good.query.get(info_data.get("goodId"))
+    good_info = good.to_json()
+    good_info["CATEGORY_ID"] = good.category.NAME if lang_type == "zh_cn" else good.category.EN_NAME
+    good_info["CREATE_DATETIME"] = good.CREATE_DATETIME.strftime('%Y-%m-%d')
+
+    good_info["SIZE"] = [e for e in good_info["SIZE"].split(",")]
+    good_info["SIZE"].sort()
+
+    good_info["IMG"] = [good_info["COVER"]]
+    good_img = GoodImg.query.filter_by(GOOD_ID=good_info["ID"]).order_by(asc(GoodImg.CREATE_DATETIME)).all()
+    for img in good_img:
+        good_info["IMG"].append(img.URL)
+
+    good_prices = GoodPrice.query.filter_by(GOOD_ID=good_info["ID"]).order_by(asc(GoodPrice.START_NUM)).all()
+    good_info["PRICES"] = [{
+        "RANGE": "{}-{}".format(price.START_NUM, price.END_NUM),
+        "PRICE": "%.2f" % price.PRICE + get_currency_op(good_info["CURRENCY"])
+    } for price in good_prices]
+    # good_info["PRICES"].append({
+    #     "RANGE": "{}<".format(good_prices[-1].START_NUM),
+    #     "PRICE": "%.2f" % good_prices[-1].PRICE + get_currency_op(good_info["CURRENCY"])
+    # })
+
+    related_goods_list = list()
+    related_goods = Good.query.filter(
+        Good.AREA_ID.like("%" + good.AREA_ID + "%"),
+        Good.CLASS.like("%" + good.CLASS + "%"),
+        Good.CATEGORY_ID.like("%" + good.CATEGORY_ID + "%"),
+        Good.TYPE.like("%" + sub_page + "%")
+    ).order_by(desc(Good.NUM)).all()
+    count = 0
+    for related_good in related_goods:
+        related_good_info = related_good.to_json()
+        if related_good.ID == good_info["ID"]:
+            continue
+        min_price, max_price = 10000000, 0
+        for price in related_good.goodPrices:
+            min_price = price.PRICE if price.PRICE < min_price else min_price
+            max_price = price.PRICE if price.PRICE > max_price else max_price
+        if min_price != max_price:
+            related_good_info["PRICE"] = "{}{} - {}".format(
+                get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price, "%.2f" % max_price)
+        else:
+            related_good_info["PRICE"] = "{}{}".format(
+                get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price)
+        related_good_info["COLOR"] = get_color_op(
+            related_good_info["COLOR"]) if lang_type == 'zh_cn' else related_good_info["COLOR"]
+        related_good_info["CATEGORY"] = related_good.category.NAME if lang_type == 'zh_cn' else related_good.category.EN_NAME
+        related_goods_list.append(related_good_info)
+        count += 1
+        if count == 6:
+            break
+
+    return render_template("public/singleProduct.html", lang=lang[lang_type], lang_type=lang_type,
+                           route="singleProduct?goodId={}".format(good_info["ID"]),
+                           goodInfo=good_info, addition=set_addition(add="-" + sub_page, location=sub_page),
+                           data={"productType": good_info["CLASS"], "related_goods": related_goods_list})
