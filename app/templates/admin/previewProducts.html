@@ -6,7 +6,7 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
-            <div class="col-lg-3 col-md-4 d-none d-md-block">
+            <div class="col-lg-3 d-none d-lg-block">
                 <p class="text-uppercase" style="margin-top: 300px;font-size: 14px;">[[goodInfo.BRAND]]</p>
                 <p style="font-size: 14px;">[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</p>
 
@@ -18,14 +18,14 @@
                 <p style="margin-top: 3px;font-size: 14px;">
                     [[lang.products_product_number]]：[[goodInfo.PRODUCT_NUMBER]]</p>
             </div>
-            <div class="col-lg-6 col-md-4 d-none d-md-block">
+            <div class="col-lg-6 d-none d-lg-block">
                 <div class="row">
                     {% for img in goodInfo.IMG %}
                         <img src="[[img]]" style="margin-top: 10px;" width="100%"/>
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 d-none d-md-block" style="text-align: center;">
+            <div class="col-lg-3 d-none d-lg-block" style="text-align: center;">
                 <div class="btn-group" role="group" style="margin-top: 10px;">
                     <button type="button" class="btn btn-outline-secondary text-uppercase exit-preview-btn"
                             style="font-size: 15px;width: 150px;height: 55px;">[[lang.products_exit_preview]]
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-4 d-md-none" style="padding: 0">
+            <div class="col-lg-6 d-lg-none" style="padding: 0">
                 <div class="btn-group" role="group" style="width: 100%">
                     <button type="button" class="btn btn-outline-secondary text-uppercase exit-preview-btn"
                             style="font-size: 12px;width: 50%;height: 40px;">[[lang.products_exit_preview]]
@@ -111,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 d-md-none" style="padding: 0">
+            <div class="col-lg-3 d-lg-none" style="padding: 0">
                 <div class="row" style="font-size: 10px;">
                     <div class="col-5 text-capitalize" style="padding: 0 30px;">
                         <span class="text-uppercase" style="font-size: 10px;">[[goodInfo.BRAND]]</span></br>

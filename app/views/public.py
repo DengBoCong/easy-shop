@@ -326,6 +326,7 @@ def single_products(lang_type):
     good_info = good.to_json()
     good_info["CATEGORY_ID"] = good.category.NAME if lang_type == "zh_cn" else good.category.EN_NAME
     good_info["CREATE_DATETIME"] = good.CREATE_DATETIME.strftime('%Y-%m-%d')
+    good_info["PRICE"] = get_currency_op(good_info["CURRENCY"]) + str(good_info["PRICE"])
 
     good_info["SIZE"] = [e for e in good_info["SIZE"].split(",")]
     good_info["SIZE"].sort()
@@ -345,37 +346,46 @@ def single_products(lang_type):
     #     "PRICE": "%.2f" % good_prices[-1].PRICE + get_currency_op(good_info["CURRENCY"])
     # })
 
-    related_goods_list = list()
-    related_goods = Good.query.filter(
-        Good.AREA_ID.like("%" + good.AREA_ID + "%"),
-        Good.CLASS.like("%" + good.CLASS + "%"),
-        Good.CATEGORY_ID.like("%" + good.CATEGORY_ID + "%"),
-        Good.TYPE.like("%" + sub_page + "%")
-    ).order_by(desc(Good.NUM)).all()
-    count = 0
-    for related_good in related_goods:
-        related_good_info = related_good.to_json()
-        if related_good.ID == good_info["ID"]:
-            continue
-        min_price, max_price = 10000000, 0
-        for price in related_good.goodPrices:
-            min_price = price.PRICE if price.PRICE < min_price else min_price
-            max_price = price.PRICE if price.PRICE > max_price else max_price
-        if min_price != max_price:
-            related_good_info["PRICE"] = "{}{} - {}".format(
-                get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price, "%.2f" % max_price)
-        else:
-            related_good_info["PRICE"] = "{}{}".format(
-                get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price)
-        related_good_info["COLOR"] = get_color_op(
-            related_good_info["COLOR"]) if lang_type == 'zh_cn' else related_good_info["COLOR"]
-        related_good_info["CATEGORY"] = related_good.category.NAME if lang_type == 'zh_cn' else related_good.category.EN_NAME
-        related_goods_list.append(related_good_info)
-        count += 1
-        if count == 6:
-            break
+    related_goods_list, buy_list, shopping_bag_list, wishlist = list(), dict(), list(), list()
+    if hasattr(current_user, "ID") and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER'):
+        for order_good in good.orderGoods:
+            buy_list[order_good.order.user.ID] = order_good.order.user.NAME
+        shopping_bag_list = good.shoppingGoods
+        wishlist = good.wishGoods
+    else:
+        related_goods = Good.query.filter(
+            Good.AREA_ID.like("%" + good.AREA_ID + "%"),
+            Good.CLASS.like("%" + good.CLASS + "%"),
+            Good.CATEGORY_ID.like("%" + good.CATEGORY_ID + "%"),
+            Good.TYPE.like("%" + sub_page + "%")
+        ).order_by(desc(Good.NUM)).all()
+
+        count = 0
+        for related_good in related_goods:
+            related_good_info = related_good.to_json()
+            if related_good.ID == good_info["ID"]:
+                continue
+            min_price, max_price = 10000000, 0
+            for price in related_good.goodPrices:
+                min_price = price.PRICE if price.PRICE < min_price else min_price
+                max_price = price.PRICE if price.PRICE > max_price else max_price
+            if min_price != max_price:
+                related_good_info["PRICE"] = "{}{} - {}".format(
+                    get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price, "%.2f" % max_price)
+            else:
+                related_good_info["PRICE"] = "{}{}".format(
+                    get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price)
+            related_good_info["COLOR"] = get_color_op(
+                related_good_info["COLOR"]) if lang_type == 'zh_cn' else related_good_info["COLOR"]
+            related_good_info["CATEGORY"] = related_good.category.NAME if lang_type == 'zh_cn' else related_good.category.EN_NAME
+            related_goods_list.append(related_good_info)
+            count += 1
+            if count == 6:
+                break
 
     return render_template("public/singleProduct.html", lang=lang[lang_type], lang_type=lang_type,
                            route="singleProduct?goodId={}".format(good_info["ID"]),
                            goodInfo=good_info, addition=set_addition(add="-" + sub_page, location=sub_page),
-                           data={"productType": good_info["CLASS"], "related_goods": related_goods_list})
+                           data={"productType": good_info["CLASS"], "related_goods": related_goods_list,
+                                 "buy_list": buy_list, "shopping_bag_list": shopping_bag_list,
+                                 "wishlist": wishlist})

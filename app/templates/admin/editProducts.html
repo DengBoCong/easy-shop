@@ -6,7 +6,7 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
-            <div class="col-lg-3 col-md-4 d-none d-md-block">
+            <div class="col-lg-3 d-none d-lg-block">
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-4 d-none d-md-block">
+            <div class="col-lg-6 d-none d-lg-block">
                 <div id="edit-product-add-img-list">
                     {% for img in data.goodInfo.IMG %}
                         <div class="row" style="position:relative;margin-top: 10px;">
@@ -128,7 +128,7 @@
                          id="edit-product-add-img" class="rounded mx-auto d-block">
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 d-none d-md-block">
+            <div class="col-lg-3 d-none d-lg-block">
                 <div class="layui-form" style="padding: 20px 20px 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
@@ -142,7 +142,7 @@
                             </select>
                         </div>
                     </div>
-                    {% if data.productType != 'DESIGN' %}
+                    {% if data.productType == 'SAMPLE' %}
                         <div class="layui-form-item d-flex justify-content-center">
                             <div class="layui-input-inline" style="width: 300px;">
                                 <label class="text-uppercase">[[lang.products_price_range]]</label>
@@ -178,6 +178,14 @@
                                      id="edit-product-add-range">
                                     [[lang.products_add_range]]
                                 </div>
+                            </div>
+                        </div>
+                    {% elif data.productType == 'REFERENCE' %}
+                        <div class="layui-form-item d-flex justify-content-center">
+                            <div class="layui-input-inline" style="width: 300px;">
+                                <label class="text-uppercase">[[lang.products_price]]</label>
+                                <input type="number" id="product-refer-price" lay-verify="required" value="[[data.goodInfo.PRICE]]" class="layui-input"
+                                       style="margin-top: 5px;border-color: #575759">
                             </div>
                         </div>
                     {% endif %}
@@ -239,7 +247,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-4 col-12 d-md-none">
+            <div class="col-lg-6 col-12 d-lg-none">
                 <div id="display-img1-upload" style="display: none;"></div>
                 <div class="row d-flex justify-content-center" style="margin-top: 30px;">
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width: 385px;">
@@ -267,7 +275,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-12 d-md-none">
+            <div class="col-lg-3 col-12 d-lg-none">
                 <div class="layui-form" style="padding: 20px 0 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
@@ -373,7 +381,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-12 d-md-none">
+            <div class="col-lg-3 col-12 d-lg-none">
                 <div class="layui-form" style="padding: 20px 0 0 0;">
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
@@ -387,7 +395,7 @@
                             </select>
                         </div>
                     </div>
-                    {% if data.productType != 'DESIGN' %}
+                    {% if data.productType == 'SAMPLE' %}
                         <div class="layui-form-item d-flex justify-content-center">
                             <div style="width: 370px;">
                                 <label class="text-uppercase">[[lang.products_price_range]]</label>
@@ -432,6 +440,14 @@
                                      id="edit-product-add-range1">
                                     [[lang.products_add_range]]
                                 </div>
+                            </div>
+                        </div>
+                    {% elif data.productType == 'REFERENCE' %}
+                        <div class="layui-form-item d-flex justify-content-center">
+                            <div style="width: 370px;">
+                                <label class="text-uppercase">[[lang.products_price]]</label>
+                                <input type="number" id="product-refer-price1" lay-verify="required" value="[[data.goodInfo.PRICE]]" class="layui-input"
+                                       style="margin-top: 5px;border-color: #575759">
                             </div>
                         </div>
                     {% endif %}
@@ -1001,6 +1017,7 @@
                 var sizeChart = $('#edit-products-import-chart').attr('data-sizeChart')
                 var prices = new Array();
                 var goodImg = new Array();
+                var referPrice = $('#product-refer-price').val()
 
                 var startNum = document.getElementsByName("START_NUM");
                 var endNum = document.getElementsByName("END_NUM");
@@ -1033,7 +1050,8 @@
                 if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
                     || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
                     || productArea == "" || staffEmail == "" || currency == "" || category == ""
-                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
+                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' == 'SAMPLE')
+                    || (referPrice == "" && '[[data.productType]]' == 'REFERENCE') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
                     admin.req({
@@ -1060,6 +1078,7 @@
                             "COVER": goodImg[0],
                             "PRICE_RANGE": prices,
                             "GOOD_IMG": goodImg,
+                            "PRICE": referPrice,
                             "langType": '[[lang_type]]'
                         }),
                         done: function (res) {
@@ -1093,6 +1112,7 @@
                 var sizeChart = $('#edit-products-import-chart1').attr('data-sizeChart')
                 var prices = new Array();
                 var goodImg = new Array();
+                var referPrice = $('#product-refer-price1').val()
 
                 var startNum = document.getElementsByName("START_NUM1");
                 var endNum = document.getElementsByName("END_NUM1");
@@ -1125,9 +1145,10 @@
                 if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
                     || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
                     || productArea == "" || staffEmail == "" || currency == "" || category == ""
-                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' != 'DESIGN') || goodImg.length == 0) {
+                    || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' == 'SAMPLE')
+                    || (referPrice == "" && '[[data.productType]]' == 'REFERENCE') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
-                } else {
+                }  else {
                     admin.req({
                         method: "post",
                         url: '/api/good/update!update_good',
@@ -1152,6 +1173,7 @@
                             "COVER": goodImg[0],
                             "PRICE_RANGE": prices,
                             "GOOD_IMG": goodImg,
+                            "PRICE": referPrice,
                             "langType": '[[lang_type]]'
                         }),
                         done: function (res) {
@@ -1160,7 +1182,7 @@
                                 if (btnType == 0) {
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
-                                    window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                                    window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
                                 }
                             }
                         }

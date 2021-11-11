@@ -397,6 +397,9 @@ lang = {
         "products_price_usd": "USD",
         "products_product_info": "item info",
         "products_view_products": "View Products",
+        "products_customer_who_buy_it": "Customers who bought it：",
+        "products_customer_who_add_shopping_bag": "Customers who add it to shopping bag：",
+        "products_customer_who_add_wishlist": "Customers who add it to wishlist：",
 
         "wishlist_title_info": "You can stay in this page to manage products that you added to wishlist. You can delete or add them to shopping bag or sample bag for placeing orders.",
         "wishlist_add_to_bag": "add to shopping bag",

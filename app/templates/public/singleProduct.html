@@ -6,7 +6,7 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
-            <div class="col-lg-3 col-md-4 d-none d-md-block">
+            <div class="col-lg-3 d-none d-lg-block">
                 <p class="text-uppercase" style="margin-top: 300px;font-size: 14px;">[[goodInfo.BRAND]]</p>
                 <p style="font-size: 14px;">[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</p>
 
@@ -18,17 +18,18 @@
                 <p style="margin-top: 3px;font-size: 14px;">
                     [[lang.products_product_number]]：[[goodInfo.PRODUCT_NUMBER]]</p>
             </div>
-            <div class="col-lg-6 col-md-4 d-none d-md-block">
-                <div class="row">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="row" style="margin-bottom: 30px;">
                     {% for img in goodInfo.IMG %}
                         <img src="[[img]]" style="margin-top: 10px;" width="100%"/>
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 d-none d-md-block" style="text-align: center;">
+            <div class="col-lg-3 d-none d-lg-block" style="text-align: center;">
                 <div class="layui-form">
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <div class="row" style="margin-top: 200px;font-size: 14px;padding: 10px;width: 300px;">
+                    <div class="layui-form-item d-flex justify-content-center" style="margin-top: 200px;">
+                        {% if goodInfo.CLASS == 'SAMPLE' %}
+                        <div class="row" style="font-size: 14px;padding: 10px;">
                             <div class="col-3 text-capitalize">[[lang.products_qty_full]]</div>
                             {% for price in goodInfo.PRICES %}
                                 <div class="col-3">[[price.RANGE]]</div>
@@ -39,22 +40,36 @@
                                 <div class="col-3" style="margin-top: -10px;">[[price.PRICE]]</div>
                             {% endfor %}
                         </div>
+                        {% elif goodInfo.CLASS == 'REFERENCE' %}
+                            <div class="row" style="float: left;width: 280px;">[[goodInfo.PRICE]]</div>
+                        {% endif %}
                     </div>
+                    {% if addition.login and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <div class="btn btn-block edit-single-product-btn"
+                             style="background-color: #323232;color: #FFFFFF;width: 280px">
+                            [[lang.common_edit]]
+                        </div>
+                    </div>
+                    <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">[[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]</div>
+                    {% else %}
                     <div class="layui-form-item d-flex justify-content-center">
                         <select id="product-color" lay-verify="required" style="margin-top: 5px;">
                             <option value="">[[lang.products_choose_size]]</option>
-                            {% for color in goodInfo.SIZE %}
-                                <option value="[[color]]">[[color]]</option>
+                            {% for size in goodInfo.SIZE %}
+                                <option value="[[size]]">[[size]]</option>
                             {% endfor %}
                         </select>
                     </div>
+                    {% if goodInfo.CLASS == 'SAMPLE' or goodInfo.CLASS == 'REFERENCE' %}
                     <div class="layui-form-item d-flex justify-content-center">
                         <input type="number" id="product-brand" lay-verify="required" value="" class="layui-input"
                                placeholder="[[lang.products_qty_full]]"
                                style="margin-top: 5px;border-color: #575759;width: 280px;">
                     </div>
+                    {% endif %}
                     <div class="layui-form-item d-flex justify-content-center">
-                        <div class="btn btn-block text-uppercase" id="edit-product-publish-products"
+                        <div class="btn btn-block text-uppercase add-to-shopping-btn"
                              style="background-color: #323232;color: #FFFFFF;width: 280px">
                             [[lang.wishlist_add_to_bag]]
                         </div>
@@ -70,9 +85,10 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
-            <div class="col-lg-6 col-md-4 d-md-none" style="padding: 0">
+            <div class="col-lg-6 d-lg-none" style="padding: 0">
                 <div class="row" style="padding: 20px;">
                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
@@ -93,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 d-md-none" style="padding: 0">
+            <div class="col-lg-3 d-lg-none" style="padding: 0">
                 <div class="row" style="font-size: 10px;">
                     <div class="col-5 text-capitalize" style="padding: 0 30px;">
                         <span class="text-uppercase" style="font-size: 10px;">[[goodInfo.BRAND]]</span></br>
@@ -115,11 +131,19 @@
                 </div>
                 <div class="layui-form">
                     <div class="layui-form-item" style="padding: 20px">
-                        {% if addition.login and current_user.ROLE == 'USER' %}
+                        {% if addition.login and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
+                        <div class="input-group mb-3">
+                            <div class="btn btn-block form-control text-capitalize edit-single-product-btn"
+                                 style="background-color: #323232;color: #FFFFFF;">
+                                [[lang.common_edit]]
+                            </div>
+                        </div>
+                        <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">[[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]</div>
+                        {% else %}
                         <select lay-verify="required">
                             <option value="">[[lang.products_choose_size]]</option>
-                            {% for color in goodInfo.SIZE %}
-                                <option value="[[color]]">[[color]]</option>
+                            {% for size in goodInfo.SIZE %}
+                                <option value="[[size]]">[[size]]</option>
                             {% endfor %}
                         </select>
                         <div class="input-group mb-3" style="margin-top: 10px;">
@@ -130,20 +154,12 @@
                                     class="bi bi-clipboard-plus"></i></span>
                         </div>
                         <div class="input-group mb-3" style="margin-top: 10px;">
-                            <div class="btn btn-block text-uppercase form-control"
+                            <div class="btn btn-block text-uppercase form-control add-to-shopping-btn"
                                  style="background-color: #323232;color: #FFFFFF;">
                                 [[lang.wishlist_add_to_bag]]
                             </div>
                             <span class="layui-form-mid">&nbsp;&nbsp;<i class="bi bi-heart"></i></span>
                         </div>
-                        {% else %}
-                        <div class="input-group mb-3">
-                            <div class="btn btn-block form-control text-capitalize"
-                                 style="background-color: #323232;color: #FFFFFF;" id="edit-single-product-btn">
-                                [[lang.common_edit]]
-                            </div>
-                        </div>
-                        <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">[[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]</div>
                         {% endif %}
                         <hr class="layui-border-black" style="margin-top: 10px;">
                         <p style="font-size: 10px;" class="text-uppercase">[[lang.products_product_info]]</p>
@@ -159,7 +175,29 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="padding: 0 20px 0 40px;margin-top: 70px">
+        {% if addition.login and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <p>[[lang.products_customer_who_buy_it]]</p>
+                {% for ID, NAME in data.buy_list.items() %}
+                <span>[[NAME]]</span></br>
+                {% endfor %}
+            </div>
+            <div class="col-lg-4 col-12">
+                <p>[[lang.products_customer_who_add_shopping_bag]]</p>
+                {% for good in data.shopping_bag_list %}
+                <span>[[good.user.NAME]]</span></br>
+                {% endfor %}
+            </div>
+            <div class="col-lg-4 col-12">
+                <p>[[lang.products_customer_who_add_wishlist]]</p>
+                {% for good in data.wishlist %}
+                <span>[[good.user.NAME]]</span></br>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="row" style="padding: 0 20px 0 40px;">
             [[lang.common_you_may_like]]
         </div>
         <div class="row flex-row flex-nowrap" style="overflow-x: scroll;padding: 0 20px 0 20px;margin-top: 30px">
@@ -172,6 +210,7 @@
             </div>
             {% endfor %}
         </div>
+        {% endif %}
         <div class="row" style="height: 50px"></div>
     </main>
 {% endblock %}
@@ -206,8 +245,14 @@
                 window.location.href = '/[[lang_type]][[addition.add]]/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
 
-            $('#edit-single-product-btn').on('click', function () {
-                window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=[[goodInfo.ID]]'
+            $('.edit-single-product-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]-[[goodInfo.CLASS]]/editProducts?goodId=[[goodInfo.ID]]'
+            });
+
+            $('.add-to-shopping-btn').on('click', function () {
+                if ('[[addition.login]]' == 'False') {
+                    window.location.href = "/[[lang_type]]/login"
+                }
             });
         });
     </script>

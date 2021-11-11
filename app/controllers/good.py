@@ -116,7 +116,7 @@ def add_good():
         good_category = GoodCategory.query.get(info_data.get("CATEGORY_ID"))
 
         good_id = uuid.uuid1()
-        good_prices, min_price = list(), 1000000
+        good_prices, min_price = list(), float(info_data.get("PRICE", 100000000))
         for price in info_data.get("PRICE_RANGE", []):
             min_price = min(min_price, float(price.get("PRICE", 0)))
             good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
@@ -169,7 +169,7 @@ def update_good():
         db.session.add_all(good_img)
         db.session.commit()
 
-    min_price = 100000000
+    min_price = float(info_data.get("PRICE", 100000000))
     if len(info_data.get("PRICE_RANGE", [])) != 0:
         GoodPrice.query.filter_by(GOOD_ID=good_id).delete()
         db.session.commit()
@@ -185,9 +185,9 @@ def update_good():
 
     try:
         del info_data["langType"]
-        if info_data.get("PRICE_RANGE", None):
+        if "PRICE_RANGE" in info_data.keys():
             del info_data["PRICE_RANGE"]
-        if info_data.get("GOOD_IMG", None):
+        if "GOOD_IMG" in info_data.keys():
             del info_data["GOOD_IMG"]
 
         if min_price:
@@ -195,8 +195,9 @@ def update_good():
         if info_data.get("CATEGORY_ID", None):
             good_category = GoodCategory.query.get(info_data.get("CATEGORY_ID"))
             info_data["CATEGORY"] = good_category.EN_NAME
+        print(info_data)
         good = Good.query.filter_by(ID=info_data.get("ID")).update(info_data)
-
+        print("极乐空间啥地方")
         if good == 1:
             db.session.commit()
 
