@@ -73,7 +73,9 @@ lang = {
         "common_making_samples": "制作样品",
         "common_edit": "编辑",
         "common_you_may_like": "你可能也喜欢：",
+        "common_add_trending_shopping_bag": "添加热门商品至购物袋。",
         "common_published_date": "发布日期：",
+        "common_remove": "移除",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -146,10 +148,13 @@ lang = {
         "orders_orders": "订单",
         "orders_date": "日期",
         "orders_total_amount": "总价",
+        "orders_amount": "数额",
         "orders_status": "状态",
         "orders_tracking_number": "物流编号",
         "orders_price": "价格",
         "orders_history": "订单历史",
+        "orders_place_your_order": "生成订单",
+        "orders_estimated_shipping_cost": "预估运费",
 
         "products_brand": "品牌",
         "products_style": "款式",
@@ -191,6 +196,7 @@ lang = {
         "wishlist_add_to_bag": "加入购物袋",
         "wishlist_add_to_sample": "加入样品袋",
         "wishlist_add_to_wishlist_bag": "加入愿望清单",
+        "wishlist_move_to_wishlist_bag": "移到愿望清单",
 
         "inner_login_success": "登陆成功",
         "inner_login_fail": "账号或密码错误",
@@ -286,7 +292,9 @@ lang = {
         "common_making_samples": "Making samples",
         "common_edit": "Edit",
         "common_you_may_like": "You may also like:",
+        "common_add_trending_shopping_bag": "Add trending products to shopping bag.",
         "common_published_date": "Published Date：",
+        "common_remove": "remove",
 
         "header_nav_men": "men",
         "header_nav_women": "women",
@@ -359,10 +367,13 @@ lang = {
         "orders_orders": "orders",
         "orders_date": "date",
         "orders_total_amount": "total amount",
+        "orders_amount": "amount",
         "orders_status": "status",
         "orders_tracking_number": "tracking number",
         "orders_price": "price",
         "orders_history": "Orders history",
+        "orders_place_your_order": "place your order",
+        "orders_estimated_shipping_cost": "Estimated Shipping cost",
 
         "products_brand": "brand",
         "products_style": "style",
@@ -407,6 +418,7 @@ lang = {
         "wishlist_add_to_bag": "add to shopping bag",
         "wishlist_add_to_sample": "add to sample bag",
         "wishlist_add_to_wishlist_bag": "Add to Wishlist",
+        "wishlist_move_to_wishlist_bag": "Move to Wishlist",
 
         "inner_login_success": "Login success",
         "inner_login_fail": "Incorrect username or password",

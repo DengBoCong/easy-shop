@@ -161,10 +161,10 @@
         <a href="/[[lang_type]]/index" style="color: #0C0C0C;font-size: 19px;"><span
                 class="align-middle text-uppercase">[[lang.company_name]]</span></a>
         <div class="d-lg-none" style="float:right;">
-            <button type="button" class="btn btn-outline-light" style="width: 30px;">
+            <button type="button" id="wish-heart-btn" class="btn btn-outline-light" style="width: 30px;">
                 <i class="bi bi-heart" style="color: #0C0C0C"></i>
             </button>
-            <button type="button" class="btn btn-outline-light" style="width: 30px;">
+            <button type="button" id="shopping-bag-btn" class="btn btn-outline-light" style="width: 30px;">
                 <i class="bi bi-bag-dash" style="color: #0C0C0C"></i>
             </button>
             <button type="button" class="btn btn-outline-light" style="width: 30px;">
@@ -556,6 +556,14 @@
 
         $('#small-screen-log-in-btn').on('click', function () {
            window.location.href = "/[[lang_type]]/login"
+        });
+
+        $('#wish-heart-btn').on('click', function () {
+           window.location.href = "/[[lang_type]]/wishlist"
+        });
+
+        $('#shopping-bag-btn').on('click', function () {
+           window.location.href = "/[[lang_type]]/shoppingBag"
         });
     });
 </script>

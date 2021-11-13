@@ -80,9 +80,24 @@ def shopping_bag(lang_type):
     """ 购物袋"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="shoppingBag")
+
+    shopping_goods = ShoppingGood.query.filter_by(USER_ID=current_user.ID).all()
+    goods_list = list()
+    for shopping_good in shopping_goods:
+        good_info = shopping_good.to_json()
+        good_info["GOOD"] = shopping_good.good.to_json()
+        good_info["GOOD"]["COLOR"] = get_color_op(shopping_good.good.COLOR) if \
+            lang_type == 'zh_cn' else shopping_good.good.COLOR
+        good_info["GOOD"]["CATEGORY"] = shopping_good.good.category.NAME if \
+            lang_type == 'zh_cn' else shopping_good.good.category.EN_NAME
+        good_info["GOOD"]["PRICE"] = "{}{}".format(
+            get_currency_op(good_info["GOOD"]["CURRENCY"]), "%.2f" % good_info["GOOD"]["PRICE"])
+        goods_list.append(good_info)
+
     return render_template("customer/shoppingBag.html", lang=lang[lang_type],
                            lang_type=lang_type, route="shoppingBag",
-                           addition=set_addition(location="shoppingBag"))
+                           addition=set_addition(location="shoppingBag"),
+                           data={"goods": goods_list})
 
 
 @views.route('/<lang_type>/sampleBag', methods=['GET', 'POST'])
