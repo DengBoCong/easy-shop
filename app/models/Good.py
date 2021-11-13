@@ -31,7 +31,7 @@ class Good(db.Model, UserMixin):
     TYPE = db.Column(db.Enum('MEN', 'WOMEN', 'KIDS', 'OTHERS'), nullable=False, comment="所属类型")
     COVER = db.Column(db.String(255), nullable=False, default="", comment="封面地址")
     USER_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID', ondelete='SET NULL'), comment="USER ID")
-    NUM = db.Column(db.Integer, nullable=False, default=0, comment="数量")
+    NUM = db.Column(db.Integer, nullable=False, default=0, comment="数量")  # 销量
     PRICE = db.Column(db.DECIMAL(20, 3), nullable=False, default=0.000, comment="价格")
 
     orderGoods = db.relationship('OrderGood', backref='good', lazy='dynamic')

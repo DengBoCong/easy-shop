@@ -8,6 +8,7 @@ from datetime import datetime
 from ..i18 import lang
 from ..utils import set_addition
 from ..models import *
+from ..utils.get import *
 
 
 @views.route('/<lang_type>/accountDetail', methods=['GET', 'POST'])
@@ -54,9 +55,23 @@ def wishlist(lang_type):
     """ 愿望清单"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="wishlist")
+
+    wish_goods = WishGood.query.filter_by(USER_ID=current_user.ID).all()
+    goods_list = list()
+    for wish_good in wish_goods:
+        good_info = wish_good.to_json()
+        good_info["GOOD"] = wish_good.good.to_json()
+        good_info["GOOD"]["COLOR"] = get_color_op(wish_good.good.COLOR) if \
+            lang_type == 'zh_cn' else wish_good.good.COLOR
+        good_info["GOOD"]["CATEGORY"] = wish_good.good.category.NAME if \
+            lang_type == 'zh_cn' else wish_good.good.category.EN_NAME
+        good_info["GOOD"]["PRICE"] = "{}{}".format(
+            get_currency_op(good_info["GOOD"]["CURRENCY"]), "%.2f" % good_info["GOOD"]["PRICE"])
+        goods_list.append(good_info)
     return render_template("customer/wishlist.html", lang=lang[lang_type],
                            lang_type=lang_type, route="wishlist",
-                           addition=set_addition(location="wishlist"))
+                           addition=set_addition(location="wishlist"),
+                           data={"goods": goods_list})
 
 
 @views.route('/<lang_type>/shoppingBag', methods=['GET', 'POST'])

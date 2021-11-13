@@ -189,6 +189,7 @@ lang = {
 
         "wishlist_title_info": "您可以在此页面管理您添加至愿望清单的产品。您可以删除或者把它们加入到购物袋和打样袋中下单。",
         "wishlist_add_to_bag": "加入购物袋",
+        "wishlist_add_to_sample": "加入样品袋",
         "wishlist_add_to_wishlist_bag": "加入愿望清单",
 
         "inner_login_success": "登陆成功",
@@ -207,7 +208,8 @@ lang = {
         "inner_en_us_repeat_reset": "英文重复，请重新填写",
         "inner_small_screen_delete_img": "小屏模式下必须从后开始删除",
         "inner_change_success": "修改成功",
-        "inner_delete_success": "删除成功"
+        "inner_delete_success": "删除成功",
+        "inner_add_repeat": "重复添加"
     },
 
     "en_us": {
@@ -403,6 +405,7 @@ lang = {
 
         "wishlist_title_info": "You can stay in this page to manage products that you added to wishlist. You can delete or add them to shopping bag or sample bag for placeing orders.",
         "wishlist_add_to_bag": "add to shopping bag",
+        "wishlist_add_to_sample": "add to sample bag",
         "wishlist_add_to_wishlist_bag": "Add to Wishlist",
 
         "inner_login_success": "Login success",
@@ -421,6 +424,7 @@ lang = {
         "inner_en_us_repeat_reset": "English repeat, please fill in again",
         "inner_small_screen_delete_img": "In small screen mode, it must be deleted from the back",
         "inner_change_success": "Change Success",
-        "inner_delete_success": "Delete Success"
+        "inner_delete_success": "Delete Success",
+        "inner_add_repeat": "Add repeatedly"
     }
 }

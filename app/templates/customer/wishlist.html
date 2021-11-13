@@ -9,31 +9,33 @@
             <div class="col-xl-2 col-lg-1 d-none d-lg-block"></div>
             <div class="col-xl-8 col-lg-10">
                 <div class="row">
-                    <span style="font-size: 15px;">[[lang.header_nav_wishlist]]</span>
+                    <p class="d-lg-none text-uppercase" style="font-size: 15px;text-align: center">[[lang.header_nav_wishlist]]</p>
+                    <span class="d-none d-lg-block text-uppercase" style="font-size: 15px;">[[lang.header_nav_wishlist]]</span>
                     <span style="font-size: 13px;margin-bottom: 40px;">[[lang.wishlist_title_info]]</span>
+                    {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                        <p style="font-size: 13px;margin-top: 10px;">JW ANDERSON</br>棕色外套</br>尺码：XXS - 只剩两件</br>￥679</p>
-                        <button class="btn btn-block"
+                        <img src="[[good.GOOD.COVER]]" width="100%" height="400px"/>
+                        <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>[[good.GOOD.PRICE]]</p>
+                        <button class="btn btn-block text-uppercase"
                                 style="background-color: #323232;color: #FFFFFF;width: 100%;">
                             [[lang.wishlist_add_to_bag]]
                         </button>
                         <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
-                            <i class="bi bi-x-lg" style="color: #0C0C0C"></i>
+                            <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C"></i>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
+                        <img src="[[good.GOOD.COVER]]" width="100%" height="400px"/>
+                        <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>[[good.GOOD.PRICE]]</p>
+                        <button class="btn btn-block text-uppercase"
+                                style="background-color: #323232;color: #FFFFFF;width: 100%;">
+                            [[lang.wishlist_add_to_sample]]
+                        </button>
+                        <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
+                            <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C"></i>
+                        </div>
                     </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[url_for('static', filename='img/background1.png')]]" width="100%" height="400px"/>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-xl-2 col-lg-1 d-none d-lg-block"></div>
@@ -51,6 +53,22 @@
                 admin = layui.admin,
                 layer = layui.layer;
 
+            $('.delete-wish-good-btn').on('click', function () {
+                admin.req({
+                    method: "post",
+                    url: '/api/good/delete!delete_wish_good',
+                    data: JSON.stringify({
+                        "ID": $(this).attr('data-wish-good-id'),
+                        "langType": '[[lang_type]]'
+                    }),
+                    done: function (res) {
+                        layer.msg(res.msg);
+                        if (res.code == 0) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}

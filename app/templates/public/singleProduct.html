@@ -29,62 +29,65 @@
                 <div class="layui-form">
                     <div class="layui-form-item d-flex justify-content-center" style="margin-top: 200px;">
                         {% if goodInfo.CLASS == 'SAMPLE' %}
-                        <div class="row" style="font-size: 14px;padding: 10px;">
-                            <div class="col-3 text-capitalize">[[lang.products_qty_full]]</div>
-                            {% for price in goodInfo.PRICES %}
-                                <div class="col-3">[[price.RANGE]]</div>
-                            {% endfor %}
-                            <hr class="layui-border-black" style="margin-top: 5px;">
-                            <div class="col-3 text-capitalize" style="margin-top: -10px;">[[lang.products_price]]</div>
-                            {% for price in goodInfo.PRICES %}
-                                <div class="col-3" style="margin-top: -10px;">[[price.PRICE]]</div>
-                            {% endfor %}
-                        </div>
+                            <div class="row" style="font-size: 14px;padding: 10px;">
+                                <div class="col-3 text-capitalize">[[lang.products_qty_full]]</div>
+                                {% for price in goodInfo.PRICES %}
+                                    <div class="col-3">[[price.RANGE]]</div>
+                                {% endfor %}
+                                <hr class="layui-border-black" style="margin-top: 5px;">
+                                <div class="col-3 text-capitalize" style="margin-top: -10px;">[[lang.products_price]]
+                                </div>
+                                {% for price in goodInfo.PRICES %}
+                                    <div class="col-3" style="margin-top: -10px;">[[price.PRICE]]</div>
+                                {% endfor %}
+                            </div>
                         {% elif goodInfo.CLASS == 'REFERENCE' %}
                             <div class="row" style="float: left;width: 280px;">[[goodInfo.PRICE]]</div>
                         {% endif %}
                     </div>
                     {% if addition.login and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <div class="btn btn-block edit-single-product-btn"
-                             style="background-color: #323232;color: #FFFFFF;width: 280px">
-                            [[lang.common_edit]]
+                        <div class="layui-form-item d-flex justify-content-center">
+                            <div class="btn btn-block edit-single-product-btn"
+                                 style="background-color: #323232;color: #FFFFFF;width: 280px">
+                                [[lang.common_edit]]
+                            </div>
                         </div>
-                    </div>
-                    <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">[[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]</div>
+                        <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">
+                            [[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]
+                        </div>
                     {% else %}
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <select id="product-color" lay-verify="required" style="margin-top: 5px;">
-                            <option value="">[[lang.products_choose_size]]</option>
-                            {% for size in goodInfo.SIZE %}
-                                <option value="[[size]]">[[size]]</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    {% if goodInfo.CLASS == 'SAMPLE' or goodInfo.CLASS == 'REFERENCE' %}
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <input type="number" id="product-brand" lay-verify="required" value="" class="layui-input"
-                               placeholder="[[lang.products_qty_full]]"
-                               style="margin-top: 5px;border-color: #575759;width: 280px;">
-                    </div>
-                    {% endif %}
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <div class="btn btn-block text-uppercase add-to-shopping-btn"
-                             style="background-color: #323232;color: #FFFFFF;width: 280px">
-                            [[lang.wishlist_add_to_bag]]
+                        <div class="layui-form-item d-flex justify-content-center">
+                            <select id="product-size" lay-verify="required" style="margin-top: 5px;">
+                                <option value="">[[lang.products_choose_size]]</option>
+                                {% for size in goodInfo.SIZE %}
+                                    <option value="[[size]]">[[size]]</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                    </div>
-                    <div class="layui-form-item d-flex justify-content-center">
-                        <div class="row" style="width:280px;">
-                            <div class="col-6" style="text-align: left;font-size: 14px;padding: 0;">
+                        {% if goodInfo.CLASS == 'SAMPLE' or goodInfo.CLASS == 'REFERENCE' %}
+                            <div class="layui-form-item d-flex justify-content-center">
+                                <input type="number" id="product-qty" lay-verify="required" value="" class="layui-input"
+                                       placeholder="[[lang.products_qty_full]]"
+                                       style="margin-top: 5px;border-color: #575759;width: 280px;">
+                            </div>
+                        {% endif %}
+                        <div class="layui-form-item d-flex justify-content-center">
+                            <div class="btn btn-block text-uppercase" id="add-to-shopping-btn"
+                                 style="background-color: #323232;color: #FFFFFF;width: 280px">
+                                [[lang.wishlist_add_to_bag]]
+                            </div>
+                        </div>
+                        <div class="layui-form-item d-flex justify-content-center">
+                            <div class="row" style="width:280px;">
+                                <div class="col-6" style="text-align: left;font-size: 14px;padding: 0;">
                                 <span class="text-capitalize"
-                              layadmin-event="frameImgPreview">[[lang.products_size_chart]]</span>
-                            </div>
-                            <div class="col-6" style="text-align: right;font-size: 14px;padding: 0;">
-                                <span>[[lang.wishlist_add_to_wishlist_bag]]</span>
+                                      layadmin-event="frameImgPreview">[[lang.products_size_chart]]</span>
+                                </div>
+                                <div class="col-6" style="text-align: right;font-size: 14px;padding: 0;">
+                                    <span id="add-to-wishlist-btn">[[lang.wishlist_add_to_wishlist_bag]]</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -132,34 +135,36 @@
                 <div class="layui-form">
                     <div class="layui-form-item" style="padding: 20px">
                         {% if addition.login and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
-                        <div class="input-group mb-3">
-                            <div class="btn btn-block form-control text-capitalize edit-single-product-btn"
-                                 style="background-color: #323232;color: #FFFFFF;">
-                                [[lang.common_edit]]
+                            <div class="input-group mb-3">
+                                <div class="btn btn-block form-control text-capitalize edit-single-product-btn"
+                                     style="background-color: #323232;color: #FFFFFF;">
+                                    [[lang.common_edit]]
+                                </div>
                             </div>
-                        </div>
-                        <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">[[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]</div>
+                            <div style="font-family: NotoSansCJK-Medium;font-size: 13px;">
+                                [[lang.common_published_date]][[goodInfo.CREATE_DATETIME]]
+                            </div>
                         {% else %}
-                        <select lay-verify="required">
-                            <option value="">[[lang.products_choose_size]]</option>
-                            {% for size in goodInfo.SIZE %}
-                                <option value="[[size]]">[[size]]</option>
-                            {% endfor %}
-                        </select>
-                        <div class="input-group mb-3" style="margin-top: 10px;">
-                            <input type="number" value="" class="form-control"
-                                   placeholder="[[lang.products_qty_full]]"
-                                   style="border-color: #575759;">
-                            <span class="layui-form-mid" layadmin-event="frameImgPreview">&nbsp;&nbsp;<i
-                                    class="bi bi-clipboard-plus"></i></span>
-                        </div>
-                        <div class="input-group mb-3" style="margin-top: 10px;">
-                            <div class="btn btn-block text-uppercase form-control add-to-shopping-btn"
-                                 style="background-color: #323232;color: #FFFFFF;">
-                                [[lang.wishlist_add_to_bag]]
+                            <select id="product-size1" lay-verify="required">
+                                <option value="">[[lang.products_choose_size]]</option>
+                                {% for size in goodInfo.SIZE %}
+                                    <option value="[[size]]">[[size]]</option>
+                                {% endfor %}
+                            </select>
+                            <div class="input-group mb-3" style="margin-top: 10px;">
+                                <input id="product-qty1" type="number" value="" class="form-control"
+                                       placeholder="[[lang.products_qty_full]]"
+                                       style="border-color: #575759;">
+                                <span class="layui-form-mid" layadmin-event="frameImgPreview">&nbsp;&nbsp;<i
+                                        class="bi bi-clipboard-plus"></i></span>
                             </div>
-                            <span class="layui-form-mid">&nbsp;&nbsp;<i class="bi bi-heart"></i></span>
-                        </div>
+                            <div class="input-group mb-3" style="margin-top: 10px;">
+                                <div class="btn btn-block text-uppercase form-control" id="add-to-shopping-btn1"
+                                     style="background-color: #323232;color: #FFFFFF;">
+                                    [[lang.wishlist_add_to_bag]]
+                                </div>
+                                <span id="add-to-wishlist-btn1" class="layui-form-mid">&nbsp;&nbsp;<i class="bi bi-heart"></i></span>
+                            </div>
                         {% endif %}
                         <hr class="layui-border-black" style="margin-top: 10px;">
                         <p style="font-size: 10px;" class="text-uppercase">[[lang.products_product_info]]</p>
@@ -176,40 +181,42 @@
             </div>
         </div>
         {% if addition.login and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
-        <div class="row">
-            <div class="col-lg-4 col-12">
-                <p>[[lang.products_customer_who_buy_it]]</p>
-                {% for ID, NAME in data.buy_list.items() %}
-                <span>[[NAME]]</span></br>
-                {% endfor %}
-            </div>
-            <div class="col-lg-4 col-12">
-                <p>[[lang.products_customer_who_add_shopping_bag]]</p>
-                {% for good in data.shopping_bag_list %}
-                <span>[[good.user.NAME]]</span></br>
-                {% endfor %}
-            </div>
-            <div class="col-lg-4 col-12">
-                <p>[[lang.products_customer_who_add_wishlist]]</p>
-                {% for good in data.wishlist %}
-                <span>[[good.user.NAME]]</span></br>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="row" style="padding: 0 20px 0 40px;">
-            [[lang.common_you_may_like]]
-        </div>
-        <div class="row flex-row flex-nowrap" style="overflow-x: scroll;padding: 0 20px 0 20px;margin-top: 30px">
-            {% for related_good in data.related_goods %}
-            <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-5 col-6">
-                <div class="card card-block">
-                    <img src="[[related_good.COVER]]" data-product-id="[[related_good.ID]]" class="single-product-img-btn" />
-                    <p style="font-size: 13px;margin-top: 10px;">[[related_good.BRAND]]</br>[[related_good.PRICE]]</p>
+            <div class="row">
+                <div class="col-lg-4 col-12">
+                    <p>[[lang.products_customer_who_buy_it]]</p>
+                    {% for ID, NAME in data.buy_list.items() %}
+                        <span>[[NAME]]</span></br>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4 col-12">
+                    <p>[[lang.products_customer_who_add_shopping_bag]]</p>
+                    {% for good in data.shopping_bag_list %}
+                        <span>[[good.user.NAME]]</span></br>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4 col-12">
+                    <p>[[lang.products_customer_who_add_wishlist]]</p>
+                    {% for good in data.wishlist %}
+                        <span>[[good.user.NAME]]</span></br>
+                    {% endfor %}
                 </div>
             </div>
-            {% endfor %}
-        </div>
+        {% else %}
+            <div class="row" style="padding: 0 20px 0 40px;">
+                [[lang.common_you_may_like]]
+            </div>
+            <div class="row flex-row flex-nowrap" style="overflow-x: scroll;padding: 0 20px 0 20px;margin-top: 30px">
+                {% for related_good in data.related_goods %}
+                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-5 col-6">
+                        <div class="card card-block">
+                            <img src="[[related_good.COVER]]" data-product-id="[[related_good.ID]]"
+                                 class="single-product-img-btn"/>
+                            <p style="font-size: 13px;margin-top: 10px;">[[related_good.BRAND]]</br>
+                                [[related_good.PRICE]]</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
         <div class="row" style="height: 50px"></div>
     </main>
@@ -249,9 +256,54 @@
                 window.location.href = '/[[lang_type]]-[[goodInfo.CLASS]]/editProducts?goodId=[[goodInfo.ID]]'
             });
 
-            $('.add-to-shopping-btn').on('click', function () {
+            $('#add-to-wishlist-btn').on('click', function () {
                 if ('[[addition.login]]' == 'False') {
                     window.location.href = "/[[lang_type]]/login"
+                } else {
+                    var sizeVal = $('#product-size').val()
+                    var qtyVal = $('#product-qty').val()
+                    if (sizeVal == "" || qtyVal == "") {
+                        layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                    } else {
+                        admin.req({
+                            method: "post",
+                            url: '/api/good/add!add_wish_good',
+                            data: JSON.stringify({
+                                "GOOD_ID": '[[goodInfo.ID]]',
+                                "SIZE": sizeVal,
+                                "NUM": qtyVal,
+                                "langType": '[[lang_type]]'
+                            }),
+                            done: function (res) {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    }
+                }
+            });
+            $('#add-to-wishlist-btn1').on('click', function () {
+                if ('[[addition.login]]' == 'False') {
+                    window.location.href = "/[[lang_type]]/login"
+                } else {
+                    var sizeVal = $('#product-size1').val()
+                    var qtyVal = $('#product-qty1').val()
+                    if (sizeVal == "" || qtyVal == "") {
+                        layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                    } else {
+                        admin.req({
+                            method: "post",
+                            url: '/api/good/add!add_wish_good',
+                            data: JSON.stringify({
+                                "GOOD_ID": '[[goodInfo.ID]]',
+                                "SIZE": sizeVal,
+                                "NUM": qtyVal,
+                                "langType": '[[lang_type]]'
+                            }),
+                            done: function (res) {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    }
                 }
             });
         });

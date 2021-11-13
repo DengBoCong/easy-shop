@@ -7,7 +7,7 @@ from ..models import *
 from flask import request, redirect, url_for
 from flask import jsonify
 from flask_login import current_user, logout_user, login_required
-from sqlalchemy import asc
+from sqlalchemy import asc, and_
 from ..i18 import lang
 
 URL_PREFIX = "/good"
@@ -207,4 +207,46 @@ def update_good():
             return jsonify({'code': 1, 'msg': lang[lang_type]["common_update_fail"], 'data': {}})
 
     except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+######################WishGood#########################
+@controllers.route('{}/add!add_wish_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def add_wish_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        wish_good = WishGood.query.filter(and_(
+            WishGood.USER_ID == current_user.ID,
+            WishGood.GOOD_ID == info_data["GOOD_ID"],
+            WishGood.SIZE == info_data["SIZE"])).all()
+
+        if len(wish_good) != 0:
+            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_add_repeat"], 'data': {}})
+        else:
+            wish_good = WishGood(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), USER_ID=current_user.ID,
+                                 GOOD_ID=info_data["GOOD_ID"], SIZE=info_data["SIZE"], NUM=info_data["NUM"])
+            db.session.add(wish_good)
+            db.session.commit()
+
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+@controllers.route('{}/delete!delete_wish_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_wish_good_by_id():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    wish_good = WishGood.query.get(info_data.get("ID"))
+
+    if wish_good is not None:
+        db.session.delete(wish_good)
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {}})
+    else:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
