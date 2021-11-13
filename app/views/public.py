@@ -14,8 +14,14 @@ from ..utils.get import *
 
 @views.route('/accessDeny', methods=['GET', 'POST'])
 def access_deny():
-    """ 登陆失效或未登录"""
+    """ 无权限"""
     return render_template("error/accessDeny.html")
+
+
+@views.route('/notLogin', methods=['GET', 'POST'])
+def not_login():
+    """ 登陆失效或未登录"""
+    return render_template("error/notLogin.html")
 
 
 @views.route('/<lang_type>/login', methods=['GET', 'POST'])

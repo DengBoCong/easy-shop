@@ -16,45 +16,27 @@
                             [[lang.common_account_detail]]
                         </a>
                     </li>
-                    {% if current_user.ROLE =='USER' %}
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/historyOrders"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
-                            [[lang.common_historical_purchase]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/historySamples"
-                           style="[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
-                            [[lang.common_historical_sample]]
-                        </a>
-                    </li>
-                    {% endif %}
                     {% if current_user.ROLE !='USER' %}
                     <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='publishedProduct' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                        <a href="/[[lang_type]]/publishedProduct">
                             [[lang.common_published_products]]
                         </a>
                     </li>
                     {% endif %}
                     {% if current_user.ROLE =='ADMIN' or current_user.ROLE =='SUPER' %}
                     <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='manageStaffAccounts' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageStaffAccounts"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                        <a href="/[[lang_type]]/manageStaffAccounts">
                             [[lang.common_manage_staff_accounts if current_user.ROLE == 'SUPER' else lang.common_check_staff_accounts]]
                         </a>
                     </li>
                     <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='manageCustomerAccounts' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageCustomerAccounts"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                        <a href="/[[lang_type]]/manageCustomerAccounts">
                             [[lang.common_manage_customer_accounts if current_user.ROLE == 'SUPER' else lang.common_check_customer_accounts]]
                         </a>
                     </li>
                     {% endif %}
                     <li style="font-size: 13px;">
-                        <a href="javascript:;" class="text-capitalize"
-                           style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
+                        <a href="javascript:;" class="text-capitalize">
                             [[lang.common_logout]]
                         </a>
                     </li>
@@ -138,8 +120,7 @@
                         </a>
                     </li>
                     <li style="font-size: 13px;[['text-decoration: underline;' if data.sort=='more_less' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=more_less&area=[[data.area]]"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                        <a href="/[[lang_type]]/manageCustomerAccounts?sort=more_less&area=[[data.area]]">
                             [[lang.common_order_more_less]]
                         </a>
                     </li>

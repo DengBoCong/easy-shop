@@ -306,6 +306,57 @@
                     }
                 }
             });
+
+            $('#add-to-shopping-btn').on('click', function () {
+                if ('[[addition.login]]' == 'False') {
+                    window.location.href = "/[[lang_type]]/login"
+                } else {
+                    var sizeVal = $('#product-size').val()
+                    var qtyVal = $('#product-qty').val()
+                    if (sizeVal == "" || qtyVal == "") {
+                        layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                    } else {
+                        admin.req({
+                            method: "post",
+                            url: '/api/good/add!add_shopping_good',
+                            data: JSON.stringify({
+                                "GOOD_ID": '[[goodInfo.ID]]',
+                                "SIZE": sizeVal,
+                                "NUM": qtyVal,
+                                "langType": '[[lang_type]]'
+                            }),
+                            done: function (res) {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    }
+                }
+            });
+            $('#add-to-shopping-btn1').on('click', function () {
+                if ('[[addition.login]]' == 'False') {
+                    window.location.href = "/[[lang_type]]/login"
+                } else {
+                    var sizeVal = $('#product-size1').val()
+                    var qtyVal = $('#product-qty1').val()
+                    if (sizeVal == "" || qtyVal == "") {
+                        layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                    } else {
+                        admin.req({
+                            method: "post",
+                            url: '/api/good/add!add_shopping_good',
+                            data: JSON.stringify({
+                                "GOOD_ID": '[[goodInfo.ID]]',
+                                "SIZE": sizeVal,
+                                "NUM": qtyVal,
+                                "langType": '[[lang_type]]'
+                            }),
+                            done: function (res) {
+                                layer.msg(res.msg);
+                            }
+                        });
+                    }
+                }
+            });
         });
     </script>
 {% endblock %}

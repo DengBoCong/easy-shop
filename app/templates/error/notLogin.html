@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}</title>
+    <title>No Access</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -17,10 +17,16 @@
         <div class="container">
             <div class="justify-content-center row">
                 <div class="my-5 col-xl-4 col-md-5 col-12">
-                    <div class="text-center"><h6 class="text-uppercase text-muted mb-4">403 Forbidden</h6>
-                        <h1 class="display-4 mb-3">[[lang.common_not_permission]]</h1>
-                        <p class="text-muted mb-4">[[lang.common_not_access_tips]]</p>
-                        <a class="btn btn-lg btn-outline-secondary text-capitalize" href="/">[[lang.common_home]]</a>
+                    <div class="text-center"><h2 class="text-uppercase text-muted mb-4">No Access</h2>
+                        <p class="text-muted">登陆失效或未登录</br>Login invalid or not logged in</p>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-6" style="text-align: center;">
+                                <a href="/zh_cn/login" class="btn btn-block" style="width: 150px;float: right;background-color: #323232;color: #FFFFFF;">登入</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="/en_us/login" class="btn btn-block" style="width: 150px;float: left;background-color: #323232;color: #FFFFFF;">LOG IN</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

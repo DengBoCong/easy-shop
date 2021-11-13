@@ -1,10 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 54px;padding: 50px 30px">
+        <div class="row">
+            <div class="col-xxl-2 d-none d-xl-block"></div>
+            <div class="col-xxl-8 col-lg-8 col-12">
+                <div class="row">
+                    <p class="text-uppercase d-none d-lg-block" style="font-size: 17px;">[[lang.header_nav_sample_bag]]</p>
+                    <p class="text-uppercase d-lg-none" style="font-size: 17px;text-align: center">[[lang.header_nav_sample_bag]]</p>
+                    <div class="row" style="font-size: 14px;padding: 0 10px 0 10px">
+                        <div class="col-8 d-none d-lg-block text-capitalize" style="color: #7C7C7F;">[[lang.orders_orders]]</div>
+                        <div class="col-3 d-none d-lg-block text-capitalize" style="color: #7C7C7F;">[[lang.orders_price]]</div>
+                        <div class="col-1 d-none d-lg-block text-capitalize" style="color: #7C7C7F;">[[lang.common_delete]]</div>
+                        <div class="d-lg-none" style="margin-bottom: 20px;margin-top: 20px">
+                            <p><span class="text-capitalize">[[lang.common_account]]</span>：[[current_user.EMAIL]]</p>
+                            <div class="btn btn-block text-uppercase" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px">
+                                [[lang.orders_make_your_sample]]
+                            </div>
+                        </div>
+                        <hr class="layui-border-black" style="margin-top: 5px;">
+                        {% for good in data.goods %}
+                        <div class="col-lg-8 col-9">
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-5 col-6">
+                                    <img src="[[good.GOOD.COVER]]" width="100%" />
+                                </div>
+                                <div class="col-xl-8 col-lg-7 col-6">
+                                    <div style="height: 90%">
+                                        <span style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br><span style="text-decoration: underline">[[lang.products_size]]：[[good.SIZE]]</span></span>
+                                    </div>
+                                    <p style="margin-bottom: 10px;text-decoration: underline">[[lang.wishlist_move_to_wishlist_bag]]</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 d-none d-lg-block">[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span></div>
+                        <div class="col-3 d-lg-none">
+                            <div style="height: 90%;text-align: right">
+                                [[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>
+                            </div>
+                            <p class="text-capitalize delete-shopping-btn" data-shopping-id="[[good.ID]]" style="text-align: right;margin-bottom: 10px;text-decoration: underline">[[lang.common_remove]]</p>
+                        </div>
+                        <div class="col-1 d-none d-lg-block"><i class="bi bi-x-lg delete-shopping-btn" data-shopping-id="[[good.ID]]" style="color: #0C0C0C"></i></div>
+                        <hr class="layui-border-black" style="margin-top: 15px;">
+                        {% endfor %}
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-5 col-6"></div>
+                                <div class="col-xl-8 col-lg-7 col-6">
+                                    <span class="text-capitalize" style="font-size: 13px;">[[lang.orders_amount]]</span></br>
+                                    <span style="font-size: 13px;">[[lang.orders_estimated_shipping_cost]]</span></br>
+                                    <span class="text-capitalize" style="font-size: 15px;"><b>[[lang.orders_total_amount]]</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <span class="text-capitalize" style="font-size: 13px;">[[data.totalAmount]]</span></br>
+                            <span style="font-size: 13px;">[[data.shippingCost]]</span></br>
+                            <span class="text-capitalize" style="font-size: 15px;"><b>[[data.totalAmount]]</b></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding: 50px 20px 0 10px;">
+                    [[lang.common_add_trending_shopping_bag]]
+                </div>
+                <div class="row flex-row flex-nowrap" style="overflow-x: scroll;margin-top: 30px">
+                    {% for good in data.trendingGoods %}
+                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-5 col-6">
+                        <div class="card card-block" style="border: 0">
+                            <img src="[[good.COVER]]" />
+                            <span style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</span>
+                            <span class="text-capitalize single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE]]" style="text-decoration: underline;font-size: 13px;">[[lang.wishlist_add_to_bag]]</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xxl-2 col-lg-4 d-none d-lg-block">
+                <p><span class="text-capitalize">[[lang.common_account]]</span>：[[current_user.EMAIL]]</p>
+                <div class="btn btn-block text-uppercase" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px">
+                    [[lang.orders_make_your_sample]]
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
 
-</body>
-</html>
+            $('.delete-shopping-btn').on('click', function () {
+                admin.req({
+                    method: "post",
+                    url: '/api/good/delete!delete_shopping_good',
+                    data: JSON.stringify({
+                        "ID": $(this).attr('data-shopping-id'),
+                        "langType": '[[lang_type]]'
+                    }),
+                    done: function (res) {
+                        layer.msg(res.msg);
+                        if (res.code == 0) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+
+            $('.single-product-img-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-type') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
+            });
+        });
+    </script>
+{% endblock %}

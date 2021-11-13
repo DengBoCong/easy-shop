@@ -38,6 +38,7 @@ class Good(db.Model, UserMixin):
     goodPrices = db.relationship('GoodPrice', backref='good', lazy='dynamic')
     wishGoods = db.relationship('WishGood', backref='good', lazy='dynamic')
     shoppingGoods = db.relationship('ShoppingGood', backref='good', lazy='dynamic')
+    sampleGoods = db.relationship('SampleGood', backref='good', lazy='dynamic')
 
     def __repr__(self):
         return '<Good %r>\n' % self.ID

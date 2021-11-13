@@ -16,10 +16,11 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                         <img src="[[good.GOOD.COVER]]" width="100%" height="400px"/>
                         <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>[[good.GOOD.PRICE]]</p>
-                        <button class="btn btn-block text-uppercase"
+                        <div class="btn btn-block text-uppercase add-shopping-good-btn" data-good-id="[[good.GOOD.ID]]"
+                              data-good-size="[[good.SIZE]]" data-good-num="[[good.NUM]]"
                                 style="background-color: #323232;color: #FFFFFF;width: 100%;">
                             [[lang.wishlist_add_to_bag]]
-                        </button>
+                        </div>
                         <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
                             <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C"></i>
                         </div>
@@ -27,10 +28,11 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                         <img src="[[good.GOOD.COVER]]" width="100%" height="400px"/>
                         <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>[[good.GOOD.PRICE]]</p>
-                        <button class="btn btn-block text-uppercase"
+                        <div class="btn btn-block text-uppercase add-sample-good-btn" data-good-id="[[good.GOOD.ID]]"
+                              data-good-size="[[good.SIZE]]" data-good-num="[[good.NUM]]"
                                 style="background-color: #323232;color: #FFFFFF;width: 100%;">
                             [[lang.wishlist_add_to_sample]]
-                        </button>
+                        </div>
                         <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
                             <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C"></i>
                         </div>
@@ -66,6 +68,38 @@
                         if (res.code == 0) {
                             window.location.reload();
                         }
+                    }
+                });
+            });
+
+            $('.add-shopping-good-btn').on('click', function () {
+                admin.req({
+                    method: "post",
+                    url: '/api/good/add!add_shopping_good',
+                    data: JSON.stringify({
+                        "GOOD_ID": $(this).attr('data-good-id'),
+                        "SIZE": $(this).attr('data-good-size'),
+                        "NUM": $(this).attr('data-good-num'),
+                        "langType": '[[lang_type]]'
+                    }),
+                    done: function (res) {
+                        layer.msg(res.msg);
+                    }
+                });
+            });
+
+            $('.add-sample-good-btn').on('click', function () {
+                admin.req({
+                    method: "post",
+                    url: '/api/good/add!add_sample_good',
+                    data: JSON.stringify({
+                        "GOOD_ID": $(this).attr('data-good-id'),
+                        "SIZE": $(this).attr('data-good-size'),
+                        "NUM": $(this).attr('data-good-num'),
+                        "langType": '[[lang_type]]'
+                    }),
+                    done: function (res) {
+                        layer.msg(res.msg);
                     }
                 });
             });

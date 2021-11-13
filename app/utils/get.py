@@ -9,6 +9,17 @@ def get_currency_op(currency: str):
     return index_dict.get(currency.lower(), "￥")
 
 
+def get_currency_lang_op(currency: str):
+    index_dict = {
+        "rmb": "人民币",
+        "jpn": "日元",
+        "eur": "欧元",
+        "usd": "美元"
+    }
+
+    return index_dict.get(currency.lower(), "￥")
+
+
 def get_color_op(color: str):
     index_dict = {
         "brown": "棕色",

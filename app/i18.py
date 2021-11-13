@@ -4,6 +4,7 @@ lang = {
         "company_name_margin_left": "font-size: 21px;margin-left: 455px;",
 
         "common_name": "账号名",
+        "common_home": "首页",
         "common_back_page": "上一页",
         "common_next_page": "下一页",
         "common_login": "登陆",
@@ -76,6 +77,8 @@ lang = {
         "common_add_trending_shopping_bag": "添加热门商品至购物袋。",
         "common_published_date": "发布日期：",
         "common_remove": "移除",
+        "common_not_access_tips": "如果有任何疑问，可以联系管理员进行确认",
+        "common_not_permission": "无权限访问此页",
 
         "header_nav_men": "男装",
         "header_nav_women": "女装",
@@ -154,7 +157,9 @@ lang = {
         "orders_price": "价格",
         "orders_history": "订单历史",
         "orders_place_your_order": "生成订单",
+        "orders_make_your_sample": "制作样品",
         "orders_estimated_shipping_cost": "预估运费",
+        "orders_check_preview_order": "查看您以往的订单",
 
         "products_brand": "品牌",
         "products_style": "款式",
@@ -223,6 +228,7 @@ lang = {
         "company_name_margin_left": "font-size: 21px;margin-left: 238px;",
 
         "common_name": "name",
+        "common_home": "home",
         "common_back_page": "Previous",
         "common_next_page": "Next",
         "common_login": "log in",
@@ -295,6 +301,8 @@ lang = {
         "common_add_trending_shopping_bag": "Add trending products to shopping bag.",
         "common_published_date": "Published Date：",
         "common_remove": "remove",
+        "common_not_access_tips": "If you have any questions, you can contact the administrator to confirm",
+        "common_not_permission": "No permission",
 
         "header_nav_men": "men",
         "header_nav_women": "women",
@@ -373,7 +381,9 @@ lang = {
         "orders_price": "price",
         "orders_history": "Orders history",
         "orders_place_your_order": "place your order",
+        "orders_make_your_sample": "make your sample",
         "orders_estimated_shipping_cost": "Estimated Shipping cost",
+        "orders_check_preview_order": "Check your preview's orders.",
 
         "products_brand": "brand",
         "products_style": "style",

@@ -250,3 +250,87 @@ def delete_wish_good_by_id():
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {}})
     else:
         return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+######################ShoppingGood#########################
+@controllers.route('{}/add!add_shopping_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def add_shopping_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        shopping_good = ShoppingGood.query.filter(and_(
+            ShoppingGood.USER_ID == current_user.ID,
+            ShoppingGood.GOOD_ID == info_data["GOOD_ID"],
+            ShoppingGood.SIZE == info_data["SIZE"])).all()
+
+        if len(shopping_good) != 0:
+            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_add_repeat"], 'data': {}})
+        else:
+            shopping_good = ShoppingGood(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), USER_ID=current_user.ID,
+                                         GOOD_ID=info_data["GOOD_ID"], SIZE=info_data["SIZE"], NUM=info_data["NUM"])
+            db.session.add(shopping_good)
+            db.session.commit()
+
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+@controllers.route('{}/delete!delete_shopping_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_shopping_good_by_id():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    shopping_good = ShoppingGood.query.get(info_data.get("ID"))
+
+    if shopping_good is not None:
+        db.session.delete(shopping_good)
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {}})
+    else:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+######################SampleGood#########################
+@controllers.route('{}/add!add_sample_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def add_sample_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        sample_good = SampleGood.query.filter(and_(
+            SampleGood.USER_ID == current_user.ID,
+            SampleGood.GOOD_ID == info_data["GOOD_ID"],
+            SampleGood.SIZE == info_data["SIZE"])).all()
+
+        if len(sample_good) != 0:
+            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_add_repeat"], 'data': {}})
+        else:
+            sample_good = SampleGood(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), USER_ID=current_user.ID,
+                                         GOOD_ID=info_data["GOOD_ID"], SIZE=info_data["SIZE"], NUM=info_data["NUM"])
+            db.session.add(sample_good)
+            db.session.commit()
+
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})
+    except:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+
+
+@controllers.route('{}/delete!delete_sample_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_sample_good_by_id():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    sample_good = SampleGood.query.get(info_data.get("ID"))
+
+    if sample_good is not None:
+        db.session.delete(sample_good)
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {}})
+    else:
+        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})

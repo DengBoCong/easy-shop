@@ -6,6 +6,7 @@ from .GoodPrice import GoodPrice
 from .GoodSize import GoodSize
 from .Order import Order
 from .OrderGood import OrderGood
+from .SampleGood import SampleGood
 from .ShoppingGood import ShoppingGood
 from .User import User
 from .WishGood import WishGood

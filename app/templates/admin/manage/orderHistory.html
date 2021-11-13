@@ -7,37 +7,67 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                {% if addition.login and current_user.ROLE =='USER' %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_account]]
+                    </li>
+                    <li style="margin-top: 25px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/accountDetail">
+                            [[lang.common_account_detail]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=[[data.sort]]">
+                            [[lang.common_historical_purchase]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/historySamples">
+                            [[lang.common_historical_sample]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/logout">
+                            [[lang.common_logout]]
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+                {% if addition.login and current_user.ROLE !='USER' %}
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
                         [[lang.common_all_categories]]
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
+                    <li style="margin-top: 25px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=[[data.sort]]">
                             [[lang.orders_history]]
                         </a>
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]" class="text-capitalize">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]][[addition.add]]/newProducts?productType=SAMPLE">
                             [[lang.common_making_samples]]
                         </a>
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]" class="text-capitalize">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/wishlist">
                             [[lang.header_nav_wishlist]]
                         </a>
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]" class="text-capitalize">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/shoppingBag">
                             [[lang.header_nav_shopping_bag]]
                         </a>
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]" class="text-capitalize">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/sampleBag">
                             [[lang.header_nav_sample_bag]]
                         </a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
+            {% if addition.login and current_user.ROLE !='USER' %}
             <div class="d-lg-none col-12" style="padding: 0">
                 <div class="row" style="padding: 0">
                     <div class="btn-group" role="group" style="padding: 0">
@@ -51,8 +81,18 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
                 <div class="row">
+                    {% if addition.login and current_user.ROLE == 'USER' %}
+                    <div class="col-12">
+                        <div class="row">
+                            <p style="text-align: center" class="text-capitalize">[[lang.common_historical_purchase]]</p>
+                            [[lang.orders_check_preview_order]]
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if addition.login and current_user.ROLE != 'USER' %}
                     <div class="col-sm-6 col-12">
                         <div class="row">
                             <div class="col-6">
@@ -63,6 +103,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     {% if addition.login and (current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
                     <div class="col-sm-6 col-12">
                         <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
@@ -77,12 +118,12 @@
                     {% endif %}
                 </div>
                 <div class="row" style="margin-top: 30px">
-                    <div class="row">
-                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.orders_orders]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_date]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_total_amount]]</div>
-                        <div class="col-2 d-none d-sm-block text-uppercase">[[lang.orders_status]]</div>
-                        <div class="col-3 d-none d-sm-block text-uppercase">[[lang.orders_tracking_number]]</div>
+                    <div class="row" style="padding: 0">
+                        <div style="color: #7C7C7F;" class="col-3 d-none d-sm-block text-capitalize">[[lang.orders_orders]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_date]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_total_amount]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_status]]</div>
+                        <div style="color: #7C7C7F;" class="col-3 d-none d-sm-block text-capitalize">[[lang.orders_tracking_number]]</div>
                     </div>
                     {% if not data.orders %}<hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">{% endif %}
                     {% for order in data.orders %}
@@ -148,6 +189,7 @@
                 </div>
             </div>
             <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                {% if addition.login and current_user.ROLE !='USER' %}
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
                         [[lang.common_sort]]
@@ -164,6 +206,7 @@
                         </a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </main>

@@ -11,21 +11,19 @@
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
                         [[lang.common_account]]
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]" class="text-capitalize">
+                    <li style="margin-top: 25px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]" class="text-capitalize">
                         <a href="/[[lang_type]]/accountDetail">
                             [[lang.common_account_detail]]
                         </a>
                     </li>
                     {% if current_user.ROLE =='USER' %}
-                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/historyOrders"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?userId=[[current_user.ID]]&sort=less_more">
                             [[lang.common_historical_purchase]]
                         </a>
                     </li>
                     <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/historySamples"
-                           style="[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
+                        <a href="/[[lang_type]]/historySamples">
                             [[lang.common_historical_sample]]
                         </a>
                     </li>
@@ -85,7 +83,7 @@
                                 <label class="text-capitalize">[[lang.account_company_name]]</label>
                                 <input type="text" value="[[current_user.COMPANY_NAME]]" class="form-control" id="account-company-name">
                             </div>
-                            <hr class="layui-border-black" style="margin-top: 25px;height: 1px;">
+                            <hr class="layui-border-black d-lg-none" style="margin-top: 25px;height: 1px;">
                             <div class="form-label-group" style="font-size: 13px;margin-top: 25px;">
                                 <p class="text-uppercase">[[lang.account_change_pwd_tips]]</p>
                                 <label class="text-capitalize">[[lang.account_old_password]]</label>

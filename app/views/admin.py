@@ -263,6 +263,9 @@ def manage_staff_accounts(lang_type):
     """ 管理员工账号"""
     info_data = request.args.to_dict()
 
+    if current_user.ROLE == "USER":
+        return render_template("error/accessDeny.html", lang=lang[lang_type])
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="manageStaffAccounts")
 
@@ -298,6 +301,9 @@ def manage_staff_accounts(lang_type):
 def manage_customer_accounts(lang_type):
     """ 管理客户账号"""
     info_data = request.args.to_dict()
+
+    if current_user.ROLE == "USER":
+        return render_template("error/accessDeny.html", lang=lang[lang_type])
 
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="manageCustomerAccounts")
