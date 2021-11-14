@@ -1,3 +1,7 @@
+import random
+from datetime import datetime
+
+
 def get_currency_op(currency: str):
     index_dict = {
         "rmb": "￥",
@@ -35,3 +39,8 @@ def get_color_op(color: str):
     }
 
     return index_dict.get(color.lower(), "")
+
+
+def get_order_code():
+    base_code = datetime.now().strftime('%Y%m%d%H%M%S')
+    return base_code + str(random.randint(0, 1000))

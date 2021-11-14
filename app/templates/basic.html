@@ -198,8 +198,8 @@
                                 <li style="[['text-decoration: underline;' if addition.location=='orderHistory' else '']]">
                                     <a class="dropdown-item text-uppercase" href="/[[lang_type]]/orderHistory?userId=[[current_user.ID]]&sort=less_more">[[lang.common_historical_purchase]]</a>
                                 </li>
-                                <li>
-                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/historySamples">[[lang.common_historical_sample]]</a>
+                                <li style="[['text-decoration: underline;' if addition.location=='historySamples' else '']]">
+                                    <a class="dropdown-item text-uppercase" href="/[[lang_type]]/historySamples?userId=[[current_user.ID]]&sort=less_more">[[lang.common_historical_sample]]</a>
                                 </li>
                             {% endif %}
                             {% if current_user.ROLE != 'AGENT' and current_user.ROLE != 'USER' %}
@@ -392,8 +392,7 @@
                     </a>
                 </li>
                 <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
-                    <a href="/[[lang_type]]/historySamples" class="text-capitalize"
-                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='historySamples' else '']]">
+                    <a href="/[[lang_type]]/historySamples?userId=[[current_user.ID]]&sort=less_more" class="text-capitalize">
                         [[lang.common_historical_sample]]
                     </a>
                 </li>

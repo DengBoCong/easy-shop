@@ -6,61 +6,277 @@
 {% block content %}
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
-            <div class="col-lg-2 d-none d-lg-block self-a-link">
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                {% if addition.login and current_user.ROLE =='USER' %}
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
                         [[lang.common_account]]
                     </li>
-                    <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]/accountDetail"
-                           style="[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]">
+                    <li style="margin-top: 25px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='accountDetail' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/accountDetail">
                             [[lang.common_account_detail]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]/historyOrders"
-                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=[[data.sort]]">
                             [[lang.common_historical_purchase]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="javascript:;"
-                           style="[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/historySamples?userId=[[data.userId]]&sort=[[data.sort]]">
                             [[lang.common_historical_sample]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;">
-                        <a href="javascript:;"
-                           style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
+                    <li style="font-size: 13px;" class="text-capitalize">
+                        <a href="/[[lang_type]]/logout">
                             [[lang.common_logout]]
                         </a>
                     </li>
                 </ul>
+                {% endif %}
+                {% if addition.login and current_user.ROLE !='USER' %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_all_categories]]
+                    </li>
+                    <li style="margin-top: 25px;font-size: 13px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=[[data.sort]]">
+                            [[lang.orders_history]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]][[addition.add]]/newProducts?productType=SAMPLE">
+                            [[lang.common_making_samples]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/wishlist">
+                            [[lang.header_nav_wishlist]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/shoppingBag">
+                            [[lang.header_nav_shopping_bag]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/sampleBag">
+                            [[lang.header_nav_sample_bag]]
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
             </div>
-            <div class="col-lg-8" style="padding: 20px 0px;">
-                <div class="text-center mb-4">
-                    <p class="mb-3 font-weight-normal" style="font-size: 17px;">[[lang.common_historical_purchase]]</p>
+            {% if addition.login and current_user.ROLE !='USER' %}
+            <div class="d-lg-none col-12" style="padding: 0">
+                <div class="row" style="padding: 0">
+                    <div class="btn-group" role="group" style="padding: 0">
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListCategory1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListCategory" aria-controls="offcanvasNavListCategory"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_categories]]</div>
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListSort1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListSort" aria-controls="offcanvasNavListSort"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_sort]]
+                        </div>
+                    </div>
                 </div>
-                <p style="font-size: 13px;">[[lang.orders_check_preview_orders]]</p>
-
-                <div class="row" style="color: #7C7C7F;font-size: 14px;">
-                    <div class="col-3">订单</div>
-                    <div class="col-2">日期</div>
-                    <div class="col-2">总价</div>
-                    <div class="col-2">状态</div>
-                    <div class="col-3">物流编号</div>
-                    <hr class="layui-border-black" style="margin-top: 5px;">
-                    <div class="col-3">#12345678901</div>
-                    <div class="col-2">2021.12.31</div>
-                    <div class="col-2">￥679</div>
-                    <div class="col-2">运输中</div>
-                    <div class="col-3">oiashd3456789</br>SF234738472983749283</div>
-                </div>
-
             </div>
-            <div class="col-lg-2 d-none d-lg-block"></div>
+            {% endif %}
+            <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
+                <div class="row">
+                    {% if addition.login and current_user.ROLE == 'USER' %}
+                    <div class="col-12">
+                        <div class="row">
+                            <p style="text-align: center" class="text-capitalize">[[lang.common_historical_purchase]]</p>
+                            [[lang.orders_check_preview_order]]
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if addition.login and current_user.ROLE != 'USER' %}
+                    <div class="col-sm-6 col-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <span>[[data.user.NAME if data.user.NAME != '' else lang.common_empty ]]</br>[[data.user.EMAIL]]</br><span class="d-none d-sm-block">[[data.user.area.NAME if lang_type == 'zh_cn' else data.user.area.EN_NAME]]</span></span>
+                            </div>
+                            <div class="col-6">
+                                <span class="d-sm-none" style="float:right;">[[data.user.area.NAME if lang_type == 'zh_cn' else data.user.area.EN_NAME]]</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if addition.login and (current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
+                    <div class="col-sm-6 col-12">
+                        <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
+                            [[lang.account_edit_the_account]]
+                        </div>
+                        <div class="btn btn-block text-uppercase d-sm-none edit-user-account-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px;">
+                            [[lang.account_edit_the_account]]
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="row" style="margin-top: 30px">
+                    <div class="row" style="padding: 0">
+                        <div style="color: #7C7C7F;" class="col-3 d-none d-sm-block text-capitalize">[[lang.orders_orders]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_date]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_total_amount]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_status]]</div>
+                        <div style="color: #7C7C7F;" class="col-3 d-none d-sm-block text-capitalize">[[lang.orders_tracking_number]]</div>
+                    </div>
+                    {% if not data.orders %}<hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">{% endif %}
+                    {% for order in data.orders %}
+                        <hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">
+                        <div class="row">
+                            <div class="col-3 d-none d-sm-block" data-bs-toggle="collapse" data-bs-target="#collapseExample[[loop.index]]"
+                                 aria-expanded="false" aria-controls="collapseExample[[loop.index]]">[[order.NUM]]
+                                <i class="bi bi-chevron-down" style="float: right"></i>
+                            </div>
+                            <div class="col-2 d-none d-sm-block">[[order.CREATE_DATETIME]]</div>
+                            <div class="col-2 d-none d-sm-block">[[order.TOTAL_AMOUNT]]</div>
+                            <div class="col-2 d-none d-sm-block">[[order.STATUS]]</div>
+                            <div class="col-3 d-none d-sm-block">[[order.TRACK_NUM]]</div>
+                            <div class="collapse" id="collapseExample[[loop.index]]" style="padding: 0;">
+                                <div class="card card-body" style="border: 0">
+                                    <div class="row">
+                                        {% for orderGood in order.orderGoods %}
+                                        <div class="col-xxl-2 col-xl-3 col-md-3 col-4" style="padding: 0 5px 0 5px">
+                                            <img src="[[orderGood.good.COVER]]" width="100%"/>
+                                            <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
+                                            <p>[[orderGood.PRICE]]</p>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row d-sm-none" style="margin-top: 30px;font-size: 13px;font-family: NotoSansCJK-Medium">
+                    {% for order in data.orders %}
+                    <hr class="layui-border-black">
+                    <div class="col-6">
+                        <p class="text-capitalize">[[lang.orders_orders]]</p>
+                        <p class="text-capitalize">[[lang.orders_date]]</p>
+                        <p class="text-capitalize">[[lang.orders_total_amount]]</p>
+                        <p class="text-capitalize">[[lang.orders_status]]</p>
+                        <p class="text-capitalize">[[lang.orders_tracking_number]]</p>
+                        <p class="text-capitalize" style="margin-top: 20px;" data-bs-toggle="collapse" data-bs-target="#collapseExample[[loop.index]]"
+                             aria-expanded="false" aria-controls="collapseExample[[loop.index]]">[[lang.products_view_products]]<i class="bi bi-chevron-down"></i></p>
+                    </div>
+                    <div class="col-6" style="text-align: right">
+                        <p>[[order.NUM]]</p>
+                        <p>[[order.CREATE_DATETIME]]</p>
+                        <p>[[order.TOTAL_AMOUNT]]</p>
+                        <p>[[order.STATUS]]</p>
+                        <p>[[order.TRACK_NUM]]</p>
+                    </div>
+                    <div class="collapse" id="collapseExample[[loop.index]]" style="padding: 0;">
+                        <div class="card card-body" style="border: 0">
+                            <div class="row">
+                                {% for orderGood in order.orderGoods %}
+                                <div class="col-3" style="padding: 0 5px 0 5px">
+                                    <img src="[[orderGood.good.COVER]]" width="100%"/>
+                                    <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
+                                    <p>[[orderGood.PRICE]]</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                {% if addition.login and current_user.ROLE !='USER' %}
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_sort]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.sort =='less_more' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=less_more">
+                            [[lang.common_order_amount_less_more]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if data.sort=='more_less' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=more_less"
+                           style="[['text-decoration: underline;' if addition.categories=='historyOrders' else '']]">
+                            [[lang.common_order_amount_more_less]]
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
         </div>
     </main>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListCategory" aria-labelledby="offcanvasNavListCategoryLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='orderHistory' else '']]">
+                    <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=[[data.sort]]">
+                        [[lang.orders_history]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='newProducts' else '']]">
+                    <a href="/[[lang_type]][[addition.add]]/newProducts?productType=SAMPLE">
+                        [[lang.common_making_samples]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='wishlist' else '']]">
+                    <a href="/[[lang_type]]/wishlist">
+                        [[lang.header_nav_wishlist]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='shoppingBag' else '']]">
+                    <a href="/[[lang_type]]/shoppingBag">
+                        [[lang.header_nav_shopping_bag]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='sampleBag' else '']]">
+                    <a href="/[[lang_type]]/sampleBag">
+                        [[lang.header_nav_sample_bag]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-category"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListSort" aria-labelledby="offcanvasNavListSortLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.sort =='less_more' else '']]">
+                    <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=less_more">
+                        [[lang.common_order_amount_less_more]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.sort=='more_less' else '']]">
+                    <a href="/[[lang_type]]/orderHistory?userId=[[data.userId]]&sort=more_less">
+                        [[lang.common_order_amount_more_less]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-sort"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block js %}
     <script>
@@ -72,6 +288,17 @@
             var $ = layui.$,
                 admin = layui.admin,
                 layer = layui.layer;
+
+            $('.edit-user-account-btn').on('click', function () {
+                window.location.href = "/[[lang_type]]-customer/editUser?userId=[[data.userId]]"
+            });
+
+            $('#header-offcanvas-bottom-close-category').on('click', function () {
+                $('#offcanvasNavListCategory1').trigger('click')
+            });
+            $('#header-offcanvas-bottom-close-sort').on('click', function () {
+                $('#offcanvasNavListSort1').trigger('click')
+            });
         });
     </script>
 {% endblock %}

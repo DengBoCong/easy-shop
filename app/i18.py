@@ -160,6 +160,9 @@ lang = {
         "orders_make_your_sample": "制作样品",
         "orders_estimated_shipping_cost": "预估运费",
         "orders_check_preview_order": "查看您以往的订单",
+        "orders_confirm_check_tips": "订单确认，您可以在历史订单中核查详情",
+        "orders_confirm_contact_email": "我们的员工将通过邮件联系您，请注意查收邮件",
+        "orders_number": "订单编号",
 
         "products_brand": "品牌",
         "products_style": "款式",
@@ -384,6 +387,9 @@ lang = {
         "orders_make_your_sample": "make your sample",
         "orders_estimated_shipping_cost": "Estimated Shipping cost",
         "orders_check_preview_order": "Check your preview's orders.",
+        "orders_confirm_check_tips": "Your order is confirmed, you can check details in history orders.",
+        "orders_confirm_contact_email": "Our staff will contact you trough email, please check your mailbox.",
+        "orders_number": "order number",
 
         "products_brand": "brand",
         "products_style": "style",

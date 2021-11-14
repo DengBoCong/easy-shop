@@ -353,9 +353,9 @@ def orde_history(lang_type):
 
     user = User.query.get(user_id)
     if sort == "less_more":
-        orders = Order.query.filter_by(USER_ID=user_id).order_by(asc(Order.TOTAL_AMOUNT)).all()
+        orders = Order.query.filter_by(USER_ID=user_id, CLASS="NORMAL").order_by(asc(Order.TOTAL_AMOUNT)).all()
     else:
-        orders = Order.query.filter_by(USER_ID=user_id).order_by(desc(Order.TOTAL_AMOUNT)).all()
+        orders = Order.query.filter_by(USER_ID=user_id, CLASS="NORMAL").order_by(desc(Order.TOTAL_AMOUNT)).all()
 
     return render_template("admin/manage/orderHistory.html", lang=lang[lang_type],
                            lang_type=lang_type, route="orderHistory?userId={}&sort={}".format(user_id, sort),

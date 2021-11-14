@@ -6,4 +6,5 @@ from .area import *
 from .common import *
 from .good import *
 from .login import *
+from .order import *
 from .user import *

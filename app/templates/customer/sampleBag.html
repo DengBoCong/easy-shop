@@ -17,7 +17,7 @@
                         <div class="col-1 d-none d-lg-block text-capitalize" style="color: #7C7C7F;">[[lang.common_delete]]</div>
                         <div class="d-lg-none" style="margin-bottom: 20px;margin-top: 20px">
                             <p><span class="text-capitalize">[[lang.common_account]]</span>：[[current_user.EMAIL]]</p>
-                            <div class="btn btn-block text-uppercase" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px">
+                            <div class="btn btn-block text-uppercase orders-place-order-btn" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px">
                                 [[lang.orders_make_your_sample]]
                             </div>
                         </div>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-xxl-2 col-lg-4 d-none d-lg-block">
                 <p><span class="text-capitalize">[[lang.common_account]]</span>：[[current_user.EMAIL]]</p>
-                <div class="btn btn-block text-uppercase" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px">
+                <div class="btn btn-block text-uppercase orders-place-order-btn" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px">
                     [[lang.orders_make_your_sample]]
                 </div>
             </div>
@@ -99,6 +99,7 @@
                 layer = layui.layer;
 
             $('.delete-shopping-btn').on('click', function () {
+                var tmpLoad = layer.load(2)
                 admin.req({
                     method: "post",
                     url: '/api/good/delete!delete_shopping_good',
@@ -111,6 +112,25 @@
                         if (res.code == 0) {
                             window.location.reload();
                         }
+                        layer.close(tmpLoad);
+                    }
+                });
+            });
+
+            $('.orders-place-order-btn').on('click', function () {
+                var tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/order/add!place_sample_order',
+                    data: JSON.stringify({
+                        "langType": '[[lang_type]]'
+                    }),
+                    done: function (res) {
+                        layer.msg(res.msg);
+                        if (res.code == 0) {
+                            window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
+                        }
+                        layer.close(tmpLoad);
                     }
                 });
             });

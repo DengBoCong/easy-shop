@@ -32,11 +32,23 @@ def account_detail(lang_type):
 @login_required
 def history_samples(lang_type):
     """ 历史打样"""
+    info_data = request.args.to_dict()
+    user_id = info_data.get("userId", "")
+    sort = info_data.get("sort", "")
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="historySamples")
+
+    user = User.query.get(user_id)
+    if sort == "less_more":
+        orders = Order.query.filter_by(USER_ID=user_id, CLASS="SAMPLE").order_by(asc(Order.TOTAL_AMOUNT)).all()
+    else:
+        orders = Order.query.filter_by(USER_ID=user_id, CLASS="SAMPLE").order_by(desc(Order.TOTAL_AMOUNT)).all()
+
     return render_template("customer/historySamples.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="historySamples",
-                           addition=set_addition(location="login", categories="historySamples"))
+                           lang_type=lang_type, route="historySamples?userId={}&sort={}".format(user_id, sort),
+                           addition=set_addition(location="login", categories="historySamples"),
+                           data={"userId": user_id, "user": user, "orders": orders, "sort": sort})
 
 
 @views.route('/<lang_type>/wishlist', methods=['GET', 'POST'])
@@ -181,3 +193,43 @@ def sample_bag(lang_type):
                            data={"goods": goods_list, "totalAmount": total_amount,
                                  "shippingCost": shipping_cost, "trendingGoods": trending_goods_list}
                            )
+
+
+@views.route('/<lang_type>/orderConfirm', methods=['GET', 'POST'])
+@login_required
+def order_confirm(lang_type):
+    """ 订单确认"""
+    info_data = request.args.to_dict()
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="orderConfirm")
+
+    amount, goods_list, order_id = 0.0, list(), ""
+    order_goods = OrderGood.query.filter_by(ORDER_ID=info_data.get("orderId", "")).all()
+    for order_good in order_goods:
+        order_id = order_good.order.NUM if order_id == "" else order_id
+        good_info = order_good.to_json()
+        good_info["GOOD"] = order_good.good.to_json()
+        good_info["GOOD"]["COLOR"] = get_color_op(order_good.good.COLOR) if \
+            lang_type == 'zh_cn' else order_good.good.COLOR
+        good_info["GOOD"]["CATEGORY"] = order_good.good.category.NAME if \
+            lang_type == 'zh_cn' else order_good.good.category.EN_NAME
+        good_info["PRICE"] = "{}{} {}".format(
+            get_currency_op(good_info["GOOD"]["CURRENCY"]),
+            "%.2f" % good_info["PRICE"],
+            get_currency_lang_op(good_info["GOOD"]["CURRENCY"])
+        )
+
+        amount += float(order_good.PRICE) * good_info["NUM"]
+
+        goods_list.append(good_info)
+    total_amount = amount if len(goods_list) == 0 else "{}{} {}".format(
+        get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
+        "%.2f" % amount,
+        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"])
+    )
+
+    return render_template("customer/orderConfirm.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="orderConfirm",
+                           addition=set_addition(location="shoppingBag", categories="orderConfirm"),
+                           data={"goods": goods_list, "amount": total_amount, "orderId": order_id})

@@ -14,6 +14,7 @@ class Order(db.Model, UserMixin):
     STATUS = db.Column(db.String(30), nullable=False, default="", comment="订单状态")
     TRACK_NUM = db.Column(db.String(100), nullable=False, default="", comment="追踪编号")
     USER_ID = db.Column(db.String(50), db.ForeignKey('SHOP_USER.ID', ondelete='SET NULL'), comment="USER ID")
+    CLASS = db.Column(db.Enum('NORMAL', 'SAMPLE'), nullable=False, comment="归类")
 
     orderGoods = db.relationship('OrderGood', backref='order', lazy='dynamic')
 
@@ -28,5 +29,6 @@ class Order(db.Model, UserMixin):
             'TOTAL_AMOUNT': self.TOTAL_AMOUNT,
             'STATUS': self.STATUS,
             'TRACK_NUM': self.TRACK_NUM,
-            'USER_ID': self.USER_ID
+            'USER_ID': self.USER_ID,
+            'CLASS': self.CLASS
         }
