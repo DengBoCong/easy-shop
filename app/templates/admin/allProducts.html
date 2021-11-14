@@ -7,39 +7,16 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-lg-2 d-none d-lg-block self-a-link">
-                <ul class="text-uppercase" style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        [[lang.common_all_categories]]
-                    </li>
-                    <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/commonSample?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.categories=='sample' else '']]">
-                            [[lang.common_sample]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/designDiagrams?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.categories=='design' else '']]">
-                            [[lang.common_design_diagrams]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/referenceDiagrams?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
-                            [[lang.common_reference_diagrams]]
-                        </a>
-                    </li>
-                </ul>
                 <ul class="text-uppercase" style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
                     <li style="margin-bottom: 15px;font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.products=='' else '']]">
                             [[lang.common_all_products]]
                         </a>
                     </li>
                     {% for category in data.categories %}
                     <li style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
                             [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
                         </a>
@@ -66,17 +43,9 @@
             </div>
             <div class="col-lg-8">
                 <div class="row" style="padding: 30px 20px 0 20px">
-                    {% if current_user.ROLE !='USER' and addition.login %}
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                            <a href="/[[lang_type]][[addition.add]]/newProducts?productType=REFERENCE" class="btn btn-block" style="width: 100%;height: 83%;border-color: #DDE1E5">
-                                <img src="[[url_for('static', filename='img/plus.png')]]" style="width: 100%;height: 100%;">
-                            </a>
-                            Add <span class="text-capitalize">[[addition.location]]</span> References
-                        </div>
-                    {% endif %}
                     {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[good.COVER]]" data-product-id="[[good.ID]]" class="single-product-img-btn" width="100%" height="400px"/>
+                        <img src="[[good.COVER]]" data-product-id="[[good.ID]]" class="single-product-img-btn" data-class="[[good.TYPE]]" width="100%" height="400px"/>
                         <div class="row">
                             <div class="col-10">
                                 <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>
@@ -98,25 +67,25 @@
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
                     <li class="text-uppercase" style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">[[lang.common_sort]]</li>
                     <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.sort=='' else '']]">
                             [[lang.common_latest_arrivals]]
                         </a>
                     </li>
                     <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=trending&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=trending&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.sort=='trending' else '']]">
                             [[lang.common_trending]]
                         </a>
                     </li>
                     <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=lowHigh&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=lowHigh&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.sort=='lowHigh' else '']]">
                             [[lang.common_price_low_high]]
                         </a>
                     </li>
                     <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=highLow&colors=[[addition.colors]]"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=highLow&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.sort=='highLow' else '']]">
                             [[lang.common_price_high_low]]
                         </a>
@@ -124,67 +93,67 @@
                 </ul>
                 <ul style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
                     <li class="text-uppercase" style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors="
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='' else '']]">
                             [[lang.color_all_colors]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Brown"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Brown&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Brown' else '']]">
                             [[lang.color_brown]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Blue"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Blue&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Blue' else '']]">
                             [[lang.color_blue]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Gray"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Gray&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Gray' else '']]">
                             [[lang.color_gray]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=White"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=White&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='White' else '']]">
                             [[lang.color_white]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Pink"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Pink&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Pink' else '']]">
                             [[lang.color_pink]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Purple"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Purple&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Purple' else '']]">
                             [[lang.color_purple]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Red"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Red&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Red' else '']]">
                             [[lang.color_red]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Green"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Green&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Green' else '']]">
                             [[lang.color_green]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Yellow"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Yellow&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Yellow' else '']]">
                             [[lang.color_yellow]]
                         </a>
                     </li>
                     <li class="text-capitalize" style="font-size: 13px;">
-                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Black"
+                        <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Black&class=[[data.class]]&name=[[data.name]]"
                            style="[['text-decoration: underline;' if addition.colors=='Black' else '']]">
                             [[lang.color_black]]
                         </a>
@@ -206,13 +175,13 @@
         <div class="offcanvas-body" style="padding: 20px 20px 0 0">
             <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
                 <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.products=='' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]">
                         [[lang.common_all_products]]
                     </a>
                 </li>
                 {% for category in data.categories %}
                 <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]">
                         [[lang.common_design_diagrams]]
                     </a>
                 </li>
@@ -237,22 +206,22 @@
                     [[lang.common_sort]]
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='' else '']]">
-                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]">
                         [[lang.common_latest_arrivals]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='trending' else '']]">
-                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=trending&colors=[[addition.colors]]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=trending&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]">
                         [[lang.common_trending]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='lowHigh' else '']]">
-                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=lowHigh&colors=[[addition.colors]]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=lowHigh&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]">
                         [[lang.common_price_low_high]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='highLow' else '']]">
-                    <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=highLow&colors=[[addition.colors]]">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=highLow&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]">
                         [[lang.common_price_high_low]]
                     </a>
                 </li>
@@ -273,57 +242,57 @@
         <div class="offcanvas-body" style="padding: 20px 20px 0 0">
             <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
                 <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_all_colors]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Brown' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Brown">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Brown&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_brown]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Blue' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Blue">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Blue&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_blue]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Gray' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Gray">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Gray&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_gray]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='White' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=White">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=White&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_white]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Pink' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Pink">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Pink&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_pink]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Purple' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Purple">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Purple&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_purple]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Red' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Red">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Red&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_red]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Green' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Green">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Green&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_green]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Yellow' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Yellow">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Yellow&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_yellow]]
                     </a>
                 </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.colors=='Black' else '']]">
-                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Black">
+                    <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=Black&class=[[data.class]]&name=[[data.name]]">
                         [[lang.color_black]]
                     </a>
                 </li>
@@ -355,7 +324,7 @@
                 , curr: [[addition.page]]
                 , jump: function (obj, first) {
                     if (!first) {
-                        window.location.href = "/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]&page=" + obj.curr
+                        window.location.href = "/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]&page=" + obj.curr
                     }
                 }
             });
@@ -371,11 +340,11 @@
             });
 
             $('.published-edit-product-btn').on('click', function () {
-                window.location.href = '/[[lang_type]]-REFERENCE/editProducts?goodId=' + $(this).attr('data-product-id')
+                window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
 
             $('.single-product-img-btn').on('click', function () {
-                window.location.href = '/[[lang_type]][[addition.add]]/singleProduct?goodId=' + $(this).attr('data-product-id')
+                window.location.href = '/[[lang_type]]-' + $(this).attr('data-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
         });
     </script>

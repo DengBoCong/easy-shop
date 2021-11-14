@@ -1,0 +1,200 @@
+{% extends "basic.html" %}
+{% block title %}[[lang.company_name]]{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="[[url_for('static', filename='style/login.css')]]" type="text/css" media="all">
+{% endblock %}
+{% block content %}
+    <main class="container" style="max-width: 1920px;margin-top: 60px;">
+        <div class="row">
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                <span class="text-uppercase" style="margin-top: 10px;">[[lang.common_search_customers]]</span>
+                <div class="input-group" style="border: #0C0C0C 1px solid;margin-top: 20px">
+                    <input type="text" class="form-control" style="border: 0" id="bag-customer-search-input">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" style="background-color: transparent;border: 0" id="bag-customer-search-btn">
+                            <i class="bi bi-search" style="color: #0C0C0C;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-lg-none col-12" style="padding: 0">
+                <div class="row" style="padding: 0">
+                    <div class="btn-group" role="group" style="padding: 0">
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListSort1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListSort" aria-controls="offcanvasNavListSort"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_sort]]
+                        </div>
+                        <div class="btn btn-block text-uppercase" id="offcanvasNavListArea1"
+                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavListArea" aria-controls="offcanvasNavListArea"
+                                style="font-size: 15px;height: 45px;line-height: 35px;border: 1px solid #575759">[[lang.common_all_countries]]</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 col-lg-6 col-12" style="padding: 20px 30px 0 30px">
+                <div class="row">
+                    <div class="col-sm-6 col-12">
+                        <p><span class="text-uppercase">[[lang.common_shopping_customer_mode]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_shopping_customer_mode_tips]]</span></p>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="btn btn-block text-uppercase d-none d-sm-block switch-product-mode-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 250px;float: right">
+                            [[lang.common_switch_product_mode]]
+                        </div>
+                        <div class="btn btn-block text-uppercase d-sm-none switch-product-mode-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 100%;">
+                            [[lang.common_switch_product_mode]]
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-none d-sm-block">
+                    <div class="row">
+                        <div class="col-4 text-uppercase">[[lang.common_customers]]</div>
+                        <div class="col-4 text-uppercase">[[lang.account_number]]</div>
+                        <div class="col-2 text-uppercase">[[lang.orders_orders]]</div>
+                        <div class="col-2 text-uppercase">[[lang.common_area]]</div>
+                    </div>
+                    {% if not data.users %}<hr class="layui-border-black" style="margin-top: 10px;">{% endif %}
+                    {% for user in data.users %}
+                        <hr class="layui-border-black" style="margin-top: 10px;">
+                        <div class="row account-details-btn" data-account="[[user.ID]]">
+                            <div class="col-4">[[user.NAME]]</div>
+                            <div class="col-4">[[user.EMAIL]]</div>
+                            <div class="col-2">[[user.ORDERS]]</div>
+                            <div class="col-2">[[user.area.NAME if lang_type == 'zh_cn' else user.area.EN_NAME]]</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row d-sm-none" style="font-size: 13px;font-family: NotoSansCJK-Medium">
+                    {% for user in data.users %}
+                    <hr class="layui-border-black" style="margin-top: 10px;">
+                    <div class="col-6 account-details-btn" data-account="[[user.ID]]">
+                        <p class="text-capitalize">[[lang.common_customers]]</p>
+                        <p class="text-capitalize">[[lang.account_number]]</p>
+                        <p class="text-capitalize">[[lang.orders_orders]]</p>
+                        <p class="text-capitalize">[[lang.common_area]]</p>
+                    </div>
+                    <div class="col-6 account-details-btn" data-account="[[user.ID]]" style="text-align: right">
+                        <p>[[user.NAME if user.NAME != '' else lang.common_empty ]]</p>
+                        <p>[[user.EMAIL]]</p>
+                        <p>[[user.ORDERS]]</p>
+                        <p>[[user.area.NAME if lang_type == 'zh_cn' else user.area.EN_NAME]]</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-3 d-none d-lg-block self-a-link">
+                <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';" class="text-uppercase">
+                        [[lang.common_sort]]
+                    </li>
+                    <li style="margin-top: 10px;font-size: 13px;[['text-decoration: underline;' if data.sort =='less_more' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/adminShoppingBag?sort=less_more&area=[[data.area]]">
+                            [[lang.common_order_less_more]]
+                        </a>
+                    </li>
+                    <li style="font-size: 13px;[['text-decoration: underline;' if data.sort=='more_less' else '']]" class="text-capitalize">
+                        <a href="/[[lang_type]]/adminShoppingBag?sort=more_less&area=[[data.area]]">
+                            [[lang.common_order_more_less]]
+                        </a>
+                    </li>
+                </ul>
+                <ul style="margin-top: 35px;font-family: 'NotoSansCJK-Medium';">
+                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';[['text-decoration: underline;' if data.area=='all' else '']]" class="text-uppercase">
+                        <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=all">[[lang.common_all_countries]]</a>
+                    </li>
+                    {% for area in data.areas %}
+                        <li style="[['margin-top: 10px;' if loop.index - 1 == 0 else '']]font-size: 13px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]" class="text-capitalize">
+                            <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=[[area.EN_NAME]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListSort" aria-labelledby="offcanvasNavListSortLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.sort =='less_more' else '']]">
+                    <a href="/[[lang_type]]/adminShoppingBag?sort=less_more&area=[[data.area]]">
+                        [[lang.common_order_less_more]]
+                    </a>
+                </li>
+                <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.sort=='more_less' else '']]">
+                    <a href="/[[lang_type]]/adminShoppingBag?sort=more_less&area=[[data.area]]">
+                        [[lang.common_order_more_less]]
+                    </a>
+                </li>
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-sort"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
+         data-bs-scroll="true" data-bs-backdrop="false"
+         id="offcanvasNavListArea" aria-labelledby="offcanvasNavListAreaLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title"></h5>
+    {#        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>#}
+        </div>
+        <div class="offcanvas-body" style="padding: 20px 20px 0 0">
+            <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
+                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if data.area=='all' else '']]">
+                    <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=all">
+                        [[lang.common_all_area]]
+                    </a>
+                </li>
+                {% for area in data.areas %}
+                    <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]">
+                        <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=[[area.EN_NAME]]">
+                            [[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="self-nav" id="header-offcanvas-bottom-close-area"
+                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                [[lang.common_close]]
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        layui.config({
+            base: '../static/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index', 'layer', 'publicCommon'], function () {
+            var $ = layui.$,
+                admin = layui.admin,
+                layer = layui.layer;
+
+            $('#header-offcanvas-bottom-close-sort').on('click', function () {
+                $('#offcanvasNavListSort1').trigger('click')
+            });
+            $('#header-offcanvas-bottom-close-area').on('click', function () {
+                $('#offcanvasNavListArea1').trigger('click')
+            });
+
+            $('.account-details-btn').on('click', function () {
+                window.location.href = "/[[lang_type]]/shoppingBag?userId=" + $(this).attr('data-account')
+            });
+
+            $('.switch-product-mode-btn').on('click', function () {
+                window.location.href = "/[[lang_type]]/bagProductMode"
+            });
+
+            $('#bag-customer-search-btn').on('click', function () {
+                window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#bag-customer-search-input').val()
+            });
+        });
+    </script>
+{% endblock %}

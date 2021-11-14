@@ -7,29 +7,15 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-lg-2 d-none d-lg-block self-a-link">
-                <ul class="text-uppercase" style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
-                        [[lang.common_all_categories]]
-                    </li>
-                    <li style="margin-top: 10px;font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/commonSample?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.categories=='sample' else '']]">
-                            [[lang.common_sample]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/designDiagrams?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.categories=='design' else '']]">
-                            [[lang.common_design_diagrams]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;">
-                        <a href="/[[lang_type]]-[[addition.location]]/referenceDiagrams?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
-                           style="[['text-decoration: underline;' if addition.categories=='reference' else '']]">
-                            [[lang.common_reference_diagrams]]
-                        </a>
-                    </li>
-                </ul>
+                <span class="text-uppercase" style="margin-top: 10px;">[[lang.common_search_product]]</span>
+                <div class="input-group" style="border: #0C0C0C 1px solid;margin-top: 20px">
+                    <input type="text" class="form-control" style="border: 0" id="bag-product-search-input">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" style="background-color: transparent;border: 0" id="bag-product-search-btn">
+                            <i class="bi bi-search" style="color: #0C0C0C;"></i>
+                        </div>
+                    </div>
+                </div>
                 <ul class="text-uppercase" style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
                     <li style="margin-bottom: 15px;font-size: 15px;font-family: 'NotoSansCJK-Bold';">
                         <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]"
@@ -65,18 +51,25 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <div class="row" style="padding: 30px 20px 0 20px">
-                    {% if current_user.ROLE !='USER' and addition.login %}
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                            <a href="/[[lang_type]][[addition.add]]/newProducts?productType=REFERENCE" class="btn btn-block" style="width: 100%;height: 83%;border-color: #DDE1E5">
-                                <img src="[[url_for('static', filename='img/plus.png')]]" style="width: 100%;height: 100%;">
-                            </a>
-                            Add <span class="text-capitalize">[[addition.location]]</span> References
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-sm-6 col-12">
+                        <p><span class="text-uppercase">[[lang.common_product_mode]]</span></br><span style="font-size: 14px;font-family: NotoSansCJK-Medium">[[lang.common_product_mode_tips]]</span></p>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="btn btn-block text-uppercase d-none d-sm-block switch-customer-mode-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 270px;float: right">
+                            [[lang.common_switch_customer_mode]]
                         </div>
-                    {% endif %}
+                        <div class="btn btn-block text-uppercase d-sm-none switch-customer-mode-btn"
+                            style="background-color: #323232;color: #FFFFFF;width: 100%;">
+                            [[lang.common_switch_customer_mode]]
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding: 30px 20px 0 20px">
                     {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[good.COVER]]" data-product-id="[[good.ID]]" class="single-product-img-btn" width="100%" height="400px"/>
+                        <img src="[[good.COVER]]" data-product-id="[[good.ID]]" class="single-product-img-btn" data-class="[[good.TYPE]]" width="100%" height="400px"/>
                         <div class="row">
                             <div class="col-10">
                                 <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>
@@ -192,9 +185,6 @@
                 </ul>
             </div>
         </div>
-        <div class="row" style="margin-top: 50px;text-align: center">
-            <div id="pageBottomSelect"></div>
-        </div>
     </main>
     <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
          data-bs-scroll="true" data-bs-backdrop="false"
@@ -213,7 +203,7 @@
                 {% for category in data.categories %}
                 <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
                     <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]">
-                        [[lang.common_design_diagrams]]
+                        [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
                     </a>
                 </li>
                 {% endfor %}
@@ -233,9 +223,6 @@
         </div>
         <div class="offcanvas-body" style="padding: 20px 20px 0 0">
             <ul class="nav flex-column" id="header-offcanvas-first" style="margin-left: 10px;font-family: NotoSansCJK-Medium;color: #0C0C0C;font-size: 15px;">
-                <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;">
-                    [[lang.common_sort]]
-                </li>
                 <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if addition.sort=='' else '']]">
                     <a href="/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=latest&colors=[[addition.colors]]">
                         [[lang.common_latest_arrivals]]
@@ -341,24 +328,10 @@
             base: '../static/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index', 'layer', 'laypage'], function () {
+        }).use(['index', 'layer'], function () {
             var $ = layui.$,
                 admin = layui.admin,
-                laypage = layui.laypage,
                 layer = layui.layer;
-
-            laypage.render({
-                elem: 'pageBottomSelect'
-                , count: 500
-                , prev: '[[lang.common_back_page]]'
-                , next: '[[lang.common_next_page]]'
-                , curr: [[addition.page]]
-                , jump: function (obj, first) {
-                    if (!first) {
-                        window.location.href = "/[[lang_type]]-[[addition.location]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]&page=" + obj.curr
-                    }
-                }
-            });
 
             $('#header-offcanvas-bottom-close-products').on('click', function () {
                 $('#offcanvasNavListProducts1').trigger('click')
@@ -371,11 +344,19 @@
             });
 
             $('.published-edit-product-btn').on('click', function () {
-                window.location.href = '/[[lang_type]]-REFERENCE/editProducts?goodId=' + $(this).attr('data-product-id')
+                window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
 
             $('.single-product-img-btn').on('click', function () {
-                window.location.href = '/[[lang_type]][[addition.add]]/singleProduct?goodId=' + $(this).attr('data-product-id')
+                window.location.href = '/[[lang_type]]-' + $(this).attr('data-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
+            });
+
+            $('.switch-customer-mode-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]/adminShoppingBag'
+            });
+
+            $('#bag-product-search-btn').on('click', function () {
+                window.location.href = "/[[lang_type]][[addition.add]]/[[route]]?brand=" + $('#bag-product-search-input').val()
             });
         });
     </script>

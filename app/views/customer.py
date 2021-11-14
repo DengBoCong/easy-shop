@@ -80,10 +80,14 @@ def wishlist(lang_type):
 @login_required
 def shopping_bag(lang_type):
     """ 购物袋"""
+    info_data = request.args.to_dict()
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="shoppingBag")
 
-    shopping_goods = ShoppingGood.query.filter_by(USER_ID=current_user.ID).all()
+    user_id = current_user.ID if info_data.get("userId", "") == "" else info_data["userId"]
+    area_id = current_user.AREA_ID if info_data.get("userId", "") == "" else ""
+    shopping_goods = ShoppingGood.query.filter_by(USER_ID=user_id).all()
     goods_list = list()
     amount, shipping = 0.0, 0.0
     for shopping_good in shopping_goods:
@@ -115,7 +119,7 @@ def shopping_bag(lang_type):
     )
 
     trending_goods = Good.query.filter(
-        Good.AREA_ID.like("%" + current_user.AREA_ID + "%")
+        Good.AREA_ID.like("%" + area_id + "%")
     ).order_by(desc(Good.NUM)).all()
     trending_goods_list = list()
     for trending_good in trending_goods:
@@ -139,10 +143,14 @@ def shopping_bag(lang_type):
 @login_required
 def sample_bag(lang_type):
     """ 样品袋"""
+    info_data = request.args.to_dict()
+
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="sampleBag")
 
-    sample_goods = SampleGood.query.filter_by(USER_ID=current_user.ID).all()
+    user_id = current_user.ID if info_data.get("userId", "") == "" else info_data["userId"]
+    area_id = current_user.AREA_ID if info_data.get("userId", "") == "" else ""
+    sample_goods = SampleGood.query.filter_by(USER_ID=user_id).all()
     goods_list = list()
     amount, shipping = 0.0, 0.0
     for sample_good in sample_goods:
@@ -174,7 +182,7 @@ def sample_bag(lang_type):
     )
 
     trending_goods = Good.query.filter(
-        Good.AREA_ID.like("%" + current_user.AREA_ID + "%")
+        Good.AREA_ID.like("%" + area_id + "%")
     ).order_by(desc(Good.NUM)).all()
     trending_goods_list = list()
     for trending_good in trending_goods:
@@ -191,8 +199,7 @@ def sample_bag(lang_type):
                            lang_type=lang_type, route="sampleBag",
                            addition=set_addition(location="sampleBag"),
                            data={"goods": goods_list, "totalAmount": total_amount,
-                                 "shippingCost": shipping_cost, "trendingGoods": trending_goods_list}
-                           )
+                                 "shippingCost": shipping_cost, "trendingGoods": trending_goods_list})
 
 
 @views.route('/<lang_type>/orderConfirm', methods=['GET', 'POST'])

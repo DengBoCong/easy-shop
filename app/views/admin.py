@@ -187,7 +187,8 @@ def published_product(lang_type):
             min_price = price.PRICE if price.PRICE < min_price else min_price
             max_price = price.PRICE if price.PRICE > max_price else max_price
         if min_price != max_price:
-            good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price, "%.2f" % max_price)
+            good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price,
+                                                    "%.2f" % max_price)
         else:
             good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
         good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
@@ -272,19 +273,23 @@ def manage_staff_accounts(lang_type):
     if info_data.get("sort", "") == "az":
         if current_user.ROLE == 'SUPER':
             if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
-                users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(asc(User.ORDERS)).all()
+                users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(
+                    asc(User.ORDERS)).all()
             else:
                 users = User.query.filter_by(
-                    ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+                    ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(
+                    asc(User.ORDERS)).all()
         elif current_user.ROLE == 'ADMIN':
             users = User.query.filter_by(ROLE="AGENT").order_by(asc(User.ORDERS)).all()
     else:
         if current_user.ROLE == 'SUPER':
             if info_data.get("position", "") == "" or info_data.get("position", "") == "all":
-                users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(desc(User.ORDERS)).all()
+                users = User.query.filter(or_(User.ROLE == "AGENT", User.ROLE == "ADMIN")).order_by(
+                    desc(User.ORDERS)).all()
             else:
                 users = User.query.filter_by(
-                    ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(asc(User.ORDERS)).all()
+                    ROLE="AGENT" if info_data.get("position", "") == "junior" else "ADMIN").order_by(
+                    asc(User.ORDERS)).all()
         elif current_user.ROLE == 'ADMIN':
             users = User.query.filter_by(ROLE="AGENT").order_by(desc(User.ORDERS)).all()
 
@@ -361,3 +366,252 @@ def orde_history(lang_type):
                            lang_type=lang_type, route="orderHistory?userId={}&sort={}".format(user_id, sort),
                            addition=set_addition(location="orderHistory", categories="orderHistory"),
                            data={"userId": user_id, "user": user, "orders": orders, "sort": sort})
+
+
+##############################shoppingbag###############################
+
+@views.route('/<lang_type>/adminShoppingBag', methods=['GET', 'POST'])
+@login_required
+def admin_shopping_bag(lang_type):
+    """ 员工的shoppingbag"""
+    info_data = request.args.to_dict()
+
+    if current_user.ROLE == "USER":
+        return render_template("error/accessDeny.html", lang=lang[lang_type])
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="adminShoppingBag")
+
+    areas = Area.query.order_by(asc(Area.EN_NAME)).all()
+    areas_list = []
+    area_dict = {"public": "public"}
+    for area in areas:
+        area_dict[area.EN_NAME] = area.ID
+        areas_list.append(area.to_json())
+
+    if info_data.get("sort", "") == "less_more":
+        users = User.query.filter(
+            User.AREA_ID.like("%" + "" if info_data.get("area", "") == "all" else info_data.get("area", "") + "%"),
+            User.ROLE.like("%USER%"),
+            User.NAME.like("%" + info_data.get("name", "") + "%")
+        ).order_by(asc(User.ORDERS)).all()
+    else:
+        users = User.query.filter(
+            User.AREA_ID.like("%" + "" if info_data.get("area", "") == "all" else info_data.get("area", "") + "%"),
+            User.ROLE.like("%USER%"),
+            User.NAME.like("%" + info_data.get("name", "") + "%")
+        ).order_by(desc(User.ORDERS)).all()
+
+    addition = set_addition(location="shoppingBag", categories="shoppingBag")
+
+    return render_template("admin/shoppingBag.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="adminShoppingBag",
+                           addition=addition, data={"areas": areas_list, "sort": info_data.get("sort", ""),
+                                                    "area": info_data.get("area", ""), "users": users})
+
+
+@views.route('/<lang_type>/adminSampleBag', methods=['GET', 'POST'])
+@login_required
+def admin_sample_bag(lang_type):
+    """ 员工的SampleBag"""
+    info_data = request.args.to_dict()
+
+    if current_user.ROLE == "USER":
+        return render_template("error/accessDeny.html", lang=lang[lang_type])
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="adminSampleBag")
+
+    areas = Area.query.order_by(asc(Area.EN_NAME)).all()
+    areas_list = []
+    area_dict = {"public": "public"}
+    for area in areas:
+        area_dict[area.EN_NAME] = area.ID
+        areas_list.append(area.to_json())
+
+    if info_data.get("sort", "") == "less_more":
+        users = User.query.filter(
+            User.AREA_ID.like("%" + "" if info_data.get("area", "") == "all" else info_data.get("area", "") + "%"),
+            User.ROLE.like("%USER%"),
+            User.NAME.like("%" + info_data.get("name", "") + "%")
+        ).order_by(asc(User.ORDERS)).all()
+    else:
+        users = User.query.filter(
+            User.AREA_ID.like("%" + "" if info_data.get("area", "") == "all" else info_data.get("area", "") + "%"),
+            User.ROLE.like("%USER%"),
+            User.NAME.like("%" + info_data.get("name", "") + "%")
+        ).order_by(desc(User.ORDERS)).all()
+
+    addition = set_addition(location="sampleBag", categories="sampleBag")
+
+    return render_template("admin/sampleBag.html", lang=lang[lang_type],
+                           lang_type=lang_type, route="adminSampleBag",
+                           addition=addition, data={"areas": areas_list, "sort": info_data.get("sort", ""),
+                                                    "area": info_data.get("area", ""), "users": users})
+
+
+@views.route('/<lang_type>/bagProductMode', methods=['GET', 'POST'])
+def bag_product_mode(lang_type):
+    """ 产品模式"""
+    info_data = request.args.to_dict()
+
+    product = info_data.get("products", "")
+    color = info_data.get("colors", "")
+    sort = info_data.get("sort", "")
+
+    addition = set_addition(categories="shoppingBag", page=info_data.get("page", 1),
+                            products=product, sort=sort, colors=color, location="shoppingBag")
+
+    good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
+    good_categories_list = list()
+    for good_category in good_categories:
+        good_categories_list.append(good_category.to_json())
+
+    area_id = "public"
+    if hasattr(current_user, "ROLE"):
+        area_id = current_user.AREA_ID if current_user.ROLE == "USER" else ""
+
+    if sort == "latest" or sort == "":
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(desc(Good.CREATE_DATETIME)).all()
+    elif sort == "trending":
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(desc(Good.NUM)).all()
+    elif sort == "lowHigh":
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(asc(Good.PRICE)).all()
+    else:
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(desc(Good.PRICE)).all()
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="bagProductMode")
+
+    goods_list = list()
+    for good in goods:
+        good_info = good.to_json()
+        if good.CLASS != "DESIGN":
+            if good.CLASS != "SAMPLE":
+                min_price, max_price = 10000000, 0
+                for price in good.goodPrices:
+                    min_price = price.PRICE if price.PRICE < min_price else min_price
+                    max_price = price.PRICE if price.PRICE > max_price else max_price
+                if min_price != max_price:
+                    good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price,
+                                                            "%.2f" % max_price)
+                else:
+                    good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
+            else:
+                good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % good_info["PRICE"])
+        else:
+            good_info["PRICE"] = ""
+
+        good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
+        good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
+        goods_list.append(good_info)
+
+    return render_template("admin/bagProductMode.html", lang=lang[lang_type], lang_type=lang_type,
+                           route="bagProductMode", addition=addition,
+                           data={"goods": goods_list, "categories": good_categories_list})
+
+@views.route('/<lang_type>/allProducts', methods=['GET', 'POST'])
+def all_products(lang_type):
+    """ 搜索所有产品页"""
+    info_data = request.args.to_dict()
+
+    product_class = info_data.get("class", "")
+    name = info_data.get("name", "")
+    product = info_data.get("products", "")
+    color = info_data.get("colors", "")
+    sort = info_data.get("sort", "")
+
+    addition = set_addition(categories="search", page=info_data.get("page", 1),
+                            products=product, sort=sort, colors=color, location="search")
+
+    good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
+    good_categories_list = list()
+    for good_category in good_categories:
+        good_categories_list.append(good_category.to_json())
+
+    area_id = "public"
+    if hasattr(current_user, "ROLE"):
+        area_id = current_user.AREA_ID if current_user.ROLE == "USER" else ""
+
+    if sort == "latest" or sort == "":
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + name + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.TYPE.like("%" + '' if product_class == 'all' else product_class + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%"),
+        ).order_by(desc(Good.CREATE_DATETIME)).all()
+    elif sort == "trending":
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + name + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.TYPE.like("%" + '' if product_class == 'all' else product_class + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(desc(Good.NUM)).all()
+    elif sort == "lowHigh":
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + name + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.TYPE.like("%" + '' if product_class == 'all' else product_class + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(asc(Good.PRICE)).all()
+    else:
+        goods = Good.query.filter(
+            Good.BRAND.like("%" + name + "%"),
+            Good.AREA_ID.like("%" + area_id + "%"),
+            Good.TYPE.like("%" + '' if product_class == 'all' else product_class + "%"),
+            Good.CATEGORY.like("%" + product + "%"),
+            Good.COLOR.like("%" + color + "%")
+        ).order_by(desc(Good.PRICE)).all()
+
+    if lang_type not in ["zh_cn", "en_us"]:
+        return render_template("404.html", lang_type=lang_type, route="commonSample")
+
+    goods_list = list()
+    for good in goods:
+        good_info = good.to_json()
+        if good.CLASS != "DESIGN":
+            if good.CLASS != "SAMPLE":
+                min_price, max_price = 10000000, 0
+                for price in good.goodPrices:
+                    min_price = price.PRICE if price.PRICE < min_price else min_price
+                    max_price = price.PRICE if price.PRICE > max_price else max_price
+                if min_price != max_price:
+                    good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price,
+                                                            "%.2f" % max_price)
+                else:
+                    good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
+            else:
+                good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % good_info["PRICE"])
+        else:
+            good_info["PRICE"] = ""
+
+        good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
+        good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
+        goods_list.append(good_info)
+
+    return render_template("admin/allProducts.html", lang=lang[lang_type], lang_type=lang_type, route="allProducts",
+                           addition=addition, data={"goods": goods_list, "categories": good_categories_list,
+                                                    "class": product_class, "name": name})

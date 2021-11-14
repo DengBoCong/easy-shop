@@ -49,6 +49,8 @@ def place_order():
                       STATUS="Processing", TRACK_NUM=str(uuid.uuid1()).replace("-", ""), USER_ID=current_user.ID,
                       CLASS="NORMAL")
         db.session.add(order)
+        user = User.query.get(current_user.ID)
+        user.ORDERS += 1
         db.session.commit()
 
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {"orderId": order_id}})
@@ -90,7 +92,10 @@ def place_sample_order():
         order = Order(ID=order_id, CREATE_DATETIME=datetime.now(), NUM=get_order_code(), TOTAL_AMOUNT=amount,
                       STATUS="Processing", TRACK_NUM=str(uuid.uuid1()).replace("-", ""), USER_ID=current_user.ID,
                       CLASS="SAMPLE")
+
         db.session.add(order)
+        user = User.query.get(current_user.ID)
+        user.ORDERS += 1
         db.session.commit()
 
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {"orderId": order_id}})

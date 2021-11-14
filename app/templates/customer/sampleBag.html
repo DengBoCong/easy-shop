@@ -63,6 +63,7 @@
                         </div>
                     </div>
                 </div>
+                {% if addition.login and current_user.ROLE == 'USER' %}
                 <div class="row" style="padding: 50px 20px 0 10px;">
                     [[lang.common_add_trending_shopping_bag]]
                 </div>
@@ -77,12 +78,15 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% endif %}
             </div>
             <div class="col-xxl-2 col-lg-4 d-none d-lg-block">
+                {% if addition.login and current_user.ROLE == 'USER' %}
                 <p><span class="text-capitalize">[[lang.common_account]]</span>：[[current_user.EMAIL]]</p>
                 <div class="btn btn-block text-uppercase orders-place-order-btn" style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 30px">
                     [[lang.orders_make_your_sample]]
                 </div>
+                {% endif %}
             </div>
         </div>
     </main>
@@ -97,7 +101,7 @@
             var $ = layui.$,
                 admin = layui.admin,
                 layer = layui.layer;
-
+            {% if addition.login and current_user.ROLE == 'USER' %}
             $('.delete-shopping-btn').on('click', function () {
                 var tmpLoad = layer.load(2)
                 admin.req({
@@ -138,6 +142,7 @@
             $('.single-product-img-btn').on('click', function () {
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-type') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
+            {% endif %}
         });
     </script>
 {% endblock %}

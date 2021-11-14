@@ -31,14 +31,14 @@
                     </li>
                 </ul>
                 <ul class="text-uppercase" style="margin-top: 30px;font-family: 'NotoSansCJK-Medium';">
-                    <li style="font-size: 15px;font-family: 'NotoSansCJK-Bold';">
+                    <li style="margin-bottom: 15px;font-size: 15px;font-family: 'NotoSansCJK-Bold';">
                         <a href="/[[lang_type]][[addition.add]]/[[route]]?products=&sort=[[addition.sort]]&colors=[[addition.colors]]"
                            style="[['text-decoration: underline;' if addition.products=='' else '']]">
                             [[lang.common_all_products]]
                         </a>
                     </li>
                     {% for category in data.categories %}
-                    <li style="margin-top: 10px;font-size: 13px;">
+                    <li style="font-size: 13px;">
                         <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]"
                            style="[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
                             [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]

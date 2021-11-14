@@ -132,7 +132,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="[['text-decoration: underline;' if addition.location=='search' else '']]">
                     <a class="nav-link text-uppercase" href="javascript:;" id="basic_nav_search_button_second" style="color: #0C0C0C">[[lang.header_nav_search]]</a>
                 </li>
             </ul>
@@ -226,6 +226,18 @@
                         [[lang.header_nav_wishlist]]
                     </a>
                 </li>
+                {% if addition.login and current_user.ROLE != 'USER' %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-uppercase" href="/[[lang_type]]/adminShoppingBag" id="basic_nav_shopping_bag"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-uppercase" href="/[[lang_type]]/adminSampleBag" id="basic_nav_sample_bag"
+                       style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">[[lang.header_nav_sample_bag]]
+                    </a>
+                </li>
+                {% else %}
                 <li class="nav-item dropdown">
                     <a class="nav-link text-uppercase" href="/[[lang_type]]/shoppingBag" id="basic_nav_shopping_bag"
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='shoppingBag' else '']]">[[lang.header_nav_shopping_bag]]
@@ -236,6 +248,7 @@
                        style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='sampleBag' else '']]">[[lang.header_nav_sample_bag]]
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -465,20 +478,67 @@
         function searchFunc() {
             layer.open({
                 type: 1,
+                offset: ['0', '0'],
+                title: false,
+                id: 'navSearchButton',
+                content: '<div style="padding: 10px 10px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
+                    '<li class="nav-item" style="margin-left: -5px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
+                    '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="men" style="color: #000000" href="javascript:;">[[lang.header_nav_men]]</a></li>' +
+                    '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="women" style="color: #000000" href="javascript:;">[[lang.header_nav_women]]</a></li>' +
+                    '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="kids" style="color: #000000" href="javascript:;">[[lang.header_nav_kids]]</a></li>' +
+                    {% if addition.login and current_user.ROLE != 'USER' %}
+                    '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="customers" style="color: #000000" href="javascript:;">[[lang.common_customers]]</a></li>' +
+                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['135' if lang_type == 'zh_cn' else '45']] + 'px;" id="basic_nav_search_close">' +
+                    {% else %}
+                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['185' if lang_type == 'zh_cn' else '150']] + 'px;" id="basic_nav_search_close">' +
+                    {% endif %}
+                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                    '<div class="row"><div class="input-group">' +
+                    '<input type="text" id="header-search-item-search-input" class="form-control"><div class="input-group-prepend">' +
+                    '<div class="input-group-text" id="header-search-item-search-btn" data-value="all"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div></div></div>',
+                shade: 0,
+                area: ['100%', '110px'],
+                resize: false,
+                closeBtn: 0,
+                success: function (layero, index) {
+                    $('#basic_nav_search_close').on('click', function () {
+                        layer.closeAll();
+                    });
+                    $('.header-search-item-btn').on('click', function () {
+                        $('#header-search-item-search-btn').attr('data-value', $(this).attr('data-value'))
+                    });
+
+                    $('#header-search-item-search-btn').on('click', function () {
+                        if ($(this).attr('data-value') == 'customers') {
+                            window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
+                        } else {
+                            window.location.href = "/[[lang_type]]/allProducts?class=" + $(this).attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
+                        }
+                    });
+                }
+            });
+        }
+        function searchFunc1() {
+            layer.open({
+                type: 1,
                 offset: ['50px', '40px'],
                 title: false,
                 id: 'navSearchButton',
                 content: '<div style="padding: 10px 25px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
-                    '<li class="nav-item"><a class="nav-link active" aria-current="page" href="#">所有</a></li>' +
-                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">男装</a></li>' +
-                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">女装</a></li>' +
-                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">童装</a></li>' +
-                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link" href="#">客户</a></li>' +
-                    '<li class="nav-item" style="margin-top: 8px;margin-left: 135px;" id="basic_nav_search_close">' +
+                    '<li class="nav-item"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="men" style="color: #000000" href="javascript:;">[[lang.header_nav_men]]</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="women" style="color: #000000" href="javascript:;">[[lang.header_nav_women]]</a></li>' +
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="kids" style="color: #000000" href="javascript:;">[[lang.header_nav_kids]]</a></li>' +
+                    {% if addition.login and current_user.ROLE != 'USER' %}
+                    '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="customers" style="color: #000000" href="javascript:;">[[lang.common_customers]]</a></li>' +
+                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['135' if lang_type == 'zh_cn' else '45']] + 'px;" id="basic_nav_search_close">' +
+                    {% else %}
+                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['185' if lang_type == 'zh_cn' else '150']] + 'px;" id="basic_nav_search_close">' +
+                    {% endif %}
                     '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
                     '<div class="row"><div class="input-group">' +
-                    '<input type="text" id="inputSearch" class="form-control"><div class="input-group-prepend">' +
-                    '<div class="input-group-text"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div></div></div>',
+                    '<input type="text" id="header-search-item-search-input" class="form-control"><div class="input-group-prepend">' +
+                    '<div class="input-group-text" id="header-search-item-search-btn" data-value="all"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div></div></div>',
                 shade: 0,
                 area: ['450px', '110px'],
                 resize: false,
@@ -486,6 +546,17 @@
                 success: function (layero, index) {
                     $('#basic_nav_search_close').on('click', function () {
                         layer.closeAll();
+                    });
+                    $('.header-search-item-btn').on('click', function () {
+                        $('#header-search-item-search-btn').attr('data-value', $(this).attr('data-value'))
+                    });
+
+                    $('#header-search-item-search-btn').on('click', function () {
+                        if ($(this).attr('data-value') == 'customers') {
+                            window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
+                        } else {
+                            window.location.href = "/[[lang_type]]/allProducts?class=" + $(this).attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
+                        }
                     });
                 }
             });
@@ -495,7 +566,7 @@
             searchFunc()
         });
         $('#basic_nav_search_button_second').on('click', function () {
-            searchFunc()
+            searchFunc1()
         });
 
         $('#header-offcanvas-language').on('click', function () {
@@ -559,11 +630,19 @@
         });
 
         $('#shopping-bag-btn').on('click', function () {
-           window.location.href = "/[[lang_type]]/shoppingBag"
+            {% if addition.login and current_user.ROLE != 'USER' %}
+            window.location.href = "/[[lang_type]]/adminShoppingBag"
+            {% else %}
+            window.location.href = "/[[lang_type]]/shoppingBag"
+            {% endif %}
         });
 
         $('#sample-bag-btn').on('click', function () {
-           window.location.href = "/[[lang_type]]/sampleBag"
+            {% if addition.login and current_user.ROLE != 'USER' %}
+            window.location.href = "/[[lang_type]]/adminSampleBag"
+            {% else %}
+            window.location.href = "/[[lang_type]]/sampleBag"
+            {% endif %}
         });
     });
 </script>
