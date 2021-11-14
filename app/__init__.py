@@ -2,7 +2,7 @@ from config import config
 from app import setting
 from flask import Flask
 from flask_login import LoginManager
-# from flask_mail import Mail
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_caching import Cache
@@ -13,7 +13,7 @@ loginManager.login_view = "views.not_login"
 loginManager.login_message = "请重新登录"
 
 bootstrap = Bootstrap()
-# mail = Mail()
+mail = Mail()
 db = SQLAlchemy()
 
 
@@ -27,7 +27,7 @@ def create_app(config_name):
     # cache = Cache(config={'CACHE_TYPE': 'filesystem', 'CACHE_DIR': ''})
     cache = Cache(config={'CACHE_TYPE': 'simple'})
 
-    # mail.init_app(app)
+    mail.init_app(app)
     bootstrap.init_app(app)
     db.init_app(app)
     loginManager.init_app(app)

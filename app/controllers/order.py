@@ -1,7 +1,7 @@
 import json
 import uuid
 from datetime import datetime
-from .. import db
+from .. import db, mail
 from . import controllers
 from ..models import *
 from flask import request, redirect, url_for
@@ -10,6 +10,8 @@ from flask_login import current_user, logout_user, login_required
 from sqlalchemy import asc, and_
 from ..i18 import lang
 from ..utils.get import *
+from ..setting import *
+from flask_mail import Mail, Message
 
 URL_PREFIX = "/order"
 
@@ -30,6 +32,7 @@ def place_order():
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"],
                             'data': {"orderId": "0", "msg": lang[lang_type]["inner_cannot_submit_order"]}})
 
+        email_set = set()
         for shopping_good in shopping_goods:
             single_price = 0.0
             if shopping_good.good.CLASS != "DESIGN":
@@ -47,6 +50,7 @@ def place_order():
                                    GOOD_ID=shopping_good.good.ID, NUM=shopping_good.NUM, TITLE="",
                                    PRICE=single_price, EMAIL=shopping_good.good.STAFF_EMAIL)
             order_good_list.append(order_good)
+            email_set.add(shopping_good.good.STAFF_EMAIL)
 
         db.session.add_all(order_good_list)
         order = Order(ID=order_id, CREATE_DATETIME=datetime.now(), NUM=get_order_code(), TOTAL_AMOUNT=amount,
@@ -56,6 +60,10 @@ def place_order():
         user = User.query.get(current_user.ID)
         user.ORDERS += 1
         db.session.commit()
+
+        msg = Message('有一个新订单，请查收', sender=SEND_EMAIL, recipients=email_set)
+        msg.body = "订单客户：" + current_user.EMAIL
+        mail.send(msg)
 
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {"orderId": order_id}})
     except:

@@ -31,10 +31,10 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     MAIL_SERVER = 'smtp.qq.com'
-    MAIL_PORT = 587
+    MAIL_PORT = 465
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_USERNAME = "1210212670@qq.com"  #os.environ.get('')
+    MAIL_PASSWORD = "opkewimdfbnbhcgc"  #os.environ.get('')
     SQLALCHEMY_DATABASE_URI = "mysql://root:Andie130857@localhost:3306/easyshop?charset=utf8&autocommit=true"
 
 
