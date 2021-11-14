@@ -26,10 +26,14 @@ def place_order():
         goods_list, order_good_list = list(), list()
         amount, shipping = 0.0, 0.0
 
+        if not shopping_goods or len(shopping_goods) == 0:
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"],
+                            'data': {"orderId": "0", "msg": lang[lang_type]["inner_cannot_submit_order"]}})
+
         for shopping_good in shopping_goods:
             single_price = 0.0
             if shopping_good.good.CLASS != "DESIGN":
-                if shopping_good.good.CLASS != "REFERENCE":
+                if shopping_good.good.CLASS == "REFERENCE":
                     single_price = float(shopping_good.good.PRICE)
                     amount += single_price * shopping_good.NUM
                 else:

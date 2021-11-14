@@ -7,16 +7,12 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-lg-3 d-none d-lg-block">
-                <p class="text-uppercase" style="margin-top: 300px;font-size: 14px;">[[goodInfo.BRAND]]</p>
-                <p style="font-size: 14px;">[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</p>
+                <p class="text-uppercase" style="margin-top: 300px;font-size: 14px;">[[goodInfo.BRAND]]</br>[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</p>
 
                 <p style="margin-top: 15px;font-size: 14px;">[[goodInfo.DESCRIPTION]]</p>
-                <p style="margin-top: 15px;font-size: 14px;">
-                    [[lang.products_supplier_color]]：[[goodInfo.SUPPLIER_COLOR]]</p>
-                <p style="margin-top: 15px;font-size: 14px;">[[lang.products_material]]：[[goodInfo.MATERIAL]]</br>
-                    [[lang.products_place_of_origin]]：[[goodInfo.PLACE_OF_ORIGIN]]</p>
-                <p style="margin-top: 3px;font-size: 14px;">
-                    [[lang.products_product_number]]：[[goodInfo.PRODUCT_NUMBER]]</p>
+                <p style="margin-top: 15px;font-size: 14px;">[[lang.products_supplier_color]]：[[goodInfo.SUPPLIER_COLOR]]</p>
+                <p style="margin-top: 15px;font-size: 14px;">[[lang.products_material]]：[[goodInfo.MATERIAL]]</br>[[lang.products_place_of_origin]]：[[goodInfo.PLACE_OF_ORIGIN]]</p>
+                <p style="margin-top: 3px;font-size: 14px;">[[lang.products_product_number]]：[[goodInfo.PRODUCT_NUMBER]]</p>
             </div>
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="row" style="margin-bottom: 30px;">
@@ -271,7 +267,7 @@
                             data: JSON.stringify({
                                 "GOOD_ID": '[[goodInfo.ID]]',
                                 "SIZE": sizeVal,
-                                "NUM": qtyVal,
+                                "NUM": typeof(qtyVal) == "undefined" ? 0 : qtyVal,
                                 "langType": '[[lang_type]]'
                             }),
                             done: function (res) {
@@ -296,7 +292,7 @@
                             data: JSON.stringify({
                                 "GOOD_ID": '[[goodInfo.ID]]',
                                 "SIZE": sizeVal,
-                                "NUM": qtyVal,
+                                "NUM": typeof(qtyVal) == "undefined" ? 0 : qtyVal,
                                 "langType": '[[lang_type]]'
                             }),
                             done: function (res) {
@@ -322,7 +318,7 @@
                             data: JSON.stringify({
                                 "GOOD_ID": '[[goodInfo.ID]]',
                                 "SIZE": sizeVal,
-                                "NUM": qtyVal,
+                                "NUM": typeof(qtyVal) == "undefined" ? 0 : qtyVal,
                                 "langType": '[[lang_type]]'
                             }),
                             done: function (res) {
@@ -347,7 +343,7 @@
                             data: JSON.stringify({
                                 "GOOD_ID": '[[goodInfo.ID]]',
                                 "SIZE": sizeVal,
-                                "NUM": qtyVal,
+                                "NUM": typeof(qtyVal) == "undefined" ? 0 : qtyVal,
                                 "langType": '[[lang_type]]'
                             }),
                             done: function (res) {

@@ -318,7 +318,9 @@
 
             laypage.render({
                 elem: 'pageBottomSelect'
-                , count: 500
+                , count: [[data.pageCount]]
+                , limit: 30
+                , theme: "#87939A"
                 , prev: '[[lang.common_back_page]]'
                 , next: '[[lang.common_next_page]]'
                 , curr: [[addition.page]]

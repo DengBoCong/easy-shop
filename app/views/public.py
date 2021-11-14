@@ -10,6 +10,7 @@ from ..i18 import lang
 from ..utils import set_addition
 from ..models import *
 from ..utils.get import *
+from ..setting import PAGE_LIMIT
 
 
 @views.route('/accessDeny', methods=['GET', 'POST'])
@@ -142,7 +143,13 @@ def sample(lang_type):
         return render_template("404.html", lang_type=lang_type, route="commonSample")
 
     goods_list = list()
-    for good in goods:
+    page_count, page = len(goods), int(info_data.get("page", 1)) - 1
+    for good_index, good in enumerate(goods):
+        if not (page * PAGE_LIMIT <= good_index < (page + 1) * PAGE_LIMIT):
+            continue
+        elif good_index >= (page + 1) * PAGE_LIMIT:
+            break
+
         good_info = good.to_json()
         min_price, max_price = 10000000, 0
         for price in good.goodPrices:
@@ -158,7 +165,8 @@ def sample(lang_type):
         goods_list.append(good_info)
 
     return render_template("public/sample.html", lang=lang[lang_type], lang_type=lang_type, route="commonSample",
-                           addition=addition, data={"goods": goods_list, "categories": good_categories_list})
+                           addition=addition, data={"goods": goods_list, "categories": good_categories_list,
+                                                    "pageCount": page_count})
 
 
 @views.route('/<lang_type>/designDiagrams', methods=['GET', 'POST'])
@@ -220,7 +228,13 @@ def design_diagrams(lang_type):
         return render_template("404.html", lang_type=lang_type, route="designDiagrams")
 
     goods_list = list()
-    for good in goods:
+    page_count, page = len(goods), int(info_data.get("page", 1)) - 1
+    for good_index, good in enumerate(goods):
+        if not (page * PAGE_LIMIT <= good_index < (page + 1) * PAGE_LIMIT):
+            continue
+        elif good_index >= (page + 1) * PAGE_LIMIT:
+            break
+
         good_info = good.to_json()
         min_price, max_price = 10000000, 0
         for price in good.goodPrices:
@@ -237,7 +251,8 @@ def design_diagrams(lang_type):
 
     return render_template("public/designDiagrams.html", lang=lang[lang_type], lang_type=lang_type,
                            route="designDiagrams", addition=addition,
-                           data={"goods": goods_list, "categories": good_categories_list})
+                           data={"goods": goods_list, "categories": good_categories_list,
+                                 "pageCount": page_count})
 
 
 @views.route('/<lang_type>/referenceDiagrams', methods=['GET', 'POST'])
@@ -299,24 +314,23 @@ def reference_diagrams(lang_type):
         return render_template("404.html", lang_type=lang_type, route="referenceDiagrams")
 
     goods_list = list()
-    for good in goods:
+    page_count, page = len(goods), int(info_data.get("page", 1)) - 1
+    for good_index, good in enumerate(goods):
+        if not (page * PAGE_LIMIT <= good_index < (page + 1) * PAGE_LIMIT):
+            continue
+        elif good_index >= (page + 1) * PAGE_LIMIT:
+            break
+
         good_info = good.to_json()
-        min_price, max_price = 10000000, 0
-        for price in good.goodPrices:
-            min_price = price.PRICE if price.PRICE < min_price else min_price
-            max_price = price.PRICE if price.PRICE > max_price else max_price
-        if min_price != max_price:
-            good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price,
-                                                    "%.2f" % max_price)
-        else:
-            good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
+        good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % good_info["PRICE"])
         good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
     return render_template("public/referenceDiagrams.html", lang=lang[lang_type], lang_type=lang_type,
                            route="referenceDiagrams", addition=addition,
-                           data={"goods": goods_list, "categories": good_categories_list})
+                           data={"goods": goods_list, "categories": good_categories_list,
+                                 "pageCount": page_count})
 
 
 @views.route('/<lang_type>/singleProduct', methods=['GET', 'POST'])
@@ -330,6 +344,7 @@ def single_products(lang_type):
 
     good = Good.query.get(info_data.get("goodId"))
     good_info = good.to_json()
+    good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
     good_info["CATEGORY_ID"] = good.category.NAME if lang_type == "zh_cn" else good.category.EN_NAME
     good_info["CREATE_DATETIME"] = good.CREATE_DATETIME.strftime('%Y-%m-%d')
     good_info["PRICE"] = get_currency_op(good_info["CURRENCY"]) + str(good_info["PRICE"])

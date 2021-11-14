@@ -93,24 +93,24 @@
                     </div>
                     {% endif %}
                     {% if addition.login and current_user.ROLE != 'USER' %}
-                    <div class="col-sm-6 col-12">
+                    <div class="col-lg-6 col-12">
                         <div class="row">
                             <div class="col-6">
-                                <span>[[data.user.NAME if data.user.NAME != '' else lang.common_empty ]]</br>[[data.user.EMAIL]]</br><span class="d-none d-sm-block">[[data.user.area.NAME if lang_type == 'zh_cn' else data.user.area.EN_NAME]]</span></span>
+                                <span>[[data.user.NAME if data.user.NAME != '' else lang.common_empty ]]</br>[[data.user.EMAIL]]</br><span class="d-none d-lg-block">[[data.user.area.NAME if lang_type == 'zh_cn' else data.user.area.EN_NAME]]</span></span>
                             </div>
                             <div class="col-6">
-                                <span class="d-sm-none" style="float:right;">[[data.user.area.NAME if lang_type == 'zh_cn' else data.user.area.EN_NAME]]</span>
+                                <span class="d-lg-none" style="float:right;">[[data.user.area.NAME if lang_type == 'zh_cn' else data.user.area.EN_NAME]]</span>
                             </div>
                         </div>
                     </div>
                     {% endif %}
                     {% if addition.login and (current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
-                    <div class="col-sm-6 col-12">
-                        <div class="btn btn-block text-uppercase d-none d-sm-block edit-user-account-btn"
+                    <div class="col-lg-6 col-12">
+                        <div class="btn btn-block text-uppercase d-none d-lg-block edit-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 200px;float: right">
                             [[lang.account_edit_the_account]]
                         </div>
-                        <div class="btn btn-block text-uppercase d-sm-none edit-user-account-btn"
+                        <div class="btn btn-block text-uppercase d-lg-none edit-user-account-btn"
                             style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px;">
                             [[lang.account_edit_the_account]]
                         </div>
@@ -119,30 +119,30 @@
                 </div>
                 <div class="row" style="margin-top: 30px">
                     <div class="row" style="padding: 0">
-                        <div style="color: #7C7C7F;" class="col-3 d-none d-sm-block text-capitalize">[[lang.orders_orders]]</div>
-                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_date]]</div>
-                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_total_amount]]</div>
-                        <div style="color: #7C7C7F;" class="col-2 d-none d-sm-block text-capitalize">[[lang.orders_status]]</div>
-                        <div style="color: #7C7C7F;" class="col-3 d-none d-sm-block text-capitalize">[[lang.orders_tracking_number]]</div>
+                        <div style="color: #7C7C7F;" class="col-3 d-none d-lg-block text-capitalize">[[lang.orders_orders]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-lg-block text-capitalize">[[lang.orders_date]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-lg-block text-capitalize">[[lang.orders_total_amount]]</div>
+                        <div style="color: #7C7C7F;" class="col-2 d-none d-lg-block text-capitalize">[[lang.orders_status]]</div>
+                        <div style="color: #7C7C7F;" class="col-3 d-none d-lg-block text-capitalize">[[lang.orders_tracking_number]]</div>
                     </div>
-                    {% if not data.orders %}<hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">{% endif %}
+                    {% if not data.orders %}<hr class="layui-border-black d-none d-lg-block" style="margin-top: 10px;">{% endif %}
                     {% for order in data.orders %}
-                        <hr class="layui-border-black d-none d-sm-block" style="margin-top: 10px;">
+                        <hr class="layui-border-black d-none d-lg-block" style="margin-top: 10px;">
                         <div class="row">
-                            <div class="col-3 d-none d-sm-block" data-bs-toggle="collapse" data-bs-target="#collapseExample[[loop.index]]"
-                                 aria-expanded="false" aria-controls="collapseExample[[loop.index]]">[[order.NUM]]
+                            <div class="col-3 d-none d-lg-block" data-bs-toggle="collapse" data-bs-target="#collapseExample[[loop.index]]"
+                                 aria-expanded="false" aria-controls="collapseExample[[loop.index]]" style="overflow: scroll">[[order.NUM]]
                                 <i class="bi bi-chevron-down" style="float: right"></i>
                             </div>
-                            <div class="col-2 d-none d-sm-block">[[order.CREATE_DATETIME]]</div>
-                            <div class="col-2 d-none d-sm-block">[[order.TOTAL_AMOUNT]]</div>
-                            <div class="col-2 d-none d-sm-block">[[order.STATUS]]</div>
-                            <div class="col-3 d-none d-sm-block">[[order.TRACK_NUM]]</div>
+                            <div class="col-2 d-none d-lg-block" style="overflow: scroll">[[order.CREATE_DATETIME]]</div>
+                            <div class="col-2 d-none d-lg-block" style="overflow: scroll">[[order.TOTAL_AMOUNT]]</div>
+                            <div class="col-2 d-none d-lg-block" style="overflow: scroll">[[order.STATUS]]</div>
+                            <div class="col-3 d-none d-lg-block" style="overflow: scroll">[[order.TRACK_NUM]]</div>
                             <div class="collapse" id="collapseExample[[loop.index]]" style="padding: 0;">
                                 <div class="card card-body" style="border: 0">
                                     <div class="row">
-                                        {% for orderGood in order.orderGoods %}
+                                        {% for orderGood in order.ORDER_GOOD %}
                                         <div class="col-xxl-2 col-xl-3 col-md-3 col-4" style="padding: 0 5px 0 5px">
-                                            <img src="[[orderGood.good.COVER]]" width="100%"/>
+                                            <img src="[[orderGood.COVER]]" width="100%"/>
                                             <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
                                             <p>[[orderGood.PRICE]]</p>
                                         </div>
@@ -153,7 +153,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="row d-sm-none" style="margin-top: 30px;font-size: 13px;font-family: NotoSansCJK-Medium">
+                <div class="row d-lg-none" style="margin-top: 30px;font-size: 13px;font-family: NotoSansCJK-Medium">
                     {% for order in data.orders %}
                     <hr class="layui-border-black">
                     <div class="col-6">
@@ -162,8 +162,8 @@
                         <p class="text-capitalize">[[lang.orders_total_amount]]</p>
                         <p class="text-capitalize">[[lang.orders_status]]</p>
                         <p class="text-capitalize">[[lang.orders_tracking_number]]</p>
-                        <p class="text-capitalize" style="margin-top: 20px;" data-bs-toggle="collapse" data-bs-target="#collapseExample[[loop.index]]"
-                             aria-expanded="false" aria-controls="collapseExample[[loop.index]]">[[lang.products_view_products]]<i class="bi bi-chevron-down"></i></p>
+                        <p class="text-capitalize" style="margin-top: 20px;" data-bs-toggle="collapse" data-bs-target="#collapseExample1[[loop.index]]"
+                             aria-expanded="false" aria-controls="collapseExample1[[loop.index]]">[[lang.products_view_products]]<i class="bi bi-chevron-down"></i></p>
                     </div>
                     <div class="col-6" style="text-align: right">
                         <p>[[order.NUM]]</p>
@@ -172,12 +172,12 @@
                         <p>[[order.STATUS]]</p>
                         <p>[[order.TRACK_NUM]]</p>
                     </div>
-                    <div class="collapse" id="collapseExample[[loop.index]]" style="padding: 0;">
+                    <div class="collapse" id="collapseExample1[[loop.index]]" style="padding: 0;">
                         <div class="card card-body" style="border: 0">
                             <div class="row">
-                                {% for orderGood in order.orderGoods %}
+                                {% for orderGood in order.ORDER_GOOD %}
                                 <div class="col-3" style="padding: 0 5px 0 5px">
-                                    <img src="[[orderGood.good.COVER]]" width="100%"/>
+                                    <img src="[[orderGood.COVER]]" width="100%"/>
                                     <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
                                     <p>[[orderGood.PRICE]]</p>
                                 </div>

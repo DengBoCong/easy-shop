@@ -213,7 +213,7 @@
                 {% for category in data.categories %}
                 <li class="nav-item self-a-link text-uppercase" style="margin-top: 15px;[['text-decoration: underline;' if addition.products==category.EN_NAME else '']]">
                     <a href="/[[lang_type]][[addition.add]]/[[route]]?products=[[category.EN_NAME]]&sort=[[addition.sort]]&colors=[[addition.colors]]">
-                        [[lang.common_design_diagrams]]
+                        [[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]
                     </a>
                 </li>
                 {% endfor %}
@@ -349,7 +349,9 @@
 
             laypage.render({
                 elem: 'pageBottomSelect'
-                , count: 500
+                , count: [[data.pageCount]]
+                , limit: 30
+                , theme: "#87939A"
                 , prev: '[[lang.common_back_page]]'
                 , next: '[[lang.common_next_page]]'
                 , curr: [[addition.page]]

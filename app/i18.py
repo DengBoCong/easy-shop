@@ -233,7 +233,8 @@ lang = {
         "inner_small_screen_delete_img": "小屏模式下必须从后开始删除",
         "inner_change_success": "修改成功",
         "inner_delete_success": "删除成功",
-        "inner_add_repeat": "重复添加"
+        "inner_add_repeat": "重复添加",
+        "inner_cannot_submit_order": "不能提交空订单"
     },
 
     "en_us": {
@@ -474,6 +475,7 @@ lang = {
         "inner_small_screen_delete_img": "In small screen mode, it must be deleted from the back",
         "inner_change_success": "Change Success",
         "inner_delete_success": "Delete Success",
-        "inner_add_repeat": "Add repeatedly"
+        "inner_add_repeat": "Add repeatedly",
+        "inner_cannot_submit_order": "Cannot submit empty order"
     }
 }

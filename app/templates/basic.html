@@ -481,21 +481,18 @@
                 offset: ['0', '0'],
                 title: false,
                 id: 'navSearchButton',
-                content: '<div style="padding: 10px 10px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
-                    '<li class="nav-item" style="margin-left: -5px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
+                content: '<div style="padding: 10px 10px 0 10px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
+                    '<li class="nav-item" style="margin-left: 10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="men" style="color: #000000" href="javascript:;">[[lang.header_nav_men]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="women" style="color: #000000" href="javascript:;">[[lang.header_nav_women]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="kids" style="color: #000000" href="javascript:;">[[lang.header_nav_kids]]</a></li>' +
                     {% if addition.login and current_user.ROLE != 'USER' %}
                     '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="customers" style="color: #000000" href="javascript:;">[[lang.common_customers]]</a></li>' +
-                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['135' if lang_type == 'zh_cn' else '45']] + 'px;" id="basic_nav_search_close">' +
-                    {% else %}
-                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['185' if lang_type == 'zh_cn' else '150']] + 'px;" id="basic_nav_search_close">' +
                     {% endif %}
-                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
-                    '<div class="row"><div class="input-group">' +
-                    '<input type="text" id="header-search-item-search-input" class="form-control"><div class="input-group-prepend">' +
-                    '<div class="input-group-text" id="header-search-item-search-btn" data-value="all"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div></div></div>',
+                    '</ul></div><div class="row"><div class="col-9"><div class="input-group" style="border: #0C0C0C 1px solid;margin-left: 15px;padding: 0;">' +
+                    '<input type="text" style="border: 0" id="header-search-item-search-input" class="form-control"><div class="input-group-prepend">' +
+                    '<div class="input-group-text" style="background-color: transparent;border: 0" id="header-search-item-search-btn" data-value="all"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div>' +
+                    '</div></div><div class="col-3"><p id="basic_nav_search_close" style="margin-top: 10px;text-align: center" class="text-uppercase">[[lang.common_close]]</p></div></div></div>',
                 shade: 0,
                 area: ['100%', '110px'],
                 resize: false,
@@ -524,21 +521,18 @@
                 offset: ['50px', '40px'],
                 title: false,
                 id: 'navSearchButton',
-                content: '<div style="padding: 10px 25px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
-                    '<li class="nav-item"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
+                content: '<div style="padding: 10px 10px 0 10px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
+                    '<li class="nav-item" style="margin-left: 10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="men" style="color: #000000" href="javascript:;">[[lang.header_nav_men]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="women" style="color: #000000" href="javascript:;">[[lang.header_nav_women]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="kids" style="color: #000000" href="javascript:;">[[lang.header_nav_kids]]</a></li>' +
                     {% if addition.login and current_user.ROLE != 'USER' %}
                     '<li class="nav-item" style="margin-left: -10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="customers" style="color: #000000" href="javascript:;">[[lang.common_customers]]</a></li>' +
-                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['135' if lang_type == 'zh_cn' else '45']] + 'px;" id="basic_nav_search_close">' +
-                    {% else %}
-                    '<li class="nav-item" style="margin-top: 8px;margin-left: ' + [['185' if lang_type == 'zh_cn' else '150']] + 'px;" id="basic_nav_search_close">' +
                     {% endif %}
-                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
-                    '<div class="row"><div class="input-group">' +
-                    '<input type="text" id="header-search-item-search-input" class="form-control"><div class="input-group-prepend">' +
-                    '<div class="input-group-text" id="header-search-item-search-btn" data-value="all"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div></div></div>',
+                    '</ul></div><div class="row"><div class="col-9"><div class="input-group" style="border: #0C0C0C 1px solid;margin-left: 15px;padding: 0;">' +
+                    '<input type="text" style="border: 0" id="header-search-item-search-input" class="form-control"><div class="input-group-prepend">' +
+                    '<div class="input-group-text" style="background-color: transparent;border: 0" id="header-search-item-search-btn" data-value="all"><i class="bi bi-search" style="color: #0C0C0C"></i></div></div></div>' +
+                    '</div><div class="col-3"><p id="basic_nav_search_close" style="margin-top: 10px;text-align: center" class="text-uppercase">[[lang.common_close]]</p></div></div></div>',
                 shade: 0,
                 area: ['450px', '110px'],
                 resize: false,

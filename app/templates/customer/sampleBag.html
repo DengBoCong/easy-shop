@@ -36,10 +36,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 d-none d-lg-block">[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span></div>
+                        <div class="col-3 d-none d-lg-block">
+                            {% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>{% endif %}
+                        </div>
                         <div class="col-3 d-lg-none">
                             <div style="height: 90%;text-align: right">
-                                [[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>
+                                {% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>{% endif %}
                             </div>
                             <p class="text-capitalize delete-shopping-btn" data-shopping-id="[[good.ID]]" style="text-align: right;margin-bottom: 10px;text-decoration: underline">[[lang.common_remove]]</p>
                         </div>
@@ -106,7 +108,7 @@
                 var tmpLoad = layer.load(2)
                 admin.req({
                     method: "post",
-                    url: '/api/good/delete!delete_shopping_good',
+                    url: '/api/good/delete!delete_sample_good',
                     data: JSON.stringify({
                         "ID": $(this).attr('data-shopping-id'),
                         "langType": '[[lang_type]]'

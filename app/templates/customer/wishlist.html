@@ -15,7 +15,7 @@
                     {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                         <img src="[[good.GOOD.COVER]]" width="100%" height="400px"/>
-                        <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>[[good.GOOD.PRICE]]</p>
+                        <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>&nbsp;{% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]{% endif %}</p>
                         <div class="btn btn-block text-uppercase add-shopping-good-btn" data-good-id="[[good.GOOD.ID]]"
                               data-good-size="[[good.SIZE]]" data-good-num="[[good.NUM]]"
                                 style="background-color: #323232;color: #FFFFFF;width: 100%;">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
                         <img src="[[good.GOOD.COVER]]" width="100%" height="400px"/>
-                        <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>[[good.GOOD.PRICE]]</p>
+                        <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>&nbsp;{% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]{% endif %}</p>
                         <div class="btn btn-block text-uppercase add-sample-good-btn" data-good-id="[[good.GOOD.ID]]"
                               data-good-size="[[good.SIZE]]" data-good-num="[[good.NUM]]"
                                 style="background-color: #323232;color: #FFFFFF;width: 100%;">

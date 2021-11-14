@@ -8,6 +8,7 @@ from sqlalchemy import asc, desc, and_, or_
 from ..utils.set import set_addition
 from ..utils.get import *
 from ..i18 import lang
+from ..setting import *
 
 
 @views.route('/<lang_type>/newProducts', methods=['GET', 'POST'])
@@ -357,15 +358,36 @@ def orde_history(lang_type):
         return render_template("404.html", lang_type=lang_type, route="orderHistory")
 
     user = User.query.get(user_id)
+    order_list = list()
     if sort == "less_more":
         orders = Order.query.filter_by(USER_ID=user_id, CLASS="NORMAL").order_by(asc(Order.TOTAL_AMOUNT)).all()
     else:
         orders = Order.query.filter_by(USER_ID=user_id, CLASS="NORMAL").order_by(desc(Order.TOTAL_AMOUNT)).all()
 
+    for order in orders:
+        order_info = order.to_json()
+        order_info["ORDER_GOOD"] = list()
+        order_info["CREATE_DATETIME"] = order.CREATE_DATETIME.strftime('%Y-%m-%d')
+        currency = ""
+        for order_good in order.orderGoods:
+            order_good_info = order_good.to_json()
+            color = get_color_op(order_good.good.COLOR) if lang_type == 'zh_cn' else order_good.good.COLOR
+            cate = order_good.good.category.NAME if lang_type == 'zh_cn' else order_good.good.category.EN_NAME
+            order_good_info["TITLE"] = "{} {} {}".format(order_good.good.BRAND, color, cate)
+            order_good_info["PRICE"] = "{}{}".format(
+                get_currency_op(order_good.good.CURRENCY), "%.2f" % order_good_info["PRICE"])
+            currency = get_currency_op(order_good.good.CURRENCY)
+            order_good_info["COVER"] = order_good.good.COVER
+
+            order_info["ORDER_GOOD"].append(order_good_info)
+
+        order_info["TOTAL_AMOUNT"] = "{}{}".format(currency, "%.2f" % order.TOTAL_AMOUNT)
+        order_list.append(order_info)
+
     return render_template("admin/manage/orderHistory.html", lang=lang[lang_type],
                            lang_type=lang_type, route="orderHistory?userId={}&sort={}".format(user_id, sort),
                            addition=set_addition(location="orderHistory", categories="orderHistory"),
-                           data={"userId": user_id, "user": user, "orders": orders, "sort": sort})
+                           data={"userId": user_id, "user": user, "orders": order_list, "sort": sort})
 
 
 ##############################shoppingbag###############################
@@ -590,7 +612,13 @@ def all_products(lang_type):
         return render_template("404.html", lang_type=lang_type, route="commonSample")
 
     goods_list = list()
-    for good in goods:
+    page_count, page = len(goods), int(info_data.get("page", 1)) - 1
+    for good_index, good in enumerate(goods):
+        if not (page * PAGE_LIMIT <= good_index < (page + 1) * PAGE_LIMIT):
+            continue
+        elif good_index >= (page + 1) * PAGE_LIMIT:
+            break
+
         good_info = good.to_json()
         if good.CLASS != "DESIGN":
             if good.CLASS != "SAMPLE":
@@ -614,4 +642,5 @@ def all_products(lang_type):
 
     return render_template("admin/allProducts.html", lang=lang[lang_type], lang_type=lang_type, route="allProducts",
                            addition=addition, data={"goods": goods_list, "categories": good_categories_list,
-                                                    "class": product_class, "name": name})
+                                                    "class": product_class, "name": name,
+                                                    "pageCount": page_count})

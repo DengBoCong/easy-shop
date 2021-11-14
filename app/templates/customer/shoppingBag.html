@@ -36,10 +36,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 d-none d-lg-block">[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span></div>
+                        <div class="col-3 d-none d-lg-block">{% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>{% endif %}</div>
                         <div class="col-3 d-lg-none">
                             <div style="height: 90%;text-align: right">
-                                [[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>
+                                {% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]</br><span style="text-decoration: underline">x [[good.NUM]]</span>{% endif %}
                             </div>
                             <p class="text-capitalize delete-shopping-btn" data-shopping-id="[[good.ID]]" style="text-align: right;margin-bottom: 10px;text-decoration: underline">[[lang.common_remove]]</p>
                         </div>
@@ -133,7 +133,11 @@
                     done: function (res) {
                         layer.msg(res.msg);
                         if (res.code == 0) {
-                            window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
+                            if (res.data.orderId == "0") {
+                                layer.msg(res.data.msg);
+                            } else {
+                                window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
+                            }
                         }
                         layer.close(tmpLoad);
                     }

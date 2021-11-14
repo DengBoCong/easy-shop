@@ -45,10 +45,31 @@ def history_samples(lang_type):
     else:
         orders = Order.query.filter_by(USER_ID=user_id, CLASS="SAMPLE").order_by(desc(Order.TOTAL_AMOUNT)).all()
 
+    order_list = list()
+    for order in orders:
+        order_info = order.to_json()
+        order_info["ORDER_GOOD"] = list()
+        order_info["CREATE_DATETIME"] = order.CREATE_DATETIME.strftime('%Y-%m-%d')
+        currency = ""
+        for order_good in order.orderGoods:
+            order_good_info = order_good.to_json()
+            color = get_color_op(order_good.good.COLOR) if lang_type == 'zh_cn' else order_good.good.COLOR
+            cate = order_good.good.category.NAME if lang_type == 'zh_cn' else order_good.good.category.EN_NAME
+            order_good_info["TITLE"] = "{} {} {}".format(order_good.good.BRAND, color, cate)
+            order_good_info["PRICE"] = "{}{}".format(
+                get_currency_op(order_good.good.CURRENCY), "%.2f" % order_good_info["PRICE"])
+            currency = get_currency_op(order_good.good.CURRENCY)
+            order_good_info["COVER"] = order_good.good.COVER
+
+            order_info["ORDER_GOOD"].append(order_good_info)
+
+        order_info["TOTAL_AMOUNT"] = "{}{}".format(currency, "%.2f" % order.TOTAL_AMOUNT)
+        order_list.append(order_info)
+
     return render_template("customer/historySamples.html", lang=lang[lang_type],
                            lang_type=lang_type, route="historySamples?userId={}&sort={}".format(user_id, sort),
                            addition=set_addition(location="login", categories="historySamples"),
-                           data={"userId": user_id, "user": user, "orders": orders, "sort": sort})
+                           data={"userId": user_id, "user": user, "orders": order_list, "sort": sort})
 
 
 @views.route('/<lang_type>/wishlist', methods=['GET', 'POST'])
@@ -67,8 +88,20 @@ def wishlist(lang_type):
             lang_type == 'zh_cn' else wish_good.good.COLOR
         good_info["GOOD"]["CATEGORY"] = wish_good.good.category.NAME if \
             lang_type == 'zh_cn' else wish_good.good.category.EN_NAME
+
+        single_price = 0.0
+        if wish_good.good.CLASS != "DESIGN":
+            if wish_good.good.CLASS == "REFERENCE":
+                single_price = float(wish_good.good.PRICE)
+            else:
+                for price in wish_good.good.goodPrices:
+                    if price.START_NUM < wish_good.NUM < price.END_NUM:
+                        single_price = float(price.PRICE)
+                        break
+
         good_info["GOOD"]["PRICE"] = "{}{}".format(
-            get_currency_op(good_info["GOOD"]["CURRENCY"]), "%.2f" % good_info["GOOD"]["PRICE"])
+            get_currency_op(good_info["GOOD"]["CURRENCY"]), "%.2f" % single_price)
+
         goods_list.append(good_info)
     return render_template("customer/wishlist.html", lang=lang[lang_type],
                            lang_type=lang_type, route="wishlist",
@@ -97,25 +130,37 @@ def shopping_bag(lang_type):
             lang_type == 'zh_cn' else shopping_good.good.COLOR
         good_info["GOOD"]["CATEGORY"] = shopping_good.good.category.NAME if \
             lang_type == 'zh_cn' else shopping_good.good.category.EN_NAME
+
+        single_price = 0.0
+        if shopping_good.good.CLASS != "DESIGN":
+            if shopping_good.good.CLASS == "REFERENCE":
+                single_price = float(shopping_good.good.PRICE)
+                amount += single_price * shopping_good.NUM
+            else:
+                for price in shopping_good.good.goodPrices:
+                    if price.START_NUM < shopping_good.NUM < price.END_NUM:
+                        single_price = float(price.PRICE)
+                        amount += single_price * shopping_good.NUM
+                        break
         good_info["GOOD"]["PRICE"] = "{}{} {}".format(
             get_currency_op(good_info["GOOD"]["CURRENCY"]),
-            "%.2f" % good_info["GOOD"]["PRICE"],
-            get_currency_lang_op(good_info["GOOD"]["CURRENCY"])
+            "%.2f" % single_price,
+            get_currency_lang_op(good_info["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else good_info["GOOD"]["CURRENCY"]
         )
 
-        amount += float(shopping_good.good.PRICE) * shopping_good.NUM
+        # amount += float(shopping_good.good.PRICE) * shopping_good.NUM
         goods_list.append(good_info)
 
     total_amount = amount if len(goods_list) == 0 else "{}{} {}".format(
         get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
         "%.2f" % amount,
-        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"])
+        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else goods_list[0]["GOOD"]["CURRENCY"]
     )
 
     shipping_cost = shipping if len(goods_list) == 0 else "{}{} {}".format(
         get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
         "%.2f" % shipping,
-        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"])
+        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else goods_list[0]["GOOD"]["CURRENCY"]
     )
 
     trending_goods = Good.query.filter(
@@ -160,25 +205,37 @@ def sample_bag(lang_type):
             lang_type == 'zh_cn' else sample_good.good.COLOR
         good_info["GOOD"]["CATEGORY"] = sample_good.good.category.NAME if \
             lang_type == 'zh_cn' else sample_good.good.category.EN_NAME
+
+        single_price = 0.0
+        if sample_good.good.CLASS != "DESIGN":
+            if sample_good.good.CLASS == "REFERENCE":
+                single_price = float(sample_good.good.PRICE)
+                amount += single_price * sample_good.NUM
+            else:
+                for price in sample_good.good.goodPrices:
+                    if price.START_NUM < sample_good.NUM < price.END_NUM:
+                        single_price = float(price.PRICE)
+                        amount += single_price * sample_good.NUM
+                        break
         good_info["GOOD"]["PRICE"] = "{}{} {}".format(
             get_currency_op(good_info["GOOD"]["CURRENCY"]),
-            "%.2f" % good_info["GOOD"]["PRICE"],
-            get_currency_lang_op(good_info["GOOD"]["CURRENCY"])
+            "%.2f" % single_price,
+            get_currency_lang_op(good_info["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else good_info["GOOD"]["CURRENCY"]
         )
 
-        amount += float(sample_good.good.PRICE) * sample_good.NUM
+        # amount += float(sample_good.good.PRICE) * sample_good.NUM
         goods_list.append(good_info)
 
     total_amount = amount if len(goods_list) == 0 else "{}{} {}".format(
         get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
         "%.2f" % amount,
-        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"])
+        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else goods_list[0]["GOOD"]["CURRENCY"]
     )
 
     shipping_cost = shipping if len(goods_list) == 0 else "{}{} {}".format(
         get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
         "%.2f" % shipping,
-        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"])
+        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else goods_list[0]["GOOD"]["CURRENCY"]
     )
 
     trending_goods = Good.query.filter(
@@ -224,7 +281,7 @@ def order_confirm(lang_type):
         good_info["PRICE"] = "{}{} {}".format(
             get_currency_op(good_info["GOOD"]["CURRENCY"]),
             "%.2f" % good_info["PRICE"],
-            get_currency_lang_op(good_info["GOOD"]["CURRENCY"])
+            get_currency_lang_op(good_info["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else good_info["GOOD"]["CURRENCY"]
         )
 
         amount += float(order_good.PRICE) * good_info["NUM"]
@@ -233,7 +290,7 @@ def order_confirm(lang_type):
     total_amount = amount if len(goods_list) == 0 else "{}{} {}".format(
         get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
         "%.2f" % amount,
-        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"])
+        get_currency_lang_op(goods_list[0]["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else goods_list[0]["GOOD"]["CURRENCY"]
     )
 
     return render_template("customer/orderConfirm.html", lang=lang[lang_type],
