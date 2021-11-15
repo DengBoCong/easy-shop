@@ -88,6 +88,7 @@ lang = {
         "common_customer_mode_tips": "你可以在客户模式下查看每个用户的购物袋，或者点击右侧的按钮切换至商品模式查看商品信息",
         "common_product_mode": "产品模式",
         "common_switch_product_mode": "切换产品模式",
+        "common_contact_admin_mod": "请联系管理员修改",
 
         "header_nav_all": "所有",
         "header_nav_men": "男装",
@@ -327,6 +328,7 @@ lang = {
         "common_product_mode_tips": "You can stay in the product mode to check every product's information, or you can switch to customer mode to check every customer's shopping bag by clicking the button on the right.",
         "common_product_mode": "product mode",
         "common_switch_product_mode": "switch to product mode",
+        "common_contact_admin_mod": "Please contact the administrator to modify",
 
         "header_nav_all": "all",
         "header_nav_men": "men",

@@ -27,7 +27,7 @@ def get_currency_lang_op(currency: str):
 def get_color_op(color: str):
     index_dict = {
         "brown": "棕色",
-        "blue": "黑色",
+        "blue": "蓝色",
         "gray": "灰色",
         "white": "白色",
         "pink": "粉色",

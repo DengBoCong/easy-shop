@@ -158,45 +158,39 @@ def published_product(lang_type):
         good_categories_list.append(good_category.to_json())
         good_categories_dict[good_category.EN_NAME] = good_category.ID
 
-    if (product == "" or product == "all") and (color == "" or color == "all"):
-        goods = Good.query.filter(and_(Good.USER_ID == user_id,
-                                       Good.CLASS == category,
-                                       Good.IS_PUBLISHED == 1)).order_by(desc(Good.CREATE_DATETIME)).all()
-    elif product != "" and product != "all" and color != "" and color != "all":
-        goods = Good.query.filter(and_(Good.USER_ID == user_id,
-                                       Good.CLASS == category,
-                                       Good.IS_PUBLISHED == 1,
-                                       Good.CATEGORY_ID == good_categories_dict.get(product, ""),
-                                       Good.COLOR == color)).order_by(desc(Good.CREATE_DATETIME)).all()
-    elif product != "" and product != "all":
-        goods = Good.query.filter(and_(Good.USER_ID == user_id,
-                                       Good.CLASS == category,
-                                       Good.IS_PUBLISHED == 1,
-                                       Good.CATEGORY_ID == good_categories_dict.get(product, "")
-                                       )).order_by(desc(Good.CREATE_DATETIME)).all()
-    elif color != "" and color != "all":
-        goods = Good.query.filter(and_(Good.USER_ID == user_id,
-                                       Good.CLASS == category,
-                                       Good.IS_PUBLISHED == 1,
-                                       Good.COLOR == color)).order_by(desc(Good.CREATE_DATETIME)).all()
+    goods = Good.query.filter(
+        Good.USER_ID.like("%" + user_id + "%"),
+        Good.CLASS.like("%" + "" if category == "all" else category + "%"),
+        Good.IS_PUBLISHED.like("%1%"),
+        Good.CATEGORY_ID.like("%" + good_categories_dict.get(product, "") + "%"),
+        Good.COLOR.like("%" + "" if color == "all" else color + "%"),
+    ).order_by(desc(Good.CREATE_DATETIME)).all()
 
     goods_list = list()
     for good in goods:
         good_info = good.to_json()
-        min_price, max_price = 10000000, 0
-        for price in good.goodPrices:
-            min_price = price.PRICE if price.PRICE < min_price else min_price
-            max_price = price.PRICE if price.PRICE > max_price else max_price
-        if min_price != max_price:
-            good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price,
-                                                    "%.2f" % max_price)
+
+        if good.CLASS != "DESIGN":
+            if good.CLASS == "SAMPLE":
+                min_price, max_price = 10000000, 0
+                for price in good.goodPrices:
+                    min_price = price.PRICE if price.PRICE < min_price else min_price
+                    max_price = price.PRICE if price.PRICE > max_price else max_price
+                if min_price != max_price:
+                    good_info["PRICE"] = "{}{} - {}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price,
+                                                            "%.2f" % max_price)
+                else:
+                    good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
+            else:
+                good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % good_info["PRICE"])
         else:
-            good_info["PRICE"] = "{}{}".format(get_currency_op(good_info["CURRENCY"]), "%.2f" % min_price)
+            good_info["PRICE"] = ""
+
         good_info["COLOR"] = get_color_op(good_info["COLOR"]) if lang_type == 'zh_cn' else good_info["COLOR"]
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
-    addition = set_addition(location="publishedProduct", categories="manageStaffAccounts")
+    addition = set_addition(location="login", categories="publishedProduct")
 
     return render_template("admin/publishedProduct.html", lang=lang[lang_type],
                            lang_type=lang_type,
@@ -529,7 +523,7 @@ def bag_product_mode(lang_type):
     for good in goods:
         good_info = good.to_json()
         if good.CLASS != "DESIGN":
-            if good.CLASS != "SAMPLE":
+            if good.CLASS == "SAMPLE":
                 min_price, max_price = 10000000, 0
                 for price in good.goodPrices:
                     min_price = price.PRICE if price.PRICE < min_price else min_price
@@ -621,7 +615,7 @@ def all_products(lang_type):
 
         good_info = good.to_json()
         if good.CLASS != "DESIGN":
-            if good.CLASS != "SAMPLE":
+            if good.CLASS == "SAMPLE":
                 min_price, max_price = 10000000, 0
                 for price in good.goodPrices:
                     min_price = price.PRICE if price.PRICE < min_price else min_price

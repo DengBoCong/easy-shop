@@ -80,6 +80,7 @@ def wishlist(lang_type):
         return render_template("404.html", lang_type=lang_type, route="wishlist")
 
     wish_goods = WishGood.query.filter_by(USER_ID=current_user.ID).all()
+    print(wish_goods)
     goods_list = list()
     for wish_good in wish_goods:
         good_info = wish_good.to_json()

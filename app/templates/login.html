@@ -162,7 +162,7 @@
             </div>
 
             <div style="text-align: center" class="mb-2">
-                <a href="forget" class="text-capitalize" style="color: #0C0C0C;font-size: 12px;">[[lang.common_forget_pwd]]</a>
+                <div class="text-capitalize" id="forget-btn" style="color: #0C0C0C;font-size: 12px;">[[lang.common_forget_pwd]]</div>
             </div>
             <div class="btn btn-block text-uppercase"  lay-submit lay-filter="LAY-user-login-submit"
                  style="background-color: #323232;color: #FFFFFF;width: 100%">
@@ -195,6 +195,10 @@
             });
 
             form.render();
+
+            $('#forget-btn').on('click', function () {
+                layer.msg("[[lang.common_contact_admin_mod]]")
+            });
 
             //提交
             form.on('submit(LAY-user-login-submit)', function (obj) {

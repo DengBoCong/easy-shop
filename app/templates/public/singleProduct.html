@@ -115,6 +115,7 @@
                         <span class="text-capitalize" style="font-size: 10px;">[[goodInfo.COLOR]] [[goodInfo.CATEGORY_ID]]</span>
                     </div>
                     <div class="col-7 text-capitalize">
+                        {% if goodInfo.CLASS == 'SAMPLE' %}
                         <div class="row">
                             <div class="col-3 text-capitalize">[[lang.products_qty_full]]</div>
                             {% for price in goodInfo.PRICES %}
@@ -126,6 +127,9 @@
                                 <div class="col-3" style="margin-top: -15px;">[[price.PRICE]]</div>
                             {% endfor %}
                         </div>
+                        {% elif goodInfo.CLASS == 'REFERENCE' %}
+                            <div class="row" style="float: left;width: 280px;">[[goodInfo.PRICE]]</div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="layui-form">
