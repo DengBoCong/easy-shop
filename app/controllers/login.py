@@ -21,5 +21,5 @@ def do_login():
         if user.check_password(request.form['password'].encode('utf-8')):
             login_user(user, remember=True, duration=timedelta(days=COOKIE_DURATION_DAYS))
 
-            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_login_success"], 'data': {}})
-    return jsonify({'code': 1, 'msg': lang[lang_type]["inner_login_fail"], 'data': {}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_login_success"], 'data': {'code': 0}})
+    return jsonify({'code': 0, 'msg': lang[lang_type]["inner_login_fail"], 'data': {'code': 1}})

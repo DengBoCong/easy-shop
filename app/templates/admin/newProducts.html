@@ -553,6 +553,7 @@
                                 if (zhName == "" || enName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/area/add!add_area',
@@ -562,8 +563,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 $('#edit-product-area-select-id').empty()
                                                 $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
                                                 $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
@@ -578,6 +580,8 @@
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -620,6 +624,7 @@
                                 if (zhName == "" || enName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/area/add!add_area',
@@ -629,8 +634,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 $('#edit-product-area-select-id1').empty()
                                                 $('#edit-product-area-select-id1').append(new Option('[[lang.products_choose_area]]', ''));
                                                 $('#edit-product-area-select-id1').append(new Option('[[lang.common_public]]', 'public'));
@@ -645,6 +651,8 @@
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -688,6 +696,7 @@
                                 if (zhName == "" || enName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/good/add!add_good_category',
@@ -697,8 +706,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad)
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 $('#edit-product-category-select-id').empty()
                                                 $('#edit-product-category-select-id').append(new Option('[[lang.products_select_category]]', ''));
                                                 for (i = 0; i < res.data.goodCategories.length; i++) {
@@ -712,6 +722,8 @@
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -754,6 +766,7 @@
                                 if (zhName == "" || enName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/good/add!add_good_category',
@@ -763,8 +776,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 $('#edit-product-category-select-id1').empty()
                                                 $('#edit-product-category-select-id1').append(new Option('[[lang.products_select_category]]', ''));
                                                 for (i = 0; i < res.data.goodCategories.length; i++) {
@@ -778,6 +792,8 @@
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -825,6 +841,7 @@
                                 if (zhName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/good/add!add_good_size',
@@ -833,8 +850,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 var sizeArr = new Array();
                                                 {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
                                                 for (i = 0; i < res.data.goodSizes.length; i++) {
@@ -851,6 +869,8 @@
                                                     arr: sizeArr
                                                 });
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -897,6 +917,7 @@
                                 if (zhName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/good/add!add_good_size',
@@ -905,8 +926,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 var sizeArr = new Array();
                                                 {#sizeArr[0] = {"name": "[[lang.products_choose_size]]", "value": ""}#}
                                                 for (i = 0; i < res.data.goodSizes.length; i++) {
@@ -923,6 +945,8 @@
                                                     arr: sizeArr
                                                 });
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -938,11 +962,12 @@
                 , elem: '#edit-products-import-chart'
                 , size: 200
                 , done: function (res) {
-                    if (res.code == 0) {
+                    if (res.data.code == 0) {
+                        layer.msg(res.msg, {icon: 1});
                         $('#edit-products-import-chart').html(res.data.originFileName)
                         $('#edit-products-import-chart').attr('data-sizeChart', res.data.url)
                     } else {
-                        layer.msg(res.msg, {icon: 5});
+                        layer.msg(res.msg, {icon: 2});
                     }
                 }
             });
@@ -951,11 +976,12 @@
                 , elem: '#edit-products-import-chart1'
                 , size: 200
                 , done: function (res) {
-                    if (res.code == 0) {
+                    if (res.data.code == 0) {
+                        layer.msg(res.msg, {icon: 1});
                         $('#edit-products-import-chart1').html(res.data.originFileName)
                         $('#edit-products-import-chart1').attr('data-sizeChart', res.data.url)
                     } else {
-                        layer.msg(res.msg, {icon: 5});
+                        layer.msg(res.msg, {icon: 2});
                     }
                 }
             });
@@ -1043,6 +1069,7 @@
                     || (referPrice == "" && '[[data.productType]]' == 'REFERENCE') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
+                    var tmpLoad = layer.load(2)
                     admin.req({
                         method: "post",
                         url: '/api/good/add!add_good',
@@ -1072,13 +1099,16 @@
                             "langType": '[[lang_type]]'
                         }),
                         done: function (res) {
-                            layer.msg(res.msg);
-                            if (res.code == 0) {
+                            layer.close(tmpLoad);
+                            if (res.data.code == 0) {
+                                layer.msg(res.msg, {icon: 1});
                                 if (btnType == 0) {
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
                                     window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
                                 }
+                            } else {
+                                layer.msg(res.msg, {icon: 2});
                             }
                         }
                     });
@@ -1139,6 +1169,7 @@
                     || (referPrice == "" && '[[data.productType]]' == 'REFERENCE') || goodImg.length == 0) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                 } else {
+                    var tmpLoad = layer.load(2)
                     admin.req({
                         method: "post",
                         url: '/api/good/add!add_good',
@@ -1168,13 +1199,16 @@
                             "langType": '[[lang_type]]'
                         }),
                         done: function (res) {
-                            layer.msg(res.msg);
-                            if (res.code == 0) {
+                            layer.close(tmpLoad);
+                            if (res.data.code == 0) {
+                                layer.msg(res.msg, {icon: 1});
                                 if (btnType == 0) {
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
                                     window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
                                 }
+                            } else {
+                                layer.msg(res.msg, {icon: 2});
                             }
                         }
                     });
@@ -1200,7 +1234,8 @@
                 , elem: '#edit-product-add-img'
                 , size: 200
                 , done: function (res) {
-                    if (res.code == 0) {
+                    if (res.data.code == 0) {
+                        layer.msg(res.msg, {icon: 1});
                         var temp = '<div class="row" style="position:relative;margin-top: 10px;">' +
                             '<img class="edit-product-add-img-img" src="' + res.data.url + '" style="width: 100%;">' +
                             '<span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
@@ -1217,16 +1252,17 @@
                             , elem: '.edit-product-add-img-replace'
                             , size: 2000
                             , done: function (res) {
-                                if (res.code == 0) {
+                                if (res.data.code == 0) {
+                                    layer.msg(res.msg, {icon: 1});
                                     {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
                                     this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
                                 } else {
-                                    layer.msg(res.msg, {icon: 5});
+                                    layer.msg(res.msg, {icon: 2});
                                 }
                             }
                         });
                     } else {
-                        layer.msg(res.msg, {icon: 5});
+                        layer.msg(res.msg, {icon: 2});
                     }
                 }
             });
@@ -1235,7 +1271,8 @@
                 , elem: '#display-img1-upload'
                 , size: 200
                 , done: function (res) {
-                    if (res.code == 0) {
+                    if (res.data.code == 0) {
+                        layer.msg(res.msg, {icon: 1});
                         var temp1 = '<button type="button" class="carousel-index-btn-sub' + imgCount + '" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="' + imgCount + '"></button>'
                         var temp2 = '<div class="carousel-item carousel-index-btn-sub' + imgCount + '" style="position:relative;"><img src="' + res.data.url + '" class="d-block w-100 edit-product-add-img-img">' +
                             '<span data-imgCountAdd="' + imgCount + '" data-imgCount=".carousel-index-btn-sub' + imgCount + '" class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 15px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
@@ -1266,18 +1303,19 @@
                             , elem: '.edit-product-add-img-replace'
                             , size: 2000
                             , done: function (res) {
-                                if (res.code == 0) {
+                                if (res.data.code == 0) {
+                                    layer.msg(res.msg, {icon: 1});
                                     {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
                                     this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
                                 } else {
-                                    layer.msg(res.msg, {icon: 5});
+                                    layer.msg(res.msg, {icon: 2});
                                 }
                             }
                         });
 
                         imgCount += 1
                     } else {
-                        layer.msg(res.msg, {icon: 5});
+                        layer.msg(res.msg, {icon: 2});
                     }
                 }
             });

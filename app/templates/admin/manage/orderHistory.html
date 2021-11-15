@@ -162,8 +162,8 @@
                         <p class="text-capitalize">[[lang.orders_total_amount]]</p>
                         <p class="text-capitalize">[[lang.orders_status]]</p>
                         <p class="text-capitalize">[[lang.orders_tracking_number]]</p>
-                        <p class="text-capitalize" style="margin-top: 20px;" data-bs-toggle="collapse" data-bs-target="#collapseExample1[[loop.index]]"
-                             aria-expanded="false" aria-controls="collapseExample1[[loop.index]]">[[lang.products_view_products]]<i class="bi bi-chevron-down"></i></p>
+                        <p class="text-capitalize" style="margin-top: 20px;" data-bs-toggle="collapse" data-bs-target="#collapseExampleApp[[loop.index]]"
+                             aria-expanded="false" aria-controls="collapseExampleApp[[loop.index]]">[[lang.products_view_products]]<i class="bi bi-chevron-down"></i></p>
                     </div>
                     <div class="col-6" style="text-align: right">
                         <p>[[order.NUM]]</p>
@@ -172,7 +172,7 @@
                         <p>[[order.STATUS]]</p>
                         <p>[[order.TRACK_NUM]]</p>
                     </div>
-                    <div class="collapse" id="collapseExample1[[loop.index]]" style="padding: 0;">
+                    <div class="collapse" id="collapseExampleApp[[loop.index]]" style="padding: 0;">
                         <div class="card card-body" style="border: 0">
                             <div class="row">
                                 {% for orderGood in order.ORDER_GOOD %}

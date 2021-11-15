@@ -34,6 +34,6 @@ def single_image_upload():
 
         return jsonify({'code': 0, 'msg': 'Success',
                         'data': {'url': '/static/uploads/images/{}{}'.format(attachment_dir, image_filename),
-                                 'originFileName': origin_filename}})
+                                 'originFileName': origin_filename, 'code': 0}})
     except:
-        return jsonify({'code': 1, 'msg': 'Fail', 'data': {}})
+        return jsonify({'code': 0, 'msg': 'Fail', 'data': {'code': 1}})

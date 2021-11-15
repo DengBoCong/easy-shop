@@ -26,13 +26,13 @@
                         <div class="col-lg-8 col-9">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 col-6">
-                                    <img src="[[good.GOOD.COVER]]" width="100%" />
+                                    <img src="[[good.GOOD.COVER]]" width="100%" class="single-product-img-btn" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" />
                                 </div>
                                 <div class="col-xl-8 col-lg-7 col-6">
                                     <div style="height: 90%">
                                         <span style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br><span style="text-decoration: underline">[[lang.products_size]]：[[good.SIZE]]</span></span>
                                     </div>
-                                    <p style="margin-bottom: 10px;text-decoration: underline">[[lang.wishlist_move_to_wishlist_bag]]</p>
+                                    <p style="margin-bottom: 10px;text-decoration: underline" class="move-wishlist-btn" data-bag-id="[[good.ID]]" data-bag-size="[[good.SIZE]]" data-bag-num="[[good.NUM]]">[[lang.wishlist_move_to_wishlist_bag]]</p>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                     {% for good in data.trendingGoods %}
                     <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-5 col-6">
                         <div class="card card-block" style="border: 0">
-                            <img src="[[good.COVER]]" />
+                            <img src="[[good.COVER]]" class="single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE]]" />
                             <span style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</span>
                             <span class="text-capitalize single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE]]" style="text-decoration: underline;font-size: 13px;">[[lang.wishlist_add_to_bag]]</span>
                         </div>
@@ -113,11 +113,13 @@
                         "langType": '[[lang_type]]'
                     }),
                     done: function (res) {
-                        layer.msg(res.msg);
-                        if (res.code == 0) {
-                            window.location.reload();
-                        }
                         layer.close(deleteLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
                     }
                 });
             });
@@ -131,15 +133,13 @@
                         "langType": '[[lang_type]]'
                     }),
                     done: function (res) {
-                        layer.msg(res.msg);
-                        if (res.code == 0) {
-                            if (res.data.orderId == "0") {
-                                layer.msg(res.data.msg);
-                            } else {
-                                window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
-                            }
-                        }
                         layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+                            window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
                     }
                 });
             });
@@ -148,6 +148,28 @@
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-type') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
             {% endif %}
+
+            $('.move-wishlist-btn').on('click', function () {
+                var tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/good/add!add_wish_good',
+                    data: JSON.stringify({
+                        "GOOD_ID": $(this).attr('data-bag-id'),
+                        "SIZE": $(this).attr('data-bag-size'),
+                        "NUM": $(this).attr('data-bag-num'),
+                        "langType": '[[lang_type]]'
+                    }),
+                    done: function (res) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            });
 
             layer.closeAll()
         });

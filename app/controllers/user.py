@@ -23,9 +23,9 @@ def add_user():
         name_user = User.query.filter_by(NAME=info_data.get("NAME")).all()
 
         if len(email_user) != 0:
-            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_account_repeat_reset"], 'data': {}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_account_repeat_reset"], 'data': {'code': 1}})
         elif info_data.get("NAME") != "NULL-None" and len(name_user) != 0:
-            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_name_repeat_reset"], 'data': {}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_name_repeat_reset"], 'data': {'code': 1}})
         else:
             user = User(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), EMAIL=info_data.get("EMAIL"),
                         NAME=info_data.get("NAME", ""), PHONE=info_data.get("PHONE", ""),
@@ -41,9 +41,9 @@ def add_user():
 
             db.session.add(user)
             db.session.commit()
-            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {'code': 0}})
     except:
-        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
 
 
 @controllers.route('{}/update!update_user'.format(URL_PREFIX), methods=['POST'])
@@ -64,8 +64,8 @@ def update_user():
                 user.password = info_data["NEW_PWD"]
                 db.session.commit()
             else:
-                return jsonify({'code': 1, 'msg': lang[lang_type]["inner_pwd_fail"],
-                                'data': {"userId": user_id}})
+                return jsonify({'code': 0, 'msg': lang[lang_type]["inner_pwd_fail"],
+                                'data': {"userId": user_id, 'code': 1}})
 
         if "_PWD" in info_data.keys():
             del info_data["_PWD"]
@@ -78,14 +78,14 @@ def update_user():
         if flag and user_id == current_user.ID:
             logout_user()
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_pwd_change"],
-                            'data': {"userId": ""}})
+                            'data': {"userId": "", 'code': 0}})
         else:
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_change_success"],
-                            'data': {"userId": user_id}})
+                            'data': {"userId": user_id, 'code': 0}})
 
     except:
-        return jsonify({'code': 1, 'msg': lang[lang_type]["common_update_fail"],
-                        'data': {"userId": user_id}})
+        return jsonify({'code': 0, 'msg': lang[lang_type]["common_update_fail"],
+                        'data': {"userId": user_id, 'code': 1}})
 
 
 @controllers.route('{}/delete!delete_user'.format(URL_PREFIX), methods=['POST'])
@@ -104,6 +104,6 @@ def delete_user_by_id():
 
         db.session.commit()
 
-        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {}})
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {'code': 0}})
     else:
-        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})

@@ -116,6 +116,7 @@
                                 if (zhName == "" || enName == "") {
                                     layer.msg('[[lang.common_complete_info]]', {icon: 4});
                                 } else {
+                                    var tmpLoad = layer.load(2)
                                     admin.req({
                                         method: "post",
                                         url: '/api/area/add!add_area',
@@ -125,8 +126,9 @@
                                             "langType": '[[lang_type]]'
                                         }),
                                         done: function (res) {
-                                            layer.msg(res.msg);
-                                            if (res.code == 0) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
                                                 $('#edit-product-area-select-id').empty()
                                                 $('#edit-product-area-select-id').append(new Option('[[lang.products_choose_area]]', ''));
                                                 $('#edit-product-area-select-id').append(new Option('[[lang.common_public]]', 'public'));
@@ -141,6 +143,8 @@
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
                                             }
                                         }
                                     });
@@ -190,18 +194,22 @@
                 } else if (confirmPwd != pwd) {
                     layer.msg('[[lang.account_pwd_confirm_diff_tip]]', {icon: 5});
                 } else {
+                    var tmpLoad = layer.load(2)
                     admin.req({
                         method: "post",
                         url: '/api/user/add!add_user',
                         data: JSON.stringify(valuePost),
                         done: function (res) {
-                            layer.msg(res.msg);
-                            if (res.code == 0) {
+                            layer.close(tmpLoad);
+                            if (res.data.code == 0) {
+                                layer.msg(res.msg, {icon: 1});
                                 if ('[[data.subPage]]' == 'customer') {
                                     window.location.href = "/[[lang_type]]/manageCustomerAccounts"
                                 } else if ('[[data.subPage]]' == 'staff') {
                                     window.location.href = "/[[lang_type]]/manageStaffAccounts"
                                 }
+                            } else {
+                                layer.msg(res.msg, {icon: 2});
                             }
                         }
                     });

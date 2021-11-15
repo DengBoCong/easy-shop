@@ -13,21 +13,6 @@ from ..i18 import lang
 URL_PREFIX = "/area"
 
 
-@controllers.route('{}/get!get_all_area'.format(URL_PREFIX), methods=['GET'])
-@login_required
-def get_all_area():
-    info_data = request.args.to_dict()
-    lang_type = info_data["langType"]
-    try:
-        areas = Area.query.order_by(asc(Area.EN_NAME)).all()
-        areas_list = []
-        for area in areas:
-            areas_list.append(area.to_json())
-        return jsonify({'code': 0, 'msg': '', 'data': areas_list})
-    except:
-        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': [{}]})
-
-
 @controllers.route('{}/add!add_area'.format(URL_PREFIX), methods=['POST'])
 @login_required
 def add_area():
@@ -39,9 +24,9 @@ def add_area():
         en_name_area = Area.query.filter_by(EN_NAME=info_data.get("EN_NAME")).all()
 
         if len(name_area) != 0:
-            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_zh_ch_repeat_reset"], 'data': {}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_zh_ch_repeat_reset"], 'data': {'code': 1}})
         elif len(en_name_area) != 0:
-            return jsonify({'code': 1, 'msg': lang[lang_type]["inner_en_us_repeat_reset"], 'data': {}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_en_us_repeat_reset"], 'data': {'code': 1}})
         else:
             area = Area(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), NAME=info_data.get("NAME"),
                         EN_NAME=info_data.get("EN_NAME"), DESCRIPTION=info_data.get("DESCRIPTION", ""))
@@ -53,6 +38,7 @@ def add_area():
             for area in areas:
                 areas_list.append(area.to_json())
 
-            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"], 'data': {"areas": areas_list}})
+            return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"],
+                            'data': {"areas": areas_list, 'code': 0}})
     except:
-        return jsonify({'code': 1, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {}})
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})

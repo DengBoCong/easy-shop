@@ -114,11 +114,13 @@
                         "langType": '[[lang_type]]'
                     }),
                     done: function (res) {
-                        layer.msg(res.msg);
-                        if (res.code == 0) {
-                            window.location.reload();
-                        }
                         layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
                     }
                 });
             });
@@ -132,11 +134,13 @@
                         "langType": '[[lang_type]]'
                     }),
                     done: function (res) {
-                        layer.msg(res.msg);
-                        if (res.code == 0) {
-                            window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
-                        }
                         layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+                            window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
                     }
                 });
             });

@@ -208,6 +208,7 @@
                     successUrl = 'commonSample'
                 }
 
+                var tmpLoad = layer.load(2)
                 admin.req({
                     method: "post",
                     url: '/api/good/update!update_good',
@@ -217,9 +218,12 @@
                         "langType": '[[lang_type]]'
                     }),
                     done: function (res) {
-                        layer.msg(res.msg);
-                        if (res.code == 0) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
                             window.location.href = "/[[lang_type]][[addition.add]]/" + successUrl
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
                         }
                     }
                 });

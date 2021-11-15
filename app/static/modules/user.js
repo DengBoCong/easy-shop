@@ -122,11 +122,11 @@ layui.define(['form', 'upload'], function (exports) {
         , elem: '#LAY_avatarUpload'
         , size: 200
         , done: function (res) {
-            if (res.code == 0) {
+            if (res.data.code == 0) {
                 layer.msg(res.msg, {icon: 1});
                 avatarSrc.val(res.data.url);
             } else {
-                layer.msg(res.msg, {icon: 5});
+                layer.msg(res.msg, {icon: 2});
             }
         }
     });

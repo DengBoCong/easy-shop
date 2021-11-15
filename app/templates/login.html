@@ -213,6 +213,7 @@
                     return
                 }
                 //请求登入接口
+                var tmpLoad = layer.load(2)
                 admin.req({
                     method: "post",
                     url: '/api/login/user!verification_login',
@@ -223,13 +224,13 @@
                     },
                     done: function (res) {
                         //登入成功的提示与跳转
-                        layer.msg('登入成功', {
-                            offset: '15px'
-                            , icon: 1
-                            , time: 1000
-                        }, function () {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
                             window.location.href = "/[[lang_type]]/index"
-                        });
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
                     }
                 });
             });

@@ -392,7 +392,7 @@
             {% if addition.login and current_user.ROLE !='USER' %}
             <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='publishedProduct' else '']]">
                 <a href="/[[lang_type]]/publishedProduct" class="text-capitalize"
-                   style="color: #0C0C0C;[['text-decoration: underline;' if addition.location=='wishlist' else '']]">
+                   style="color: #0C0C0C;">
                     [[lang.common_published_products]]
                 </a>
             </li>
@@ -405,7 +405,8 @@
                     </a>
                 </li>
                 <li class="nav-item" style="margin-top: 15px;[['text-decoration: underline;' if addition.categories=='historySamples' else '']]">
-                    <a href="/[[lang_type]]/historySamples?userId=[[current_user.ID]]&sort=less_more" class="text-capitalize">
+                    <a href="/[[lang_type]]/historySamples?userId=[[current_user.ID]]&sort=less_more" class="text-capitalize"
+                        style="color: #0C0C0C;">
                         [[lang.common_historical_sample]]
                     </a>
                 </li>
