@@ -26,7 +26,7 @@
                         <div class="col-lg-8 col-9">
                             <div class="row">
                                 <div class="col-xl-4 col-lg-5 col-6">
-                                    <img src="[[good.GOOD.COVER]]" width="100%" class="single-product-img-btn" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" />
+                                    <img style="cursor: pointer" src="[[good.GOOD.COVER]]" width="100%" class="single-product-img-btn" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" />
                                 </div>
                                 <div class="col-xl-8 col-lg-7 col-6">
                                     <div style="height: 90%">
@@ -73,7 +73,7 @@
                     {% for good in data.trendingGoods %}
                     <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-5 col-6">
                         <div class="card card-block" style="border: 0">
-                            <img src="[[good.COVER]]" class="single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE]]" />
+                            <img style="cursor: pointer" src="[[good.COVER]]" class="single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE]]" />
                             <span style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</span>
                             <span class="text-capitalize single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE]]" style="text-decoration: underline;font-size: 13px;">[[lang.wishlist_add_to_bag]]</span>
                         </div>

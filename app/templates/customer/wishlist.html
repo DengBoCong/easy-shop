@@ -14,7 +14,7 @@
                     <span style="font-size: 13px;margin-bottom: 40px;">[[lang.wishlist_title_info]]</span>
                     {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[good.GOOD.COVER]]" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" class="single-product-img-btn" width="100%" height="400px"/>
+                        <img src="[[good.GOOD.COVER]]" style="cursor: pointer" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" class="single-product-img-btn" width="100%" height="400px"/>
                         <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>&nbsp;{% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]{% endif %}</p>
                         <div class="btn btn-block text-uppercase add-shopping-good-btn" data-good-id="[[good.GOOD.ID]]"
                               data-good-size="[[good.SIZE]]" data-good-num="[[good.NUM]]"
@@ -22,11 +22,11 @@
                             [[lang.wishlist_add_to_bag]]
                         </div>
                         <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
-                            <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C"></i>
+                            <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C;cursor: pointer"></i>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[good.GOOD.COVER]]" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" class="single-product-img-btn" width="100%" height="400px"/>
+                        <img src="[[good.GOOD.COVER]]" style="cursor: pointer" data-product-id="[[good.GOOD.ID]]" data-product-type="[[good.GOOD.TYPE | lower]]" class="single-product-img-btn" width="100%" height="400px"/>
                         <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[lang.products_size]]：[[good.SIZE]]</br>&nbsp;{% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]{% endif %}</p>
                         <div class="btn btn-block text-uppercase add-sample-good-btn" data-good-id="[[good.GOOD.ID]]"
                               data-good-size="[[good.SIZE]]" data-good-num="[[good.NUM]]"
@@ -34,7 +34,7 @@
                             [[lang.wishlist_add_to_sample]]
                         </div>
                         <div style="text-align: center;margin-top: 20px;margin-bottom: 20px;">
-                            <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C"></i>
+                            <i data-wish-good-id="[[good.ID]]" class="bi bi-x-lg delete-wish-good-btn" style="color: #0C0C0C;cursor: pointer"></i>
                         </div>
                     </div>
                     {% endfor %}

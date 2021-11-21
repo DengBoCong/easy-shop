@@ -60,6 +60,7 @@ def history_samples(lang_type):
                 get_currency_op(order_good.good.CURRENCY), "%.2f" % order_good_info["PRICE"])
             currency = get_currency_op(order_good.good.CURRENCY)
             order_good_info["COVER"] = order_good.good.COVER
+            order_good_info["GOOD"] = order_good.good.to_json()
 
             order_info["ORDER_GOOD"].append(order_good_info)
 
@@ -279,15 +280,34 @@ def order_confirm(lang_type):
             lang_type == 'zh_cn' else order_good.good.COLOR
         good_info["GOOD"]["CATEGORY"] = order_good.good.category.NAME if \
             lang_type == 'zh_cn' else order_good.good.category.EN_NAME
-        good_info["PRICE"] = "{}{} {}".format(
+
+        single_price = 0.0
+        if order_good.good.CLASS != "DESIGN":
+            if order_good.good.CLASS == "REFERENCE":
+                single_price = float(order_good.good.PRICE)
+                amount += single_price * order_good.NUM
+            else:
+                for price in order_good.good.goodPrices:
+                    if price.START_NUM < order_good.NUM < price.END_NUM:
+                        single_price = float(price.PRICE)
+                        amount += single_price * order_good.NUM
+                        break
+        good_info["GOOD"]["PRICE"] = "{}{} {}".format(
             get_currency_op(good_info["GOOD"]["CURRENCY"]),
-            "%.2f" % good_info["PRICE"],
-            get_currency_lang_op(good_info["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else good_info["GOOD"]["CURRENCY"]
+            "%.2f" % single_price,
+            get_currency_lang_op(good_info["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else good_info["GOOD"][
+                "CURRENCY"]
         )
 
-        amount += float(order_good.PRICE) * good_info["NUM"]
-
+        # good_info["PRICE"] = "{}{} {}".format(
+        #     get_currency_op(good_info["GOOD"]["CURRENCY"]),
+        #     "%.2f" % good_info["PRICE"],
+        #     get_currency_lang_op(good_info["GOOD"]["CURRENCY"]) if lang_type == "zh_cn" else good_info["GOOD"]["CURRENCY"]
+        # )
         goods_list.append(good_info)
+
+        # amount += float(order_good.PRICE) * good_info["NUM"]
+
     total_amount = amount if len(goods_list) == 0 else "{}{} {}".format(
         get_currency_op(goods_list[0]["GOOD"]["CURRENCY"]),
         "%.2f" % amount,
@@ -296,5 +316,5 @@ def order_confirm(lang_type):
 
     return render_template("customer/orderConfirm.html", lang=lang[lang_type],
                            lang_type=lang_type, route="orderConfirm",
-                           addition=set_addition(location="shoppingBag", categories="orderConfirm"),
+                           addition=set_addition(location="orderConfirm", categories="orderConfirm"),
                            data={"goods": goods_list, "amount": total_amount, "orderId": order_id})

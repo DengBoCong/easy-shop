@@ -91,7 +91,7 @@ def edit_single_product(lang_type):
         good_sizes_list.append(good_size.to_json())
 
     return render_template("admin/editProducts.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="editProducts",
+                           lang_type=lang_type, route="editProducts?goodId={}".format(info_data.get("goodId")),
                            addition=set_addition(add="-" + sub_page, location=sub_page),
                            data={"areas": areas_list, "goodCategories": good_categories_list,
                                  "goodSizes": good_sizes_list, "goodInfo": good_info,
@@ -372,6 +372,7 @@ def orde_history(lang_type):
                 get_currency_op(order_good.good.CURRENCY), "%.2f" % order_good_info["PRICE"])
             currency = get_currency_op(order_good.good.CURRENCY)
             order_good_info["COVER"] = order_good.good.COVER
+            order_good_info["GOOD"] = order_good.good.to_json()
 
             order_info["ORDER_GOOD"].append(order_good_info)
 

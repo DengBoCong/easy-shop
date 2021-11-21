@@ -16,10 +16,10 @@
                 <div class="row">
                     {% for good in data.goods %}
                     <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                        <img src="[[good.GOOD.COVER]]" width="100%" height="300px"/>
+                        <img src="[[good.GOOD.COVER]]" style="cursor: pointer" data-product-id="[[good.GOOD.ID]]" data-product-class="[[good.GOOD.CLASS]]" class="single-product-img-btn" width="100%" height="300px"/>
                         <div class="row">
                             <div class="col-10">
-                                <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>[[good.GOOD.PRICE]]</p>
+                                <p style="font-size: 13px;margin-top: 10px;">[[good.GOOD.BRAND]]</br>[[good.GOOD.COLOR]] [[good.GOOD.CATEGORY]]</br>{% if good.GOOD.CLASS != 'DESIGN' %}[[good.GOOD.PRICE]]{% endif %}</p>
                             </div>
                             <div class="col-2" style="padding: 0;font-size: 13px;"><p style="margin-top: 5px;">x [[good.NUM]]</p></div>
                         </div>
@@ -45,6 +45,10 @@
             var $ = layui.$,
                 admin = layui.admin,
                 layer = layui.layer;
+
+            $('.single-product-img-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
+            });
         });
     </script>
 {% endblock %}

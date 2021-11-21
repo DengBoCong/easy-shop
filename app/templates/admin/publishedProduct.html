@@ -73,7 +73,7 @@
                     <div class="row">
                         {% for good in data.goods %}
                         <div class="col-xxl-3 col-lg-4 col-6">
-                            <img src="[[good.COVER]]" style="width: 100%;" class="single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE | lower]]">
+                            <img src="[[good.COVER]]" style="width: 100%;cursor: pointer" class="single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE | lower]]">
                             <div class="row">
                                 <div class="col-10">
                                     <p style="font-size: 13px;margin-top: 10px;">[[good.BRAND]]</br>[[good.COLOR]] [[good.CATEGORY]]</br>[[good.PRICE]]</p>

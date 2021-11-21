@@ -130,19 +130,19 @@
                         <hr class="layui-border-black d-none d-lg-block" style="margin-top: 10px;">
                         <div class="row">
                             <div class="col-3 d-none d-lg-block" data-bs-toggle="collapse" data-bs-target="#collapseExample[[loop.index]]"
-                                 aria-expanded="false" aria-controls="collapseExample[[loop.index]]" style="overflow: scroll">[[order.NUM]]
+                                 aria-expanded="false" aria-controls="collapseExample[[loop.index]]" style="overflow: hidden;">[[order.NUM]]
                                 <i class="bi bi-chevron-down" style="float: right"></i>
                             </div>
-                            <div class="col-2 d-none d-lg-block" style="overflow: scroll">[[order.CREATE_DATETIME]]</div>
-                            <div class="col-2 d-none d-lg-block" style="overflow: scroll">[[order.TOTAL_AMOUNT]]</div>
-                            <div class="col-2 d-none d-lg-block" style="overflow: scroll">[[order.STATUS]]</div>
-                            <div class="col-3 d-none d-lg-block" style="overflow: scroll">[[order.TRACK_NUM]]</div>
+                            <div class="col-2 d-none d-lg-block" style="overflow: hidden">[[order.CREATE_DATETIME]]</div>
+                            <div class="col-2 d-none d-lg-block" style="overflow: hidden">[[order.TOTAL_AMOUNT]]</div>
+                            <div class="col-2 d-none d-lg-block" style="overflow: hidden">[[order.STATUS]]</div>
+                            <div class="col-3 d-none d-lg-block" style="overflow: hidden">[[order.TRACK_NUM]]</div>
                             <div class="collapse" id="collapseExample[[loop.index]]" style="padding: 0;">
                                 <div class="card card-body" style="border: 0">
                                     <div class="row">
                                         {% for orderGood in order.ORDER_GOOD %}
                                         <div class="col-xxl-2 col-xl-3 col-md-3 col-4" style="padding: 0 5px 0 5px">
-                                            <img src="[[orderGood.COVER]]" width="100%"/>
+                                            <img style="cursor: pointer" src="[[orderGood.COVER]]" data-product-id="[[orderGood.GOOD.ID]]" data-product-class="[[orderGood.GOOD.CLASS]]" class="single-product-img-btn" width="100%"/>
                                             <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
                                             <p>[[orderGood.PRICE]]</p>
                                         </div>
@@ -177,7 +177,7 @@
                             <div class="row">
                                 {% for orderGood in order.ORDER_GOOD %}
                                 <div class="col-3" style="padding: 0 5px 0 5px">
-                                    <img src="[[orderGood.COVER]]" width="100%"/>
+                                    <img style="cursor: pointer" src="[[orderGood.COVER]]" data-product-id="[[orderGood.GOOD.ID]]" data-product-class="[[orderGood.GOOD.CLASS]]" class="single-product-img-btn" width="100%"/>
                                     <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
                                     <p>[[orderGood.PRICE]]</p>
                                 </div>
@@ -298,6 +298,10 @@
             });
             $('#header-offcanvas-bottom-close-sort').on('click', function () {
                 $('#offcanvasNavListSort1').trigger('click')
+            });
+
+            $('.single-product-img-btn').on('click', function () {
+                window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
         });
     </script>
