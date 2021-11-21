@@ -192,9 +192,11 @@
                 </ul>
             </div>
         </div>
+        {% if data.pageCount != 0 %}
         <div class="row" style="margin-top: 50px;text-align: center">
             <div id="pageBottomSelect"></div>
         </div>
+        {% endif %}
     </main>
     <div class="offcanvas offcanvas-start" tabindex="-1" style="z-index: 50;width: 100%"
          data-bs-scroll="true" data-bs-backdrop="false"

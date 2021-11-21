@@ -400,9 +400,7 @@ def admin_shopping_bag(lang_type):
 
     areas = Area.query.order_by(asc(Area.EN_NAME)).all()
     areas_list = []
-    area_dict = {"public": "public"}
     for area in areas:
-        area_dict[area.EN_NAME] = area.ID
         areas_list.append(area.to_json())
 
     if info_data.get("sort", "") == "less_more":

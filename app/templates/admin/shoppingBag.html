@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-none d-sm-block">
+                <div class="row d-none d-sm-block" style="margin-top: 20px;">
                     <div class="row">
                         <div class="col-4 text-uppercase">[[lang.common_customers]]</div>
                         <div class="col-4 text-uppercase">[[lang.account_number]]</div>
@@ -104,7 +104,7 @@
                     </li>
                     {% for area in data.areas %}
                         <li style="[['margin-top: 10px;' if loop.index - 1 == 0 else '']]font-size: 13px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]" class="text-capitalize">
-                            <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=[[area.EN_NAME]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</a>
+                            <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -153,7 +153,7 @@
                 </li>
                 {% for area in data.areas %}
                     <li class="nav-item self-a-link" style="margin-top: 15px;[['text-decoration: underline;' if data.area == area.EN_NAME else '']]">
-                        <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=[[area.EN_NAME]]">
+                        <a href="/[[lang_type]]/adminShoppingBag?sort=[[data.sort]]&area=[[area.ID]]">
                             [[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]
                         </a>
                     </li>
