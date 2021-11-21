@@ -61,6 +61,8 @@
         .self-a-link a:hover {
             text-decoration: underline
         }
+
+        .layui-form-select dl dd.layui-this { background-color: #323232; color: #FFFFFF; }
     </style>
 </head>
 <body style="font-family: NotoSansCJK-Bold;background-color: #FFFFFF;">
@@ -551,6 +553,16 @@
                             window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
                         } else {
                             window.location.href = "/[[lang_type]]/allProducts?class=" + $(this).attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
+                        }
+                    });
+
+                    $('#header-search-item-search-input').on('keydown', function (event) {
+                        if (event.keyCode == 13) {
+                            if ($('#header-search-item-search-btn').attr('data-value') == 'customers') {
+                                window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
+                            } else {
+                                window.location.href = "/[[lang_type]]/allProducts?class=" + $('#header-search-item-search-btn').attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
+                            }
                         }
                     });
                 }
