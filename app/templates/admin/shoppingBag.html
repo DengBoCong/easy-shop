@@ -11,7 +11,7 @@
                 <div class="input-group" style="border: #0C0C0C 1px solid;margin-top: 20px">
                     <input type="text" class="form-control" style="border: 0" id="bag-customer-search-input">
                     <div class="input-group-prepend">
-                        <div class="input-group-text" style="background-color: transparent;border: 0" id="bag-customer-search-btn">
+                        <div class="input-group-text" style="cursor: pointer;background-color: transparent;border: 0" id="bag-customer-search-btn">
                             <i class="bi bi-search" style="color: #0C0C0C;"></i>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                     {% if not data.users %}<hr class="layui-border-black" style="margin-top: 10px;">{% endif %}
                     {% for user in data.users %}
                         <hr class="layui-border-black" style="margin-top: 10px;">
-                        <div class="row account-details-btn" data-account="[[user.ID]]">
+                        <div class="row account-details-btn" style="cursor: pointer" data-account="[[user.ID]]">
                             <div class="col-4">[[user.NAME]]</div>
                             <div class="col-4">[[user.EMAIL]]</div>
                             <div class="col-2">[[user.ORDERS]]</div>
@@ -67,13 +67,13 @@
                 <div class="row d-sm-none" style="font-size: 13px;font-family: NotoSansCJK-Medium">
                     {% for user in data.users %}
                     <hr class="layui-border-black" style="margin-top: 10px;">
-                    <div class="col-6 account-details-btn" data-account="[[user.ID]]">
+                    <div class="col-6 account-details-btn" data-account="[[user.ID]]" style="cursor: pointer">
                         <p class="text-capitalize">[[lang.common_customers]]</p>
                         <p class="text-capitalize">[[lang.account_number]]</p>
                         <p class="text-capitalize">[[lang.orders_orders]]</p>
                         <p class="text-capitalize">[[lang.common_area]]</p>
                     </div>
-                    <div class="col-6 account-details-btn" data-account="[[user.ID]]" style="text-align: right">
+                    <div class="col-6 account-details-btn" data-account="[[user.ID]]" style="text-align: right;cursor: pointer">
                         <p>[[user.NAME if user.NAME != '' else lang.common_empty ]]</p>
                         <p>[[user.EMAIL]]</p>
                         <p>[[user.ORDERS]]</p>
@@ -132,7 +132,7 @@
                 </li>
             </ul>
             <div class="self-nav" id="header-offcanvas-bottom-close-sort"
-                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                 style="cursor: pointer;border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
                 [[lang.common_close]]
             </div>
         </div>
@@ -160,7 +160,7 @@
                 {% endfor %}
             </ul>
             <div class="self-nav" id="header-offcanvas-bottom-close-area"
-                 style="border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
+                 style="cursor: pointer;border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
                 [[lang.common_close]]
             </div>
         </div>
