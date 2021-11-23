@@ -484,7 +484,7 @@
                 offset: ['0', '0'],
                 title: false,
                 id: 'navSearchButton',
-                content: '<div style="padding: 10px 10px 0 10px;font-size: 14px;"><div class="row self-a-link"><ul class="nav">' +
+                content: '<div style="padding: 10px 10px 0 10px;font-size: 14px;overflow: hidden;"><div class="row self-a-link"><ul class="nav">' +
                     '<li class="nav-item" style="margin-left: 10px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="all" style="color: #000000" href="javascript:;">[[lang.header_nav_all]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="men" style="color: #000000" href="javascript:;">[[lang.header_nav_men]]</a></li>' +
                     '<li class="nav-item" style="margin-left: -20px;"><a class="nav-link text-uppercase header-search-item-btn" data-value="women" style="color: #000000" href="javascript:;">[[lang.header_nav_women]]</a></li>' +
@@ -506,6 +506,8 @@
                     });
                     $('.header-search-item-btn').on('click', function () {
                         $('#header-search-item-search-btn').attr('data-value', $(this).attr('data-value'))
+                        $('.header-search-item-btn').css('text-decoration', 'none')
+                        $(this).css('text-decoration', 'underline')
                     });
 
                     $('#header-search-item-search-btn').on('click', function () {
@@ -546,6 +548,8 @@
                     });
                     $('.header-search-item-btn').on('click', function () {
                         $('#header-search-item-search-btn').attr('data-value', $(this).attr('data-value'))
+                        $('.header-search-item-btn').css('text-decoration', 'none')
+                        $(this).css('text-decoration', 'underline')
                     });
 
                     $('#header-search-item-search-btn').on('click', function () {
