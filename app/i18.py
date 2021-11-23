@@ -113,6 +113,7 @@ lang = {
         "contact_us_third": "中泰天成南山主角大厦14楼",
         "contact_us_forth": "电话：86-755-26520270",
         "contact_us_fifth": "传真：86-755-26520160",
+        "contact_us_sixth": "邮箱：olivia@huahongltd.com",
 
         "products_categories_shoes": "鞋履",
         "products_categories_bags": "包袋",
@@ -353,6 +354,7 @@ lang = {
         "contact_us_third": "Road, Nanshan.Shenzhen,China.",
         "contact_us_forth": "Tel: 86-755-26520270",
         "contact_us_fifth": "Fax: 86-755-26520160",
+        "contact_us_sixth": "Email: olivia@huahongltd.com",
 
         "products_categories_shoes": "shoes",
         "products_categories_bags": "bags",
