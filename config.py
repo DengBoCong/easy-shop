@@ -15,7 +15,7 @@ class Config:
     SQLALCHEMY_ECHO = False
 
     # 邮件相关
-    FLASKY_MAIL_SENDER = "1210212670@qq.com"
+    FLASKY_MAIL_SENDER = "609116848@qq.com"
 
     @classmethod
     def init_app(cls, app: Flask):
@@ -34,8 +34,8 @@ class DevelopmentConfig(Config):
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
-    MAIL_USERNAME = "1210212670@qq.com"  #os.environ.get('')
-    MAIL_PASSWORD = "opkewimdfbnbhcgc"  #os.environ.get('')
+    MAIL_USERNAME = "609116848@qq.com"  #os.environ.get('')
+    MAIL_PASSWORD = "gxvjtwovwamhbdef"  #os.environ.get('')
     SQLALCHEMY_DATABASE_URI = "mysql://root:Andie130857@localhost:3306/easyshop?charset=utf8&autocommit=true"
 
 
