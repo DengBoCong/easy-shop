@@ -138,11 +138,11 @@
                             <div class="col-2 d-none d-lg-block" style="overflow: hidden">[[order.STATUS]]</div>
                             <div class="col-3 d-none d-lg-block" style="overflow: hidden">[[order.TRACK_NUM]]</div>
                             <div class="collapse" id="collapseExample[[loop.index]]" style="padding: 0;">
-                                <div class="card card-body" style="border: 0">
+                                <div class="card card-body d-none d-lg-block" style="border: 0">
                                     <div class="row">
                                         {% for orderGood in order.ORDER_GOOD %}
                                         <div class="col-xxl-2 col-xl-3 col-md-3 col-4" style="padding: 0 5px 0 5px">
-                                            <img style="cursor: pointer" src="[[orderGood.COVER]]" data-product-id="[[orderGood.GOOD.ID]]" data-product-class="[[orderGood.GOOD.CLASS]]" class="single-product-img-btn" width="100%"/>
+                                            <img style="cursor: pointer;object-fit: contain" src="[[orderGood.COVER]]" data-product-id="[[orderGood.GOOD.ID]]" data-product-class="[[orderGood.GOOD.CLASS]]" class="single-product-img-btn" width="100%"/>
                                             <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
                                             <p>[[orderGood.PRICE]]</p>
                                         </div>
@@ -173,11 +173,11 @@
                         <p>[[order.TRACK_NUM]]</p>
                     </div>
                     <div class="collapse" id="collapseExampleApp[[loop.index]]" style="padding: 0;">
-                        <div class="card card-body" style="border: 0">
+                        <div class="card card-body d-lg-none" style="border: 0">
                             <div class="row">
                                 {% for orderGood in order.ORDER_GOOD %}
                                 <div class="col-3" style="padding: 0 5px 0 5px">
-                                    <img style="cursor: pointer" src="[[orderGood.COVER]]" data-product-id="[[orderGood.GOOD.ID]]" data-product-class="[[orderGood.GOOD.CLASS]]" class="single-product-img-btn" width="100%"/>
+                                    <img style="cursor: pointer;object-fit: contain" src="[[orderGood.COVER]]" data-product-id="[[orderGood.GOOD.ID]]" data-product-class="[[orderGood.GOOD.CLASS]]" class="single-product-img-btn" width="100%"/>
                                     <span>[[orderGood.TITLE]]</span><span style="float:right;">x [[orderGood.NUM]]</span>
                                     <p>[[orderGood.PRICE]]</p>
                                 </div>

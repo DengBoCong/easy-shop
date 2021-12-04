@@ -116,7 +116,7 @@
                 <div id="edit-product-add-img-list">
                     {% for img in data.goodInfo.IMG %}
                         <div class="row" style="position:relative;margin-top: 10px;">
-                            <img class="edit-product-add-img-img" src="[[img]]" style="width: 100%;cursor: pointer">
+                            <img class="edit-product-add-img-img" src="[[img]]" style="width: 100%;cursor: pointer;object-fit: contain">
                             <span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>
                             <span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
                         </div>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="row" style="margin-top: 30px;">
                     <img src="[[url_for('static', filename='img/plusLine.png')]]"
-                         style="width: 600px;border-color: #0C0C0C;cursor: pointer"
+                         style="width: 100%;border-color: #0C0C0C;cursor: pointer;object-fit: contain"
                          id="edit-product-add-img" class="rounded mx-auto d-block">
                 </div>
             </div>
@@ -261,12 +261,12 @@
                         </div>
                         <div class="carousel-inner" id="carousel-index-img">
                             <div class="carousel-item active">
-                                <img style="cursor: pointer" src="[[url_for('static', filename='img/plusLine.png')]]"
+                                <img style="cursor: pointer;object-fit: contain;width: 100%" src="[[url_for('static', filename='img/plusLine.png')]]"
                                      class="d-block w-100 edit-product-add-img1" data-tag-first="yes">
                             </div>
                             {% for img in data.goodInfo.IMG %}
                                 <div class="carousel-item carousel-index-btn-sub[[loop.index]]" style="position:relative;">
-                                    <img src="[[img]]" class="d-block w-100 edit-product-add-img-img1">
+                                    <img src="[[img]]" class="d-block w-100 edit-product-add-img-img1" style="object-fit: contain">
                                     <span data-imgCountAdd="[[loop.index]]" data-imgCount=".carousel-index-btn-sub[[loop.index]]" class="btn btn-block text-uppercase edit-product-add-img-delete1" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 15px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>
                                     <span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 15px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
                                 </div>
