@@ -56,6 +56,7 @@
                 layer = layui.layer;
 
             $('.single-product-img-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-type') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
 

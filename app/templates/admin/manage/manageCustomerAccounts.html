@@ -205,6 +205,7 @@
                 layer = layui.layer;
 
             $('.add-user-account-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]-customer/addUser"
             });
 
@@ -216,6 +217,7 @@
             });
 
             $('.account-details-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]/orderHistory?userId=" + $(this).attr('data-account') + '&sort=less_more'
             });
         });

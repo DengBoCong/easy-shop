@@ -290,6 +290,7 @@
                 layer = layui.layer;
 
             $('.edit-user-account-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]-customer/editUser?userId=[[data.userId]]"
             });
 
@@ -301,6 +302,7 @@
             });
 
             $('.single-product-img-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
         });

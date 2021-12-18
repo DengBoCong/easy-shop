@@ -49,7 +49,8 @@ def index(lang_type):
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="index")
     return render_template("index.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="index", addition=set_addition())
+                           lang_type=lang_type, route="index",
+                           addition=set_addition(), rand=str(random.randint(0, 10000)))
 
 
 @views.route('/<lang_type>/', methods=['GET', 'POST'])
@@ -72,7 +73,8 @@ def about_us(lang_type):
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang=lang[lang_type], lang_type=lang_type, route="aboutUs")
     return render_template("public/aboutUs.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="aboutUs", addition=set_addition(location="aboutUs"))
+                           lang_type=lang_type, route="aboutUs",
+                           addition=set_addition(location="aboutUs"), rand=str(random.randint(0, 10000)))
 
 
 @views.route('/<lang_type>/contactUs', methods=['GET', 'POST'])
@@ -81,7 +83,8 @@ def contact_us(lang_type):
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang=lang[lang_type], lang_type=lang_type, route="contactUs")
     return render_template("public/contactUs.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="contactUs", addition=set_addition(location="contactUs"))
+                           lang_type=lang_type, route="contactUs",
+                           addition=set_addition(location="contactUs"), rand=str(random.randint(0, 10000)))
 
 
 @views.route('/<lang_type>/commonSample', methods=['GET', 'POST'])

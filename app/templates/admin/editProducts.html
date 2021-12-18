@@ -1113,8 +1113,10 @@
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
                                 if (btnType == 0) {
+                                    layer.load(2)
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
+                                    layer.load(2)
                                     window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
                                 }
                             } else {
@@ -1212,8 +1214,10 @@
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
                                 if (btnType == 0) {
+                                    layer.load(2)
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
+                                    layer.load(2)
                                     window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
                                 }
                             } else {

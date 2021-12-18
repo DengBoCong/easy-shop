@@ -95,7 +95,7 @@
                         <hr class="layui-border-black" style="margin-top: 10px;">
                         <div class="row account-details-btn" data-account="[[user.ID]]">
                             {% if addition.login and current_user.ROLE == 'SUPER' %}
-                            <div class="col-3">[[user.NAME]]</div>
+                            <div class="col-3">[[user.FIRST_NAME]] [[user.LAST_NAME]]</div>
                             <div class="col-3">[['Junior Staff' if user.ROLE == 'AGENT' else 'Senior Staff']]</div>
                             <div class="col-3">[[user.EMAIL]]</div>
                             <div class="col-3">[[user.ORDERS]]</div>
@@ -119,7 +119,7 @@
                         <p class="text-capitalize">[[lang.common_published_products]]</p>
                     </div>
                     <div class="col-6 account-details-btn" data-account="[[user.ID]]" style="text-align: right">
-                        <p>[[user.NAME if user.NAME != '' else lang.common_empty ]]</p>
+                        <p>[[user.FIRST_NAME]] [[user.LAST_NAME]]</p>
                         {% if addition.login and current_user.ROLE == 'SUPER' %}
                         <p>[['Junior Staff' if user.ROLE == 'AGENT' else 'Senior Staff']]</p>
                         {% endif %}
@@ -231,6 +231,7 @@
                 layer = layui.layer;
 
             $('.add-user-accpunt-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]-staff/addUser"
             });
 
@@ -242,6 +243,7 @@
             });
 
             $('.account-details-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]/publishedProduct?userId=" + $(this).attr('data-account') + '&category=SAMPLE'
             });
         });

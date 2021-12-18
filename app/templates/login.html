@@ -231,6 +231,7 @@
                         layer.close(tmpLoad);
                         if (res.data.code == 0) {
                             layer.msg(res.msg, {icon: 1});
+                            layer.load(2)
                             window.location.href = "/[[lang_type]]/index"
                         } else {
                             layer.msg(res.msg, {icon: 2});

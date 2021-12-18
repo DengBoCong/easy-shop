@@ -512,8 +512,10 @@
 
                     $('#header-search-item-search-btn').on('click', function () {
                         if ($(this).attr('data-value') == 'customers') {
+                            layer.load(2)
                             window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
                         } else {
+                            layer.load(2)
                             window.location.href = "/[[lang_type]]/allProducts?class=" + $(this).attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
                         }
                     });
@@ -554,8 +556,10 @@
 
                     $('#header-search-item-search-btn').on('click', function () {
                         if ($(this).attr('data-value') == 'customers') {
+                            layer.load(2)
                             window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
                         } else {
+                            layer.load(2)
                             window.location.href = "/[[lang_type]]/allProducts?class=" + $(this).attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
                         }
                     });
@@ -563,8 +567,10 @@
                     $('#header-search-item-search-input').on('keydown', function (event) {
                         if (event.keyCode == 13) {
                             if ($('#header-search-item-search-btn').attr('data-value') == 'customers') {
+                                layer.load(2)
                                 window.location.href = "/[[lang_type]]/adminShoppingBag?name=" + $('#header-search-item-search-input').val()
                             } else {
+                                layer.load(2)
                                 window.location.href = "/[[lang_type]]/allProducts?class=" + $('#header-search-item-search-btn').attr('data-value') + "&name=" + $('#header-search-item-search-input').val()
                             }
                         }
@@ -633,25 +639,31 @@
         });
 
         $('#small-screen-log-in-btn').on('click', function () {
+            layer.load(2)
            window.location.href = "/[[lang_type]]/login"
         });
 
         $('#wish-heart-btn').on('click', function () {
+            layer.load(2)
            window.location.href = "/[[lang_type]]/wishlist"
         });
 
         $('#shopping-bag-btn').on('click', function () {
             {% if addition.login and current_user.ROLE != 'USER' %}
+            layer.load(2)
             window.location.href = "/[[lang_type]]/adminShoppingBag"
             {% else %}
+            layer.load(2)
             window.location.href = "/[[lang_type]]/shoppingBag"
             {% endif %}
         });
 
         $('#sample-bag-btn').on('click', function () {
             {% if addition.login and current_user.ROLE != 'USER' %}
+            layer.load(2)
             window.location.href = "/[[lang_type]]/adminSampleBag"
             {% else %}
+            layer.load(2)
             window.location.href = "/[[lang_type]]/sampleBag"
             {% endif %}
         });

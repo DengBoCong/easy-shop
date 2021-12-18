@@ -1,4 +1,5 @@
 import os
+import random
 import time
 import json
 import uuid
@@ -8,7 +9,7 @@ from .. import db
 from flask import request
 from flask import jsonify
 from flask_login import login_required, current_user
-from ..setting import IMAGE_FILE_DIR, FILE_DIR
+from ..setting import IMAGE_FILE_DIR, INDEX_IMAGE_FILE_DIR
 from ..i18 import lang
 from werkzeug.utils import secure_filename
 
@@ -37,3 +38,121 @@ def single_image_upload():
                                  'originFileName': origin_filename, 'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': 'Fail', 'data': {'code': 1}})
+
+
+@controllers.route('{}/upload!index_men_image_upload'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def index_men_image_upload():
+    image = request.files["file"]
+    upload_path = os.path.abspath(os.path.join(os.getcwd())).replace("\\", "/") + INDEX_IMAGE_FILE_DIR
+
+    try:
+        if not os.path.exists(upload_path):
+            os.makedirs(upload_path, 0o777)
+
+        origin_filename = image.filename
+        image_filename = "indexMen.jpg"
+        src = os.path.join(upload_path + secure_filename(image_filename))  # image.filename
+        image.save(src)
+
+        return jsonify({'code': 0, 'msg': 'Success',
+                        'data': {'url': '/static/img/indexMen.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': 'Fail',
+                        'data': {'url': '/static/img/indexMen.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 1}})
+
+
+@controllers.route('{}/upload!index_women_image_upload'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def index_women_image_upload():
+    image = request.files["file"]
+    upload_path = os.path.abspath(os.path.join(os.getcwd())).replace("\\", "/") + INDEX_IMAGE_FILE_DIR
+
+    try:
+        if not os.path.exists(upload_path):
+            os.makedirs(upload_path, 0o777)
+
+        origin_filename = image.filename
+        image_filename = "indexWomen.jpg"
+        src = os.path.join(upload_path + secure_filename(image_filename))  # image.filename
+        image.save(src)
+
+        return jsonify({'code': 0, 'msg': 'Success',
+                        'data': {'url': '/static/img/indexWomen.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': 'Fail',
+                        'data': {'url': '/static/img/indexWomen.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 1}})
+
+
+@controllers.route('{}/upload!index_new_image_upload'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def index_new_image_upload():
+    image = request.files["file"]
+    upload_path = os.path.abspath(os.path.join(os.getcwd())).replace("\\", "/") + INDEX_IMAGE_FILE_DIR
+
+    try:
+        if not os.path.exists(upload_path):
+            os.makedirs(upload_path, 0o777)
+
+        origin_filename = image.filename
+        image_filename = "indexNew.jpg"
+        src = os.path.join(upload_path + secure_filename(image_filename))  # image.filename
+        image.save(src)
+
+        return jsonify({'code': 0, 'msg': 'Success',
+                        'data': {'url': '/static/img/indexNew.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': 'Fail',
+                        'data': {'url': '/static/img/indexNew.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 1}})
+
+
+@controllers.route('{}/upload!index_about_image_upload'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def index_about_image_upload():
+    image = request.files["file"]
+    upload_path = os.path.abspath(os.path.join(os.getcwd())).replace("\\", "/") + INDEX_IMAGE_FILE_DIR
+
+    try:
+        if not os.path.exists(upload_path):
+            os.makedirs(upload_path, 0o777)
+
+        origin_filename = image.filename
+        image_filename = "aboutUs.jpg"
+        src = os.path.join(upload_path + secure_filename(image_filename))  # image.filename
+        image.save(src)
+
+        return jsonify({'code': 0, 'msg': 'Success',
+                        'data': {'url': '/static/img/aboutUs.jpg?rand={}'.format(random.randint(0, 10000)), 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': 'Fail',
+                        'data': {'url': '/static/img/aboutUs.jpg?rand={}'.format(random.randint(0, 10000)), 'code': 1}})
+
+
+@controllers.route('{}/upload!index_contact_image_upload'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def index_contact_image_upload():
+    image = request.files["file"]
+    upload_path = os.path.abspath(os.path.join(os.getcwd())).replace("\\", "/") + INDEX_IMAGE_FILE_DIR
+
+    try:
+        if not os.path.exists(upload_path):
+            os.makedirs(upload_path, 0o777)
+
+        origin_filename = image.filename
+        image_filename = "contactUs.jpg"
+        src = os.path.join(upload_path + secure_filename(image_filename))  # image.filename
+        image.save(src)
+
+        return jsonify({'code': 0, 'msg': 'Success',
+                        'data': {'url': '/static/img/contactUs.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': 'Fail',
+                        'data': {'url': '/static/img/contactUs.jpg?rand={}'.format(random.randint(0, 10000)),
+                                 'code': 1}})

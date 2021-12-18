@@ -140,6 +140,7 @@
                         layer.close(tmpLoad);
                         if (res.data.code == 0) {
                             layer.msg(res.msg, {icon: 1});
+                            layer.load(2)
                             window.location.href = '/[[lang_type]]/orderConfirm?orderId=' + res.data.orderId
                         } else {
                             layer.msg(res.msg, {icon: 2});
@@ -171,6 +172,7 @@
             });
 
             $('.single-product-img-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-type') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
             {% endif %}

@@ -19,16 +19,6 @@ def page_not_found(e):
     return render_template('error/404.html'), 404
 
 
-@app.errorhandler(403)
-def page_not_found(e):
-    return render_template('error/403.html'), 403
-
-
-@app.errorhandler(401)
-def page_not_found(e):
-    return render_template("user/app/templates/login.html"), 401
-
-
 with app.app_context():
     g.contextPath = ''
 

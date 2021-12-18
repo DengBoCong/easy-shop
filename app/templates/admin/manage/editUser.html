@@ -196,8 +196,10 @@
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
                                 if ('[[data.subPage]]' == 'customer') {
+                                    layer.load(2)
                                     window.location.href = "/[[lang_type]]/orderHistory?userId=[[data.user.ID]]"
                                 } else if ('[[data.subPage]]' == 'staff') {
+                                    layer.load(2)
                                     window.location.href = "/[[lang_type]]/manageStaffAccounts"
                                 }
                             } else {
@@ -244,8 +246,10 @@
                                     if (res.data.code == 0) {
                                         layer.msg(res.msg, {icon: 1});
                                         if ('[[data.subPage]]' == 'customer') {
+                                            layer.load(2)
                                             window.location.href = "/[[lang_type]]/manageCustomerAccounts"
                                         } else if ('[[data.subPage]]' == 'staff') {
+                                            layer.load(2)
                                             window.location.href = "/[[lang_type]]/manageStaffAccounts"
                                         }
                                     } else {

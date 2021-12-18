@@ -185,14 +185,17 @@
             });
 
             $('.account-details-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]/sampleBag?userId=" + $(this).attr('data-account')
             });
 
             $('.switch-product-mode-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]/bagProductMode"
             });
 
             $('#bag-customer-search-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = "/[[lang_type]]/adminSampleBag?name=" + $('#bag-customer-search-input').val()
             });
         });

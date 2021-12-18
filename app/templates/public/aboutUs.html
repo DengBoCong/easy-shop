@@ -16,7 +16,8 @@
                 <p style="margin-top: 15px;font-size: 14px;">[[lang.about_us_fifth]]</p>
             </div>
             <div class="col-12 col-md-6 col-xl-6" style="padding: 0 20px 0 20px">
-                <img src="[[url_for('static', filename='img/background.png')]]" width="100%" style="margin-top: 20px;" />
+                {% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-aboutus-index" style="cursor: pointer">[[lang.common_replace]]</span>{% endif %}
+                <img id="index-nav-about-img-btn" src="[[url_for('static', filename='img/aboutUs.jpg') + '?rand=' + rand]]" width="100%" style="margin-top: 20px;" />
             </div>
             <div class="col-12 col-md-12 col-xl-3"></div>
         </div>
@@ -28,10 +29,30 @@
             base: '../static/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index', 'layer', 'publicCommon'], function () {
+        }).use(['index', 'layer', 'publicCommon', 'upload'], function () {
             var $ = layui.$,
                 admin = layui.admin,
+                upload = layui.upload,
                 layer = layui.layer;
+
+
+            var tmpLoad;
+            upload.render({
+                url: '/api/common/upload!index_about_image_upload'
+                , elem: '#upload-img-aboutus-index'
+                , size: 200
+                , done: function (res) {
+                    if (res.data.code == 0) {
+                        layer.msg(res.msg, {icon: 1});
+                        $("#index-nav-about-img-btn").attr("src", res.data.url)
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                    layer.close(tmpLoad)
+                }, before: function (obj) {
+                    tmpLoad = layer.load(2)
+                }
+            });
         });
     </script>
 {% endblock %}

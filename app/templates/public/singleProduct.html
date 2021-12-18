@@ -251,15 +251,18 @@
             };
 
             $('.single-product-img-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = '/[[lang_type]][[addition.add]]/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
 
             $('.edit-single-product-btn').on('click', function () {
+                layer.load(2)
                 window.location.href = '/[[lang_type]]-[[goodInfo.CLASS]]/editProducts?goodId=[[goodInfo.ID]]'
             });
 
             $('#add-to-wishlist-btn').on('click', function () {
                 if ('[[addition.login]]' == 'False') {
+                    layer.load(2)
                     window.location.href = "/[[lang_type]]/login"
                 } else {
                     var sizeVal = $('#product-size').val()
@@ -287,6 +290,7 @@
             });
             $('#add-to-wishlist-btn1').on('click', function () {
                 if ('[[addition.login]]' == 'False') {
+                    layer.load(2)
                     window.location.href = "/[[lang_type]]/login"
                 } else {
                     var sizeVal = $('#product-size1').val()
@@ -313,6 +317,7 @@
 
             $('#add-to-shopping-btn').on('click', function () {
                 if ('[[addition.login]]' == 'False') {
+                    layer.load(2)
                     window.location.href = "/[[lang_type]]/login"
                 } else {
                     var sizeVal = $('#product-size').val()
@@ -344,6 +349,7 @@
             });
             $('#add-to-shopping-btn1').on('click', function () {
                 if ('[[addition.login]]' == 'False') {
+                    layer.load(2)
                     window.location.href = "/[[lang_type]]/login"
                 } else {
                     var sizeVal = $('#product-size1').val()

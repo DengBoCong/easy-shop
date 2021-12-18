@@ -4,6 +4,7 @@ COOKIE_DURATION_DAYS = 1  # cookie保存时间
 TEMP_FILE_DIR = "/app/static/uploads/temps/"
 FILE_DIR = "/app/static/uploads/files/"
 IMAGE_FILE_DIR = "/app/static/uploads/images/"
+INDEX_IMAGE_FILE_DIR = "/app/static/img/"
 FILE_SUFFIX = ".tag"
 FRAME_FILE_SUFFIX = ".txt"
 DEFAULT_PASSWORD = "111111"
