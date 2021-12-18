@@ -7,15 +7,15 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-sm-6 col-12">
-                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='img/indexMen.jpg') + '?rand=' + rand]]" id="index-nav-men-img-btn" width="100%"/>
+                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='uploads/indexMen.jpg') + '?rand=' + rand]]" id="index-nav-men-img-btn" width="100%"/>
                 <div class="text-uppercase" style="font-size: 13px;margin-top: 10px;">[[lang.header_nav_men]]{% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-men-index" style="cursor: pointer"> | [[lang.common_replace]]</span>{% endif %}</div>
             </div>
             <div class="col-sm-6 col-12">
-                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='img/indexWomen.jpg') + '?rand=' + rand]]" id="index-nav-women-img-btn" width="100%"/>
+                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='uploads/indexWomen.jpg') + '?rand=' + rand]]" id="index-nav-women-img-btn" width="100%"/>
                 <div class="text-uppercase" style="font-size: 13px;margin-top: 10px;">[[lang.header_nav_women]]{% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-women-index" style="cursor: pointer"> | [[lang.common_replace]]</span>{% endif %}</div>
             </div>
             <div class="col-12">
-                <img style="cursor: pointer" src="[[url_for('static', filename='img/indexNew.jpg') + '?rand=' + rand]]" id="index-nav-new-img-btn" width="100%"/>
+                <img style="cursor: pointer" src="[[url_for('static', filename='uploads/indexNew.jpg') + '?rand=' + rand]]" id="index-nav-new-img-btn" width="100%"/>
                 <div class="text-uppercase" style="font-size: 13px;margin-top: 10px;">[[lang.common_new_arrivals]]{% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-new-index" style="cursor: pointer"> | [[lang.common_replace]]</span>{% endif %}</div>
             </div>
         </div>

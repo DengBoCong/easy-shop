@@ -56,11 +56,11 @@ def index_men_image_upload():
         image.save(src)
 
         return jsonify({'code': 0, 'msg': 'Success',
-                        'data': {'url': '/static/img/indexMen.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/indexMen.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': 'Fail',
-                        'data': {'url': '/static/img/indexMen.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/indexMen.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 1}})
 
 
@@ -80,11 +80,11 @@ def index_women_image_upload():
         image.save(src)
 
         return jsonify({'code': 0, 'msg': 'Success',
-                        'data': {'url': '/static/img/indexWomen.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/indexWomen.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': 'Fail',
-                        'data': {'url': '/static/img/indexWomen.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/indexWomen.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 1}})
 
 
@@ -104,11 +104,11 @@ def index_new_image_upload():
         image.save(src)
 
         return jsonify({'code': 0, 'msg': 'Success',
-                        'data': {'url': '/static/img/indexNew.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/indexNew.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': 'Fail',
-                        'data': {'url': '/static/img/indexNew.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/indexNew.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 1}})
 
 
@@ -128,10 +128,10 @@ def index_about_image_upload():
         image.save(src)
 
         return jsonify({'code': 0, 'msg': 'Success',
-                        'data': {'url': '/static/img/aboutUs.jpg?rand={}'.format(random.randint(0, 10000)), 'code': 0}})
+                        'data': {'url': '/static/uploads/aboutUs.jpg?rand={}'.format(random.randint(0, 10000)), 'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': 'Fail',
-                        'data': {'url': '/static/img/aboutUs.jpg?rand={}'.format(random.randint(0, 10000)), 'code': 1}})
+                        'data': {'url': '/static/uploads/aboutUs.jpg?rand={}'.format(random.randint(0, 10000)), 'code': 1}})
 
 
 @controllers.route('{}/upload!index_contact_image_upload'.format(URL_PREFIX), methods=['POST'])
@@ -150,9 +150,9 @@ def index_contact_image_upload():
         image.save(src)
 
         return jsonify({'code': 0, 'msg': 'Success',
-                        'data': {'url': '/static/img/contactUs.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/contactUs.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': 'Fail',
-                        'data': {'url': '/static/img/contactUs.jpg?rand={}'.format(random.randint(0, 10000)),
+                        'data': {'url': '/static/uploads/contactUs.jpg?rand={}'.format(random.randint(0, 10000)),
                                  'code': 1}})
