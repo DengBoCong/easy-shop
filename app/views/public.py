@@ -48,8 +48,11 @@ def index(lang_type):
     """ 首页"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="index")
+
+    system = System.query.get("0")
+
     return render_template("index.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="index",
+                           lang_type=lang_type, route="index", systemInfo=system,
                            addition=set_addition(), rand=str(random.randint(0, 10000)))
 
 
@@ -72,8 +75,16 @@ def about_us(lang_type):
     """ 关于我们页"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang=lang[lang_type], lang_type=lang_type, route="aboutUs")
+
+    system = System.query.get("0")
+    img_list = []
+    if system:
+        img_list = system.ABOUT_US.split(",")
+    if len(img_list) == 1 and img_list[0] == "":
+        img_list = []
+
     return render_template("public/aboutUs.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="aboutUs",
+                           lang_type=lang_type, route="aboutUs", imgs=img_list,
                            addition=set_addition(location="aboutUs"), rand=str(random.randint(0, 10000)))
 
 
@@ -82,8 +93,16 @@ def contact_us(lang_type):
     """ 联系我们页"""
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang=lang[lang_type], lang_type=lang_type, route="contactUs")
+
+    system = System.query.get("0")
+    img_list = []
+    if system:
+        img_list = system.CONTACT_US.split(",")
+    if len(img_list) == 1 and img_list[0] == "":
+        img_list = []
+
     return render_template("public/contactUs.html", lang=lang[lang_type],
-                           lang_type=lang_type, route="contactUs",
+                           lang_type=lang_type, route="contactUs", imgs=img_list,
                            addition=set_addition(location="contactUs"), rand=str(random.randint(0, 10000)))
 
 
@@ -167,9 +186,14 @@ def sample(lang_type):
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     return render_template("public/sample.html", lang=lang[lang_type], lang_type=lang_type, route="commonSample",
                            addition=addition, data={"goods": goods_list, "categories": good_categories_list,
-                                                    "pageCount": page_count})
+                                                    "pageCount": page_count, "colors": colors_list})
 
 
 @views.route('/<lang_type>/designDiagrams', methods=['GET', 'POST'])
@@ -252,10 +276,15 @@ def design_diagrams(lang_type):
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     return render_template("public/designDiagrams.html", lang=lang[lang_type], lang_type=lang_type,
                            route="designDiagrams", addition=addition,
                            data={"goods": goods_list, "categories": good_categories_list,
-                                 "pageCount": page_count})
+                                 "pageCount": page_count, "colors": colors_list})
 
 
 @views.route('/<lang_type>/referenceDiagrams', methods=['GET', 'POST'])
@@ -330,10 +359,15 @@ def reference_diagrams(lang_type):
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     return render_template("public/referenceDiagrams.html", lang=lang[lang_type], lang_type=lang_type,
                            route="referenceDiagrams", addition=addition,
                            data={"goods": goods_list, "categories": good_categories_list,
-                                 "pageCount": page_count})
+                                 "pageCount": page_count, "colors": colors_list})
 
 
 @views.route('/<lang_type>/singleProduct', methods=['GET', 'POST'])
@@ -371,7 +405,8 @@ def single_products(lang_type):
     # })
 
     related_goods_list, buy_list, shopping_bag_list, wishlist = list(), dict(), list(), list()
-    if hasattr(current_user, "ID") and (current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER'):
+    if hasattr(current_user, "ID") and (
+            current_user.ROLE == 'AGENT' or current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER'):
         for order_good in good.orderGoods:
             buy_list[order_good.order.user.ID] = order_good.order.user.NAME
         shopping_bag_list = good.shoppingGoods
@@ -401,7 +436,8 @@ def single_products(lang_type):
                     get_currency_op(related_good_info["CURRENCY"]), "%.2f" % min_price)
             related_good_info["COLOR"] = get_color_op(
                 related_good_info["COLOR"]) if lang_type == 'zh_cn' else related_good_info["COLOR"]
-            related_good_info["CATEGORY"] = related_good.category.NAME if lang_type == 'zh_cn' else related_good.category.EN_NAME
+            related_good_info[
+                "CATEGORY"] = related_good.category.NAME if lang_type == 'zh_cn' else related_good.category.EN_NAME
             related_goods_list.append(related_good_info)
             count += 1
             if count == 6:

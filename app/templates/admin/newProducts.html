@@ -18,18 +18,13 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div class="layui-input-inline" style="width: 300px;">
                             <label class="text-uppercase">[[lang.color_color]]</label>
-                            <select id="product-color" lay-verify="required" style="margin-top: 5px;">
+                            <select lay-verify="required" style="margin-top: 5px;"
+                                    lay-filter="edit-product-color-select" id="edit-product-color-select-id">
                                 <option value="">[[lang.products_choose_color]]</option>
-                                <option value="Brown">[[lang.color_brown]]</option>
-                                <option value="Blue">[[lang.color_blue]]</option>
-                                <option value="Gray">[[lang.color_gray]]</option>
-                                <option value="White">[[lang.color_white]]</option>
-                                <option value="Pink">[[lang.color_pink]]</option>
-                                <option value="Purple">[[lang.color_purple]]</option>
-                                <option value="Red">[[lang.color_red]]</option>
-                                <option value="Green">[[lang.color_green]]</option>
-                                <option value="Yellow">[[lang.color_yellow]]</option>
-                                <option value="Black">[[lang.color_black]]</option>
+                                {% for color in data.colors %}
+                                    <option value="[[color.EN_NAME]]">[[color.NAME if lang_type == 'zh_cn' else color.EN_NAME]]</option>
+                                {% endfor %}
+                                <option value="add">[[lang.common_add]]</option>
                             </select>
                         </div>
                     </div>
@@ -272,18 +267,13 @@
                     <div class="layui-form-item d-flex justify-content-center">
                         <div style="width: 370px;">
                             <label class="text-uppercase">[[lang.color_color]]</label>
-                            <select id="product-color1" lay-verify="required" style="margin-top: 5px;">
+                            <select lay-verify="required" style="margin-top: 5px;"
+                                    lay-filter="edit-product-color-select1" id="edit-product-color-select-id1">
                                 <option value="">[[lang.products_choose_color]]</option>
-                                <option value="Brown">[[lang.color_brown]]</option>
-                                <option value="Blue">[[lang.color_blue]]</option>
-                                <option value="Gray">[[lang.color_gray]]</option>
-                                <option value="White">[[lang.color_white]]</option>
-                                <option value="Pink">[[lang.color_pink]]</option>
-                                <option value="Purple">[[lang.color_purple]]</option>
-                                <option value="Red">[[lang.color_red]]</option>
-                                <option value="Green">[[lang.color_green]]</option>
-                                <option value="Yellow">[[lang.color_yellow]]</option>
-                                <option value="Black">[[lang.color_black]]</option>
+                                {% for color in data.colors %}
+                                    <option value="[[color.EN_NAME]]">[[color.NAME if lang_type == 'zh_cn' else color.EN_NAME]]</option>
+                                {% endfor %}
+                                <option value="add">[[lang.common_add]]</option>
                             </select>
                         </div>
                     </div>
@@ -519,6 +509,149 @@
 
             $('.layui-form-select').css("border", "1px solid #575759");
             $('.xm-select-parent').css("border", "1px solid #575759");
+
+            form.on('select(edit-product-color-select)', function (data) {
+                if (data.value == "add") {
+                    layer.open({
+                        type: 1,
+                        offset: 'auto',
+                        title: false,
+                        id: 'navColorSelect',
+                        content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                            '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                            '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                            '<div class="row"><div class="layui-inline"><div class="layui-input-inline" style="width: 150px;">' +
+                            '<input type="text" id="add-color-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<div class="layui-input-inline" style="width: 150px;float: right">' +
+                            '<input type="text" id="add-color-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-color-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '</div></div></div>',
+                        shade: 0,
+                        area: ['370px', '150px'],
+                        resize: false,
+                        closeBtn: false,
+                        success: function (layero, index) {
+                            $('#basic_nav_search_close').on('click', function () {
+                                layer.closeAll();
+                            });
+
+                            $('#edit-products-color-add-btn').on('click', function () {
+                                var zhName = $('#add-color-zh-name').val()
+                                var enName = $('#add-color-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    var tmpLoad = layer.load(2)
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/color/add!add_color',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-color-zh-name').val(),
+                                            "EN_NAME": $('#add-color-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
+                                                $('#edit-product-color-select-id').empty()
+                                                $('#edit-product-color-select-id').append(new Option('[[lang.products_choose_color]]', ''));
+                                                $('#edit-product-color-select-id').append(new Option('[[lang.common_public]]', 'public'));
+                                                for (i = 0; i < res.data.colors.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-color-select-id').append(new Option(res.data.colors[i].NAME, res.data.colors[i].EN_NAME));
+                                                    } else {
+                                                        $('#edit-product-color-select-id').append(new Option(res.data.colors[i].EN_NAME, res.data.colors[i].EN_NAME));
+                                                    }
+                                                }
+                                                $('#edit-product-color-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            form.on('select(edit-product-color-select1)', function (data) {
+                if (data.value == "add") {
+                    layer.open({
+                        type: 1,
+                        offset: 'auto',
+                        title: false,
+                        id: 'navColorSelect1',
+                        content: '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                            '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                            '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                            '<div class="row"><div class="layui-inline"><div class="layui-input-inline" style="width: 150px;">' +
+                            '<input type="text" id="add-color-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<div class="layui-input-inline" style="width: 150px;float: right">' +
+                            '<input type="text" id="add-color-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
+                            '<button type="button" id="edit-products-color-add-btn" class="layui-btn layui-btn-primary" ' +
+                            'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
+                            '</div></div></div>',
+                        shade: 0,
+                        area: ['370px', '150px'],
+                        resize: false,
+                        closeBtn: false,
+                        success: function (layero, index) {
+                            $('#basic_nav_search_close').on('click', function () {
+                                layer.closeAll();
+                            });
+
+                            $('#edit-products-color-add-btn').on('click', function () {
+                                var zhName = $('#add-color-zh-name').val()
+                                var enName = $('#add-color-en-name').val()
+
+                                if (zhName == "" || enName == "") {
+                                    layer.msg('[[lang.common_complete_info]]', {icon: 4});
+                                } else {
+                                    var tmpLoad = layer.load(2)
+                                    admin.req({
+                                        method: "post",
+                                        url: '/api/color/add!add_color',
+                                        data: JSON.stringify({
+                                            "NAME": $('#add-color-zh-name').val(),
+                                            "EN_NAME": $('#add-color-en-name').val(),
+                                            "langType": '[[lang_type]]'
+                                        }),
+                                        done: function (res) {
+                                            layer.close(tmpLoad);
+                                            if (res.data.code == 0) {
+                                                layer.msg(res.msg, {icon: 1});
+                                                $('#edit-product-color-select-id1').empty()
+                                                $('#edit-product-color-select-id1').append(new Option('[[lang.products_choose_color]]', ''));
+                                                $('#edit-product-color-select-id1').append(new Option('[[lang.common_public]]', 'public'));
+                                                for (i = 0; i < res.data.colors.length; i++) {
+                                                    if ('[[lang_type]]' == 'zh_cn') {
+                                                        $('#edit-product-color-select-id1').append(new Option(res.data.colors[i].NAME, res.data.colors[i].EN_NAME));
+                                                    } else {
+                                                        $('#edit-product-color-select-id1').append(new Option(res.data.colors[i].EN_NAME, res.data.colors[i].EN_NAME));
+                                                    }
+                                                }
+                                                $('#edit-product-color-select-id1').append(new Option('[[lang.common_add]]', 'add'));
+                                                layui.form.render("select");
+                                                $('.layui-form-select').css("border", "1px solid #575759");
+                                                layer.closeAll();
+                                            } else {
+                                                layer.msg(res.msg, {icon: 2});
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
 
             form.on('select(edit-product-area-select)', function (data) {
                 if (data.value == "add") {
@@ -957,11 +1090,13 @@
                 }
             });
 
+            var indexTempLoad;
             upload.render({
                 url: '/api/common/upload!single_image_upload'
                 , elem: '#edit-products-import-chart'
-                , size: 200
+                , size: 20000
                 , done: function (res) {
+                    layer.close(indexTempLoad)
                     if (res.data.code == 0) {
                         layer.msg(res.msg, {icon: 1});
                         $('#edit-products-import-chart').html(res.data.originFileName)
@@ -969,13 +1104,16 @@
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
+                }, before: function (obj) {
+                    indexTempLoad = layer.load(2)
                 }
             });
             upload.render({
                 url: '/api/common/upload!single_image_upload'
                 , elem: '#edit-products-import-chart1'
-                , size: 200
+                , size: 20000
                 , done: function (res) {
+                    layer.close(indexTempLoad)
                     if (res.data.code == 0) {
                         layer.msg(res.msg, {icon: 1});
                         $('#edit-products-import-chart1').html(res.data.originFileName)
@@ -983,6 +1121,8 @@
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
+                }, before: function (obj) {
+                    indexTempLoad = layer.load(2)
                 }
             });
 
@@ -1016,7 +1156,7 @@
             }
             function addProducts(btnType) {
                 var brand = $('#product-brand').val()
-                var color = $('#product-color').val()
+                var color = $('#edit-product-color-select-id').val()
                 var style = $('#product-style').val()
                 var description = $('#product-description').val()
                 var supplierColor = $('#product-supplier-color').val()
@@ -1118,7 +1258,7 @@
             }
             function addProducts1(btnType) {
                 var brand = $('#product-brand1').val()
-                var color = $('#product-color1').val()
+                var color = $('#edit-product-color-select-id1').val()
                 var style = $('#product-style1').val()
                 var description = $('#product-description1').val()
                 var supplierColor = $('#product-supplier-color1').val()
@@ -1236,8 +1376,9 @@
             upload.render({
                 url: '/api/common/upload!single_image_upload'
                 , elem: '#edit-product-add-img'
-                , size: 200
+                , size: 20000
                 , done: function (res) {
+                    layer.close(indexTempLoad)
                     if (res.data.code == 0) {
                         layer.msg(res.msg, {icon: 1});
                         var temp = '<div class="row" style="position:relative;margin-top: 10px;">' +
@@ -1254,8 +1395,9 @@
                         upload.render({
                             url: '/api/common/upload!single_image_upload'
                             , elem: '.edit-product-add-img-replace'
-                            , size: 2000
+                            , size: 20000
                             , done: function (res) {
+                                layer.close(indexTempLoad)
                                 if (res.data.code == 0) {
                                     layer.msg(res.msg, {icon: 1});
                                     {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
@@ -1263,18 +1405,23 @@
                                 } else {
                                     layer.msg(res.msg, {icon: 2});
                                 }
+                            }, before: function (obj) {
+                                indexTempLoad = layer.load(2)
                             }
                         });
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
+                }, before: function (obj) {
+                    indexTempLoad = layer.load(2)
                 }
             });
             upload.render({
                 url: '/api/common/upload!single_image_upload'
                 , elem: '#display-img1-upload'
-                , size: 200
+                , size: 20000
                 , done: function (res) {
+                    layer.close(indexTempLoad)
                     if (res.data.code == 0) {
                         layer.msg(res.msg, {icon: 1});
                         var temp1 = '<button type="button" class="carousel-index-btn-sub' + imgCount + '" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="' + imgCount + '"></button>'
@@ -1305,8 +1452,9 @@
                         upload.render({
                             url: '/api/common/upload!single_image_upload'
                             , elem: '.edit-product-add-img-replace'
-                            , size: 2000
+                            , size: 20000
                             , done: function (res) {
+                                layer.close(indexTempLoad)
                                 if (res.data.code == 0) {
                                     layer.msg(res.msg, {icon: 1});
                                     {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
@@ -1314,6 +1462,8 @@
                                 } else {
                                     layer.msg(res.msg, {icon: 2});
                                 }
+                            }, before: function (obj) {
+                                indexTempLoad = layer.load(2)
                             }
                         });
 
@@ -1321,6 +1471,8 @@
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
+                }, before: function (obj) {
+                    indexTempLoad = layer.load(2)
                 }
             });
 

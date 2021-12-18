@@ -7,16 +7,34 @@
     <main class="container" style="max-width: 1920px;margin-top: 60px;">
         <div class="row">
             <div class="col-sm-6 col-12">
-                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='uploads/indexMen.jpg') + '?rand=' + rand]]" id="index-nav-men-img-btn" width="100%"/>
-                <div class="text-uppercase" style="font-size: 13px;margin-top: 10px;">[[lang.header_nav_men]]{% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-men-index" style="cursor: pointer"> | [[lang.common_replace]]</span>{% endif %}</div>
+                <div class="row" style="position:relative;margin-top: 10px;">
+                    <img id="index-nav-men-img-btn" class="edit-product-add-img-img" src="[[systemInfo.INDEX_MEN]]" style="width: 100%;cursor: pointer;object-fit: contain">
+                    {% if addition.login and current_user.ROLE =='SUPER' %}
+                    <span data-type="INDEX_MEN" class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
+                    {% endif %}
+                </div>
+{#                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='uploads/indexMen.jpg') + '?rand=' + rand]]" id="index-nav-men-img-btn" width="100%"/>#}
+                <p class="text-uppercase" style="font-size: 13px;margin-top: 20px;">[[lang.header_nav_men]]</p>
             </div>
             <div class="col-sm-6 col-12">
-                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='uploads/indexWomen.jpg') + '?rand=' + rand]]" id="index-nav-women-img-btn" width="100%"/>
-                <div class="text-uppercase" style="font-size: 13px;margin-top: 10px;">[[lang.header_nav_women]]{% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-women-index" style="cursor: pointer"> | [[lang.common_replace]]</span>{% endif %}</div>
+                <div class="row" style="position:relative;margin-top: 10px;">
+                    <img id="index-nav-women-img-btn" class="edit-product-add-img-img" src="[[systemInfo.INDEX_WOMEN]]" style="width: 100%;cursor: pointer;object-fit: contain">
+                    {% if addition.login and current_user.ROLE =='SUPER' %}
+                    <span data-type="INDEX_WOMEN" class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
+                    {% endif %}
+                </div>
+{#                <img style="cursor: pointer;object-fit: contain" src="[[url_for('static', filename='uploads/indexWomen.jpg') + '?rand=' + rand]]" id="index-nav-women-img-btn" width="100%"/>#}
+                <p class="text-uppercase" style="font-size: 13px;margin-top: 20px;">[[lang.header_nav_women]]</p>
             </div>
             <div class="col-12">
-                <img style="cursor: pointer" src="[[url_for('static', filename='uploads/indexNew.jpg') + '?rand=' + rand]]" id="index-nav-new-img-btn" width="100%"/>
-                <div class="text-uppercase" style="font-size: 13px;margin-top: 10px;">[[lang.common_new_arrivals]]{% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-new-index" style="cursor: pointer"> | [[lang.common_replace]]</span>{% endif %}</div>
+                <div class="row" style="position:relative;margin-top: 10px;">
+                    <img id="index-nav-new-img-btn" class="edit-product-add-img-img" src="[[systemInfo.INDEX_NEW]]" style="width: 100%;cursor: pointer;object-fit: contain">
+                    {% if addition.login and current_user.ROLE =='SUPER' %}
+                    <span data-type="INDEX_NEW" class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
+                    {% endif %}
+                </div>
+{#                <img style="cursor: pointer" src="[[url_for('static', filename='uploads/indexNew.jpg') + '?rand=' + rand]]" id="index-nav-new-img-btn" width="100%"/>#}
+                <p class="text-uppercase" style="font-size: 13px;margin-top: 20px;">[[lang.common_new_arrivals]]</p>
             </div>
         </div>
     </main>
@@ -34,53 +52,43 @@
                 upload = layui.upload,
                 layer = layui.layer;
 
+            var imgTempDesc = "INDEX_MEN"
+            $(".edit-product-add-img-replace").click(function () {
+                imgTempDesc = $(this).attr("data-type")
+            });
+
             var tmpLoad;
             upload.render({
-                url: '/api/common/upload!index_men_image_upload'
-                , elem: '#upload-img-men-index'
-                , size: 200
+                url: '/api/common/upload!single_image_upload'
+                , elem: '.edit-product-add-img-replace'
+                , size: 20000
                 , done: function (res) {
+                    layer.close(tmpLoad)
                     if (res.data.code == 0) {
                         layer.msg(res.msg, {icon: 1});
-                        $("#index-nav-men-img-btn").attr("src", res.data.url)
-                    } else {
-                        layer.msg(res.msg, {icon: 2});
-                    }
-                    layer.close(tmpLoad)
-                }, before: function (obj) {
-                    tmpLoad = layer.load(2)
-                }
-            });
+                        {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
+                        this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
 
-            upload.render({
-                url: '/api/common/upload!index_women_image_upload'
-                , elem: '#upload-img-women-index'
-                , size: 200
-                , done: function (res) {
-                    if (res.data.code == 0) {
-                        layer.msg(res.msg, {icon: 1});
-                        $("#index-nav-women-img-btn").attr("src", res.data.url)
+                        var tempLoad = layer.load(2)
+                        let obj = Object.create(null);
+                        obj[imgTempDesc] = res.data.url
+                        obj["langType"] = "[[lang_type]]"
+                        admin.req({
+                            method: "post",
+                            url: '/api/system/update!update_info',
+                            data: JSON.stringify(obj),
+                            done: function (res) {
+                                layer.close(tempLoad);
+                                if (res.data.code == 0) {
+                                    layer.msg(res.msg, {icon: 1});
+                                } else {
+                                    layer.msg(res.msg, {icon: 2});
+                                }
+                            }
+                        });
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
-                    layer.close(tmpLoad)
-                }, before: function (obj) {
-                    tmpLoad = layer.load(2)
-                }
-            });
-
-            upload.render({
-                url: '/api/common/upload!index_new_image_upload'
-                , elem: '#upload-img-new-index'
-                , size: 200
-                , done: function (res) {
-                    if (res.data.code == 0) {
-                        layer.msg(res.msg, {icon: 1});
-                        $("#index-nav-new-img-btn").attr("src", res.data.url)
-                    } else {
-                        layer.msg(res.msg, {icon: 2});
-                    }
-                    layer.close(tmpLoad)
                 }, before: function (obj) {
                     tmpLoad = layer.load(2)
                 }
@@ -93,6 +101,10 @@
             $('#index-nav-women-img-btn').on('click', function () {
                 layer.load(2)
                 window.location.href = "/[[lang_type]]-women/commonSample"
+            });
+            $('#index-nav-new-img-btn').on('click', function () {
+                layer.load(2)
+                window.location.href = "/[[lang_type]]-men/commonSample"
             });
         });
     </script>

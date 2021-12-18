@@ -1,4 +1,5 @@
 from .Area import Area
+from .Color import Color
 from .Good import Good
 from .GoodCategory import GoodCategory
 from .GoodImg import GoodImg
@@ -8,5 +9,6 @@ from .Order import Order
 from .OrderGood import OrderGood
 from .SampleGood import SampleGood
 from .ShoppingGood import ShoppingGood
+from .System import System
 from .User import User
 from .WishGood import WishGood

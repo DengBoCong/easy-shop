@@ -30,6 +30,11 @@ def new_single_product(lang_type):
     for area in areas:
         areas_list.append(area.to_json())
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
     good_categories_list = []
     for good_category in good_categories:
@@ -44,7 +49,7 @@ def new_single_product(lang_type):
                            lang_type=lang_type, route="newProducts?productType={}".format(product_type),
                            addition=set_addition(add="-" + sub_page, location=sub_page),
                            data={"areas": areas_list, "goodCategories": good_categories_list,
-                                 "goodSizes": good_sizes_list, "productType": product_type})
+                                 "goodSizes": good_sizes_list, "productType": product_type, "colors": colors_list})
 
 
 @views.route('/<lang_type>/editProducts', methods=['GET', 'POST'])
@@ -80,6 +85,11 @@ def edit_single_product(lang_type):
     for area in areas:
         areas_list.append(area.to_json())
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
     good_categories_list = []
     for good_category in good_categories:
@@ -95,7 +105,7 @@ def edit_single_product(lang_type):
                            addition=set_addition(add="-" + sub_page, location=sub_page),
                            data={"areas": areas_list, "goodCategories": good_categories_list,
                                  "goodSizes": good_sizes_list, "goodInfo": good_info,
-                                 "productType": good_info["CLASS"]})
+                                 "productType": good_info["CLASS"], "colors": colors_list})
 
 
 @views.route('/<lang_type>/previewProducts', methods=['GET', 'POST'])
@@ -144,7 +154,7 @@ def published_product(lang_type):
     user_id = info_data.get("userId", "")
     category = info_data.get("category", "")
     product = info_data.get("product", "")
-    color = info_data.get("color", "")
+    color_s = info_data.get("color", "")
 
     if lang_type not in ["zh_cn", "en_us"]:
         return render_template("404.html", lang_type=lang_type, route="publishedProduct")
@@ -163,7 +173,7 @@ def published_product(lang_type):
         Good.CLASS.like("%" + "" if category == "all" else category + "%"),
         Good.IS_PUBLISHED.like("%1%"),
         Good.CATEGORY_ID.like("%" + good_categories_dict.get(product, "") + "%"),
-        Good.COLOR.like("%" + "" if color == "all" else color + "%"),
+        Good.COLOR.like("%" + "" if color_s == "all" else color_s + "%"),
     ).order_by(desc(Good.CREATE_DATETIME)).all()
 
     goods_list = list()
@@ -192,12 +202,17 @@ def published_product(lang_type):
 
     addition = set_addition(location="login", categories="publishedProduct")
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     return render_template("admin/publishedProduct.html", lang=lang[lang_type],
                            lang_type=lang_type,
                            route="publishedProduct?userId={}&category={}".format(user_id, category),
                            addition=addition,
-                           data={"user": user, "category": category, "product": product, "color": color,
-                                 "categories": good_categories_list, "goods": goods_list,
+                           data={"user": user, "category": category, "product": product, "color": color_s,
+                                 "categories": good_categories_list, "goods": goods_list, "colors": colors_list,
                                  "add": "-" + info_data.get("category", "SAMPLE")})
 
 
@@ -471,11 +486,11 @@ def bag_product_mode(lang_type):
     info_data = request.args.to_dict()
 
     product = info_data.get("products", "")
-    color = info_data.get("colors", "")
+    color_s = info_data.get("colors", "")
     sort = info_data.get("sort", "")
 
     addition = set_addition(categories="shoppingBag", page=info_data.get("page", 1),
-                            products=product, sort=sort, colors=color, location="shoppingBag")
+                            products=product, sort=sort, colors=color_s, location="shoppingBag")
 
     good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
     good_categories_list = list()
@@ -491,28 +506,28 @@ def bag_product_mode(lang_type):
             Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
             Good.AREA_ID.like("%" + area_id + "%"),
             Good.CATEGORY.like("%" + product + "%"),
-            Good.COLOR.like("%" + color + "%")
+            Good.COLOR.like("%" + color_s + "%")
         ).order_by(desc(Good.CREATE_DATETIME)).all()
     elif sort == "trending":
         goods = Good.query.filter(
             Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
             Good.AREA_ID.like("%" + area_id + "%"),
             Good.CATEGORY.like("%" + product + "%"),
-            Good.COLOR.like("%" + color + "%")
+            Good.COLOR.like("%" + color_s + "%")
         ).order_by(desc(Good.NUM)).all()
     elif sort == "lowHigh":
         goods = Good.query.filter(
             Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
             Good.AREA_ID.like("%" + area_id + "%"),
             Good.CATEGORY.like("%" + product + "%"),
-            Good.COLOR.like("%" + color + "%")
+            Good.COLOR.like("%" + color_s + "%")
         ).order_by(asc(Good.PRICE)).all()
     else:
         goods = Good.query.filter(
             Good.BRAND.like("%" + info_data.get("brand", "") + "%"),
             Good.AREA_ID.like("%" + area_id + "%"),
             Good.CATEGORY.like("%" + product + "%"),
-            Good.COLOR.like("%" + color + "%")
+            Good.COLOR.like("%" + color_s + "%")
         ).order_by(desc(Good.PRICE)).all()
 
     if lang_type not in ["zh_cn", "en_us"]:
@@ -541,9 +556,15 @@ def bag_product_mode(lang_type):
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     return render_template("admin/bagProductMode.html", lang=lang[lang_type], lang_type=lang_type,
                            route="bagProductMode", addition=addition,
-                           data={"goods": goods_list, "categories": good_categories_list})
+                           data={"goods": goods_list, "categories": good_categories_list, "colors": colors_list})
+
 
 @views.route('/<lang_type>/allProducts', methods=['GET', 'POST'])
 def all_products(lang_type):
@@ -633,7 +654,12 @@ def all_products(lang_type):
         good_info["CATEGORY"] = good.category.NAME if lang_type == 'zh_cn' else good.category.EN_NAME
         goods_list.append(good_info)
 
+    colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+    colors_list = []
+    for color in colors:
+        colors_list.append(color.to_json())
+
     return render_template("admin/allProducts.html", lang=lang[lang_type], lang_type=lang_type, route="allProducts",
                            addition=addition, data={"goods": goods_list, "categories": good_categories_list,
                                                     "class": product_class, "name": name,
-                                                    "pageCount": page_count})
+                                                    "pageCount": page_count, "colors": colors_list})

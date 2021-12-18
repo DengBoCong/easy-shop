@@ -298,6 +298,7 @@
                     if (sizeVal == "" || qtyVal == "") {
                         layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
                     } else {
+                        var tmpLoad = layer.load(2)
                         admin.req({
                             method: "post",
                             url: '/api/good/add!add_wish_good',
@@ -308,6 +309,7 @@
                                 "langType": '[[lang_type]]'
                             }),
                             done: function (res) {
+                                layer.close(tmpLoad);
                                 layer.msg(res.msg);
                             }
                         });

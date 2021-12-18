@@ -55,6 +55,7 @@ lang = {
         "common_upload_fail": "上传失败",
         "common_complete_info": "请补全信息",
         "common_redirecting": "正在为您跳转",
+        "common_update_success": "信息更新成功",
         "common_update_fail": "信息更新失败",
         "common_close": "关闭",
         "common_published_products": "已发布产品",
@@ -89,6 +90,7 @@ lang = {
         "common_product_mode": "产品模式",
         "common_switch_product_mode": "切换产品模式",
         "common_contact_admin_mod": "请联系管理员修改",
+        "common_submit": "提交修改",
 
         "header_nav_all": "所有",
         "header_nav_men": "男装",
@@ -295,6 +297,7 @@ lang = {
         "common_upload_fail": "upload fail",
         "common_complete_info": "Please complete the information",
         "common_redirecting": "Redirecting for you",
+        "common_update_success": "Information update success",
         "common_update_fail": "Information update failed",
         "common_close": "Close",
         "common_published_products": "published products",
@@ -330,6 +333,7 @@ lang = {
         "common_product_mode": "product mode",
         "common_switch_product_mode": "switch to product mode",
         "common_contact_admin_mod": "Please contact the administrator to modify",
+        "common_submit": "submit",
 
         "header_nav_all": "all",
         "header_nav_men": "men",

@@ -12,10 +12,31 @@
                 <p style="font-size: 14px;">[[lang.contact_us_first]]</p>
                 <p style="font-size: 14px;">[[lang.contact_us_second]]</br>[[lang.contact_us_third]]</p>
                 <p style="font-size: 14px;">[[lang.contact_us_forth]]</br>[[lang.contact_us_fifth]]</br>[[lang.contact_us_sixth]]</p>
+                {% if addition.login and current_user.ROLE =='SUPER' %}
+                <div class="btn btn-block text-uppercase" id="edit-product-publish-img" style="background-color: #323232;color: #FFFFFF;width: 100%">
+                    [[lang.common_submit]]
+                </div>
+                {% endif %}
             </div>
             <div class="col-12 col-md-6 col-xl-6" style="padding: 20px 40px 0 40px;">
-                {% if addition.login and current_user.ROLE =='SUPER' %}<span id="upload-img-contact-index" style="cursor: pointer">[[lang.common_replace]]</span>{% endif %}
-                <img id="index-nav-contact-img-btn" src="[[url_for('static', filename='uploads/contactUs.jpg') + '?rand=' + rand]]" width="100%" />
+                <div id="edit-product-add-img-list">
+                    {% for img in imgs %}
+                        <div class="row" style="position:relative;margin-top: 10px;">
+                            <img class="edit-product-add-img-img" src="[[img]]" style="width: 100%;cursor: pointer;object-fit: contain">
+                            {% if addition.login and current_user.ROLE =='SUPER' %}
+                            <span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>
+                            <span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if addition.login and current_user.ROLE =='SUPER' %}
+                <div class="row" style="margin-top: 30px;">
+                    <img src="[[url_for('static', filename='img/plusLine.png')]]"
+                         style="width: 100%;border-color: #0C0C0C;cursor: pointer;object-fit: contain"
+                         id="edit-product-add-img" class="rounded mx-auto d-block">
+                </div>
+                {% endif %}
             </div>
             <div class="col-12 col-md-12 col-xl-3"></div>
         </div>
@@ -33,21 +54,99 @@
                 upload = layui.upload,
                 layer = layui.layer;
 
+            $('.edit-product-add-img-delete').on('click', function () {
+                $(this).parent('.row').remove();
+            });
+
             var tmpLoad;
             upload.render({
-                url: '/api/common/upload!index_contact_image_upload'
-                , elem: '#upload-img-contact-index'
-                , size: 200
+                url: '/api/common/upload!single_image_upload'
+                , elem: '.edit-product-add-img-replace'
+                , size: 20000
                 , done: function (res) {
+                    layer.close(tmpLoad)
                     if (res.data.code == 0) {
                         layer.msg(res.msg, {icon: 1});
-                        $("#index-nav-contact-img-btn").attr("src", res.data.url)
+                        {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
+                        this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
-                    layer.close(tmpLoad)
                 }, before: function (obj) {
                     tmpLoad = layer.load(2)
+                }
+            });
+
+            upload.render({
+                url: '/api/common/upload!single_image_upload'
+                , elem: '#edit-product-add-img'
+                , size: 20000
+                , done: function (res) {
+                    layer.close(tmpLoad)
+                    if (res.data.code == 0) {
+                        layer.msg(res.msg, {icon: 1});
+                        var temp = '<div class="row" style="position:relative;margin-top: 10px;">' +
+                            '<img class="edit-product-add-img-img" src="' + res.data.url + '" style="width: 100%;">' +
+                            '<span class="btn btn-block text-uppercase edit-product-add-img-delete" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 50px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_delete]]</span>' +
+                            '<span class="btn btn-block text-uppercase edit-product-add-img-replace" style="background-color: #323232;color: #FFFFFF;position: absolute;bottom: 10px;right: 30px;width: 80px;font-size: 7px;">[[lang.common_replace]]</span></div>'
+                        $('#edit-product-add-img-list').html($('#edit-product-add-img-list').html() + temp)
+
+                        $('.edit-product-add-img-delete').on('click', function () {
+                            $(this).parent('.row').remove();
+                        });
+
+
+                        upload.render({
+                            url: '/api/common/upload!single_image_upload'
+                            , elem: '.edit-product-add-img-replace'
+                            , size: 20000
+                            , done: function (res) {
+                                layer.close(tmpLoad)
+                                if (res.data.code == 0) {
+                                    layer.msg(res.msg, {icon: 1});
+                                    {#var imgNode = $(this).siblings('.edit-product-add-img-img')#}
+                                    this.item.siblings('.edit-product-add-img-img').attr('src', res.data.url)
+                                } else {
+                                    layer.msg(res.msg, {icon: 2});
+                                }
+                            }, before: function (obj) {
+                                tmpLoad = layer.load(2)
+                            }
+                        });
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                }, before: function (obj) {
+                    tmpLoad = layer.load(2)
+                }
+            });
+
+            $('#edit-product-publish-img').on('click', function () {
+                var goodImg = new Array();
+                $(".edit-product-add-img-img").each(function (i, e) {
+                    goodImg[i] = $(this).attr('src')
+                });
+
+                if (goodImg.length == 0) {
+                    layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                } else {
+                    var tempLoad = layer.load(2)
+                    admin.req({
+                        method: "post",
+                        url: '/api/system/update!update_info',
+                        data: JSON.stringify({
+                            "CONTACT_US": goodImg,
+                            "langType": '[[lang_type]]'
+                        }),
+                        done: function (res) {
+                            layer.close(tempLoad);
+                            if (res.data.code == 0) {
+                                layer.msg(res.msg, {icon: 1});
+                            } else {
+                                layer.msg(res.msg, {icon: 2});
+                            }
+                        }
+                    });
                 }
             });
         });

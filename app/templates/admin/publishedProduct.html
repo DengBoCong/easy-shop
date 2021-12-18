@@ -112,56 +112,14 @@
                             [[lang.color_all_colors]]
                         </a>
                     </li>
-                    <li style="margin-top: 25px;font-size: 13px;[['text-decoration: underline;' if data.color == 'brown' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=brown">
-                            [[lang.color_brown]]
+                    {% for color in data.colors %}
+                    <li class="text-capitalize" style="[['margin-top: 25px;' if loop.index == 1 else '']]font-size: 13px;">
+                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=[[color.EN_NAME]]"
+                           style="[['text-decoration: underline;' if data.color == color.EN_NAME else '']]">
+                            [[color.NAME if lang_type == 'zh_cn' else color.EN_NAME]]
                         </a>
                     </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'blue' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=blue">
-                            [[lang.color_blue]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'gray' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=gray">
-                            [[lang.color_gray]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'white' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=white">
-                            [[lang.color_white]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'pink' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=pink">
-                            [[lang.color_pink]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'purple' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=purple">
-                            [[lang.color_purple]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'red' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=red">
-                            [[lang.color_red]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'green' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=green">
-                            [[lang.color_green]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'yellow' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=yellow">
-                            [[lang.color_yellow]]
-                        </a>
-                    </li>
-                    <li style="font-size: 13px;[['text-decoration: underline;' if data.color == 'black' else '']]" class="text-capitalize">
-                        <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=black">
-                            [[lang.color_black]]
-                        </a>
-                    </li>
+                    {% endfor %}
                 </ul>
                 {% else %}
                 <ul style="margin-top: 20px;font-family: 'NotoSansCJK-Medium';">
@@ -275,56 +233,13 @@
                         [[lang.color_all_colors]]
                     </a>
                 </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'brown' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=brown">
-                        [[lang.color_brown]]
+                {% for color in data.colors %}
+                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color==color.EN_NAME else '']]">
+                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=[[color.EN_NAME]]">
+                        [[color.NAME if lang_type == 'zh_cn' else color.EN_NAME]]
                     </a>
                 </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'blue' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=blue">
-                        [[lang.color_blue]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'gray' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=gray">
-                        [[lang.color_gray]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'white' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=white">
-                        [[lang.color_white]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'pink' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=pink">
-                        [[lang.color_pink]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'purple' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=purple">
-                        [[lang.color_purple]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'red' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=red">
-                        [[lang.color_red]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'green' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=green">
-                        [[lang.color_green]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'yellow' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=yellow">
-                        [[lang.color_yellow]]
-                    </a>
-                </li>
-                <li class="nav-item self-a-link text-capitalize" style="margin-top: 15px;[['text-decoration: underline;' if data.color == 'black' else '']]">
-                    <a href="/[[lang_type]]/publishedProduct?userId=[[data.user.ID]]&category=[[data.category]]&product=[[data.product]]&color=black">
-                        [[lang.color_black]]
-                    </a>
-                </li>
+                {% endfor %}
             </ul>
             <div class="self-nav" id="header-offcanvas-bottom-close-color"
                  style="cursor: pointer;border-top: 1px solid #0C0C0C;position: fixed; bottom: 0;width: 100%;height: 60px;line-height: 60px;text-align: center;background-color: #FFFFFF">
