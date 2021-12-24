@@ -233,7 +233,10 @@
                 , curr: [[addition.page]]
                 , jump: function (obj, first) {
                     if (!first) {
-                        layer.load(2)
+                        var tp = layer.load(2)
+                        setTimeout(function(){
+                            layer.close(tp);
+                        },5000);
                         window.location.href = "/[[lang_type]][[addition.add]]/[[route]]?products=[[addition.products]]&sort=[[addition.sort]]&colors=[[addition.colors]]&class=[[data.class]]&name=[[data.name]]&page=" + obj.curr
                     }
                 }
@@ -250,12 +253,18 @@
             });
 
             $('.published-edit-product-btn').on('click', function () {
-                layer.load(2)
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
                 window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
 
             $('.single-product-img-btn').on('click', function () {
-                layer.load(2)
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
         });

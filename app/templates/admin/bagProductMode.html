@@ -249,22 +249,34 @@
             });
 
             $('.published-edit-product-btn').on('click', function () {
-                layer.load(2)
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
                 window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
 
             $('.single-product-img-btn').on('click', function () {
-                layer.load(2)
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-class') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
             });
 
             $('.switch-customer-mode-btn').on('click', function () {
-                layer.load(2)
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
                 window.location.href = '/[[lang_type]]/adminShoppingBag'
             });
 
             $('#bag-product-search-btn').on('click', function () {
-                layer.load(2)
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
                 window.location.href = "/[[lang_type]][[addition.add]]/[[route]]?brand=" + $('#bag-product-search-input').val()
             });
         });

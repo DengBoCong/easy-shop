@@ -123,6 +123,49 @@ def add_good():
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
 
 
+@controllers.route('{}/add!transfer_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def transfer_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        good_category = GoodCategory.query.get(info_data.get("CATEGORY_ID"))
+
+        good_id = uuid.uuid1()
+        good_prices, min_price = list(), float(info_data.get("PRICE", 100000000))
+        for price in info_data.get("PRICE_RANGE", []):
+            min_price = min(min_price, float(price.get("PRICE", 0)))
+            good_prices.append(GoodPrice(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id,
+                                         START_NUM=price.get("START_NUM", 0), END_NUM=price.get("END_NUM", 0),
+                                         PRICE=price.get("PRICE", 0)))
+        db.session.add_all(good_prices)
+        good = Good(ID=good_id, CREATE_DATETIME=datetime.now(), BRAND=info_data.get("BRAND"),
+                    COLOR=info_data.get("COLOR"), STYLE=info_data.get("STYLE"),
+                    DESCRIPTION=info_data.get("DESCRIPTION"), SUPPLIER_COLOR=info_data.get("SUPPLIER_COLOR"),
+                    MATERIAL=info_data.get("MATERIAL"), PLACE_OF_ORIGIN=info_data.get("PLACE_OF_ORIGIN"),
+                    PRODUCT_NUMBER=info_data.get("PRODUCT_NUMBER"), FACTORY_CODE=info_data.get("FACTORY_CODE"),
+                    AREA_ID=info_data.get("AREA_ID"), CURRENCY=info_data.get("CURRENCY"),
+                    CATEGORY_ID=info_data.get("CATEGORY_ID"), SIZE=info_data.get("SIZE"),
+                    SIZE_CHART=info_data.get("SIZE_CHART"), STAFF_EMAIL=info_data.get("STAFF_EMAIL"),
+                    IS_PUBLISHED=True, CLASS=info_data.get("CLASS"),
+                    TYPE=info_data.get("TYPE").upper(), COVER=info_data.get("GOOD_IMG", [""])[0],
+                    USER_ID=info_data.get("USER_ID"), NUM=0, PRICE=min_price, CATEGORY=good_category.EN_NAME)
+        db.session.add(good)
+
+        good_img = list()
+        for img in info_data.get("GOOD_IMG", [])[1:]:
+            good_img.append(GoodImg(ID=uuid.uuid1(), CREATE_DATETIME=datetime.now(), GOOD_ID=good_id, URL=img))
+        db.session.add_all(good_img)
+
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["common_redirecting"],
+                        'data': {"goodId": good_id, 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
 @controllers.route('{}/update!update_good'.format(URL_PREFIX), methods=['POST'])
 @login_required
 def update_good():

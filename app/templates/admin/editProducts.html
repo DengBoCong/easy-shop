@@ -240,6 +240,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <div class="layui-input-inline" style="width: 300px;">
+                            <div class="btn btn-block text-uppercase" id="transfer-product-publish-products" style="background-color: #323232;color: #FFFFFF;width: 100%">
+                                [[lang.common_transfer]]
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6 col-12 d-lg-none">
@@ -403,28 +410,6 @@
                                     </div>
                                     {% endfor %}
                                 </div>
-
-                                {#                            <div id="edit-products-add-range-block1">#}
-                                {#                                <div class="layui-inline" style="margin-top: 5px;width: 100%;">#}
-                                {#                                    <div class="layui-input-inline" style="width: 30%;">#}
-                                {#                                        <input type="number" name="START_NUM1" autocomplete="off" class="layui-input"#}
-                                {#                                               value="" style="border-color: #575759;background-color: #0C0C0C">#}
-                                {#                                    </div>#}
-                                {#                                    <div class="layui-form-mid" style="">-</div>#}
-                                {#                                    <div class="layui-input-inline" style="width: 30%;">#}
-                                {#                                        <input type="number" name="END_NUM1" autocomplete="off"#}
-                                {#                                               value="" class="layui-input" style="border-color: #575759">#}
-                                {#                                    </div>#}
-                                {#                                    <div style="margin-top: 5px;float: right" class="text-uppercase">[[lang.products_qty]]</div>#}
-                                {#                                </div>#}
-                                {#                                <div class="layui-inline" style="width: 100%">#}
-                                {#                                    <div class="layui-input-inline" style="width: 67%;margin-top: 5px;">#}
-                                {#                                        <input type="number" name="RANGE_PRICE1" class="form-control"#}
-                                {#                                               value="" style="border-color: #575759">#}
-                                {#                                    </div>#}
-                                {#                                    <div style="margin-top: 10px;float: right" class="text-uppercase">[[lang.products_price]]</div>#}
-                                {#                                </div>#}
-                                {#                            </div>#}
                                 <div class="btn btn-block text-uppercase"
                                      style="width: 100%;border-color: #575759;margin-top: 5px;"
                                      id="edit-product-add-range1">
@@ -497,6 +482,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="layui-form-item d-flex justify-content-center">
+                        <div style="width: 370px;">
+                            <div class="btn btn-block text-uppercase" id="transfer-product-publish-products1" style="background-color: #323232;color: #FFFFFF;width: 100%">
+                                [[lang.common_transfer]]
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -535,7 +527,7 @@
                             '<input type="text" id="add-color-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
                             '<input type="text" id="add-color-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-color-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-color-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -606,7 +598,7 @@
                             '<input type="text" id="add-color-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
                             '<input type="text" id="add-color-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-color-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-color-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -678,7 +670,7 @@
                             '<input type="text" id="add-area-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
                             '<input type="text" id="add-area-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -749,7 +741,7 @@
                             '<input type="text" id="add-area-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
                             '<input type="text" id="add-area-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-area-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -821,7 +813,7 @@
                             '<input type="text" id="add-category-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
                             '<input type="text" id="add-category-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-category-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-category-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -891,7 +883,7 @@
                             '<input type="text" id="add-category-zh-name" placeholder="[[lang.common_zh_name]]" autocomplete="off" class="layui-input"></div>' +
                             '<div class="layui-input-inline" style="width: 150px;float: right">' +
                             '<input type="text" id="add-category-en-name" placeholder="[[lang.common_en_name]]" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-category-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-category-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -967,7 +959,7 @@
                             '<div class="row"><div class="layui-inline">' +
                             '<div class="layui-input-inline" style="width: 100%;">' +
                             '<input type="text" id="add-size-name" placeholder="Size" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-size-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-size-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -1043,7 +1035,7 @@
                             '<div class="row"><div class="layui-inline">' +
                             '<div class="layui-input-inline" style="width: 100%;">' +
                             '<input type="text" id="add-size-name" placeholder="Size" autocomplete="off" class="layui-input"></div>' +
-                            '<button type="button" id="edit-products-size-add-btn" class="layui-btn layui-btn-primary" ' +
+                            '<button type="button" id="edit-products-size-add-btn" class="layui-btn" ' +
                             'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_add]]</button></div>' +
                             '</div></div></div>',
                         shade: 0,
@@ -1253,10 +1245,16 @@
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
                                 if (btnType == 0) {
-                                    layer.load(2)
+                                    var tp = layer.load(2)
+                                    setTimeout(function(){
+                                        layer.close(tp);
+                                    },5000);
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
-                                    layer.load(2)
+                                    var tp = layer.load(2)
+                                    setTimeout(function(){
+                                        layer.close(tp);
+                                    },5000);
                                     window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
                                 }
                             } else {
@@ -1354,10 +1352,16 @@
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
                                 if (btnType == 0) {
-                                    layer.load(2)
+                                    var tp = layer.load(2)
+                                    setTimeout(function(){
+                                        layer.close(tp);
+                                    },5000);
                                     window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
                                 } else {
-                                    layer.load(2)
+                                    var tp = layer.load(2)
+                                    setTimeout(function(){
+                                        layer.close(tp);
+                                    },5000);
                                     window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
                                 }
                             } else {
@@ -1518,6 +1522,293 @@
                 }, before: function (obj) {
                     indexTempLoad = layer.load(2)
                 }
+            });
+
+            var trType;
+            $("#transfer-product-publish-products").on("click", function () {
+                var tmpText = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                        '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                        '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                        '<div class="row"><div class="layui-inline">'
+                if ("[[data.goodInfo.TYPE]]" !== "men") {
+                    tmpText += '<button type="button" data-t-type="MEN" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;">[[lang.header_nav_men]]</button>'
+                }
+                if ("[[data.goodInfo.TYPE]]" !== "women") {
+                    tmpText += '<button type="button" data-t-type="WOMEN" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;">[[lang.header_nav_women]]</button>'
+                }
+                if ("[[data.goodInfo.TYPE]]" !== "kids") {
+                    tmpText += '<button type="button" data-t-type="KIDS" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;">[[lang.header_nav_kids]]</button>'
+                }
+                if ("[[data.goodInfo.TYPE]]" !== "others") {
+                    tmpText += '<button type="button" data-t-type="OTHERS" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;">[[lang.header_nav_everything_else]]</button>'
+                }
+                tmpText += '</div></div></div></div>'
+
+                layer.open({
+                    type: 1,
+                    offset: 'auto',
+                    title: false,
+                    id: 'TransferSelect',
+                    content: tmpText,
+                    shade: 0,
+                    area: ['450px', '150px'],
+                    resize: false,
+                    closeBtn: false,
+                    success: function (layero, index) {
+                        $('#basic_nav_search_close').on('click', function () {
+                            layer.closeAll();
+                        });
+
+                        $('.transfer-btn-click').on('click', function () {
+                            trType = $(this).attr("data-t-type")
+                            var brand = $('#product-brand').val()
+                            var color = $('#edit-product-color-select-id').val()
+                            var style = $('#product-style').val()
+                            var description = $('#product-description').val()
+                            var supplierColor = $('#product-supplier-color').val()
+                            var material = $('#product-material').val()
+                            var placeOfOrigin = $('#product-place-of-origin').val()
+                            var productNumber = $('#product-product-number').val()
+                            var factoryCode = $('#product-factory-code').val()
+                            var productArea = $('#edit-product-area-select-id').val()
+                            var staffEmail = $('#product-staff-email').val()
+                            var currency = $('#product-currency').val()
+                            var category = $('#edit-product-category-select-id').val()
+                            var size = layui.formSelects.value('size_select', 'valStr')
+                            var sizeChart = $('#edit-products-import-chart').attr('data-sizeChart')
+                            var prices = new Array();
+                            var goodImg = new Array();
+                            var referPrice = $('#product-refer-price').val()
+
+                            var startNum = document.getElementsByName("START_NUM");
+                            var endNum = document.getElementsByName("END_NUM");
+                            var rangePrice = document.getElementsByName("RANGE_PRICE");
+                            for (var i = 0; i < startNum.length; i++) {
+                                if (startNum[i].value == '' && endNum[i].value == '' && rangePrice[i].value == '') {
+                                    continue
+                                } else if (startNum[i].value != '' && endNum[i].value != '' && rangePrice[i].value != '') {
+                                    prices[i] = {
+                                        "START_NUM": startNum[i].value,
+                                        "END_NUM": endNum[i].value,
+                                        "PRICE": rangePrice[i].value
+                                    }
+                                } else {
+                                    if ('[[lang_type]]' == 'zh_cn') {
+                                        layer.msg('价格区间的最低数量、最高数量和价格不允许残缺，可全空', {icon: 5, time: 5000});
+                                    } else {
+                                        layer.msg('The minimum quantity, maximum quantity and price of the price range are not allowed to be incomplete and can be completely empty', {
+                                            icon: 5,
+                                            time: 5000
+                                        });
+                                    }
+                                }
+                            }
+
+                            $(".edit-product-add-img-img").each(function (i, e) {
+                                goodImg[i] = $(this).attr('src')
+                            });
+
+                            if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
+                                || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
+                                || productArea == "" || staffEmail == "" || currency == "" || category == ""
+                                || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' == 'SAMPLE')
+                                || (referPrice == "" && '[[data.productType]]' == 'REFERENCE') || goodImg.length == 0) {
+                                layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                            } else {
+                                var tmpLoad = layer.load(2)
+                                setTimeout(function(){
+                                    layer.close(tmpLoad);
+                                },5000);
+                                admin.req({
+                                    method: "post",
+                                    url: '/api/good/add!transfer_good',
+                                    data: JSON.stringify({
+                                        "TYPE": trType,
+                                        "BRAND": brand,
+                                        "COLOR": color,
+                                        "STYLE": style,
+                                        "DESCRIPTION": description,
+                                        "SUPPLIER_COLOR": supplierColor,
+                                        "MATERIAL": material,
+                                        "PLACE_OF_ORIGIN": placeOfOrigin,
+                                        "PRODUCT_NUMBER": productNumber,
+                                        "FACTORY_CODE": factoryCode,
+                                        "AREA_ID": productArea,
+                                        "CURRENCY": currency,
+                                        "CATEGORY_ID": category,
+                                        "SIZE": size,
+                                        "SIZE_CHART": sizeChart,
+                                        "STAFF_EMAIL": staffEmail,
+                                        "COVER": goodImg[0],
+                                        "PRICE_RANGE": prices,
+                                        "GOOD_IMG": goodImg,
+                                        "PRICE": referPrice,
+                                        "CLASS": '[[data.productType]]',
+                                        "langType": '[[lang_type]]'
+                                    }),
+                                    done: function (res) {
+                                        layer.close(tmpLoad);
+                                        if (res.data.code == 0) {
+                                            layer.msg(res.msg, {icon: 1});
+                                            var tp = layer.load(2)
+                                            setTimeout(function(){
+                                                layer.close(tp);
+                                            },5000);
+                                            window.location.href = "/[[lang_type]]-" + trType + "/" + successUrl
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2});
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+            $("#transfer-product-publish-products1").on("click", function () {
+                var tmpText = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                        '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                        '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                        '<div class="row"><div class="layui-inline">'
+                if ("[[data.goodInfo.TYPE]]" !== "men") {
+                    tmpText += '<button type="button" data-t-type="MEN" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;font-size: 10px;">[[lang.header_nav_men]]</button>'
+                }
+                if ("[[data.goodInfo.TYPE]]" !== "women") {
+                    tmpText += '<button type="button" data-t-type="WOMEN" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;font-size: 10px;">[[lang.header_nav_women]]</button>'
+                }
+                if ("[[data.goodInfo.TYPE]]" !== "kids") {
+                    tmpText += '<button type="button" data-t-type="KIDS" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;font-size: 10px;">[[lang.header_nav_kids]]</button>'
+                }
+                if ("[[data.goodInfo.TYPE]]" !== "others") {
+                    tmpText += '<button type="button" data-t-type="OTHERS" class="layui-btn text-uppercase transfer-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;font-size: 10px;">[[lang.header_nav_everything_else]]</button>'
+                }
+                tmpText += '</div></div></div></div>'
+
+                layer.open({
+                    type: 1,
+                    offset: 'auto',
+                    title: false,
+                    id: 'TransferSelect',
+                    content: tmpText,
+                    shade: 0,
+                    area: ['350px', '150px'],
+                    resize: false,
+                    closeBtn: false,
+                    success: function (layero, index) {
+                        $('#basic_nav_search_close').on('click', function () {
+                            layer.closeAll();
+                        });
+
+                        $('.transfer-btn-click').on('click', function () {
+                            trType = $(this).attr("data-t-type")
+                            var brand = $('#product-brand1').val()
+                            var color = $('#edit-product-color-select-id1').val()
+                            var style = $('#product-style1').val()
+                            var description = $('#product-description1').val()
+                            var supplierColor = $('#product-supplier-color1').val()
+                            var material = $('#product-material1').val()
+                            var placeOfOrigin = $('#product-place-of-origin1').val()
+                            var productNumber = $('#product-product-number1').val()
+                            var factoryCode = $('#product-factory-code1').val()
+                            var productArea = $('#edit-product-area-select-id1').val()
+                            var staffEmail = $('#product-staff-email1').val()
+                            var currency = $('#product-currency1').val()
+                            var category = $('#edit-product-category-select-id1').val()
+                            var size = layui.formSelects.value('size_select1', 'valStr')
+                            var sizeChart = $('#edit-products-import-chart1').attr('data-sizeChart')
+                            var prices = new Array();
+                            var goodImg = new Array();
+                            var referPrice = $('#product-refer-price1').val()
+
+                            var startNum = document.getElementsByName("START_NUM1");
+                            var endNum = document.getElementsByName("END_NUM1");
+                            var rangePrice = document.getElementsByName("RANGE_PRICE1");
+                            for (var i = 0; i < startNum.length; i++) {
+                                if (startNum[i].value == '' && endNum[i].value == '' && rangePrice[i].value == '') {
+                                    continue
+                                } else if (startNum[i].value != '' && endNum[i].value != '' && rangePrice[i].value != '') {
+                                    prices[i] = {
+                                        "START_NUM": startNum[i].value,
+                                        "END_NUM": endNum[i].value,
+                                        "PRICE": rangePrice[i].value
+                                    }
+                                } else {
+                                    if ('[[lang_type]]' == 'zh_cn') {
+                                        layer.msg('价格区间的最低数量、最高数量和价格不允许残缺，可全空', {icon: 5, time: 5000});
+                                    } else {
+                                        layer.msg('The minimum quantity, maximum quantity and price of the price range are not allowed to be incomplete and can be completely empty', {
+                                            icon: 5,
+                                            time: 5000
+                                        });
+                                    }
+                                }
+                            }
+
+                            $(".edit-product-add-img-img1").each(function (i, e) {
+                                goodImg[i] = $(this).attr('src')
+                            });
+
+                            if (brand == "" || color == "" || style == "" || description == "" || supplierColor == ""
+                                || material == "" || placeOfOrigin == "" || productNumber == "" || factoryCode == ""
+                                || productArea == "" || staffEmail == "" || currency == "" || category == ""
+                                || size == "" || sizeChart == "" || (prices.length == 0 && '[[data.productType]]' == 'SAMPLE')
+                                || (referPrice == "" && '[[data.productType]]' == 'REFERENCE') || goodImg.length == 0) {
+                                layer.msg('[[lang.common_complete_info]]', {icon: 4, time: 5000});
+                            }  else {
+                                var tmpLoad = layer.load(2)
+                                admin.req({
+                                    method: "post",
+                                    url: '/api/good/add!transfer_good',
+                                    data: JSON.stringify({
+                                        "TYPE": trType,
+                                        "BRAND": brand,
+                                        "COLOR": color,
+                                        "STYLE": style,
+                                        "DESCRIPTION": description,
+                                        "SUPPLIER_COLOR": supplierColor,
+                                        "MATERIAL": material,
+                                        "PLACE_OF_ORIGIN": placeOfOrigin,
+                                        "PRODUCT_NUMBER": productNumber,
+                                        "FACTORY_CODE": factoryCode,
+                                        "AREA_ID": productArea,
+                                        "CURRENCY": currency,
+                                        "CATEGORY_ID": category,
+                                        "SIZE": size,
+                                        "SIZE_CHART": sizeChart,
+                                        "STAFF_EMAIL": staffEmail,
+                                        "COVER": goodImg[0],
+                                        "PRICE_RANGE": prices,
+                                        "GOOD_IMG": goodImg,
+                                        "PRICE": referPrice,
+                                        "CLASS": '[[data.productType]]',
+                                        "langType": '[[lang_type]]'
+                                    }),
+                                    done: function (res) {
+                                        layer.close(tmpLoad);
+                                        if (res.data.code == 0) {
+                                            layer.msg(res.msg, {icon: 1});
+                                            if (btnType == 0) {
+                                                var tp = layer.load(2)
+                                                setTimeout(function(){
+                                                    layer.close(tp);
+                                                },5000);
+                                                window.location.href = "/[[lang_type]][[addition.add]]/previewProducts?goodId=" + res.data.goodId
+                                            } else {
+                                                var tp = layer.load(2)
+                                                setTimeout(function(){
+                                                    layer.close(tp);
+                                                },5000);
+                                                window.location.href = "/[[lang_type]]-[[data.goodInfo.TYPE]]/" + successUrl
+                                            }
+                                        } else {
+                                            layer.msg(res.msg, {icon: 2});
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             });
         });
     </script>

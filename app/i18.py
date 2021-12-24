@@ -49,6 +49,7 @@ lang = {
         "common_email": "邮箱",
         "common_public": "公共",
         "common_add": "添加",
+        "common_add_fail": "添加失败",
         "common_zh_name": "中文名",
         "common_en_name": "英文名",
         "common_upload_success": "上传成功",
@@ -91,6 +92,7 @@ lang = {
         "common_switch_product_mode": "切换产品模式",
         "common_contact_admin_mod": "请联系管理员修改",
         "common_submit": "提交修改",
+        "common_transfer": "迁移数据",
 
         "header_nav_all": "所有",
         "header_nav_men": "男装",
@@ -291,6 +293,7 @@ lang = {
         "common_email": "E-mail",
         "common_public": "Public",
         "common_add": "Add",
+        "common_add_fail": "Add Fail",
         "common_zh_name": "Chinese name",
         "common_en_name": "English name",
         "common_upload_success": "upload success",
@@ -334,6 +337,7 @@ lang = {
         "common_switch_product_mode": "switch to product mode",
         "common_contact_admin_mod": "Please contact the administrator to modify",
         "common_submit": "submit",
+        "common_transfer": "migrate data",
 
         "header_nav_all": "all",
         "header_nav_men": "men",

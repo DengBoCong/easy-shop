@@ -194,7 +194,10 @@
                             layer.close(tmpLoad);
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
-                                layer.load(2)
+                                var tp = layer.load(2)
+                                setTimeout(function(){
+                                    layer.close(tp);
+                                },5000);
                                 window.location.href = "/[[lang_type]]/login"
                             } else {
                                 layer.msg(res.msg, {icon: 2});
@@ -224,7 +227,10 @@
                             layer.close(tmpLoad);
                             if (res.data.code == 0) {
                                 layer.msg(res.msg, {icon: 1});
-                                layer.load(2)
+                                var tp = layer.load(2)
+                                setTimeout(function(){
+                                    layer.close(tp);
+                                },5000);
                                 window.location.href = "/[[lang_type]]/login"
                             } else {
                                 layer.msg(res.msg, {icon: 2});
