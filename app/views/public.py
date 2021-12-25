@@ -224,7 +224,7 @@ def design_diagrams(lang_type):
             Good.CLASS.like("%DESIGN%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(desc(Good.CREATE_DATETIME)).all()
     elif sort == "trending":
         goods = Good.query.filter(
@@ -232,7 +232,7 @@ def design_diagrams(lang_type):
             Good.CLASS.like("%DESIGN%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(desc(Good.NUM)).all()
     elif sort == "lowHigh":
         goods = Good.query.filter(
@@ -240,7 +240,7 @@ def design_diagrams(lang_type):
             Good.CLASS.like("%DESIGN%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(asc(Good.PRICE)).all()
     else:
         goods = Good.query.filter(
@@ -248,7 +248,7 @@ def design_diagrams(lang_type):
             Good.CLASS.like("%DESIGN%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(desc(Good.PRICE)).all()
 
     if lang_type not in ["zh_cn", "en_us"]:
@@ -315,7 +315,7 @@ def reference_diagrams(lang_type):
             Good.CLASS.like("%REFERENCE%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(desc(Good.CREATE_DATETIME)).all()
     elif sort == "trending":
         goods = Good.query.filter(
@@ -323,7 +323,7 @@ def reference_diagrams(lang_type):
             Good.CLASS.like("%REFERENCE%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(desc(Good.NUM)).all()
     elif sort == "lowHigh":
         goods = Good.query.filter(
@@ -331,7 +331,7 @@ def reference_diagrams(lang_type):
             Good.CLASS.like("%REFERENCE%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(asc(Good.PRICE)).all()
     else:
         goods = Good.query.filter(
@@ -339,7 +339,7 @@ def reference_diagrams(lang_type):
             Good.CLASS.like("%REFERENCE%"),
             Good.CATEGORY.like("%" + product + "%"),
             Good.COLOR.like("%" + color + "%"),
-            Good.TYPE.like("%" + sub_page + "%")
+            Good.TYPE == sub_page
         ).order_by(desc(Good.PRICE)).all()
 
     if lang_type not in ["zh_cn", "en_us"]:

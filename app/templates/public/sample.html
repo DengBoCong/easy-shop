@@ -84,8 +84,14 @@
                             <div class="col-2">
                                 {% if addition.login and current_user.ROLE != "USER" %}
                                 <div class="btn btn-block text-capitalize published-edit-product-btn" data-product-id="[[good.ID]]"
-                                    style="font-size: 10px;background-color: #323232;color: #FFFFFF;width: 50px;margin-top: 10px;float: right">
+                                    style="font-size: 10px;background-color: #323232;color: #FFFFFF;width: 50px;margin-top: 5px;float: right">
                                     [[lang.common_edit]]
+                                </div>
+                                {% endif %}
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <div class="btn btn-block text-capitalize delete-edit-product-btn" data-product-id="[[good.ID]]"
+                                    style="font-size: 10px;background-color: #323232;color: #FFFFFF;width: 50px;margin-top: 2px;float: right">
+                                    [[lang.common_del]]
                                 </div>
                                 {% endif %}
                             </div>
@@ -290,6 +296,54 @@
                 },5000);
                 window.location.href = '/[[lang_type]]-SAMPLE/editProducts?goodId=' + $(this).attr('data-product-id')
             });
+
+            $(".delete-edit-product-btn").on("click", function () {
+                var goodIdT = $(this).attr("data-product-id")
+                var tmpText = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                        '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                        '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                        '<div class="row"><div class="layui-inline"><span>[[lang.common_del_tips]]</span>'
+                tmpText += '<button type="button" class="layui-btn text-uppercase delete-btn-click" style="margin-top: 20px;background-color: #323232;color: #FFFFFF;font-size: 10px;">[[lang.common_sure]]</button>'
+                tmpText += '</div></div></div></div>'
+                layer.open({
+                    type: 1,
+                    offset: 'auto',
+                    title: false,
+                    id: 'DeleteSelect',
+                    content: tmpText,
+                    shade: 0,
+                    area: ['350px', '150px'],
+                    resize: false,
+                    closeBtn: false,
+                    success: function (layero, index) {
+                        $('#basic_nav_search_close').on('click', function () {
+                            layer.closeAll();
+                        });
+
+                        $('.delete-btn-click').on('click', function () {
+                            let tmpLoad = layer.load(2)
+                            admin.req({
+                                method: "post",
+                                url: '/api/good/delete!delete_good',
+                                data: JSON.stringify({
+                                    "ID": goodIdT,
+                                    "langType": '[[lang_type]]'
+                                }),
+                                done: function (res) {
+                                    layer.close(tmpLoad);
+                                    if (res.data.code == 0) {
+                                        layer.msg(res.msg, {icon: 1});
+                                        layer.load(2)
+                                        window.location.reload()
+                                    } else {
+                                        layer.msg(res.msg, {icon: 2});
+                                    }
+                                }
+                            });
+                        });
+                    }
+                });
+            })
 
             $('.single-product-img-btn').on('click', function () {
                 var tp = layer.load(2)

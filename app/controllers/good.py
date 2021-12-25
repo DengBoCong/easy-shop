@@ -44,6 +44,39 @@ def add_good_category():
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
 
 
+@controllers.route('{}/get!get_good_category'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def get_good_category():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        good_categories = GoodCategory.query.order_by(asc(GoodCategory.EN_NAME)).all()
+        good_categories_list = []
+        for good_category in good_categories:
+            good_categories_list.append(good_category.to_json())
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_query"],
+                        'data': {"good_categories": good_categories_list, 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
+@controllers.route('{}/delete!delete_good_category'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_good_category():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        GoodCategory.query.filter_by(EN_NAME=info_data.get("EN_NAME")).delete()
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {'code': 0}})
+    except Exception:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
 ######################Good Size#########################
 
 @controllers.route('{}/add!add_good_size'.format(URL_PREFIX), methods=['POST'])
@@ -71,6 +104,39 @@ def add_good_size():
             return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_success"],
                             'data': {"goodSizes": good_sizes_list, 'code': 0}})
     except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
+@controllers.route('{}/get!get_good_size'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def get_good_size():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        good_sizes = GoodSize.query.order_by(asc(GoodSize.SIZE)).all()
+        good_sizes_list = []
+        for good_size in good_sizes:
+            good_sizes_list.append(good_size.to_json())
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_query"],
+                        'data': {"good_sizes": good_sizes_list, 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
+@controllers.route('{}/delete!delete_good_size'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_good_size():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        GoodSize.query.filter_by(SIZE=info_data.get("SIZE")).delete()
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {'code': 0}})
+    except Exception:
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
 
 
@@ -163,6 +229,30 @@ def transfer_good():
         return jsonify({'code': 0, 'msg': lang[lang_type]["common_redirecting"],
                         'data': {"goodId": good_id, 'code': 0}})
     except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
+@controllers.route('{}/delete!delete_good'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_good():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    good = Good.query.get(info_data.get("ID"))
+
+    if good.orderGoods.count() != 0:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["common_del_good_order_fail_tip"], 'data': {'code': 1}})
+
+    if good is not None:
+        GoodPrice.query.filter_by(GOOD_ID=info_data.get("ID")).delete()
+        GoodImg.query.filter_by(GOOD_ID=info_data.get("ID")).delete()
+        WishGood.query.filter_by(GOOD_ID=info_data.get("ID")).delete()
+        ShoppingGood.query.filter_by(GOOD_ID=info_data.get("ID")).delete()
+        SampleGood.query.filter_by(GOOD_ID=info_data.get("ID")).delete()
+        db.session.delete(good)
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {'code': 0}})
+    else:
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
 
 

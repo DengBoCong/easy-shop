@@ -25,6 +25,9 @@
                                     <option [['selected' if data.goodInfo.COLOR == color.EN_NAME else '']] value="[[color.EN_NAME]]">[[color.NAME if lang_type == 'zh_cn' else color.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -93,6 +96,9 @@
                                     <option [['selected' if data.goodInfo.AREA_ID == area.ID else '']] value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                             <label style="color: red;font-size: 13px;">[[lang.products_check_upload_area]]</label>
                         </div>
@@ -194,6 +200,9 @@
                                     <option [['selected' if data.goodInfo.CATEGORY_ID == category.ID else '']] value="[[category.ID]]">[[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -208,6 +217,9 @@
                                     <option [['selected' if size.SIZE in data.goodInfo.SIZE else '']] value="[[size.SIZE]]">[[size.SIZE]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -296,6 +308,9 @@
                                     <option [['selected' if data.goodInfo.COLOR == color.EN_NAME else '']] value="[[color.EN_NAME]]">[[color.NAME if lang_type == 'zh_cn' else color.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -364,6 +379,9 @@
                                     <option [['selected' if data.goodInfo.AREA_ID == area.ID else '']] value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                             <label style="color: red;font-size: 13px;">[[lang.products_check_upload_area]]</label>
                         </div>
@@ -436,6 +454,9 @@
                                     <option [['selected' if data.goodInfo.CATEGORY_ID == category.ID else '']] value="[[category.ID]]">[[category.NAME if lang_type == 'zh_cn' else category.EN_NAME]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -450,6 +471,9 @@
                                     <option [['selected' if size.SIZE in data.goodInfo.SIZE else '']] value="[[size.SIZE]]">[[size.SIZE]]</option>
                                 {% endfor %}
                                 <option value="add">[[lang.common_add]]</option>
+                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                <option value="del">[[lang.common_delete]]</option>
+                                {% endif %}
                             </select>
                         </div>
                     </div>
@@ -513,6 +537,315 @@
             $('.layui-form-select').css("border", "1px solid #575759");
             $('.xm-select-parent').css("border", "1px solid #575759");
 
+            function deleteColorTy() {
+                let tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/color/get!get_color',
+                    data: JSON.stringify({"langType": '[[lang_type]]'}),
+                    done: function (res) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+
+                            let tmpTextTy = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                                    '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                                    '<div class="row"><div class="layui-form" lay-filter="test2"><select id="select-id-type">';
+
+                            for (i = 0; i < res.data.colors.length; i++) {
+                                if ('[[lang_type]]' == 'zh_cn') {
+                                    tmpTextTy += '<option value="' + res.data.colors[i].EN_NAME + '">' + res.data.colors[i].NAME + '</option>';
+                                } else {
+                                    tmpTextTy += '<option value="' + res.data.colors[i].EN_NAME + '">' + res.data.colors[i].EN_NAME + '</option>';
+                                }
+                            }
+
+                            tmpTextTy += '</select></div><div class="layui-inline"><button type="button" id="edit-products-color-del-btn" class="layui-btn" ' +
+                                    'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_delete]]</button></div>' +
+                                    '</div></div></div>';
+                            layer.open({
+                                type: 1,
+                                offset: 'auto',
+                                title: false,
+                                id: 'delColorSelect',
+                                content: tmpTextTy,
+                                shade: 0,
+                                area: ['370px', '200px'],
+                                resize: false,
+                                closeBtn: false,
+                                success: function (layero, index) {
+                                    $('#basic_nav_search_close').on('click', function () {
+                                        layer.closeAll();
+                                    });
+
+                                    layui.form.render("select", "test2");
+                                    $('.layui-form-select').css("border", "1px solid #575759");
+
+                                    $('#edit-products-color-del-btn').on('click', function () {
+                                        var tmpLoad = layer.load(2)
+                                        admin.req({
+                                            method: "post",
+                                            url: '/api/color/delete!delete_color',
+                                            data: JSON.stringify({
+                                                "EN_NAME": $('#select-id-type').val(),
+                                                "langType": '[[lang_type]]'
+                                            }),
+                                            done: function (res) {
+                                                layer.close(tmpLoad);
+                                                if (res.data.code == 0) {
+                                                    layer.msg(res.msg, {icon: 1});
+                                                    var tp = layer.load(2)
+                                                    setTimeout(function(){
+                                                        layer.close(tp);
+                                                    },5000);
+                                                    window.location.reload()
+                                                } else {
+                                                    layer.msg(res.msg, {icon: 2});
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+            function deleteAreaTy() {
+                let tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/area/get!get_area',
+                    data: JSON.stringify({"langType": '[[lang_type]]'}),
+                    done: function (res) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+
+                            let tmpTextTy = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                                    '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                                    '<div class="row"><div class="layui-form" lay-filter="test2"><select id="select-id-type">';
+
+                            for (i = 0; i < res.data.areas.length; i++) {
+                                if ('[[lang_type]]' == 'zh_cn') {
+                                    tmpTextTy += '<option value="' + res.data.areas[i].EN_NAME + '">' + res.data.areas[i].NAME + '</option>';
+                                } else {
+                                    tmpTextTy += '<option value="' + res.data.areas[i].EN_NAME + '">' + res.data.areas[i].EN_NAME + '</option>';
+                                }
+                            }
+
+                            tmpTextTy += '</select></div><div class="layui-inline"><button type="button" id="edit-products-color-del-btn" class="layui-btn" ' +
+                                    'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_delete]]</button></div>' +
+                                    '</div></div></div>';
+                            layer.open({
+                                type: 1,
+                                offset: 'auto',
+                                title: false,
+                                id: 'delAreaSelect',
+                                content: tmpTextTy,
+                                shade: 0,
+                                area: ['370px', '200px'],
+                                resize: false,
+                                closeBtn: false,
+                                success: function (layero, index) {
+                                    $('#basic_nav_search_close').on('click', function () {
+                                        layer.closeAll();
+                                    });
+
+                                    layui.form.render("select", "test2");
+                                    $('.layui-form-select').css("border", "1px solid #575759");
+
+                                    $('#edit-products-color-del-btn').on('click', function () {
+                                        var tmpLoad = layer.load(2)
+                                        admin.req({
+                                            method: "post",
+                                            url: '/api/area/delete!delete_area',
+                                            data: JSON.stringify({
+                                                "EN_NAME": $('#select-id-type').val(),
+                                                "langType": '[[lang_type]]'
+                                            }),
+                                            done: function (res) {
+                                                layer.close(tmpLoad);
+                                                if (res.data.code == 0) {
+                                                    layer.msg(res.msg, {icon: 1});
+                                                    var tp = layer.load(2)
+                                                    setTimeout(function(){
+                                                        layer.close(tp);
+                                                    },5000);
+                                                    window.location.reload()
+                                                } else {
+                                                    layer.msg(res.msg, {icon: 2});
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+            function deleteCategoryTy() {
+                let tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/good/get!get_good_category',
+                    data: JSON.stringify({"langType": '[[lang_type]]'}),
+                    done: function (res) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+
+                            let tmpTextTy = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                                    '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                                    '<div class="row"><div class="layui-form" lay-filter="test2"><select id="select-id-type">';
+
+                            for (i = 0; i < res.data.good_categories.length; i++) {
+                                if ('[[lang_type]]' == 'zh_cn') {
+                                    tmpTextTy += '<option value="' + res.data.good_categories[i].EN_NAME + '">' + res.data.good_categories[i].NAME + '</option>';
+                                } else {
+                                    tmpTextTy += '<option value="' + res.data.good_categories[i].EN_NAME + '">' + res.data.good_categories[i].EN_NAME + '</option>';
+                                }
+                            }
+
+                            tmpTextTy += '</select></div><div class="layui-inline"><button type="button" id="edit-products-color-del-btn" class="layui-btn" ' +
+                                    'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_delete]]</button></div>' +
+                                    '</div></div></div>';
+                            layer.open({
+                                type: 1,
+                                offset: 'auto',
+                                title: false,
+                                id: 'delCategorySelect',
+                                content: tmpTextTy,
+                                shade: 0,
+                                area: ['370px', '200px'],
+                                resize: false,
+                                closeBtn: false,
+                                success: function (layero, index) {
+                                    $('#basic_nav_search_close').on('click', function () {
+                                        layer.closeAll();
+                                    });
+
+                                    layui.form.render("select", "test2");
+                                    $('.layui-form-select').css("border", "1px solid #575759");
+
+                                    $('#edit-products-color-del-btn').on('click', function () {
+                                        var tmpLoad = layer.load(2)
+                                        admin.req({
+                                            method: "post",
+                                            url: '/api/good/delete!delete_good_category',
+                                            data: JSON.stringify({
+                                                "EN_NAME": $('#select-id-type').val(),
+                                                "langType": '[[lang_type]]'
+                                            }),
+                                            done: function (res) {
+                                                layer.close(tmpLoad);
+                                                if (res.data.code == 0) {
+                                                    layer.msg(res.msg, {icon: 1});
+                                                    var tp = layer.load(2)
+                                                    setTimeout(function(){
+                                                        layer.close(tp);
+                                                    },5000);
+                                                    window.location.reload()
+                                                } else {
+                                                    layer.msg(res.msg, {icon: 2});
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+            function deleteGoodSizeTy() {
+                let tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/good/get!get_good_size',
+                    data: JSON.stringify({"langType": '[[lang_type]]'}),
+                    done: function (res) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
+
+                            let tmpTextTy = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                                    '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                                    '<div class="row"><div class="layui-form" lay-filter="test2"><select id="select-id-type">';
+
+                            for (i = 0; i < res.data.good_sizes.length; i++) {
+                                if ('[[lang_type]]' == 'zh_cn') {
+                                    tmpTextTy += '<option value="' + res.data.good_sizes[i].SIZE + '">' + res.data.good_sizes[i].SIZE + '</option>';
+                                } else {
+                                    tmpTextTy += '<option value="' + res.data.good_sizes[i].SIZE + '">' + res.data.good_sizes[i].SIZE + '</option>';
+                                }
+                            }
+
+                            tmpTextTy += '</select></div><div class="layui-inline"><button type="button" id="edit-products-color-del-btn" class="layui-btn" ' +
+                                    'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_delete]]</button></div>' +
+                                    '</div></div></div>';
+                            layer.open({
+                                type: 1,
+                                offset: 'auto',
+                                title: false,
+                                id: 'delGoodSizeSelect',
+                                content: tmpTextTy,
+                                shade: 0,
+                                area: ['370px', '200px'],
+                                resize: false,
+                                closeBtn: false,
+                                success: function (layero, index) {
+                                    $('#basic_nav_search_close').on('click', function () {
+                                        layer.closeAll();
+                                    });
+
+                                    layui.form.render("select", "test2");
+                                    $('.layui-form-select').css("border", "1px solid #575759");
+
+                                    $('#edit-products-color-del-btn').on('click', function () {
+                                        var tmpLoad = layer.load(2)
+                                        admin.req({
+                                            method: "post",
+                                            url: '/api/good/delete!delete_good_size',
+                                            data: JSON.stringify({
+                                                "SIZE": $('#select-id-type').val(),
+                                                "langType": '[[lang_type]]'
+                                            }),
+                                            done: function (res) {
+                                                layer.close(tmpLoad);
+                                                if (res.data.code == 0) {
+                                                    layer.msg(res.msg, {icon: 1});
+                                                    var tp = layer.load(2)
+                                                    setTimeout(function(){
+                                                        layer.close(tp);
+                                                    },5000);
+                                                    window.location.reload()
+                                                } else {
+                                                    layer.msg(res.msg, {icon: 2});
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
+
             form.on('select(edit-product-color-select)', function (data) {
                 if (data.value == "add") {
                     layer.open({
@@ -570,6 +903,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-color-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-color-select-id').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -582,6 +918,8 @@
                             });
                         }
                     });
+                } else if (data.value == "del") {
+                    deleteColorTy()
                 }
             });
             form.on('select(edit-product-color-select1)', function (data) {
@@ -641,6 +979,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-color-select-id1').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-color-select-id1').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -653,6 +994,8 @@
                             });
                         }
                     });
+                } else if (data.value == "del") {
+                    deleteColorTy()
                 }
             });
 
@@ -713,6 +1056,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -725,6 +1071,8 @@
                             });
                         }
                     });
+                } else if (data.value == "del") {
+                    deleteAreaTy()
                 }
             });
             form.on('select(edit-product-area-select1)', function (data) {
@@ -784,6 +1132,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-area-select-id1').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-area-select-id1').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -796,6 +1147,8 @@
                             });
                         }
                     });
+                } else if (data.value == "del") {
+                    deleteAreaTy()
                 }
             });
 
@@ -855,6 +1208,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-category-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-category-select-id').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -867,6 +1223,8 @@
                             });
                         }
                     });
+                } else if (data.value == "del") {
+                    deleteCategoryTy()
                 }
             });
             form.on('select(edit-product-category-select1)', function (data) {
@@ -925,6 +1283,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-category-select-id1').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-category-select-id1').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -937,6 +1298,8 @@
                             });
                         }
                     });
+                } else if (data.value == "del") {
+                    deleteCategoryTy()
                 }
             });
 
@@ -1001,6 +1364,12 @@
                                                     "name": "[[lang.common_add]]",
                                                     "value": "add"
                                                 }
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                sizeArr[res.data.goodSizes.length + 1] = {
+                                                    "name": "[[lang.common_delete]]",
+                                                    "value": "del"
+                                                }
+                                                {% endif %}
                                                 layui.formSelects.data('size_select', 'local', {
                                                     arr: sizeArr
                                                 });
@@ -1014,6 +1383,8 @@
                             });
                         }
                     });
+                } else if (val.value == "del") {
+                    deleteGoodSizeTy()
                 }
             });
             layui.formSelects.on('size_select1', function (id, vals, val, isAdd, isDisabled) {
@@ -1077,6 +1448,12 @@
                                                     "name": "[[lang.common_add]]",
                                                     "value": "add"
                                                 }
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                sizeArr[res.data.goodSizes.length + 1] = {
+                                                    "name": "[[lang.common_delete]]",
+                                                    "value": "del"
+                                                }
+                                                {% endif %}
                                                 layui.formSelects.data('size_select', 'local', {
                                                     arr: sizeArr
                                                 });
@@ -1090,6 +1467,8 @@
                             });
                         }
                     });
+                } else if (val.value == "del") {
+                    deleteGoodSizeTy()
                 }
             });
 

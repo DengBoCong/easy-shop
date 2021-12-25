@@ -42,3 +42,36 @@ def add_color():
                             'data': {"colors": colors_list, 'code': 0}})
     except:
         return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
+@controllers.route('{}/get!get_color'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def get_color():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        colors = Color.query.order_by(asc(Color.EN_NAME)).all()
+        colors_list = []
+        for color in colors:
+            colors_list.append(color.to_json())
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_add_query"],
+                        'data': {"colors": colors_list, 'code': 0}})
+    except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
+
+
+@controllers.route('{}/delete!delete_color'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def delete_color():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+
+    try:
+        Color.query.filter_by(EN_NAME=info_data.get("EN_NAME")).delete()
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_delete_success"], 'data': {'code': 0}})
+    except Exception:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_network_abnormal"], 'data': {'code': 1}})
