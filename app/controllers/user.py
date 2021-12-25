@@ -88,6 +88,32 @@ def update_user():
                         'data': {"userId": user_id, 'code': 1}})
 
 
+@controllers.route('{}/update!update_user_admin'.format(URL_PREFIX), methods=['POST'])
+@login_required
+def update_user_admin():
+    info_data = json.loads(request.get_data())
+    lang_type = info_data["langType"]
+    user_id = info_data["ID"]
+    user = User.query.filter_by(ID=user_id).first()
+
+    try:
+        del info_data["langType"]
+        if "NEW_PWD" in info_data.keys():
+            user.password = info_data["NEW_PWD"]
+            db.session.commit()
+            del info_data["NEW_PWD"]
+
+        User.query.filter_by(ID=user_id).update(info_data)
+        db.session.commit()
+
+        return jsonify({'code': 0, 'msg': lang[lang_type]["inner_change_success"],
+                        'data': {"userId": user_id, 'code': 0}})
+
+    except:
+        return jsonify({'code': 0, 'msg': lang[lang_type]["common_update_fail"],
+                        'data': {"userId": user_id, 'code': 1}})
+
+
 @controllers.route('{}/delete!delete_user'.format(URL_PREFIX), methods=['POST'])
 @login_required
 def delete_user_by_id():

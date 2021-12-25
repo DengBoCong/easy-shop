@@ -23,10 +23,10 @@
                         <label class="text-capitalize">[[lang.account_related_email]]</label>
                         <input type="email" value="[[data.user.EMAIL]]" class="form-control" disabled>
                     </div>
-                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
-                        <label class="text-capitalize">[[lang.account_old_password]]</label>
-                        <input type="password" value="" class="form-control" id="account-old-pwd">
-                    </div>
+{#                    <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">#}
+{#                        <label class="text-capitalize">[[lang.account_old_password]]</label>#}
+{#                        <input type="password" value="" class="form-control" id="account-old-pwd">#}
+{#                    </div>#}
                     <div class="form-label-group" style="font-size: 13px;margin-top: 10px;">
                         <label class="text-capitalize">[[lang.account_new_password]]</label>
                         <input type="password" value="" class="form-control" id="account-new-pwd">
@@ -41,6 +41,9 @@
                                 <option [['selected' if data.user.AREA_ID == area.ID else '']] value="[[area.ID]]">[[area.NAME if lang_type == 'zh_cn' else area.EN_NAME]]</option>
                             {% endfor %}
                             <option value="add">[[lang.common_add]]</option>
+                            {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                            <option value="del">[[lang.common_delete]]</option>
+                            {% endif %}
                         </select>
                     </div>
                     {% endif %}
@@ -59,10 +62,12 @@
                              style="background-color: #323232;color: #FFFFFF;width: 100%;">
                             [[lang.common_confirm_change]]
                         </div>
-                        <div class="btn btn-block text-uppercase" id="delete-customer-account-btn"
-                             style="margin-top: 30px;width: 100%;background-color: #970005;color: #FFFFFF;">
-                            [[lang.account_delete_an_account]]
-                        </div>
+{#                        {% if data.user.ROLE == 'USER' %}#}
+{#                        <div class="btn btn-block text-uppercase" id="delete-customer-account-btn"#}
+{#                             style="margin-top: 30px;width: 100%;background-color: #970005;color: #FFFFFF;">#}
+{#                            [[lang.account_delete_an_account]]#}
+{#                        </div>#}
+{#                        {% endif %}#}
                     </div>
                 </div>
             </div>
@@ -82,7 +87,83 @@
                 layer = layui.layer;
 
             layer.load(2)
+            function deleteAreaTy() {
+                let tmpLoad = layer.load(2)
+                admin.req({
+                    method: "post",
+                    url: '/api/area/get!get_area',
+                    data: JSON.stringify({"langType": '[[lang_type]]'}),
+                    done: function (res) {
+                        layer.close(tmpLoad);
+                        if (res.data.code == 0) {
+                            layer.msg(res.msg, {icon: 1});
 
+                            let tmpTextTy = '<div style="padding: 10px 25px;font-size: 14px;text-align: center"><div class="row self-a-link"><ul class="nav">' +
+                                    '<li class="nav-item" style="margin-top: 8px;" id="basic_nav_search_close">' +
+                                    '<i class="bi bi-x-lg" style="color: #0C0C0C"></i></li></ul></div>' +
+                                    '<div class="row"><div class="layui-form" lay-filter="test2"><select id="select-id-type">';
+
+                            for (i = 0; i < res.data.areas.length; i++) {
+                                if ('[[lang_type]]' == 'zh_cn') {
+                                    tmpTextTy += '<option value="' + res.data.areas[i].EN_NAME + '">' + res.data.areas[i].NAME + '</option>';
+                                } else {
+                                    tmpTextTy += '<option value="' + res.data.areas[i].EN_NAME + '">' + res.data.areas[i].EN_NAME + '</option>';
+                                }
+                            }
+
+                            tmpTextTy += '</select></div><div class="layui-inline"><button type="button" id="edit-products-color-del-btn" class="layui-btn" ' +
+                                    'style="margin-top: 20px;width: 100px;background-color: #323232;color: #FFFFFF;">[[lang.common_delete]]</button></div>' +
+                                    '</div></div></div>';
+                            layer.open({
+                                type: 1,
+                                offset: 'auto',
+                                title: false,
+                                id: 'delAreaSelect',
+                                content: tmpTextTy,
+                                shade: 0,
+                                area: ['370px', '200px'],
+                                resize: false,
+                                closeBtn: false,
+                                success: function (layero, index) {
+                                    $('#basic_nav_search_close').on('click', function () {
+                                        layer.closeAll();
+                                    });
+
+                                    layui.form.render("select", "test2");
+                                    $('.layui-form-select').css("border", "1px solid #575759");
+
+                                    $('#edit-products-color-del-btn').on('click', function () {
+                                        var tmpLoad = layer.load(2)
+                                        admin.req({
+                                            method: "post",
+                                            url: '/api/area/delete!delete_area',
+                                            data: JSON.stringify({
+                                                "EN_NAME": $('#select-id-type').val(),
+                                                "langType": '[[lang_type]]'
+                                            }),
+                                            done: function (res) {
+                                                layer.close(tmpLoad);
+                                                if (res.data.code == 0) {
+                                                    layer.msg(res.msg, {icon: 1});
+                                                    var tp = layer.load(2)
+                                                    setTimeout(function(){
+                                                        layer.close(tp);
+                                                    },5000);
+                                                    window.location.reload()
+                                                } else {
+                                                    layer.msg(res.msg, {icon: 2});
+                                                }
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg, {icon: 2});
+                        }
+                    }
+                });
+            }
             $('.layui-form-select').css("border", "1px solid #575759");
             form.on('select(edit-product-area-select)', function (data) {
                 if (data.value == "add") {
@@ -141,6 +222,9 @@
                                                     }
                                                 }
                                                 $('#edit-product-area-select-id').append(new Option('[[lang.common_add]]', 'add'));
+                                                {% if addition.login and current_user.ROLE != "USER" and current_user.ROLE != "AGENT" %}
+                                                $('#edit-product-area-select-id').append(new Option('[[lang.common_delete]]', 'del'));
+                                                {% endif %}
                                                 layui.form.render("select");
                                                 $('.layui-form-select').css("border", "1px solid #575759");
                                                 layer.closeAll();
@@ -153,13 +237,14 @@
                             });
                         }
                     });
+                } {
+                    deleteAreaTy()
                 }
             });
 
             $('#edit-customer-account-btn').on('click', function () {
                 var lastName = $('#account-last-name').val()
                 var firstName = $('#account-first-name').val()
-                var pwd = $('#account-old-pwd').val()
                 var confirmPwd = $('#account-new-pwd').val()
                 var areaVal = $('#edit-product-area-select-id').val()
                 var position = $('#edit-position-select-id').val()
@@ -168,7 +253,6 @@
                     "ID": '[[data.user.ID]]',
                     "LAST_NAME": lastName,
                     "FIRST_NAME": firstName,
-                    "_PWD": pwd,
                     "NEW_PWD": confirmPwd,
                     "langType": '[[lang_type]]'
                 }
@@ -183,13 +267,13 @@
                     || areaVal == "")) || ('[[data.subPage]]' == 'staff')
                     && (lastName == "" || firstName == "" || position == "")) {
                     layer.msg('[[lang.common_complete_info]]', {icon: 5});
-                } else if((pwd == "" && confirmPwd != "") || (pwd != "" && confirmPwd == "")) {
+                } else if(confirmPwd == "") {
                     layer.msg('[[lang.common_complete_info]]', {icon: 5});
                 } else {
                     var tmpLoad = layer.load(2)
                     admin.req({
                         method: "post",
-                        url: '/api/user/update!update_user',
+                        url: '/api/user/update!update_user_admin',
                         data: JSON.stringify(valuePost),
                         done: function (res) {
                             layer.close(tmpLoad);

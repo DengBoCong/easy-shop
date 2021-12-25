@@ -71,6 +71,20 @@
             <div class="col-xl-8 col-lg-8 col-12" style="padding: 20px 30px 0 30px">
                 <div class="row" style="margin-top: 30px">
                     <div class="row">
+                        {% if addition.login and (current_user.ROLE == 'ADMIN' or current_user.ROLE == 'SUPER') %}
+                        <div class="col-12">
+                            <div class="btn btn-block text-uppercase d-none d-lg-block edit-user-account-btn"
+                                style="background-color: #323232;color: #FFFFFF;width: 200px;">
+                                [[lang.account_edit_the_account]]
+                            </div>
+                            <div class="btn btn-block text-uppercase d-lg-none edit-user-account-btn"
+                                style="background-color: #323232;color: #FFFFFF;width: 100%;margin-top: 10px;">
+                                [[lang.account_edit_the_account]]
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
                         {% for good in data.goods %}
                         <div class="col-xxl-3 col-lg-4 col-6">
                             <img src="[[good.COVER]]" style="width: 100%;cursor: pointer;object-fit: contain" class="single-product-img-btn" data-product-id="[[good.ID]]" data-product-type="[[good.TYPE | lower]]">
@@ -85,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -285,6 +299,14 @@
                     layer.close(tp);
                 },5000);
                 window.location.href = '/[[lang_type]]-' + $(this).attr('data-product-type') + '/singleProduct?goodId=' + $(this).attr('data-product-id')
+            });
+
+            $('.edit-user-account-btn').on('click', function () {
+                var tp = layer.load(2)
+                setTimeout(function(){
+                    layer.close(tp);
+                },5000);
+                window.location.href = "/[[lang_type]]-customer/editUser?userId=[[data.user.ID]]"
             });
 
             layer.closeAll()
