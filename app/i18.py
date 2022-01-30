@@ -1,3 +1,5 @@
+from datetime import datetime
+
 lang = {
     "zh_cn": {
         "company_name": "华虹",
@@ -14,7 +16,7 @@ lang = {
         "common_forget_pwd": "忘记密码?",
         "common_about_us": "关于我们",
         "common_contact_us": "联系我们",
-        "common_copyright": "© 2021 huahong.com",
+        "common_copyright": f"© {datetime.now().year} huahong.com",
         "common_account": "账号",
         "common_password": "密码",
         "common_confirm_password": "确认密码",
@@ -263,7 +265,7 @@ lang = {
         "common_forget_pwd": "forget password ?",
         "common_about_us": "about us",
         "common_contact_us": "contact us",
-        "common_copyright": "© 2021 huahong.com",
+        "common_copyright": f"© {datetime.now().year} huahong.com",
         "common_account": "account",
         "common_password": "password",
         "common_confirm_password": "confirm password",
